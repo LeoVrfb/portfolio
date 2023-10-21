@@ -6,24 +6,24 @@ img_alt: formulaire web avec des boites de dialogues et des textarea
 description: |
   Validation à Étapes Multiples
 tags:
-  - Dev
-  - Design
+  - State Management
+  - Step Form
 ---
 
 > Validation à Étapes Multiples
 
-## Description
+**Description**
 
 Le projet de validation à étapes multiples, qu'on pourrait aussi nommer stepper funnel, est une projet permettant de collecter des informations sur les préférences alimentaires d'un utilisateur afin de lui recommander des plats adaptés à ses goûts. L'application guide l'utilisateur à travers plusieurs étapes, lui posant des questions sur son régime alimentaire, ses préférences en matière de cuisine, ses allergies et ses aversions alimentaires. On a ce type de questionnaire dans de nombreux sites, notamment lors de tunnel de ventes, de tunnel de prises de rendez-vous médicales, etc... donc c'est particulièrement intéressant de savoir comment cela fonctionne.
 
-## Technologies Utilisées
+**Technologies Utilisées**
 
 - **React**: La bibliothèque JavaScript React est utilisée pour créer l'interface utilisateur de l'application.
 - **CSS**: Les fichiers CSS sont utilisés pour styliser l'application, pas de lib CSS particulière ici.
 - **les hooks**: Les hooks useState et useRef sont utilisés pour stocker les réponses des utilisateurs et créer des références aux éléments DOM.
 - **images svg**: images svg pour générer les icones alimentaires.
 
-## Fonctionnalités Clés
+**Fonctionnalités Clés**
 
 - L'application guide l'utilisateur à travers plusieurs étapes pour collecter des informations sur ses préférences alimentaires.
 - Chaque étape présente une question spécifique, et l'utilisateur peut choisir une réponse parmi plusieurs options.
@@ -31,7 +31,7 @@ Le projet de validation à étapes multiples, qu'on pourrait aussi nommer steppe
 - Les données collectées à chaque étape sont stockées dans un état global pour être utilisées ultérieurement (Les valeurs des cases cochées sont stockées dans l'état local des composants en utilisant useState).
 - Une fois que l'utilisateur a terminé toutes les étapes, il est redirigé vers une page de confirmation.
 
-## Apprentissage et Réalisations
+**Apprentissage et Réalisations**
 
 Ce projet a permis d'apprendre et de mettre en pratique plusieurs concepts importants en développement web, notamment :
 
@@ -41,7 +41,7 @@ Ce projet a permis d'apprendre et de mettre en pratique plusieurs concepts impor
 - La gestion des événements d'interaction utilisateur, tels que les clics de bouton, pour naviguer entre les étapes.
 - La création d'une interface utilisateur conviviale pour guider les utilisateurs tout au long du processus.
 
-## Prochaines Étapes
+**Prochaines Étapes**
 
 Pour améliorer et étendre ce projet, voici quelques pistes de développement possibles :
 
