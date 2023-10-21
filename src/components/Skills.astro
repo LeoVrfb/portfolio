@@ -1,0 +1,92 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<section class="box skills">
+  <div class="stack gap-2 lg:gap-4">
+    <Icon
+      icon="terminal-window"
+      color="var(--accent-regular)"
+      size="2.5rem"
+      gradient
+    />
+    <h2>Dev Front End React</h2>
+    <p>
+      I'm a React addict! I absolutely love its vast ecosystem, which is nearly
+      limitless. There are numerous JavaScript libraries, and I enjoy constantly
+      discovering and expanding my toolkit. I'm actively working on becoming a
+      full-stack developer through Next.js, exploring the server-side rendering
+      (SSR) side of the force.
+    </p>
+  </div>
+  <div class="stack gap-2 lg:gap-4">
+    <Icon
+      icon="rocket-launch"
+      color="var(--accent-regular)"
+      size="2.5rem"
+      gradient
+    />
+    <h2>Website Creator</h2>
+    <p>
+      I've created several websites using CMS like WordPress or tools like
+      Astro, and even just with React! Don't hesitate to reach out to me if you
+      have a project in mind!
+    </p>
+  </div>
+  <div class="stack gap-2 lg:gap-4">
+    <Icon
+      icon="microphone-stage"
+      color="var(--accent-regular)"
+      size="2.5rem"
+      gradient
+    />
+    <h2>Video Creator/Coach</h2>
+    <p>
+      Audio-visual content is also a passion of mine, and I hosted a YouTube
+      channel for several years where I taught my community how to play chess. I
+      was a chess coach for over two years. You can find me there under the name
+      R2D3!
+    </p>
+  </div>
+</section>
+
+<style>
+  .box {
+    border: 1px solid var(--gray-800);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    background-color: var(--gray-999_40);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .skills {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .skills h2 {
+    font-size: var(--text-lg);
+  }
+
+  .skills p {
+    color: var(--gray-400);
+  }
+
+  @media (min-width: 50em) {
+    .box {
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+    }
+
+    .skills {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5rem;
+    }
+
+    .skills h2 {
+      font-size: var(--text-2xl);
+    }
+  }
+</style>
