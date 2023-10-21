@@ -8,6 +8,7 @@ description: |
 tags:
   - Time Control
   - Hooks
+  - dev
 ---
 
 > Chronomètre en React - Gestion du Temps et des Sessions
