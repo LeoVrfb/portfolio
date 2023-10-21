@@ -6,18 +6,17 @@ img_alt: Accordeon noir et vert réalisé avec React.
 description: |
   Expérimenter le CSS en Mode JavaScript
 tags:
-  - Dev
   - Design
   - Styled-components
 ---
 
 > Expérimenter le CSS en Mode JavaScript
 
-##### Description :
+**Description :**
 
 L'accordéon React est un projet qui se démarque par son design élégant, rappelant l'esthétique de Matrix avec ses teintes de noir et de vert émeraude. Ce composant notoire pourrait bien inspirer d'autres développeurs à créer des interfaces uniques et stylées.
 
-##### Fonctionnalités Clés :
+**Fonctionnalités Clés :**
 
 - Utilisation de Styled-components : L'une des caractéristiques marquantes de ce composant est l'utilisation de la célèbre bibliothèque Styled-components, qui permet d'écrire du CSS en utilisant du JavaScript. Cette approche facilite la gestion du style sans avoir à gérer des fichiers CSS distincts, idéale pour les amateurs de JavaScript.
 - Exploration Visuelle : Bien que Styled-components puisse être un choix exigeant, ce projet offre une exploration visuelle captivante. Les images et les illustrations, même issues de banques d'images gratuites, sont intégrées avec goût.
@@ -27,4 +26,4 @@ Vous pouvez explorer l'accordéon en action via le lien ci-dessus. Le projet est
 
 Si vous avez des remarques par rapport à la présentation de ce projet ou des ajustements à faire, n'hésitez pas à me le faire savoir.
 
-##### Decouvrir l'accordéon : <a href="https://leovrfb.github.io/accordeon-react/">voir l'accordéon</a>
+**Decouvrir l'accordéon :** <a href="https://leovrfb.github.io/accordeon-react/">voir l'accordéon</a>

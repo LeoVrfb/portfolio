@@ -6,8 +6,8 @@ img_alt: Chronomètre design crée avec React de couleur violet et blanc.
 description: |
   Chronomètre en React - Gestion du Temps et des Sessions
 tags:
-  - Dev
-  - Design
+  - Time Control
+  - Hooks
 ---
 
 > Chronomètre en React - Gestion du Temps et des Sessions
