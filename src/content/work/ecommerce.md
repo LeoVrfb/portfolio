@@ -6,8 +6,6 @@ img_alt: site e-commerce avec des cartes produits où on voit des mugs
 description: |
   Création d'une Plateforme e-commerce Archi-Complète
 tags:
-  - Dev
-  - Design
   - State management
   - e-commerce
 ---

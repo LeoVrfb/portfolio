@@ -6,8 +6,6 @@ img_alt: site web animalier avec un perroquet en fond d'écran
 description: |
   Expérience Visuelle Étonnante
 tags:
-  - Dev
-  - Design
   - Framer Motion
   - Styled-components
 ---
