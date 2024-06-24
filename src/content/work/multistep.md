@@ -1,5 +1,5 @@
 ---
-title: Stepper funnel nutrtion
+title: Stepper funnel nutrition
 publishDate: 2022-01-27 00:00:00
 img: /assets/imgMultistepValidation/img5.png
 img_alt: formulaire web avec des boites de dialogues et des textarea
@@ -33,7 +33,7 @@ Le projet de validation à étapes multiples, qu'on pourrait aussi nommer steppe
 
 **Apprentissage et Réalisations**
 
-Ce projet a permis d'apprendre et de mettre en pratique plusieurs concepts importants en développement web, notamment :
+Ce projet a permis d'apprendre et de mettre en pratique plusieurs concepts, notamment :
 
 - La gestion de l'état dans une application React à l'aide du hook `useState`. pas de state management lib ici.
 - L'utilisation de formulaires HTML pour collecter des données utilisateur.
@@ -43,7 +43,7 @@ Ce projet a permis d'apprendre et de mettre en pratique plusieurs concepts impor
 
 **Prochaines Étapes**
 
-Pour améliorer et étendre ce projet, voici quelques pistes de développement possibles :
+Pour améliorer et étendre ce projet, voici quelques pistes possibles :
 
 - Ajouter des validations de formulaire pour s'assurer que les données sont complètes et valides.
 - Intégrer une base de données pour stocker les préférences alimentaires des utilisateurs et leur recommander des plats en fonction de leurs choix.
@@ -52,4 +52,5 @@ Pour améliorer et étendre ce projet, voici quelques pistes de développement p
 - Élargir les options de questions pour collecter des données plus précises sur les préférences alimentaires.
 
 Ce projet de validation à étapes multiples démontre l'utilisation de React et des principes de collecte de données pour créer une expérience interactive et personnalisée pour les utilisateurs.
+
 **Vous pourrez le tester ici :** [le stepper funnel](https://leovrfb.github.io/multi-step-validation/)

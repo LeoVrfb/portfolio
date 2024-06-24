@@ -13,7 +13,7 @@ tags:
 > Site Web Animé avec Framer Motion - Expérience Visuelle Étonnante
 
 **Description :**
-Ce projet de site web est une démonstration intéressante de l'utilisation de Framer Motion pour animer une ou plusieurs pages et immédiatement attirer l'attention. Il offre une expérience visuelle sympathique grâce à des animations fluides et élégantes. Le code source de ce projet est structuré en plusieurs composants réutilisables, et il utilise des lib modernes Framer Motion et Styled Components pour créer un site web esthétique.
+Ce projet de site web est une démonstration intéressante de l'utilisation de Framer Motion pour animer une ou plusieurs pages et immédiatement attirer l'attention. Il offre une expérience visuelle sympathique grâce à des animations fluides et élégantes. Le code source de ce projet est structuré en plusieurs composants réutilisables, et il utilise des libs modernes Framer Motion et Styled Components pour créer un site web esthétique.
 
 **Technologies Utilisées :**
 

@@ -1,0 +1,155 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<div class="container">
+  <section class="box skills">
+    <div class="stack gap-2 lg:gap-4">
+      <div class="description_service"></div>
+      <!-- Remplace le bouton par le formulaire -->
+      <form action="/submit_form" method="post" class="callActionForm">
+        <input type="text" name="name" placeholder="Prénom*" required />
+        <input type="text" name="surname" placeholder="Nom*" required />
+        <input
+          type="email"
+          name="email"
+          placeholder="Adresse Email*"
+          required
+        />
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Numéro de Téléphone*"
+          required
+        />
+        <textarea name="message" placeholder="Message*" required></textarea>
+
+        <button type="submit">Envoyer</button>
+      </form>
+    </div>
+    <div class="description">
+      <h5>🌟 Pourquoi Opter pour un Site Vitrine ?</h5>
+      <p class="whyUse">
+        Présentez votre entreprise ou votre activité de manière professionnelle
+        et attrayante. Créez une première impression positive et engageante pour
+        vos visiteurs.
+      </p>
+      <h5 class="toGet">💼 Ce Que Vous Obtiendrez :</h5>
+      <ul>
+        <li>
+          Installation et Personnalisation de Divi : Installation de Wordpress
+          et du thème DIVI, et création jusqu'à 5 pages.
+        </li>
+        <li>
+          Guidance pour l'Hébergement : Je vous guiderai dans le processus
+          d'achat du nom de domaine et de l'hébergement avec Hostinger.
+        </li>
+        <li>
+          Navigation Intuitive : Un menu clair et un pied de page professionnel
+          pour faciliter la navigation et renforcer la confiance.
+        </li>
+        <li>
+          Fonctionnalités Essentielles : Intégration de formulaires de contact,
+          presentation de votre entreprise et services, témoignages clients, et
+          plus encore.
+        </li>
+        <li>
+          Sécurité et Conformité : Installation de SSL-HTTPS et respect des
+          normes RGPD pour garantir la sécurité et la confidentialité des
+          données.
+        </li>
+        <li>
+          Mentions Légales Incluses : Intégration de vos mentions légales pour
+          une transparence totale et une conformité juridique.
+        </li>
+        <li>
+          Conception Personnalisée : Je créerais un design unique qui met en
+          valeur votre marque et attire l'attention.
+        </li>
+        <li>
+          Formation de Base : Apprenez à gérer et mettre à jour votre site
+          vitrine en toute autonomie.
+        </li>
+      </ul>
+    </div>
+  </section>
+  <!-- Ajoute les autres sections de tarification ici -->
+</div>
+
+<style>
+  /* Ajoute ce style pour le formulaire */
+  .box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* Divise la boîte en deux colonnes égales */
+    gap: 2rem; /* Ajoute un espacement entre les colonnes */
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, #13072e, #3f2182);
+  }
+  .callActionForm {
+    padding: 2rem;
+    background-color: none;
+  }
+
+  .callActionForm input,
+  .callActionForm textarea {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+  }
+  .callActionForm textarea {
+    font-family: Arial, sans-serif; /* Utilise la police Arial */
+    resize: none; /* Empêche l'utilisateur de redimensionner le textarea */
+    height: 200px; /* Définit une hauteur par défaut pour le textarea */
+  }
+
+  .callActionForm button {
+    background-color: #13072e;
+    color: #fff;
+    padding: 2rem 2.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    float: right;
+    width: 40%;
+    float: right;
+    margin-right: 0.5rem;
+  }
+
+  .callActionForm button:hover {
+    background-color: #7a3aa1;
+  }
+
+  .description {
+    flex: 1;
+    padding: 2.5rem; /* Ajoute un espacement entre la description et le formulaire */
+  }
+
+  .description ul {
+    list-style-type: none; /* Supprime les puces standard */
+  }
+
+  .description li {
+    margin-left: 1.5em; /* Ajoute une marge à gauche pour le texte */
+    position: relative; /* Position relative pour aligner l'icône */
+  }
+
+  .description li::before {
+    content: "🟢"; /* Utilise l'icône verte comme marqueur */
+    color: green; /* Définit la couleur de l'icône */
+    position: absolute; /* Position absolue pour l'icône */
+    left: -1.5em; /* Décale l'icône vers la gauche */
+  }
+
+  .whyUse {
+    margin-left: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .toGet {
+    margin-bottom: 1rem;
+  }
+</style>
