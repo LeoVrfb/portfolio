@@ -136,7 +136,7 @@ const formId = entry.data.form_id || "contactForm";
         const siteType = form.id.replace("contactForm", ""); // Obtient le type de site à partir de l'ID du formulaire
 
         try {
-          const response = await fetch("http://localhost:3000/send-email", {
+          const response = await fetch("/api/send-email", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
