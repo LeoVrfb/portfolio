@@ -9,12 +9,22 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware CORS
-app.use(cors({
-    origin: 'http://localhost:4321', // Autorisez l'origine du client
-    methods: 'GET,POST,PUT,DELETE,OPTIONS', // Méthodes autorisées
-    allowedHeaders: ['Content-Type', 'Authorization'], // Headers autorisés
-    optionsSuccessStatus: 200 // Pour les navigateurs anciens qui ne prennent pas en charge les statuts 204
-}));
+const allowedOrigins = ['http://localhost:4321', 'https://portfolio-leo-vrfb.vercel.app'];
+
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (allowedOrigins.includes(origin) || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: 'GET,POST,PUT,DELETE,OPTIONS',
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 
 
 // Middleware pour parser les données POST
