@@ -1,79 +1,113 @@
 ---
+import { type CollectionEntry, getCollection } from "astro:content";
 
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ContactCTA from "../../components/ContactCTA.astro";
+import Hero from "../../components/Hero.astro";
+import Icon from "../../components/Icon.astro";
+import Pill from "../../components/Pill.astro";
+
+interface Props {
+  entry: CollectionEntry<"service">;
+}
+
+export async function getStaticPaths() {
+  const services = await getCollection("service");
+  return services.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const formId = entry.data.form_id || "contactForm";
 ---
 
-<div class="container">
-  <section class="box skills">
-    <div class="stack gap-2 lg:gap-4">
-      <div class="description_service"></div>
-      <!-- Remplace le bouton par le formulaire -->
-      <form
-        action="/submit_form"
-        method="post"
-        class="callActionForm"
-        id="contactFormLandingPage"
-      >
-        <input type="text" name="name" placeholder="Prénom*" required />
-        <input type="text" name="surname" placeholder="Nom*" required />
-        <input
-          type="email"
-          name="email"
-          placeholder="Adresse Email*"
-          required
-        />
-        <input
-          type="tel"
-          name="phone"
-          placeholder="Numéro de Téléphone*"
-          required
-        />
-        <textarea name="message" placeholder="Message*" required></textarea>
+<BaseLayout title={entry.data.title} description={entry.data.description}>
+  <div class="stack gap-20">
+    <div class="stack gap-15">
+      <header>
+        <div class="wrapper stack gap-2">
+          <a class="back-link" href="/services/"
+            ><Icon icon="arrow-left" /> Services</a
+          >
+          <Hero title={entry.data.title} align="center">
+            <!-- <div class="details">
+              <div class="tags">
+                {
+                  entry.data.tags &&
+                    entry.data.tags.map((t: any) => <Pill>{t}</Pill>)
+                }
+              </div>
+              <p class="description">{entry.data.description}</p> -->
+          </Hero>
+        </div>
+      </header>
+    </div>
+    <main class="wrapper">
+      <!-- <div class="stack gap-10 content">
+          {
+            entry.data.img && (
+              <img src={entry.data.img} alt={entry.data.img_alt || ""} />
+            )
+          }
+          <div class="content">
+            <Content />
+          </div> -->
+      <div class="container"></div>
 
-        <button type="submit">Envoyer</button>
-      </form>
-    </div>
-    <div class="description">
-      <h5>🌟 Pourquoi Opter pour une Landing Page ?</h5>
-      <p class="whyUse">
-        Simplicité et Efficacité : Concentrez-vous sur un objectif précis et
-        obtenez des résultats qui vous motivent à continuer. C'est le service de
-        base que je propose, et il vous assure une présence en ligne cohérente.
-        Il s'agit d'une page unique, sur laquelle l'utilisateur va atterir et
-        qui lui permettra rapidement comprendre votre service.
-      </p>
-      <h5 class="toGet">💼 Ce Que Vous Obtiendrez :</h5>
-      <ul>
-        <li>
-          Installation et Personnalisation de Divi : Créez une page simple et
-          unique qui vous offre une rapide présence en ligne.
-        </li>
-        <li>
-          Guidance pour l'Hébergement : Je vous guiderai dans le processus
-          d'achat du nom de domaine et de l'hébergement avec Hostinger.
-        </li>
-        <li>
-          Optimisation SEO de Base : Assurez-vous que votre page soit bien
-          référencée pour attirer un maximum de visiteurs.
-        </li>
-        <li>
-          Navigation Intuitive : Un menu clair et un pied de page professionnel
-          pour faciliter la navigation et renforcer la confiance + un formulaire
-          de contact.
-        </li>
-        <li>
-          Sécurité et Conformité : Installation de SSL-HTTPS et respect des
-          normes RGPD pour garantir la sécurité et la confidentialité des
-          données.
-        </li>
-        <li>
-          Mentions Légales Incluses : Intégration de vos mentions légales pour
-          une transparence totale et une conformité juridique.
-        </li>
-      </ul>
-    </div>
-  </section>
-  <!-- Ajoute les autres sections de tarification ici -->
-</div>
+      <section class="box skills">
+        <div class="stack gap-2 lg:gap-4">
+          <div class="description_service"></div>
+          <form
+            action="/submit_form"
+            method="post"
+            class="callActionForm"
+            id={formId}
+          >
+            <input type="text" name="name" placeholder="Prénom*" required />
+            <input type="text" name="surname" placeholder="Nom*" required />
+            <input
+              type="email"
+              name="email"
+              placeholder="Adresse Email*"
+              required
+            />
+            <input
+              type="tel"
+              name="phone"
+              placeholder="Numéro de Téléphone*"
+              required
+            />
+            <textarea name="message" placeholder="Message*" required></textarea>
+
+            <button type="submit">Envoyer</button>
+          </form>
+        </div>
+        <div class="description">
+          {
+            entry.data.service_details.map((detail: any) => (
+              <>
+                <h5>{detail.title}</h5>
+                {detail.content && <p class="whyUse">{detail.content}</p>}
+                {detail.list_items && (
+                  <ul>
+                    {detail.list_items.map((item: any) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                )}
+              </>
+            ))
+          }
+        </div>
+      </section>
+      <!-- Ajoute les autres sections de tarification ici -->
+    </main>
+  </div>
+</BaseLayout>
+<ContactCTA />
 
 <script>
   interface FormDataObject {

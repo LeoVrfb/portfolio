@@ -7,7 +7,12 @@ import Icon from "./Icon.astro";
     <div class="stack gap-2 lg:gap-4">
       <div class="description_service"></div>
       <!-- Remplace le bouton par le formulaire -->
-      <form action="/submit_form" method="post" class="callActionForm">
+      <form
+        action="/submit_form"
+        method="post"
+        class="callActionForm"
+        id="contactFormEcommerce"
+      >
         <input type="text" name="name" placeholder="Prénom*" required />
         <input type="text" name="surname" placeholder="Nom*" required />
         <input
@@ -80,6 +85,52 @@ import Icon from "./Icon.astro";
   </section>
   <!-- Ajoute les autres sections de tarification ici -->
 </div>
+
+<script>
+  interface FormDataObject {
+    name: string;
+    surname: string;
+    email: string;
+    phone: string;
+    message: string;
+  }
+  document.addEventListener("DOMContentLoaded", function () {
+    const forms = document.querySelectorAll<HTMLFormElement>(".callActionForm");
+
+    forms.forEach((form) => {
+      form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        const formObject: FormDataObject = {
+          name: formData.get("name") as string,
+          surname: formData.get("surname") as string,
+          email: formData.get("email") as string,
+          phone: formData.get("phone") as string,
+          message: formData.get("message") as string,
+        };
+
+        const siteType = form.id.replace("contactForm", ""); // Obtient le type de site à partir de l'ID du formulaire
+
+        try {
+          const response = await fetch("http://localhost:3000/send-email", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ ...formObject, siteType }),
+          });
+
+          const result = await response.json();
+          alert(result.message || result.error);
+        } catch (error) {
+          console.error("Error:", error);
+          alert("Une erreur est survenue lors de l'envoi du message.");
+        }
+      });
+    });
+  });
+</script>
 
 <style>
   /* Ajoute ce style pour le formulaire */

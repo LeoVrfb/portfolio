@@ -4,30 +4,26 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 import ContactCTA from "../components/ContactCTA.astro";
-import PortfolioPreview from "../components/PortfolioPreview.astro";
 import Hero from "../components/Hero.astro";
-import Grid from "../components/Grid.astro";
-import Pill from "../components/Pill.astro";
-import Icon from "../components/Icon.astro";
-import MyServices from "../components/MyServices.astro";
+import ServiceList from "../components/ServiceList.astro";
 
-const projects = (await getCollection("work")).sort(
-  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+const services = (await getCollection("service")).sort(
+  (a, b) => a.data.order - b.data.order
 );
 ---
 
 <BaseLayout
-  title="My services | Léo Hengebaert"
-  description="Learn about Léo Hengebaert's most recent projects"
+  title="My Services | Léo Hengebaert"
+  description="Learn about Léo Hengebaert's different offers to select the one that suits your needs"
 >
   <div class="stack gap-20">
     <main class="wrapper stack gap-8">
       <Hero
         title="My Services"
-        tagline="Check my different offers to select the one suits to your needs"
-        align="start"
+        tagline="Check my different offers to select the one that suits your needs"
+        align="center"
       />
-      <MyServices />
+      <ServiceList services={services} />
     </main>
     <ContactCTA />
   </div>

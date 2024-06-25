@@ -6,7 +6,7 @@ export default async (req, res) => {
         return;
     }
 
-    const { name, surname, email, phone, message } = req.body;
+    const { name, surname, email, phone, message, siteType } = req.body;
 
     const transporter = createTransport({
         service: 'gmail',
@@ -20,7 +20,7 @@ export default async (req, res) => {
     const contactMailOptions = {
         from: email,
         to: process.env.EMAIL,
-        subject: 'Nouveau message de contact',
+        subject: `Nouveau message de contact : ${siteType}`, // Sujet dynamique en fonction du type de site
         text: `Nom: ${name} ${surname}\nEmail: ${email}\nTéléphone: ${phone}\nMessage: ${message}`
     };
 
