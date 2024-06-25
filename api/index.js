@@ -8,7 +8,6 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware CORS
 const allowedOrigins = ['https://portfolio-leo-vrfb.vercel.app', 'http://localhost:4321'];
 
 const corsOptions = {
@@ -25,13 +24,9 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
-// Middleware pour parser les données POST
 app.use(urlencoded({ extended: true }));
 app.use(json());
 
-// Route pour gérer les requêtes POST du formulaire
 app.post('/send-email', sendEmail);
 
-// Exporter le serveur pour Vercel
 export default app;
