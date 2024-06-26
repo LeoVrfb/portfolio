@@ -22,7 +22,6 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-console.log("entry ?", entry);
 const { Content } = await entry.render();
 const formId = entry.data.form_id || "contactForm";
 ---
@@ -32,62 +31,41 @@ const formId = entry.data.form_id || "contactForm";
     <div class="stack gap-15">
       <header>
         <div class="wrapper stack gap-2">
-          <a class="back-link" href="/services/"
-            ><Icon icon="arrow-left" /> Services</a
-          >
-          <Hero title={entry.data.title} align="center">
-            <!-- <div class="details">
-              <div class="tags">
-                {
-                  entry.data.tags &&
-                    entry.data.tags.map((t: any) => <Pill>{t}</Pill>)
-                }
-              </div>
-              <p class="description">{entry.data.description}</p> -->
-          </Hero>
+          <a class="back-link" href="/services/">
+            <Icon icon="arrow-left" /> Services
+          </a>
+          <Hero title={entry.data.title} align="center" />
         </div>
       </header>
     </div>
     <main class="wrapper">
-      <!-- <div class="stack gap-10 content">
-          {
-            entry.data.img && (
-              <img src={entry.data.img} alt={entry.data.img_alt || ""} />
-            )
-          }
-          <div class="content">
-            <Content />
-          </div> -->
       <div class="container"></div>
 
       <section class="box skills">
-        <div class="stack gap-2 lg:gap-4">
-          <div class="description_service"></div>
-          <form
-            action="/submit_form"
-            method="post"
-            class="callActionForm"
-            id={formId}
-          >
-            <input type="text" name="name" placeholder="Prénom*" required />
-            <input type="text" name="surname" placeholder="Nom*" required />
-            <input
-              type="email"
-              name="email"
-              placeholder="Adresse Email*"
-              required
-            />
-            <input
-              type="tel"
-              name="phone"
-              placeholder="Numéro de Téléphone*"
-              required
-            />
-            <textarea name="message" placeholder="Message*" required></textarea>
+        <form
+          action="/submit_form"
+          method="post"
+          class="callActionForm"
+          id={formId}
+        >
+          <input type="text" name="name" placeholder="Prénom*" required />
+          <input type="text" name="surname" placeholder="Nom*" required />
+          <input
+            type="email"
+            name="email"
+            placeholder="Adresse Email*"
+            required
+          />
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Numéro de Téléphone*"
+            required
+          />
+          <textarea name="message" placeholder="Message*" required></textarea>
 
-            <button type="submit">Envoyer</button>
-          </form>
-        </div>
+          <button type="submit">Envoyer</button>
+        </form>
         <div class="description">
           {
             entry.data.service_details.map((detail: any) => (
@@ -96,6 +74,7 @@ const formId = entry.data.form_id || "contactForm";
                 {detail.content && <p class="whyUse">{detail.content}</p>}
                 {detail.list_items && (
                   <ul>
+                    <br />
                     {detail.list_items.map((item: any) => (
                       <li>{item}</li>
                     ))}
@@ -106,10 +85,13 @@ const formId = entry.data.form_id || "contactForm";
           }
         </div>
       </section>
-      <!-- Ajoute les autres sections de tarification ici -->
     </main>
   </div>
 </BaseLayout>
+<ContactCTA />
+
+<ContactCTA />
+
 <ContactCTA />
 
 <script>
@@ -159,18 +141,19 @@ const formId = entry.data.form_id || "contactForm";
 </script>
 
 <style>
-  /* Ajoute ce style pour le formulaire */
+  /* Styles par défaut (pour les écrans larges) */
   .box {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    /* Divise la boîte en deux colonnes égales */
-    gap: 2rem; /* Ajoute un espacement entre les colonnes */
+    grid-template-columns: 1fr 1fr; /* Deux colonnes égales */
+    gap: 2rem;
     border-radius: 0.75rem;
     background: linear-gradient(135deg, #13072e, #3f2182);
   }
+
   .callActionForm {
     padding: 2rem;
     background-color: none;
+    order: 1; /* Formulaire à gauche par défaut */
   }
 
   .callActionForm input,
@@ -181,10 +164,11 @@ const formId = entry.data.form_id || "contactForm";
     border: 1px solid #ccc;
     border-radius: 0.5rem;
   }
+
   .callActionForm textarea {
-    font-family: Arial, sans-serif; /* Utilise la police Arial */
-    resize: none; /* Empêche l'utilisateur de redimensionner le textarea */
-    height: 200px; /* Définit une hauteur par défaut pour le textarea */
+    font-family: Arial, sans-serif;
+    resize: none;
+    height: 200px;
   }
 
   .callActionForm button {
@@ -194,10 +178,8 @@ const formId = entry.data.form_id || "contactForm";
     border: none;
     border-radius: 0.5rem;
     cursor: pointer;
-    float: right;
-    width: 40%;
-    float: right;
-    margin-right: 0.5rem;
+    width: 100%;
+    margin: 0;
   }
 
   .callActionForm button:hover {
@@ -206,35 +188,36 @@ const formId = entry.data.form_id || "contactForm";
 
   .description {
     flex: 1;
-    padding: 2.5rem; /* Ajoute un espacement entre la description et le formulaire */
+    padding: 2.5rem;
+    order: 2; /* Description à droite par défaut */
   }
 
   .description ul {
-    list-style-type: none; /* Supprime les puces standard */
+    list-style-type: none;
   }
 
   .description li {
-    margin-left: 1.5em; /* Ajoute une marge à gauche pour le texte */
-    position: relative; /* Position relative pour aligner l'icône */
+    margin-left: 1.5em;
+    position: relative;
   }
 
   .description li::before {
-    content: "🟢"; /* Utilise l'icône verte comme marqueur */
-    color: green; /* Définit la couleur de l'icône */
-    position: absolute; /* Position absolue pour l'icône */
-    left: -1.5em; /* Décale l'icône vers la gauche */
+    content: "🟢";
+    color: green;
+    position: absolute;
+    left: -1.5em;
   }
 
   .whyEcom {
-    margin-left: 1.5em; /* Ajoute une marge à gauche pour le texte */
-    position: relative; /* Position relative pour aligner l'icône */
+    margin-left: 1.5em;
+    position: relative;
   }
 
   .whyEcom::before {
-    content: "🌟"; /* Utilise l'icône verte comme marqueur */
-    color: gold; /* Définit la couleur de l'icône */
-    position: absolute; /* Position absolue pour l'icône */
-    left: -1.5em; /* Décale l'icône vers la gauche */
+    content: "🌟";
+    color: gold;
+    position: absolute;
+    left: -1.5em;
   }
 
   .whyUse {
@@ -245,5 +228,26 @@ const formId = entry.data.form_id || "contactForm";
 
   .toGet {
     margin-bottom: 1rem;
+  }
+
+  /* Styles pour les écrans de moins de 1080px (tablettes et mobiles) */
+  @media (max-width: 1080px) {
+    .box {
+      display: flex;
+      flex-direction: column; /* Une seule colonne */
+    }
+
+    .callActionForm,
+    .description {
+      padding: 1rem; /* Réduire le padding pour les petits écrans */
+    }
+
+    .callActionForm {
+      order: 2; /* Formulaire en dessous de la description */
+    }
+
+    .description {
+      order: 1; /* Description au dessus du formulaire */
+    }
   }
 </style>
