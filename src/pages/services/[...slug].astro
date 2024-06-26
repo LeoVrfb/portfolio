@@ -11,6 +11,8 @@ interface Props {
   entry: CollectionEntry<"service">;
 }
 
+export const prerender = true;
+
 export async function getStaticPaths() {
   const services = await getCollection("service");
   return services.map((entry) => ({
