@@ -5,7 +5,7 @@ tags: ["Web Design", "SEO", "Business"]
 img: "/images/site-vitrine.jpg"
 img_alt: "Exemple de site vitrine"
 form_id: "contactFormSiteVitrine"
-price: 600
+price: 599
 is_best_deal: true
 features:
   - "Installation et Personnalisation de Divi"

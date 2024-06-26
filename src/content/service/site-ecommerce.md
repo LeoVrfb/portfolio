@@ -5,7 +5,7 @@ tags: ["Web Design", "SEO", "E-commerce"]
 img: "/images/site-ecommerce.jpg"
 img_alt: "Exemple de site e-commerce"
 form_id: "contactFormEcommerce"
-price: 900
+price: 899
 is_best_deal: false
 features:
   - "Installation et Personnalisation de Divi"

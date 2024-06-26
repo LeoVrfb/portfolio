@@ -2,7 +2,7 @@
 title: "Landing Page"
 description: "Découvrez notre service de création de landing pages professionnelles."
 form_id: "contactFormLandingPage"
-price: 300
+price: 299
 is_best_deal: false
 features:
   - "Installation et Personnalisation de Divi"
