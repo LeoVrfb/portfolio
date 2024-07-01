@@ -81,9 +81,13 @@ const { services } = Astro.props;
   }
 
   .button-container {
-    width: 100%;
+    width: 80%;
     position: absolute;
     bottom: 0;
+    margin-bottom: 1rem;
+    bottom: 0;
+    left: 50%; /* Pour centrer horizontalement */
+    transform: translateX(-50%); /* Pour centrer horizontalement */
   }
 
   .button {
@@ -91,14 +95,14 @@ const { services } = Astro.props;
     width: 100%;
     padding-inline: 0;
     padding-block: 0;
-    border-bottom-left-radius: 0.75rem;
-    border-bottom-right-radius: 0.75rem;
+    border-radius: 0.75rem;
+    border: none;
   }
 
   .button a {
     display: flex;
     justify-content: center;
-    padding: 1.5em 0.3em 1em 0;
+    padding: 1em 0em 1em 0;
     color: #13072e;
     text-decoration: none;
     width: 100%;
@@ -116,7 +120,7 @@ const { services } = Astro.props;
     margin: 1rem;
     background: linear-gradient(135deg, #13072e, #3f2182);
     box-shadow: var(--shadow-sm);
-    width: 80%;
+    width: 100%;
     position: relative;
   }
 
@@ -139,6 +143,29 @@ const { services } = Astro.props;
     top: 1em;
   }
 
+  .bestdeal {
+    border: 1px solid #b3aaff;
+  }
+
+  /* Media query pour les écrans de moins de 475px */
+  /* Media query pour les écrans de moins de 475px */
+  @media (max-width: 475px) {
+    .pastille {
+      scale: 0.6;
+      top: 0.5em;
+      right: 0em;
+    }
+
+    .button a {
+      padding: 1em 0em 1em 0;
+      font-weight: 700;
+    }
+
+    .bestdeal {
+      border: 1px solid #b3aaff;
+    }
+  }
+
   @media (min-width: 67.5em) {
     .container {
       flex-wrap: nowrap;
@@ -148,6 +175,12 @@ const { services } = Astro.props;
     .box {
       border-radius: 1.5rem;
       padding: 1.5rem 0;
+      transition: transform 0.3s ease; /* Transition pour l'effet de zoom */
+    }
+
+    .box:hover {
+      transform: scale(1.05); /* Zoom léger */
+      transition: transform 0.3s ease; /* Transition pour l'effet de zoom */
     }
 
     .title_services {
