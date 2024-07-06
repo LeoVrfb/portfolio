@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { Link } from "react-router-dom";
 
 interface Props {
   services: CollectionEntry<"service">[];
@@ -8,11 +9,26 @@ interface Props {
 const { services } = Astro.props;
 ---
 
+<script type="module">
+  function handleSectionClick(slug) {
+    window.location.href = `/services/${slug}`;
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const sections = document.querySelectorAll(".box.skills");
+    sections.forEach((section) => {
+      const slug = section.getAttribute("data-slug");
+      section.addEventListener("click", () => handleSectionClick(slug));
+    });
+  });
+</script>
+
 <div class="container">
   {
     services.map((service) => (
       <section
         class={`box skills ${service.data.is_best_deal ? "bestdeal" : ""}`}
+        data-slug={service.slug}
       >
         {service.data.is_best_deal && <div class="pastille">#bestdeal</div>}
         <div class="stack gap-2 lg:gap-4">
@@ -122,6 +138,7 @@ const { services } = Astro.props;
     box-shadow: var(--shadow-sm);
     width: 100%;
     position: relative;
+    cursor: pointer;
   }
 
   .skills {
@@ -242,6 +259,12 @@ const { services } = Astro.props;
       position: absolute;
       right: 1em;
       top: 1em;
+    }
+    .service-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      width: 100%;
     }
   }
 </style>

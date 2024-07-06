@@ -86,13 +86,9 @@ const formId = entry.data.form_id || "contactForm";
         </div>
       </section>
     </main>
+    <ContactCTA />
   </div>
 </BaseLayout>
-<ContactCTA />
-
-<ContactCTA />
-
-<ContactCTA />
 
 <script>
   interface FormDataObject {
@@ -208,13 +204,8 @@ const formId = entry.data.form_id || "contactForm";
     left: -1.5em;
   }
 
-  .whyEcom {
-    margin-left: 1.5em;
-    position: relative;
-  }
-
-  .whyEcom::before {
-    content: "🌟";
+  .description h5::before {
+    content: "🌟"; /* Votre icône ici */
     color: gold;
     position: absolute;
     left: -1.5em;
