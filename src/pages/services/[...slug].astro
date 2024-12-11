@@ -97,6 +97,7 @@ const formId = entry.data.form_id || "contactForm";
         <!-- Colonne de droite : Formulaire -->
         <div class="order-1 lg:order-2 lg:sticky lg:top-8">
           <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-xl">
+            <!-- Conteneur du formulaire -->
             <div id="formContainer">
               <h3 class="text-2xl font-bold text-white mb-6">
                 Commencez votre projet
@@ -169,16 +170,8 @@ const formId = entry.data.form_id || "contactForm";
 </BaseLayout>
 
 <script>
-  interface FormDataObject {
-    name: string;
-    surname: string;
-    email: string;
-    phone: string;
-    message: string;
-  }
-
   document.addEventListener("DOMContentLoaded", function () {
-    const forms = document.querySelectorAll<HTMLFormElement>(".callActionForm");
+    const forms = document.querySelectorAll("form");
     const formContainer = document.getElementById("formContainer");
     const successMessage = document.getElementById("successMessage");
 
@@ -187,15 +180,14 @@ const formId = entry.data.form_id || "contactForm";
         event.preventDefault();
 
         const formData = new FormData(form);
-        const formObject: FormDataObject = {
-          name: formData.get("name") as string,
-          surname: formData.get("surname") as string,
-          email: formData.get("email") as string,
-          phone: formData.get("phone") as string,
-          message: formData.get("message") as string,
+        const formObject = {
+          name: formData.get("name"),
+          surname: formData.get("surname"),
+          email: formData.get("email"),
+          phone: formData.get("phone"),
+          message: formData.get("message"),
+          siteType: form.id.replace("contactForm", ""),
         };
-
-        const siteType = form.id.replace("contactForm", "");
 
         try {
           const response = await fetch("/api/send-email", {
@@ -203,7 +195,7 @@ const formId = entry.data.form_id || "contactForm";
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ ...formObject, siteType }),
+            body: JSON.stringify(formObject),
           });
 
           const result = await response.json();
@@ -213,8 +205,6 @@ const formId = entry.data.form_id || "contactForm";
             if (formContainer && successMessage) {
               formContainer.classList.add("hidden");
               successMessage.classList.remove("hidden");
-
-              // Animation fade-in pour le message de succès
               successMessage.classList.add("animate-fade-in");
             }
           } else {
