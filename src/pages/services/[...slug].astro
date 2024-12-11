@@ -1,11 +1,15 @@
 ---
 import { type CollectionEntry, getCollection } from "astro:content";
-
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ContactCTA from "../../components/ContactCTA.astro";
 import Hero from "../../components/Hero.astro";
 import Icon from "../../components/Icon.astro";
-import Pill from "../../components/Pill.astro";
+import {
+  FaStar,
+  FaBriefcase,
+  FaCheckCircle,
+  FaArrowRight,
+} from "react-icons/fa";
 
 interface Props {
   entry: CollectionEntry<"service">;
@@ -27,66 +31,140 @@ const formId = entry.data.form_id || "contactForm";
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description}>
-  <div class="stack gap-20">
-    <div class="stack gap-15">
-      <header>
-        <div class="wrapper stack gap-2">
-          <a class="back-link" href="/services/">
-            <Icon icon="arrow-left" /> Services
-          </a>
-          <Hero title={entry.data.title} align="center" />
-        </div>
-      </header>
-    </div>
-    <main class="wrapper">
-      <div class="container"></div>
-
-      <section class="box skills">
-        <form
-          action="/submit_form"
-          method="post"
-          class="callActionForm"
-          id={formId}
+  <div class="min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <!-- En-tête avec navigation -->
+      <nav class="mb-8">
+        <a
+          href="/services"
+          class="inline-flex items-center text-white hover:text-purple-300 transition-colors"
         >
-          <input type="text" name="name" placeholder="Prénom*" required />
-          <input type="text" name="surname" placeholder="Nom*" required />
-          <input
-            type="email"
-            name="email"
-            placeholder="Adresse Email*"
-            required
-          />
-          <input
-            type="tel"
-            name="phone"
-            placeholder="Numéro de Téléphone*"
-            required
-          />
-          <textarea name="message" placeholder="Message*" required></textarea>
+          <Icon icon="arrow-left" />
+          <span class="ml-2">Retour aux services</span>
+        </a>
+      </nav>
 
-          <button type="submit">Envoyer</button>
-        </form>
-        <div class="description">
+      <!-- Hero Section -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">
+          {entry.data.title}
+        </h1>
+        <p class="text-purple-200 max-w-2xl mx-auto">
+          {entry.data.description}
+        </p>
+      </div>
+
+      <!-- Contenu Principal -->
+      <div class="grid lg:grid-cols-2 gap-12 items-start">
+        <!-- Colonne de gauche : Description du service -->
+        <div class="space-y-8 order-2 lg:order-1">
           {
             entry.data.service_details.map((detail: any) => (
-              <>
-                <h5>{detail.title}</h5>
-                {detail.content && <p class="whyUse">{detail.content}</p>}
+              <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 transform hover:scale-[1.02] transition-all duration-300">
+                {detail.title && (
+                  <h2 class="text-2xl font-bold flex items-center gap-3 mb-6 text-white">
+                    {detail.title.includes("Pourquoi") ? (
+                      <FaStar className="text-yellow-400" size="1.2em" />
+                    ) : (
+                      <FaBriefcase className="text-purple-400" size="1.2em" />
+                    )}
+                    {detail.title}
+                  </h2>
+                )}
+                {detail.content && (
+                  <p class="text-purple-100 leading-relaxed mb-6">
+                    {detail.content}
+                  </p>
+                )}
                 {detail.list_items && (
-                  <ul>
-                    <br />
-                    {detail.list_items.map((item: any) => (
-                      <li>{item}</li>
+                  <ul class="space-y-4">
+                    {detail.list_items.map((item: string) => (
+                      <li class="flex items-start gap-4 group">
+                        <FaCheckCircle
+                          className="text-green-400 flex-shrink-0 mt-1 transform group-hover:scale-110 transition-transform"
+                          size="1.2em"
+                        />
+                        <span class="text-purple-100">{item}</span>
+                      </li>
                     ))}
                   </ul>
                 )}
-              </>
+              </div>
             ))
           }
         </div>
-      </section>
-    </main>
-    <ContactCTA />
+
+        <!-- Colonne de droite : Formulaire -->
+        <div class="order-1 lg:order-2 lg:sticky lg:top-8">
+          <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-xl">
+            <div id="formContainer">
+              <h3 class="text-2xl font-bold text-white mb-6">
+                Commencez votre projet
+              </h3>
+              <form id={formId} class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Prénom*"
+                    required
+                    class="col-span-1 w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all"
+                  />
+                  <input
+                    type="text"
+                    name="surname"
+                    placeholder="Nom*"
+                    required
+                    class="col-span-1 w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all"
+                  />
+                </div>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Adresse Email*"
+                  required
+                  class="w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all"
+                />
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="Numéro de Téléphone*"
+                  required
+                  class="w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all"
+                />
+                <textarea
+                  name="message"
+                  placeholder="Votre message*"
+                  required
+                  class="w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all h-32 resize-none"
+                ></textarea>
+                <button
+                  type="submit"
+                  class="w-full bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white py-4 px-6 rounded-lg flex items-center justify-center gap-2 transform hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-xl"
+                >
+                  <span>Envoyer votre demande</span>
+                  <FaArrowRight />
+                </button>
+              </form>
+            </div>
+
+            <!-- Message de succès (caché par défaut) -->
+            <div id="successMessage" class="hidden">
+              <div class="text-center py-8 space-y-4">
+                <FaCheckCircle className="text-green-400 w-16 h-16 mx-auto" />
+                <h3 class="text-2xl font-bold text-white">
+                  Message envoyé avec succès !
+                </h3>
+                <p class="text-purple-200">
+                  Merci pour votre intérêt. Nous avons bien reçu votre message
+                  et nous vous répondrons dans les plus brefs délais.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </BaseLayout>
 
@@ -98,8 +176,11 @@ const formId = entry.data.form_id || "contactForm";
     phone: string;
     message: string;
   }
+
   document.addEventListener("DOMContentLoaded", function () {
     const forms = document.querySelectorAll<HTMLFormElement>(".callActionForm");
+    const formContainer = document.getElementById("formContainer");
+    const successMessage = document.getElementById("successMessage");
 
     forms.forEach((form) => {
       form.addEventListener("submit", async function (event) {
@@ -114,7 +195,7 @@ const formId = entry.data.form_id || "contactForm";
           message: formData.get("message") as string,
         };
 
-        const siteType = form.id.replace("contactForm", ""); // Obtient le type de site à partir de l'ID du formulaire
+        const siteType = form.id.replace("contactForm", "");
 
         try {
           const response = await fetch("/api/send-email", {
@@ -126,7 +207,19 @@ const formId = entry.data.form_id || "contactForm";
           });
 
           const result = await response.json();
-          alert(result.message || result.error);
+
+          if (response.ok) {
+            // Cacher le formulaire et afficher le message de succès
+            if (formContainer && successMessage) {
+              formContainer.classList.add("hidden");
+              successMessage.classList.remove("hidden");
+
+              // Animation fade-in pour le message de succès
+              successMessage.classList.add("animate-fade-in");
+            }
+          } else {
+            throw new Error(result.error || "Une erreur est survenue");
+          }
         } catch (error) {
           console.error("Error:", error);
           alert("Une erreur est survenue lors de l'envoi du message.");
@@ -137,118 +230,18 @@ const formId = entry.data.form_id || "contactForm";
 </script>
 
 <style>
-  /* Styles par défaut (pour les écrans larges) */
-  .box {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Deux colonnes égales */
-    gap: 2rem;
-    border-radius: 0.75rem;
-    background: linear-gradient(135deg, #13072e, #3f2182);
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in;
   }
 
-  .callActionForm {
-    padding: 2rem;
-    background-color: none;
-    order: 1; /* Formulaire à gauche par défaut */
-  }
-
-  .callActionForm input,
-  .callActionForm textarea {
-    width: 100%;
-    padding: 1rem;
-    margin-bottom: 2rem;
-    border: 1px solid #ccc;
-    border-radius: 0.5rem;
-  }
-
-  .callActionForm textarea {
-    font-family: Arial, sans-serif;
-    resize: none;
-    height: 200px;
-  }
-
-  .callActionForm button {
-    background-color: #13072e;
-    color: #fff;
-    padding: 2rem 2.5rem;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    width: 100%;
-    margin: 0;
-  }
-
-  .callActionForm button:hover {
-    background-color: #7a3aa1;
-  }
-
-  .description {
-    flex: 1;
-    padding: 2.5rem;
-    order: 2; /* Description à droite par défaut */
-  }
-
-  .description ul {
-    list-style-type: none;
-  }
-
-  .description li {
-    margin-left: 1.5em;
-    position: relative;
-  }
-
-  .description li::before {
-    content: "🟢";
-    color: green;
-    position: absolute;
-    left: -1.5em;
-  }
-
-  .description h5::before {
-    content: "🌟"; /* Votre icône ici */
-    color: gold;
-    position: absolute;
-    left: -1.5em;
-  }
-
-  .whyUse {
-    margin-left: 2rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  .toGet {
-    margin-bottom: 1rem;
-  }
-
-  /* Styles pour les écrans de moins de 1080px (tablettes et mobiles) */
-  @media (max-width: 1080px) {
-    .box {
-      display: flex;
-      flex-direction: column; /* Une seule colonne */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
     }
-
-    .callActionForm,
-    .description {
-      padding: 1rem; /* Réduire le padding pour les petits écrans */
-    }
-
-    .callActionForm {
-      order: 2; /* Formulaire en dessous de la description */
-    }
-
-    .description {
-      order: 1; /* Description au dessus du formulaire */
-      margin-top: 1em;
-    }
-  }
-
-  @media (max-width: 475px) {
-    .whyUse {
-      margin-left: auto;
-    }
-    .description li {
-      margin-left: 0;
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 </style>

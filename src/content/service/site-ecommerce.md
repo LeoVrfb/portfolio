@@ -10,20 +10,19 @@ is_best_deal: false
 features:
   - "Installation et Personnalisation de Divi"
   - "Guidance pour l'Hébergement"
-  - "Optimisation SEO"
+  - "Optimisation SEO Avancée"
   - "Navigation Intuitive"
-  - "Fonctionnalités Essentielles"
-  - "Conception Personnalisée"
   - "Sécurité et Conformité"
   - "Mentions Légales Incluses"
-  - "Configuration Complète de la Boutique"
+  - "Conception Personnalisée"
   - "Formation Approfondie"
+  - "Configuration Complète de la Boutique"
 order: 3
 service_details:
-  - title: "🌟 Pourquoi Opter pour un Site E-commerce ?"
+  - title: "Pourquoi Opter pour un Site E-commerce ?"
     content: >
       Un site e-commerce est essentiel pour vendre vos produits en ligne et atteindre un public plus large. Il offre une plateforme complète pour gérer vos ventes, attirer des clients, et augmenter votre chiffre d'affaires.
-  - title: "💼 Ce Que Vous Obtiendrez :"
+  - title: "Ce Que Vous Obtiendrez :"
     list_items:
       - "Installation et Personnalisation de Divi : Installation de Wordpress
         et du thème DIVI, et création jusqu'à 10 pages."

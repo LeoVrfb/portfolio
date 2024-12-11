@@ -13,6 +13,7 @@ export const collections = {
 	}),
 	service: defineCollection({
 		// Les options de la collection vont ici
+
 	  }),
 };
 

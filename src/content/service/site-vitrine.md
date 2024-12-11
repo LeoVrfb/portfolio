@@ -10,19 +10,18 @@ is_best_deal: true
 features:
   - "Installation et Personnalisation de Divi"
   - "Guidance pour l'Hébergement"
-  - "Optimisation SEO"
+  - "Optimisation SEO Avancée"
   - "Navigation Intuitive"
-  - "Fonctionnalités Essentielles"
-  - "Conception Personnalisée"
   - "Sécurité et Conformité"
   - "Mentions Légales Incluses"
+  - "Conception Personnalisée"
   - "Formation de Base"
 order: 2
 service_details:
-  - title: "🌟 Pourquoi Opter pour un Site Vitrine ?"
+  - title: "Pourquoi Opter pour un Site Vitrine ?"
     content: >
       Un site vitrine est parfait pour présenter votre entreprise, vos services et vos produits. Il offre une présence en ligne complète et professionnelle, renforçant ainsi votre crédibilité et votre attractivité.
-  - title: "💼 Ce Que Vous Obtiendrez :"
+  - title: "Ce Que Vous Obtiendrez :"
     list_items:
       - "Installation et Personnalisation de Divi : Créez un site complet et professionnel."
       - "Guidance pour l'Hébergement : Je vous guiderai dans le processus d'achat du nom de domaine et de l'hébergement avec Hostinger."

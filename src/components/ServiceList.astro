@@ -1,270 +1,129 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { Link } from "react-router-dom";
+import {
+  FaCheckCircle,
+  FaTimesCircle,
+  FaArrowRight,
+  FaCrown,
+} from "react-icons/fa";
 
 interface Props {
   services: CollectionEntry<"service">[];
 }
 
 const { services } = Astro.props;
+
+const getMissingFeatures = (currentService: CollectionEntry<"service">) => {
+  if (currentService.data.title === "Landing Page") {
+    const siteVitrine = services.find((s) => s.data.title === "Site Vitrine");
+    return siteVitrine
+      ? siteVitrine.data.features.filter(
+          (feature: string) => !currentService.data.features.includes(feature)
+        )
+      : [];
+  }
+
+  if (currentService.data.title === "Site Vitrine") {
+    const ecommerce = services.find((s) => s.data.title === "Site E-commerce");
+    return ecommerce
+      ? ecommerce.data.features.filter(
+          (feature: string) => !currentService.data.features.includes(feature)
+        )
+      : [];
+  }
+  return [];
+};
 ---
 
-<script type="module">
-  function handleSectionClick(slug) {
+<div class="py-16 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {
+        services.map((service) => (
+          <div
+            class={`relative group overflow-hidden rounded-2xl backdrop-blur-lg transition-transform duration-300 hover:scale-[1.01] cursor-pointer
+            ${
+              service.data.is_best_deal
+                ? "bg-gradient-to-br from-purple-500/20 to-indigo-500/20 border-2 border-purple-400/50"
+                : "bg-white/10 border border-white/10"
+            }`}
+            data-slug={service.slug}
+          >
+            {service.data.is_best_deal && (
+              <div class="absolute top-3 right-3">
+                <span class="inline-flex items-center gap-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-purple-900 px-4 py-1 rounded-full text-sm font-semibold shadow-lg scale-[0.95] ">
+                  <FaCrown className="text-purple-900" /> Best Deal
+                </span>
+              </div>
+            )}
+
+            <div class="p-8 pb-28 relative h-full">
+              <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-white mb-4">
+                  {service.data.title}
+                </h2>
+                <div class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300">
+                  {service.data.price}€
+                </div>
+              </div>
+
+              <ul class="space-y-4 mb-4">
+                {service.data.features.map((feature: string) => (
+                  <li class="flex items-start gap-3 group">
+                    <FaCheckCircle
+                      className="text-green-400 flex-shrink-0 mt-1 transform group-hover:scale-110 transition-transform"
+                      size="1.2em"
+                    />
+                    <span class="text-purple-100">{feature}</span>
+                  </li>
+                ))}
+                {getMissingFeatures(service).map((feature: string) => (
+                  <li class="flex items-start gap-3 opacity-50">
+                    <FaTimesCircle
+                      className="text-red-400 flex-shrink-0 mt-1"
+                      size="1.2em"
+                    />
+                    <span class="text-purple-200">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div class="absolute bottom-10 left-0 right-0 px-8">
+                <a
+                  href={`/services/${service.slug}`}
+                  class={`flex items-center justify-between w-full px-6 py-3 rounded-lg transition-all duration-300
+                  ${
+                    service.data.is_best_deal
+                      ? "bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl"
+                      : "bg-white/10 hover:bg-white/20 text-white"
+                  }`}
+                >
+                  <span>Découvrir {service.data.title}</span>
+                  <div class="bg-white/10 w-8 h-8 rounded-full flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                    <FaArrowRight className="text-white" />
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<script>
+  function handleSectionClick(slug: string) {
     window.location.href = `/services/${slug}`;
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    const sections = document.querySelectorAll(".box.skills");
+    const sections = document.querySelectorAll("[data-slug]");
     sections.forEach((section) => {
       const slug = section.getAttribute("data-slug");
-      section.addEventListener("click", () => handleSectionClick(slug));
+      if (slug) {
+        section.addEventListener("click", () => handleSectionClick(slug));
+      }
     });
   });
 </script>
-
-<div class="container">
-  {
-    services.map((service) => (
-      <section
-        class={`box skills ${service.data.is_best_deal ? "bestdeal" : ""}`}
-        data-slug={service.slug}
-      >
-        {service.data.is_best_deal && <div class="pastille">#bestdeal</div>}
-        <div class="stack gap-2 lg:gap-4">
-          <div class="title_services">
-            <h2>{service.data.title}</h2>
-            <h5>{service.data.price}€</h5>
-          </div>
-          <div class="description_service">
-            <ul>
-              {service.data.features.map((feature: any) => (
-                <li>{feature}</li>
-              ))}
-            </ul>
-          </div>
-          <div class="button-container">
-            <button class="button">
-              <a href={`/services/${service.slug}`}>
-                Get {service.data.title.toLowerCase()}
-                <p>
-                  <span>&rarr;</span>
-                </p>
-              </a>
-            </button>
-          </div>
-        </div>
-      </section>
-    ))
-  }
-</div>
-
-<style>
-  .container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .stack {
-    width: 100%;
-  }
-  .title_services {
-    display: flex;
-    flex-direction: column;
-    padding: 1em 2.5em;
-    border-bottom: 1px solid var(--gray-800);
-    text-align: center;
-    width: 100%;
-  }
-
-  .description_service {
-    padding: 0 2rem;
-    padding-bottom: 7em;
-  }
-  .description_service ul {
-    list-style-type: none;
-  }
-
-  .description_service li {
-    position: relative;
-  }
-
-  .description_service li::before {
-    content: "✅";
-    color: green;
-    position: absolute;
-    left: -1.5em;
-  }
-
-  .button-container {
-    width: 80%;
-    position: absolute;
-    bottom: 0;
-    margin-bottom: 1rem;
-    bottom: 0;
-    left: 50%; /* Pour centrer horizontalement */
-    transform: translateX(-50%); /* Pour centrer horizontalement */
-  }
-
-  .button {
-    font-size: var(--text-md);
-    width: 100%;
-    padding-inline: 0;
-    padding-block: 0;
-    border-radius: 0.75rem;
-    border: none;
-  }
-
-  .button a {
-    display: flex;
-    justify-content: center;
-    padding: 1em 0em 1em 0;
-    color: #13072e;
-    text-decoration: none;
-    width: 100%;
-    border-bottom-left-radius: 0.75rem;
-    border-bottom-right-radius: 0.75rem;
-  }
-
-  .button span {
-    display: none;
-  }
-
-  .box {
-    border: 1px solid var(--gray-800);
-    border-radius: 0.75rem;
-    margin: 1rem;
-    background: linear-gradient(135deg, #13072e, #3f2182);
-    box-shadow: var(--shadow-sm);
-    width: 100%;
-    position: relative;
-    cursor: pointer;
-  }
-
-  .skills {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .skills h2 {
-    font-size: var(--text-lg);
-  }
-
-  .pastille {
-    border-radius: 50px;
-    padding: 0.5em 1em;
-    background-color: #b3aaff;
-    color: #13072e;
-    position: absolute;
-    right: 1em;
-    top: 1em;
-  }
-
-  .bestdeal {
-    border: 1px solid #b3aaff;
-  }
-
-  /* Media query pour les écrans de moins de 475px */
-  /* Media query pour les écrans de moins de 475px */
-  @media (max-width: 475px) {
-    .pastille {
-      scale: 0.6;
-      top: 0.5em;
-      right: 0em;
-    }
-
-    .button a {
-      padding: 1em 0em 1em 0;
-      font-weight: 700;
-    }
-
-    .bestdeal {
-      border: 1px solid #b3aaff;
-    }
-  }
-
-  @media (min-width: 67.5em) {
-    .container {
-      flex-wrap: nowrap;
-      position: relative;
-    }
-
-    .box {
-      border-radius: 1.5rem;
-      padding: 1.5rem 0;
-      transition: transform 0.3s ease; /* Transition pour l'effet de zoom */
-    }
-
-    .box:hover {
-      transform: scale(1.05); /* Zoom léger */
-      transition: transform 0.3s ease; /* Transition pour l'effet de zoom */
-    }
-
-    .title_services {
-      text-align: left;
-    }
-
-    .skills {
-      display: grid;
-      gap: 5rem;
-    }
-
-    .skills h2 {
-      font-size: var(--text-lg);
-      margin-bottom: 1rem;
-    }
-    .skills h5 {
-      font-size: var(--text-4xl);
-      margin-bottom: 1rem;
-    }
-
-    .button-container {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-      position: absolute;
-      bottom: 10px;
-    }
-
-    .button {
-      font-size: var(--text-md);
-      width: auto;
-      border-radius: 50px;
-    }
-
-    .button a {
-      padding: 1.8em 0.3em 1.8em 2em;
-      justify-content: space-between;
-      color: #13072e;
-      text-decoration: none;
-    }
-
-    .button span {
-      display: initial;
-      margin-left: 1em;
-      border-radius: 50px;
-      background-color: #13072e;
-      padding: 1.5em;
-      color: #fff;
-    }
-
-    .bestdeal {
-      border: 1px solid #b3aaff;
-    }
-
-    .pastille {
-      padding: 0.5em 1em;
-      background-color: #b3aaff;
-      color: #13072e;
-      position: absolute;
-      right: 1em;
-      top: 1em;
-    }
-    .service-link {
-      text-decoration: none;
-      color: inherit;
-      display: block;
-      width: 100%;
-    }
-  }
-</style>

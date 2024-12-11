@@ -20,14 +20,14 @@ features_detailed:
   - "Mentions Légales Incluses : Intégration de vos mentions légales pour une transparence totale et une conformité juridique."
 order: 1
 service_details:
-  - title: "🌟 Pourquoi Opter pour une Landing Page ?"
+  - title: "Pourquoi Opter pour une Landing Page ?"
     content: >
       Simplicité et Efficacité : Concentrez-vous sur un objectif précis et
       obtenez des résultats qui vous motivent à continuer. C'est le service de
       base que je propose, et il vous assure une présence en ligne cohérente.
       Il s'agit d'une page unique, sur laquelle l'utilisateur va atterir et
       qui lui permettra rapidement comprendre votre service.
-  - title: "💼 Ce Que Vous Obtiendrez :"
+  - title: "Ce Que Vous Obtiendrez :"
     list_items:
       - "Installation et Personnalisation de Divi : Créez une page simple et unique qui vous offre une rapide présence en ligne."
       - "Guidance pour l'Hébergement : Je vous guiderai dans le processus d'achat du nom de domaine et de l'hébergement avec Hostinger."
