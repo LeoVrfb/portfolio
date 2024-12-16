@@ -1,20 +1,29 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection, z } from "astro:content";
+
+const work = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    publishDate: z.date(),
+    tags: z.array(z.string()),
+    img: z.string().optional(),
+    img_alt: z.string().optional(),
+    mediaType: z
+      .enum(["image", "video", "carousel"])
+      .optional()
+      .default("image"),
+    videoUrl: z.string().optional(),
+    images: z
+      .array(
+        z.object({
+          src: z.string(),
+          alt: z.string(),
+        })
+      )
+      .optional(),
+  }),
+});
 
 export const collections = {
-	work: defineCollection({
-		schema: z.object({
-			title: z.string(),
-			description: z.string(),
-			publishDate: z.coerce.date(),
-			tags: z.array(z.string()),
-			img: z.string(),
-			img_alt: z.string().optional(),
-		}),
-	}),
-	service: defineCollection({
-		// Les options de la collection vont ici
-
-	  }),
+  work: work,
 };
-
-

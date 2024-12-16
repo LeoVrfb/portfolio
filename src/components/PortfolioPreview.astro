@@ -6,12 +6,18 @@ interface Props {
 }
 
 const { data, slug } = Astro.props.project;
+
+// Détermine quelle image afficher
+const previewImage =
+  data.mediaType === "carousel" && data.images?.[0]
+    ? data.images[0].src // Première image du carousel
+    : data.img; // Image simple par défaut
 ---
 
 <a class="card" href={`/work/${slug}`}>
   <span class="title">{data.title}</span>
   <img
-    src={data.img}
+    src={previewImage}
     alt={data.img_alt || ""}
     loading="lazy"
     decoding="async"

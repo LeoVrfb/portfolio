@@ -1,0 +1,158 @@
+---
+interface Props {
+  images: {
+    src: string;
+    alt: string;
+    title?: string;
+  }[];
+}
+
+const { images } = Astro.props;
+---
+
+<div class="w-full h-full">
+  <div class="container mx-auto h-full flex items-center">
+    <div class="relative w-full h-[500px]">
+      {/* Image de gauche */}
+      <div
+        class="absolute left-0 w-[calc(50%-10px)] h-full rounded-[32px] overflow-hidden z-10"
+      >
+        <div class="w-full h-full origin-left" id="leftImageWrapper">
+          <img
+            src={images[0].src}
+            alt={images[0].alt}
+            class="w-full h-full object-cover rounded-[32px]"
+          />
+        </div>
+      </div>
+
+      {/* Image centrale */}
+      <div
+        class="absolute left-[calc(50%+5px)] w-[calc(30%-10px)] h-full rounded-[32px] overflow-hidden z-20"
+        id="centerContainer"
+      >
+        <div class="w-full h-full origin-left" id="centerImageWrapper">
+          <img
+            src={images[1].src}
+            alt={images[1].alt}
+            class="w-full h-full object-cover rounded-[32px]"
+          />
+        </div>
+      </div>
+
+      {/* Image de droite */}
+      <div
+        class="absolute right-0 w-[calc(20%-5px)] h-full rounded-[32px] overflow-hidden z-30"
+        id="rightContainer"
+      >
+        <div class="w-full h-full origin-left" id="rightImageWrapper">
+          <img
+            src={images[2].src}
+            alt={images[2].alt}
+            class="w-full h-full object-cover rounded-[32px]"
+          />
+        </div>
+      </div>
+
+      {/* Image suivante (cachée) */}
+      <div
+        class="absolute right-[-20%] w-[calc(20%-5px)] h-full rounded-[32px] overflow-hidden z-0 opacity-0"
+        id="nextContainer"
+      >
+        <div class="w-full h-full origin-left" id="nextImageWrapper">
+          <img
+            src={images[3]?.src || images[0].src}
+            alt={images[3]?.alt || images[0].alt}
+            class="w-full h-full object-cover rounded-[32px]"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import gsap from "gsap";
+
+  function animateImages() {
+    const leftWrapper = document.querySelector("#leftImageWrapper");
+    const centerContainer = document.querySelector("#centerContainer");
+    const rightContainer = document.querySelector("#rightContainer");
+    const nextContainer = document.querySelector("#nextContainer");
+
+    if (!leftWrapper || !centerContainer || !rightContainer || !nextContainer) {
+      return; // Sort de la fonction si un élément est manquant
+    }
+
+    const tl = gsap.timeline();
+
+    tl.to("#leftImageWrapper", {
+      scaleX: 0,
+      duration: 2,
+      ease: "power2.inOut",
+    })
+      .to(
+        "#centerContainer",
+        {
+          left: "0",
+          width: "calc(50% - 10px)",
+          duration: 2,
+          ease: "power2.inOut",
+        },
+        "<"
+      )
+      .to(
+        "#rightContainer",
+        {
+          right: "calc(20% + 5px)",
+          width: "calc(30% - 10px)",
+          duration: 2,
+          ease: "power2.inOut",
+        },
+        "<"
+      )
+      .to(
+        "#nextContainer",
+        {
+          right: "0",
+          opacity: 1,
+          width: "calc(20% - 5px)",
+          duration: 2,
+          ease: "power2.inOut",
+        },
+        "<"
+      );
+
+    tl.then(() => {
+      const images = document.querySelectorAll("img");
+      const srcs = Array.from(images).map((img) => img.src);
+      const alts = Array.from(images).map((img) => img.alt);
+
+      const firstSrc = srcs.shift();
+      const firstAlt = alts.shift();
+      if (firstSrc && firstAlt) {
+        srcs.push(firstSrc);
+        alts.push(firstAlt);
+      }
+
+      images.forEach((img, i) => {
+        img.src = srcs[i];
+        img.alt = alts[i];
+      });
+
+      gsap.set("#leftImageWrapper", { scaleX: 1 });
+      gsap.set("#centerContainer", {
+        left: "calc(50% + 5px)",
+        width: "calc(30% - 10px)",
+      });
+      gsap.set("#rightContainer", { right: "0", width: "calc(20% - 5px)" });
+      gsap.set("#nextContainer", {
+        right: "-20%",
+        opacity: 0,
+        width: "calc(20% - 5px)",
+      });
+    });
+  }
+
+  setInterval(animateImages, 4000);
+</script>
