@@ -4,22 +4,10 @@ publishDate: 2024-03-20 00:00:00
 mediaType: "carousel"
 images:
   [
-    {
-      src: "/assets/nettoyage-hurepoix/nettoyage-hurepoix.png",
-      alt: "Page d'accueil",
-    },
-    {
-      src: "/assets/nettoyage-hurepoix/nettoyage-hurepoix2.png",
-      alt: "Section offres",
-    },
-    {
-      src: "/assets/nettoyage-hurepoix/nettoyage-hurepoix3.png",
-      alt: "Section devis",
-    },
-    {
-      src: "/assets/nettoyage-hurepoix/nettoyage-hurepoix4.png",
-      alt: "Section services",
-    },
+    { src: "/assets/nettoyage-hurepoix/img1.jpg", alt: "Page d'accueil" },
+    { src: "/assets/nettoyage-hurepoix/img2.jpg", alt: "Section offres" },
+    { src: "/assets/nettoyage-hurepoix/img3.jpg", alt: "Section devis" },
+    { src: "/assets/nettoyage-hurepoix/img4.jpg", alt: "Section services" },
   ]
 description: |
   Création d'un site vitrine professionnel pour une entreprise de nettoyage avec WordPress et Divi

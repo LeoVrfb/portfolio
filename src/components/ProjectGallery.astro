@@ -8,20 +8,28 @@ interface Props {
 }
 
 const { images } = Astro.props;
+
+// Vérification des images pour éviter les undefined
+const validImages = images.filter((image) => image.src && image.alt);
+const totalImages = validImages.length;
+
+if (totalImages === 0) {
+  console.warn("Aucune image valide trouvée.");
+}
 ---
 
 <div class="w-full h-full">
-  <div class="container mx-auto h-full flex items-center">
+  <div class="container mx-auto h-full flex">
     <div class="relative w-full h-[500px]">
       {/* Image de gauche */}
       <div
-        class="absolute left-0 w-[calc(50%-10px)] h-full rounded-[32px] overflow-hidden z-10"
+        class="absolute left-0 w-[calc(50%-5px)] h-full rounded-[32px] overflow-hidden z-10"
       >
         <div class="w-full h-full origin-left" id="leftImageWrapper">
           <img
-            src={images[0].src}
-            alt={images[0].alt}
-            class="w-full h-full object-cover rounded-[32px]"
+            src={images[0]?.src || ""}
+            alt={images[0]?.alt}
+            class="w-[100%] h-full object-cover rounded-[32px]"
           />
         </div>
       </div>
@@ -33,9 +41,9 @@ const { images } = Astro.props;
       >
         <div class="w-full h-full origin-left" id="centerImageWrapper">
           <img
-            src={images[1].src}
-            alt={images[1].alt}
-            class="w-full h-full object-cover rounded-[32px]"
+            src={images[1]?.src}
+            alt={images[1]?.alt}
+            class="w-[100%] h-full object-cover rounded-[32px]"
           />
         </div>
       </div>
@@ -47,9 +55,9 @@ const { images } = Astro.props;
       >
         <div class="w-full h-full origin-left" id="rightImageWrapper">
           <img
-            src={images[2].src}
-            alt={images[2].alt}
-            class="w-full h-full object-cover rounded-[32px]"
+            src={images[2]?.src || ""}
+            alt={images[2]?.alt}
+            class="w-[100%] h-full object-cover rounded-[32px]"
           />
         </div>
       </div>
@@ -61,9 +69,9 @@ const { images } = Astro.props;
       >
         <div class="w-full h-full origin-left" id="nextImageWrapper">
           <img
-            src={images[3]?.src || images[0].src}
-            alt={images[3]?.alt || images[0].alt}
-            class="w-full h-full object-cover rounded-[32px]"
+            src={images[3]?.src}
+            alt={images[3]?.alt}
+            class="w-[100%] h-full object-cover rounded-[32px]"
           />
         </div>
       </div>
@@ -86,23 +94,19 @@ const { images } = Astro.props;
 
     const tl = gsap.timeline();
 
-    tl.to("#leftImageWrapper", {
-      scaleX: 0,
-      duration: 2,
-      ease: "power2.inOut",
-    })
+    tl.to(leftWrapper, { scaleX: 0, duration: 2, ease: "power2.inOut" })
       .to(
-        "#centerContainer",
+        centerContainer,
         {
           left: "0",
-          width: "calc(50% - 10px)",
+          width: "calc(50% - 5px)",
           duration: 2,
           ease: "power2.inOut",
         },
         "<"
       )
       .to(
-        "#rightContainer",
+        rightContainer,
         {
           right: "calc(20% + 5px)",
           width: "calc(30% - 10px)",
@@ -112,7 +116,7 @@ const { images } = Astro.props;
         "<"
       )
       .to(
-        "#nextContainer",
+        nextContainer,
         {
           right: "0",
           opacity: 1,
@@ -124,10 +128,30 @@ const { images } = Astro.props;
       );
 
     tl.then(() => {
-      const images = document.querySelectorAll("img");
-      const srcs = Array.from(images).map((img) => img.src);
-      const alts = Array.from(images).map((img) => img.alt);
+      // Récupérer toutes les images dans l'ordre
+      const images = [
+        document.querySelector("#leftImageWrapper img"),
+        document.querySelector("#centerContainer img"),
+        document.querySelector("#rightContainer img"),
+        document.querySelector("#nextContainer img"),
+      ];
 
+      // Vérifier que toutes les images existent
+      if (images.some((img) => !img)) return;
+
+      // Sauvegarder les sources et alts
+      const srcs = images.map((img) => (img as HTMLImageElement).src);
+      const alts = images.map((img) => (img as HTMLImageElement).alt);
+      // Précharger les images avant de les assigner
+      const preloadImage = (src: string) => {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.src = src;
+          img.onload = resolve;
+        });
+      };
+
+      // Faire la rotation
       const firstSrc = srcs.shift();
       const firstAlt = alts.shift();
       if (firstSrc && firstAlt) {
@@ -135,24 +159,46 @@ const { images } = Astro.props;
         alts.push(firstAlt);
       }
 
-      images.forEach((img, i) => {
-        img.src = srcs[i];
-        img.alt = alts[i];
-      });
+      Promise.all(srcs.map(preloadImage)).then(() => {
+        // Mettre à jour les images sans clignotement
+        images.forEach((img, i) => {
+          if (img instanceof HTMLImageElement) {
+            if (img.src !== srcs[i]) {
+              img.src = srcs[i];
+            }
+            if (img.alt !== alts[i]) {
+              img.alt = alts[i];
+            }
+          }
+        });
 
-      gsap.set("#leftImageWrapper", { scaleX: 1 });
-      gsap.set("#centerContainer", {
-        left: "calc(50% + 5px)",
-        width: "calc(30% - 10px)",
-      });
-      gsap.set("#rightContainer", { right: "0", width: "calc(20% - 5px)" });
-      gsap.set("#nextContainer", {
-        right: "-20%",
-        opacity: 0,
-        width: "calc(20% - 5px)",
+        // Reset des positions
+        gsap.set(leftWrapper, { scaleX: 1 });
+        gsap.set(centerContainer, {
+          left: "calc(50% + 5px)",
+          width: "calc(30% - 10px)",
+        });
+        gsap.set(rightContainer, { right: "0", width: "calc(20% - 5px)" });
+        gsap.set(nextContainer, {
+          right: "-20%",
+          opacity: 0,
+          width: "calc(20% - 5px)",
+        });
       });
     });
   }
 
-  setInterval(animateImages, 4000);
+  // Démarrer l'animation seulement quand toutes les images sont chargées
+  window.addEventListener("load", () => {
+    const interval = setInterval(animateImages, 3000);
+
+    // Pause l'interval quand l'onglet est invisible
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        clearInterval(interval);
+      } else {
+        animateImages(); // Relance une animation à la reprise
+      }
+    });
+  });
 </script>

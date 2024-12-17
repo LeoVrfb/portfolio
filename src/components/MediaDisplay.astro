@@ -21,7 +21,8 @@ const { mediaType, images, videoUrl, img, img_alt } = Astro.props;
           <img
             src={images[0].src}
             alt={images[0].alt || ""}
-            class="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105"
+            class="w-full h-full object-cover object-top"
+            loading="eager"
           />
         </div>
       </div>
@@ -49,10 +50,27 @@ const { mediaType, images, videoUrl, img, img_alt } = Astro.props;
           <img
             src={img.startsWith("/") ? img : `/${img}`}
             alt={img_alt || ""}
-            class="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105"
+            class="w-full h-full object-cover object-top"
+            loading="eager"
           />
         </div>
       </div>
     )
   )
 }
+
+<style>
+  img {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+</style>
