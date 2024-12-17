@@ -8,7 +8,7 @@ import Hero from "../../components/Hero.astro";
 import Icon from "../../components/Icon.astro";
 import Pill from "../../components/Pill.astro";
 import MediaDisplay from "../../components/MediaDisplay.astro";
-import ProjectGallery from "../../components/ProjectGallery.astro";
+import ReactIcon from "../../components/ReactIcon.astro";
 
 interface Props {
   entry: CollectionEntry<"work">;
@@ -50,6 +50,20 @@ const { Content } = await entry.render();
               </div>
               <p class="text-lg text-gray-300 max-w-2xl">
                 {entry.data.description}
+                {
+                  entry.data.url ? (
+                    <a
+                      href={entry.data.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-purple-600 dark:text-purple-400 hover:underline"
+                    >
+                      bjr à tous
+                    </a>
+                  ) : (
+                    "hello"
+                  )
+                }
               </p>
             </div>
           </Hero>
@@ -131,7 +145,7 @@ const { Content } = await entry.render();
   }
 
   .prose ul li::before {
-    content: "•";
+    content: "▶";
     @apply absolute left-0 text-purple-600 dark:text-purple-400 text-xl;
   }
 
