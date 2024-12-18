@@ -3,223 +3,90 @@ interface Props {
   images: {
     src: string;
     alt: string;
-    title?: string;
   }[];
 }
 
 const { images } = Astro.props;
-
-// Vérification des images pour éviter les undefined
-const validImages = images.filter((image) => image.src && image.alt);
-const totalImages = validImages.length;
-
-if (totalImages === 0) {
-  console.warn("Aucune image valide trouvée.");
-}
 ---
 
-<div class="w-full h-full">
-  <div class="container mx-auto h-full flex">
-    <div class="relative w-full h-[400px]">
-      {/* Image de gauche */}
-      <div
-        class="absolute left-0 w-[calc(50%-5px)] h-full rounded-[32px] overflow-hidden z-10"
-      >
-        <div class="w-full h-full origin-left" id="leftImageWrapper">
-          <img
-            src={images[0]?.src || ""}
-            alt={images[0]?.alt}
-            class="w-[100%] h-full object-cover rounded-[32px]"
-          />
-        </div>
-      </div>
-
-      {/* Image centrale */}
-      <div
-        class="absolute left-[calc(50%+5px)] w-[calc(30%-10px)] h-full rounded-[32px] overflow-hidden z-20"
-        id="centerContainer"
-      >
-        <div class="w-full h-full origin-left" id="centerImageWrapper">
-          <img
-            src={images[1]?.src}
-            alt={images[1]?.alt}
-            class="w-[100%] h-full object-cover rounded-[32px]"
-          />
-        </div>
-      </div>
-
-      {/* Image de droite */}
-      <div
-        class="absolute right-0 w-[calc(20%-5px)] h-full rounded-[32px] overflow-hidden z-30"
-        id="rightContainer"
-      >
-        <div class="w-full h-full origin-left" id="rightImageWrapper">
-          <img
-            src={images[2]?.src || ""}
-            alt={images[2]?.alt}
-            class="w-[100%] h-full object-cover rounded-[32px]"
-          />
-        </div>
-      </div>
-
-      {/* Image suivante (cachée) */}
-      <div
-        class="absolute right-[-20%] w-[calc(20%-5px)] h-full rounded-[32px] overflow-hidden z-0 opacity-0"
-        id="nextContainer"
-      >
-        <div class="w-full h-full origin-left" id="nextImageWrapper">
-          <img
-            src={images[3]?.src}
-            alt={images[3]?.alt}
-            class="w-[100%] h-full object-cover rounded-[32px]"
-          />
-        </div>
-      </div>
+<div class="w-full">
+  <div class="swiper mySwiper h-[400px] mb-8">
+    <div class="swiper-wrapper">
+      {
+        images.map((image) => (
+          <div class="swiper-slide">
+            <img
+              src={image.src}
+              alt={image.alt}
+              class="w-full h-full object-cover rounded-[32px]"
+            />
+          </div>
+        ))
+      }
     </div>
   </div>
+  <div class="swiper-pagination"></div>
 </div>
+
 <script>
-  import gsap from "gsap";
+  import Swiper from "swiper";
+  import { EffectCoverflow, Pagination, Autoplay } from "swiper/modules";
+  import "swiper/css";
+  import "swiper/css/effect-coverflow";
+  import "swiper/css/pagination";
 
-  // Précharge une image
-  const preloadImage = (src) => {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.src = src;
-      img.onload = resolve;
-    });
-  };
-
-  // Précharge toutes les images
-  const preloadAllImages = (imageSources) => {
-    return Promise.all(imageSources.map((src) => preloadImage(src)));
-  };
-
-  // Animation principale
-  function animateImages() {
-    const leftWrapper = document.querySelector("#leftImageWrapper");
-    const centerContainer = document.querySelector("#centerContainer");
-    const rightContainer = document.querySelector("#rightContainer");
-    const nextContainer = document.querySelector("#nextContainer");
-
-    if (!leftWrapper || !centerContainer || !rightContainer || !nextContainer) {
-      return; // Sort de la fonction si un élément est manquant
-    }
-
-    const tl = gsap.timeline();
-
-    tl.to(leftWrapper, { scaleX: 0, duration: 2, ease: "power2.inOut" })
-      .to(
-        centerContainer,
-        {
-          left: "0",
-          width: "calc(50% - 5px)",
-          duration: 2,
-          ease: "power2.inOut",
-        },
-        "<"
-      )
-      .to(
-        rightContainer,
-        {
-          right: "calc(20% + 5px)",
-          width: "calc(30% - 10px)",
-          duration: 2,
-          ease: "power2.inOut",
-        },
-        "<"
-      )
-      .to(
-        nextContainer,
-        {
-          right: "0",
-          opacity: 1,
-          width: "calc(20% - 5px)",
-          duration: 2,
-          ease: "power2.inOut",
-        },
-        "<"
-      );
-
-    tl.then(() => {
-      // Récupérer toutes les images dans l'ordre
-      const images = [
-        document.querySelector("#leftImageWrapper img"),
-        document.querySelector("#centerContainer img"),
-        document.querySelector("#rightContainer img"),
-        document.querySelector("#nextContainer img"),
-      ];
-
-      // Vérifier que toutes les images existent
-      if (images.some((img) => !img)) return;
-
-      // Sauvegarder les sources et alts
-      const srcs = images.map((img) =>
-        img instanceof HTMLImageElement ? img.src : ""
-      );
-      const alts = images.map((img) =>
-        img instanceof HTMLImageElement ? img.alt : ""
-      );
-
-      // Faire la rotation
-      const firstSrc = srcs.shift();
-      const firstAlt = alts.shift();
-      if (firstSrc && firstAlt) {
-        srcs.push(`${firstSrc}?t=${Date.now()}`); // Ajoute un cache buster pour Safari
-        alts.push(firstAlt);
-      }
-
-      // Précharger les nouvelles images avant de les assigner
-      preloadAllImages(srcs).then(() => {
-        // Mettre à jour les images sans clignotement
-        images.forEach((img, i) => {
-          if (img instanceof HTMLImageElement) {
-            if (img.src !== srcs[i]) {
-              img.src = srcs[i];
-            }
-            if (img.alt !== alts[i]) {
-              img.alt = alts[i];
-            }
-          }
-        });
-
-        // Reset des positions après l'animation
-        gsap.set(leftWrapper, { scaleX: 1 });
-        gsap.set(centerContainer, {
-          left: "calc(50% + 5px)",
-          width: "calc(30% - 10px)",
-        });
-        gsap.set(rightContainer, { right: "0", width: "calc(20% - 5px)" });
-        gsap.set(nextContainer, {
-          right: "-20%",
-          opacity: 0,
-          width: "calc(20% - 5px)",
-        });
-      });
-    });
-  }
-
-  // Initialisation de l'animation
-  window.addEventListener("load", async () => {
-    // Précharge toutes les images au démarrage
-    const allImageSources = [
-      ...document.querySelectorAll(
-        "#leftImageWrapper img, #centerContainer img, #rightContainer img, #nextContainer img"
-      ),
-    ].map((img) => img.src);
-
-    await preloadAllImages(allImageSources);
-
-    // Lance l'interval d'animation
-    const interval = setInterval(animateImages, 4000);
-
-    // Gère la pause/reprise de l'animation quand la page est masquée
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) {
-        clearInterval(interval);
-      } else {
-        animateImages();
-      }
-    });
+  new Swiper(".mySwiper", {
+    modules: [EffectCoverflow, Pagination, Autoplay],
+    effect: "coverflow",
+    grabCursor: true,
+    centeredSlides: true,
+    slidesPerView: "auto",
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
+    coverflowEffect: {
+      rotate: 15,
+      stretch: 0,
+      depth: 300,
+      modifier: 1,
+      slideShadows: false,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
   });
 </script>
+
+<style>
+  .swiper-slide {
+    width: 50%;
+    height: 100%;
+    aspect-ratio: 16/9;
+  }
+
+  .swiper-pagination {
+    position: static;
+    margin-top: 1rem;
+  }
+
+  :global(.swiper-pagination-bullet) {
+    @apply text-gray-400 dark:text-gray-600;
+    background-color: currentColor !important;
+    opacity: 1 !important;
+  }
+
+  :global(.swiper-pagination-bullet-active) {
+    @apply text-purple-700 dark:text-purple-300;
+    background-color: currentColor !important;
+    opacity: 1 !important;
+  }
+
+  @media (max-width: 768px) {
+    .swiper-slide {
+      width: 100%;
+      height: auto;
+    }
+  }
+</style>
