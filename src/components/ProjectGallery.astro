@@ -78,10 +78,24 @@ if (totalImages === 0) {
     </div>
   </div>
 </div>
-
 <script>
   import gsap from "gsap";
 
+  // Précharge une image
+  const preloadImage = (src) => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = resolve;
+    });
+  };
+
+  // Précharge toutes les images
+  const preloadAllImages = (imageSources) => {
+    return Promise.all(imageSources.map((src) => preloadImage(src)));
+  };
+
+  // Animation principale
   function animateImages() {
     const leftWrapper = document.querySelector("#leftImageWrapper");
     const centerContainer = document.querySelector("#centerContainer");
@@ -89,17 +103,12 @@ if (totalImages === 0) {
     const nextContainer = document.querySelector("#nextContainer");
 
     if (!leftWrapper || !centerContainer || !rightContainer || !nextContainer) {
-      return;
+      return; // Sort de la fonction si un élément est manquant
     }
 
     const tl = gsap.timeline();
 
-    tl.to(leftWrapper, {
-      scaleX: 0,
-      duration: 2,
-      ease: "power2.inOut",
-      willChange: "transform",
-    })
+    tl.to(leftWrapper, { scaleX: 0, duration: 2, ease: "power2.inOut" })
       .to(
         centerContainer,
         {
@@ -107,7 +116,6 @@ if (totalImages === 0) {
           width: "calc(50% - 5px)",
           duration: 2,
           ease: "power2.inOut",
-          willChange: "transform, width",
         },
         "<"
       )
@@ -118,7 +126,6 @@ if (totalImages === 0) {
           width: "calc(30% - 10px)",
           duration: 2,
           ease: "power2.inOut",
-          willChange: "transform, width",
         },
         "<"
       )
@@ -130,12 +137,12 @@ if (totalImages === 0) {
           width: "calc(20% - 5px)",
           duration: 2,
           ease: "power2.inOut",
-          willChange: "transform, opacity",
         },
         "<"
       );
 
     tl.then(() => {
+      // Récupérer toutes les images dans l'ordre
       const images = [
         document.querySelector("#leftImageWrapper img"),
         document.querySelector("#centerContainer img"),
@@ -143,67 +150,70 @@ if (totalImages === 0) {
         document.querySelector("#nextContainer img"),
       ];
 
+      // Vérifier que toutes les images existent
       if (images.some((img) => !img)) return;
 
-      const srcs = images.map((img) => (img as HTMLImageElement).src);
-      const alts = images.map((img) => (img as HTMLImageElement).alt);
+      // Sauvegarder les sources et alts
+      const srcs = images.map((img) =>
+        img instanceof HTMLImageElement ? img.src : ""
+      );
+      const alts = images.map((img) =>
+        img instanceof HTMLImageElement ? img.alt : ""
+      );
 
-      const preloadImage = (src: string) => {
-        return new Promise((resolve) => {
-          const img = new Image();
-          img.src = src;
-          img.onload = resolve;
-        });
-      };
-
+      // Faire la rotation
       const firstSrc = srcs.shift();
       const firstAlt = alts.shift();
       if (firstSrc && firstAlt) {
-        srcs.push(firstSrc);
+        srcs.push(`${firstSrc}?t=${Date.now()}`); // Ajoute un cache buster pour Safari
         alts.push(firstAlt);
       }
 
-      Promise.all(srcs.map(preloadImage)).then(() => {
-        requestAnimationFrame(() => {
-          images.forEach((img, i) => {
-            if (img instanceof HTMLImageElement) {
-              img.style.transition = "none";
-              if (img.src !== srcs[i]) {
-                img.src = srcs[i];
-              }
-              if (img.alt !== alts[i]) {
-                img.alt = alts[i];
-              }
+      // Précharger les nouvelles images avant de les assigner
+      preloadAllImages(srcs).then(() => {
+        // Mettre à jour les images sans clignotement
+        images.forEach((img, i) => {
+          if (img instanceof HTMLImageElement) {
+            if (img.src !== srcs[i]) {
+              img.src = srcs[i];
             }
-          });
-
-          gsap.set(
-            [leftWrapper, centerContainer, rightContainer, nextContainer],
-            {
-              clearProps: "willChange",
-              force3D: true,
+            if (img.alt !== alts[i]) {
+              img.alt = alts[i];
             }
-          );
+          }
+        });
 
-          gsap.set(leftWrapper, { scaleX: 1 });
-          gsap.set(centerContainer, {
-            left: "calc(50% + 5px)",
-            width: "calc(30% - 10px)",
-          });
-          gsap.set(rightContainer, { right: "0", width: "calc(20% - 5px)" });
-          gsap.set(nextContainer, {
-            right: "-20%",
-            opacity: 0,
-            width: "calc(20% - 5px)",
-          });
+        // Reset des positions après l'animation
+        gsap.set(leftWrapper, { scaleX: 1 });
+        gsap.set(centerContainer, {
+          left: "calc(50% + 5px)",
+          width: "calc(30% - 10px)",
+        });
+        gsap.set(rightContainer, { right: "0", width: "calc(20% - 5px)" });
+        gsap.set(nextContainer, {
+          right: "-20%",
+          opacity: 0,
+          width: "calc(20% - 5px)",
         });
       });
     });
   }
 
-  window.addEventListener("load", () => {
-    const interval = setInterval(animateImages, 3000);
+  // Initialisation de l'animation
+  window.addEventListener("load", async () => {
+    // Précharge toutes les images au démarrage
+    const allImageSources = [
+      ...document.querySelectorAll(
+        "#leftImageWrapper img, #centerContainer img, #rightContainer img, #nextContainer img"
+      ),
+    ].map((img) => img.src);
 
+    await preloadAllImages(allImageSources);
+
+    // Lance l'interval d'animation
+    const interval = setInterval(animateImages, 4000);
+
+    // Gère la pause/reprise de l'animation quand la page est masquée
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) {
         clearInterval(interval);
@@ -213,13 +223,3 @@ if (totalImages === 0) {
     });
   });
 </script>
-
-<style>
-  img {
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    transform: translateZ(0);
-    perspective: 1000;
-    will-change: transform;
-  }
-</style>
