@@ -89,12 +89,17 @@ if (totalImages === 0) {
     const nextContainer = document.querySelector("#nextContainer");
 
     if (!leftWrapper || !centerContainer || !rightContainer || !nextContainer) {
-      return; // Sort de la fonction si un élément est manquant
+      return;
     }
 
     const tl = gsap.timeline();
 
-    tl.to(leftWrapper, { scaleX: 0, duration: 2, ease: "power2.inOut" })
+    tl.to(leftWrapper, {
+      scaleX: 0,
+      duration: 2,
+      ease: "power2.inOut",
+      willChange: "transform",
+    })
       .to(
         centerContainer,
         {
@@ -102,6 +107,7 @@ if (totalImages === 0) {
           width: "calc(50% - 5px)",
           duration: 2,
           ease: "power2.inOut",
+          willChange: "transform, width",
         },
         "<"
       )
@@ -112,6 +118,7 @@ if (totalImages === 0) {
           width: "calc(30% - 10px)",
           duration: 2,
           ease: "power2.inOut",
+          willChange: "transform, width",
         },
         "<"
       )
@@ -123,12 +130,12 @@ if (totalImages === 0) {
           width: "calc(20% - 5px)",
           duration: 2,
           ease: "power2.inOut",
+          willChange: "transform, opacity",
         },
         "<"
       );
 
     tl.then(() => {
-      // Récupérer toutes les images dans l'ordre
       const images = [
         document.querySelector("#leftImageWrapper img"),
         document.querySelector("#centerContainer img"),
@@ -136,13 +143,11 @@ if (totalImages === 0) {
         document.querySelector("#nextContainer img"),
       ];
 
-      // Vérifier que toutes les images existent
       if (images.some((img) => !img)) return;
 
-      // Sauvegarder les sources et alts
       const srcs = images.map((img) => (img as HTMLImageElement).src);
       const alts = images.map((img) => (img as HTMLImageElement).alt);
-      // Précharger les images avant de les assigner
+
       const preloadImage = (src: string) => {
         return new Promise((resolve) => {
           const img = new Image();
@@ -151,7 +156,6 @@ if (totalImages === 0) {
         });
       };
 
-      // Faire la rotation
       const firstSrc = srcs.shift();
       const firstAlt = alts.shift();
       if (firstSrc && firstAlt) {
@@ -160,45 +164,62 @@ if (totalImages === 0) {
       }
 
       Promise.all(srcs.map(preloadImage)).then(() => {
-        // Mettre à jour les images sans clignotement
-        images.forEach((img, i) => {
-          if (img instanceof HTMLImageElement) {
-            if (img.src !== srcs[i]) {
-              img.src = srcs[i];
+        requestAnimationFrame(() => {
+          images.forEach((img, i) => {
+            if (img instanceof HTMLImageElement) {
+              img.style.transition = "none";
+              if (img.src !== srcs[i]) {
+                img.src = srcs[i];
+              }
+              if (img.alt !== alts[i]) {
+                img.alt = alts[i];
+              }
             }
-            if (img.alt !== alts[i]) {
-              img.alt = alts[i];
-            }
-          }
-        });
+          });
 
-        // Reset des positions
-        gsap.set(leftWrapper, { scaleX: 1 });
-        gsap.set(centerContainer, {
-          left: "calc(50% + 5px)",
-          width: "calc(30% - 10px)",
-        });
-        gsap.set(rightContainer, { right: "0", width: "calc(20% - 5px)" });
-        gsap.set(nextContainer, {
-          right: "-20%",
-          opacity: 0,
-          width: "calc(20% - 5px)",
+          gsap.set(
+            [leftWrapper, centerContainer, rightContainer, nextContainer],
+            {
+              clearProps: "willChange",
+              force3D: true,
+            }
+          );
+
+          gsap.set(leftWrapper, { scaleX: 1 });
+          gsap.set(centerContainer, {
+            left: "calc(50% + 5px)",
+            width: "calc(30% - 10px)",
+          });
+          gsap.set(rightContainer, { right: "0", width: "calc(20% - 5px)" });
+          gsap.set(nextContainer, {
+            right: "-20%",
+            opacity: 0,
+            width: "calc(20% - 5px)",
+          });
         });
       });
     });
   }
 
-  // Démarrer l'animation seulement quand toutes les images sont chargées
   window.addEventListener("load", () => {
     const interval = setInterval(animateImages, 3000);
 
-    // Pause l'interval quand l'onglet est invisible
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) {
         clearInterval(interval);
       } else {
-        animateImages(); // Relance une animation à la reprise
+        animateImages();
       }
     });
   });
 </script>
+
+<style>
+  img {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    perspective: 1000;
+    will-change: transform;
+  }
+</style>
