@@ -14,7 +14,24 @@ const { mediaType, images, videoUrl, img, img_alt } = Astro.props;
 
 {
   mediaType === "carousel" && images ? (
-    <ProjectGallery images={images} />
+    <>
+      <!-- Version mobile : première image uniquement -->
+      <div class="md:hidden relative w-full h-full rounded-xl shadow-2xl">
+       
+          <img
+            src={images[0].src}
+            alt={images[0].alt || ""}
+            class="w-full h-full object-cover object-top rounded-xl"
+            loading="eager"
+          />
+
+      </div>
+
+      <!-- Version desktop : carousel -->
+      <div class="hidden md:block">
+        <ProjectGallery images={images} />
+      </div>
+    </>
   ) : mediaType === "video" ? (
     <div class="aspect-video w-full rounded-2xl overflow-hidden shadow-2xl">
       <video
@@ -57,3 +74,4 @@ const { mediaType, images, videoUrl, img, img_alt } = Astro.props;
     }
   }
 </style>
+
