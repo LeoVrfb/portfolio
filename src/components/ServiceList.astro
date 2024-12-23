@@ -47,7 +47,7 @@ const getMissingFeatures = (currentService: CollectionEntry<"service">) => {
                 ? "bg-gradient-to-br from-purple-500/20 to-indigo-500/20 border-2 border-purple-400/50"
                 : "bg-white/10 border border-white/10"
             }`}
-            data-slug={service.data.id}
+            data-slug={service.slug}
           >
             {service.data.is_best_deal && (
               <div class="absolute top-2 right-2 sm:right-4 md:right-3">
@@ -90,7 +90,7 @@ const getMissingFeatures = (currentService: CollectionEntry<"service">) => {
 
               <div class="absolute bottom-10 left-0 right-0 px-8">
                 <a
-                  href={`/services/${service.data.id}`}
+                  href={`/services/${service.slug}`}
                   class={`flex items-center justify-between w-full px-6 py-3 rounded-lg transition-all duration-300
                   ${
                     service.data.is_best_deal
