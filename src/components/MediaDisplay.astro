@@ -33,15 +33,17 @@ const { mediaType, images, videoUrl, img, img_alt } = Astro.props;
       </div>
     </>
   ) : mediaType === "video" ? (
-    <div class="aspect-video w-full h-[600px] md:h-[1160px] lg:h-full rounded-2xl overflow-hidden shadow-2xl">
-      <video
-        class="w-full h-full"
-        src={videoUrl}
-        controls
-        autoplay
-        muted
-        loop
-      />
+    <div class="aspect-video w-full h-[600px] md:h-[1160px] lg:h-full  overflow-hidden shadow-2xl">
+     <video
+          class="w-full h-full"
+          src={videoUrl}
+          autoplay
+          muted
+          loop
+          playsinline
+          webkit-playsinline
+          x5-playsinline
+        />
     </div>
   ) : (
     img && (

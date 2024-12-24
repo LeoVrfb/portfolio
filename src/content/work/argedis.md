@@ -1,5 +1,5 @@
 ---
-title: Application Régionalisme pour Argedis/TotalEnergies
+title: Application Régionalisme pour Argedis - TotalEnergies
 publishDate: 2024-12-23 00:00:00
 mediaType: "video"
 videoUrl: "/assets/videoArgedis/argedis-record.mov" # Remplacez par le chemin réel de la vidéo
