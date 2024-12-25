@@ -70,7 +70,7 @@ const { Content } = await entry.render();
 
       <main class="w-full px-4 sm:px-6 lg:px-8">
         <div
-          class="flex flex-col gap-5 md:gap-10 lg:gap-15 max-w-[90rem] mx-auto"
+          class={`flex flex-col ${entry.data.mediaType !== "none" ? "gap-5 md:gap-10 lg:gap-15" : ""} max-w-[90rem] mx-auto`}
         >
           <div class="w-full media-container">
             <MediaDisplay {...entry.data} />
@@ -91,14 +91,6 @@ const { Content } = await entry.render();
 <style is:global>
   .prose {
     @apply text-[var(--gray-200)] dark:text-[var(--gray-200)] text-[var(--text-lg)];
-  }
-
-  .prose div {
-    @apply flex w-full justify-around;
-  }
-
-  .prose div img {
-    @apply w-[40%];
   }
 
   .prose h1 {
@@ -141,7 +133,11 @@ const { Content } = await entry.render();
   }
 
   .prose strong {
-    @apply font-bold text-purple-600 dark:text-purple-400;
+    @apply font-bold text-purple-600 dark:text-purple-400 text-2xl;
+  }
+
+  .prose li strong {
+    @apply font-bold text-purple-600 dark:text-purple-400 text-xl;
   }
 
   .prose ul {
@@ -207,6 +203,26 @@ const { Content } = await entry.render();
 
   .prose > *.show {
     @apply opacity-100 translate-y-0;
+  }
+
+  .prose .imgs-argedis {
+    @apply flex w-full justify-around;
+  }
+
+  .prose .imgs-argedis img {
+    @apply w-[40%] object-cover mb-12 mt-0;
+    object-position: center top; /* Aligne en haut et centre horizontalement */
+  }
+
+  .prose .video-container {
+    @apply w-full flex justify-center items-center mb-8;
+  }
+
+  .prose .video-container .video-project {
+    @apply w-auto max-w-[calc(9/16*100%)] h-[350px] rounded-2xl shadow-lg md:h-[500px] lg:h-[600px];
+    aspect-ratio: 9/16;
+    object-fit: cover;
+    object-position: center top; /* Aligne en haut et centre horizontalement */
   }
 </style>
 

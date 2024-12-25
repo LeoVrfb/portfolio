@@ -1,20 +1,25 @@
 ---
-title: Application Régionalisme pour Argedis - TotalEnergies
+title: Application pour Argedis - TotalEnergies
 publishDate: 2024-12-23 00:00:00
-mediaType: "video"
-videoUrl: "/assets/videoArgedis/argedis-record.mov" # Remplacez par le chemin réel de la vidéo
+mediaType: "none"
 img: "/assets/videoArgedis/argedis-img.png"
 # description: Découvrez le projet ici
 # url: "https://argedis-app.com" # Ajoutez cette ligne si un lien est disponible
 tags:
+  - Projet Artefact 3000
   - Next.js
   - Contentful
-  - PWA
   - GraphQL
   - Tailwind CSS
 ---
 
 > Création d'une application interactive pour promouvoir les producteurs locaux dans les stations Total
+
+<div class="video-container">
+
+  <video class="video-project" src="/assets/videoArgedis/argedis-record.mov" autoplay  muted loop playsinline webkit-playsinline x5-playsinline />
+   
+</div>
 
 **Description :**
 
@@ -22,9 +27,9 @@ En tant que développeur front-end chez Artefact 3000, j'ai participé à la con
 
 Les utilisateurs peuvent consulter une carte interactive montrant la station où ils se trouvent, entourée des producteurs locaux partenaires, avec leur distance par rapport à la station.
 
-<div >
-<img src="/assets/videoArgedis/argedis-img1.png" class="w-1/2 object-cover"/>
-<img src="/assets/videoArgedis/argedis-img2.png" class="w-1/2 object-cover"/>
+<div class="imgs-argedis" >
+<img src="/assets/videoArgedis/argedis-img1.png" >
+<img src="/assets/videoArgedis/argedis-img2.png"/>
 </div>
 
 **Technologies et Outils Utilisés :**
@@ -44,7 +49,7 @@ Les utilisateurs peuvent consulter une carte interactive montrant la station où
 
 **Challenges et Solutions :**
 
-- **Gestion des positions absolues** : Chaque producteur était placé précisément sur la carte grâce à des coordonnées fixes, adaptées à une résolution de 1920x1080.
+- **Gestion des positions** : Positionnement pixel-perfect des producteurs sur la carte régionale
 - **Maintenance et mise à jour** : L'ajout et la modification fréquente des producteurs dans Contentful étaient répétitifs et fastidieux, représentant un axe d'amélioration.
 - **Compatibilité Android** : Passage de la PWA à l'APK pour contourner les limitations d'installation sur les tablettes.
 

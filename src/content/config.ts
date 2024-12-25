@@ -10,7 +10,7 @@ const work = defineCollection({
     img: z.string().optional(),
     img_alt: z.string().optional(),
     mediaType: z
-      .enum(["image", "video", "carousel"])
+      .enum(["image", "video", "carousel", "none"])
       .optional()
       .default("image"),
     videoUrl: z.string().optional(),
