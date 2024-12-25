@@ -22,6 +22,11 @@ En tant que développeur front-end chez Artefact 3000, j'ai participé à la con
 
 Les utilisateurs peuvent consulter une carte interactive montrant la station où ils se trouvent, entourée des producteurs locaux partenaires, avec leur distance par rapport à la station.
 
+<div >
+<img src="/assets/videoArgedis/argedis-img1.png" class="w-1/2 object-cover"/>
+<img src="/assets/videoArgedis/argedis-img2.png" class="w-1/2 object-cover"/>
+</div>
+
 **Technologies et Outils Utilisés :**
 
 - **Next.js (v 13 : App Router)** pour la gestion asynchrone dans les composants serveurs et des performances optimales.
