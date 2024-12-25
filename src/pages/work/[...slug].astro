@@ -164,7 +164,30 @@ const { Content } = await entry.render();
   }
 
   .prose blockquote {
-    @apply pl-6 my-4 mb-8 border-l-4 border-purple-600 dark:border-purple-400 bg-purple-50 dark:bg-purple-900/10  rounded-r-lg;
+    @apply pl-6 my-4 mb-8 border-l-4 border-purple-600 dark:border-purple-400;
+
+    /* Fallback pour les anciens navigateurs */
+    background-color: rgba(
+      17,
+      24,
+      39,
+      0.1
+    ); /* Équivalent de dark:bg-purple-900/10 */
+
+    /* Version moderne avec transparence */
+    background-color: rgba(var(--color-dark), 0.1);
+
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+
+    /* Préfixes vendeurs */
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+  }
+
+  /* Mode sombre */
+  .dark .prose blockquote {
+    background-color: rgba(17, 24, 39, 0.1);
   }
 
   .prose code {
