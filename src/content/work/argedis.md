@@ -1,8 +1,8 @@
 ---
-title: Application pour Argedis - TotalEnergies
+title: TotalEnergies - Argedis | Application
 publishDate: 2024-12-23 00:00:00
 mediaType: "none"
-img: "/assets/videoArgedis/argedis-img.png"
+img: "/assets/videoArgedis/argedis-img-bg.webp"
 # description: Découvrez le projet ici
 # url: "https://argedis-app.com" # Ajoutez cette ligne si un lien est disponible
 tags:

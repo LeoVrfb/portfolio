@@ -247,6 +247,16 @@ const { Content } = await entry.render();
     object-fit: cover;
     object-position: center top; /* Aligne en haut et centre horizontalement */
   }
+
+  .prose .video-container-sweetime {
+    @apply w-full flex justify-center items-center mb-8;
+  }
+
+  .prose .video-container-sweetime .video-project-sweetime {
+    @apply w-full max-w-[calc(9/16*100%)] h-[450px] rounded-2xl shadow-lg md:h-[500px] lg:h-[600px] md:w-[40%] lg:w-[30%];
+    aspect-ratio: 9/16;
+    object-fit: fill; /* Aligne en haut et centre horizontalement */
+  }
 </style>
 
 <script>

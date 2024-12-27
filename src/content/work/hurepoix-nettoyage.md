@@ -1,5 +1,5 @@
 ---
-title: Site Vitrine pour une Entreprise de Nettoyage
+title: Nettoyage du Hurepoix | Site vitrine
 publishDate: 2024-03-20 00:00:00
 mediaType: "carousel"
 images:
@@ -12,10 +12,10 @@ images:
 description: Visitez le site ici
 url: "https://hurepoix-nettoyage.fr" # Ajoutez cette ligne
 tags:
+  - Client Privé
   - WordPress
   - Divi Builder
   - Web Design
-  - SEO Local
 ---
 
 > Développement d'un site vitrine moderne et efficace pour une entreprise de nettoyage dans la région du Hurepoix
