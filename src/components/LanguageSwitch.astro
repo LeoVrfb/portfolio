@@ -4,9 +4,22 @@ import { getLangFromUrl } from "../i18n/utils";
 const currentLang = getLangFromUrl(Astro.url);
 const targetLang = currentLang === "fr" ? "en" : "fr";
 
-// Obtenir le chemin actuel et remplacer la langue
+// Obtenir le chemin actuel
 const currentPath = Astro.url.pathname;
-const newPath = currentPath.replace(`/${currentLang}/`, `/${targetLang}/`);
+
+// Gérer les cas spéciaux
+let newPath;
+if (currentPath === "/" || currentPath === "") {
+  // Si on est à la racine, rediriger vers la langue cible
+  newPath = `/${targetLang}`;
+} else {
+  // Sinon, remplacer la langue dans le chemin
+  newPath = currentPath.replace(`/${currentLang}/`, `/${targetLang}/`);
+  // Si le remplacement n'a pas fonctionné, c'est qu'on est sur une page sans langue
+  if (newPath === currentPath) {
+    newPath = `/${targetLang}`;
+  }
+}
 ---
 
 <a
