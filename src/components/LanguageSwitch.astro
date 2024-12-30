@@ -10,12 +10,9 @@ const currentPath = Astro.url.pathname;
 // Gérer les cas spéciaux
 let newPath;
 if (currentPath === "/" || currentPath === "") {
-  // Si on est à la racine, rediriger vers la langue cible
   newPath = `/${targetLang}`;
 } else {
-  // Sinon, remplacer la langue dans le chemin
   newPath = currentPath.replace(`/${currentLang}/`, `/${targetLang}/`);
-  // Si le remplacement n'a pas fonctionné, c'est qu'on est sur une page sans langue
   if (newPath === currentPath) {
     newPath = `/${targetLang}`;
   }
@@ -24,7 +21,37 @@ if (currentPath === "/" || currentPath === "") {
 
 <a
   href={newPath}
-  class="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-white bg-gradient-to-br from-gray-800 to-gray-900 rounded-full border border-gray-700 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 ease-in-out hover:from-gray-700 hover:to-gray-800 active:translate-y-0 active:shadow-md"
+  class="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-white
+  bg-gradient-to-br from-gray-800/80 to-gray-900/80
+  rounded-full
+  border border-gray-500/50
+  shadow-lg
+  -webkit-backdrop-filter backdrop-filter backdrop-blur-sm
+  transform-gpu
+  transition-all duration-200 ease-in-out
+  hover:shadow-xl hover:border-gray-400/50 hover:-translate-y-0.5 hover:from-gray-700 hover:to-gray-800
+  active:translate-y-0 active:shadow-md
+  will-change-transform"
 >
-  {currentLang === "fr" ? "EN" : "FR"}
+  {
+    currentLang === "fr" ? (
+      <>
+        <img
+          src="/assets/englishflag.webp"
+          alt="English"
+          class="w-5 h-5 rounded-full shadow-sm"
+        />
+        <span>EN</span>
+      </>
+    ) : (
+      <>
+        <img
+          src="/assets/frenchflag.webp"
+          alt="Français"
+          class="w-5 h-5 rounded-full shadow-sm"
+        />
+        <span>FR</span>
+      </>
+    )
+  }
 </a>
