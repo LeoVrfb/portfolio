@@ -1,5 +1,9 @@
 ---
 import Icon from "./Icon.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <section class="box skills">
@@ -10,14 +14,8 @@ import Icon from "./Icon.astro";
       size="2.5rem"
       gradient
     />
-    <h2>Front End developer</h2>
-    <p>
-      Working within the renowned consulting firm Artefact, specialized in AI
-      and Data, I recently joined the team at its advertising agency studio:
-      Artefact 3000. This tech-forward and future-friendly company has opened up
-      limitless opportunities for me in terms of creativity, of design, and web
-      development challenges.
-    </p>
+    <h2>{t("skills.dev.title")}</h2>
+    <p>{t("skills.dev.description")}</p>
   </div>
   <div class="stack gap-2 lg:gap-4">
     <Icon
@@ -26,15 +24,8 @@ import Icon from "./Icon.astro";
       size="2.5rem"
       gradient
     />
-    <h2>Websites Creator</h2>
-    <p>
-      Beyond my role as a developer, I have founded my own website creation
-      company catering to individuals and businesses alike. The goal is to bring
-      to life all the web projects my clients envision, providing them with
-      technical expertise that is both unique and of high quality. If you're
-      looking to launch your business and need online visibility, don't hesitate
-      to reach out and contact me!
-    </p>
+    <h2>{t("skills.creator.title")}</h2>
+    <p>{t("skills.creator.description")}</p>
   </div>
 </section>
 

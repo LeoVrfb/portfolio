@@ -1,0 +1,21 @@
+{
+    "home": {
+        "hero": {
+            "title": "Bonjour, je suis Léo Hengebaert",
+            "tagline": "Développeur Front-End basé à Paris",
+            "role1": "Développeur web",
+            "role2": "Créateur de sites web",
+            "portrait-alt": "Portrait de Léo Hengebaert"
+        },
+        "work": {
+            "title": "Projets sélectionnés",
+            "description": "Découvrez ci-dessous mes 3 derniers projets dont je suis fier.",
+            "view-all": "Voir tout"
+        },
+        "services": {
+            "title": "Mes services",
+            "description": "Vous souhaitez que je crée votre site web ? Sélectionnez l'offre dont vous avez besoin",
+            "see-more": "En savoir plus"
+        }
+    }
+}

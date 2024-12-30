@@ -1,9 +1,9 @@
 ---
 import { type CollectionEntry, getCollection } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import ContactCTA from "../../components/ContactCTA.astro";
-import Hero from "../../components/Hero.astro";
-import Icon from "../../components/Icon.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ContactCTA from "../../../components/ContactCTA.astro";
+import Hero from "../../../components/Hero.astro";
+import Icon from "../../../components/Icon.astro";
 import {
   FaStar,
   FaBriefcase,
@@ -17,10 +17,15 @@ interface Props {
 
 export const prerender = true;
 
+// Get only English service entries
 export async function getStaticPaths() {
-  const services = await getCollection("service");
+  const lang = "en";
+  const services = await getCollection("service", ({ id }) => {
+    return id.startsWith(`${lang}/`);
+  });
+
   return services.map((entry) => ({
-    params: { slug: entry.slug },
+    params: { slug: entry.id.split("/")[1] }, // Remove language prefix from slug
     props: { entry },
   }));
 }
@@ -35,11 +40,11 @@ const formId = entry.data.form_id || "contactForm";
       <!-- En-tête avec navigation -->
       <nav class="mb-8">
         <a
-          href="/services"
+          href="/en/services"
           class="inline-flex items-center text-white hover:text-purple-300 transition-colors"
         >
           <Icon icon="arrow-left" />
-          <span class="ml-2">Retour aux services</span>
+          <span class="ml-2">Back to Services</span>
         </a>
       </nav>
 

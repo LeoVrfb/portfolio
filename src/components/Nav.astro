@@ -2,13 +2,18 @@
 import Icon from "./Icon.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 import type { iconPaths } from "./IconPaths";
+import LanguageSwitch from "./LanguageSwitch.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 /** Main menu items */
 const textLinks: { label: string; href: string }[] = [
-  { label: "Home", href: "/" },
-  { label: "Work", href: "/work/" },
-  { label: "Services", href: "/services/" },
-  { label: "About", href: "/about/" },
+  { label: String(t("nav.home")), href: `/${lang}` },
+  { label: String(t("nav.work")), href: `/${lang}/work` },
+  { label: String(t("nav.services")), href: `/${lang}/services` },
+  { label: String(t("nav.about")), href: `/${lang}/about` },
 ];
 
 /** Icon links to social media — edit these with links to your profiles! */
@@ -33,7 +38,7 @@ const iconLinks: {
 
 <nav>
   <div class="menu-header">
-    <a href="/" class="site-title">
+    <a href=`/${lang}` class="site-title">
       <Icon
         icon="terminal-window"
         color="var(--accent-regular)"
@@ -42,14 +47,19 @@ const iconLinks: {
       />
       Léo Hengebaert
     </a>
-    <menu-button>
-      <template>
-        <button class="menu-button" aria-expanded="false">
-          <span class="sr-only">Menu</span>
-          <Icon icon="list" />
-        </button>
-      </template>
-    </menu-button>
+    <div class="menu-controls">
+      <div class="mobile-language-switch">
+        <LanguageSwitch />
+      </div>
+      <menu-button>
+        <template>
+          <button class="menu-button">
+            <span class="sr-only">Menu</span>
+            <Icon icon="list" size="1.5rem" />
+          </button>
+        </template>
+      </menu-button>
+    </div>
   </div>
   <noscript>
     <ul class="nav-items">
@@ -62,8 +72,9 @@ const iconLinks: {
                 "link",
                 {
                   active:
-                    Astro.url.pathname === href ||
-                    (href !== "/" && Astro.url.pathname.startsWith(href)),
+                    href === `/${lang}`
+                      ? Astro.url.pathname === href
+                      : Astro.url.pathname.startsWith(href),
                 },
               ]}
               href={href}
@@ -100,8 +111,9 @@ const iconLinks: {
                 "link",
                 {
                   active:
-                    Astro.url.pathname === href ||
-                    (href !== "/" && Astro.url.pathname.startsWith(href)),
+                    href === `/${lang}`
+                      ? Astro.url.pathname === href
+                      : Astro.url.pathname.startsWith(href),
                 },
               ]}
               href={href}
@@ -123,8 +135,10 @@ const iconLinks: {
           ))
         }
       </div>
-
-      <div class="theme-toggle">
+      <div class="theme-switch-container">
+        <div class="desktop-language-switch">
+          <LanguageSwitch />
+        </div>
         <ThemeToggle />
       </div>
     </div>
@@ -377,6 +391,41 @@ const iconLinks: {
   @media (forced-colors: active) {
     .link.active {
       color: SelectedItem;
+    }
+  }
+
+  .menu-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .mobile-language-switch {
+    display: block; /* Visible sur mobile en dehors du menu */
+  }
+
+  .desktop-language-switch {
+    display: none; /* Caché par défaut */
+  }
+
+  .theme-switch-container {
+    display: flex;
+    gap: 1rem;
+  }
+
+  @media (min-width: 50em) {
+    .mobile-language-switch {
+      display: none; /* Caché sur desktop */
+    }
+
+    .desktop-language-switch {
+      display: block; /* Visible sur desktop */
+    }
+
+    .theme-switch-container {
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
     }
   }
 </style>

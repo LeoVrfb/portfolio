@@ -1,0 +1,17 @@
+---
+import { getLangFromUrl } from "../i18n/utils";
+
+const currentLang = getLangFromUrl(Astro.url);
+const targetLang = currentLang === "fr" ? "en" : "fr";
+
+// Obtenir le chemin actuel et remplacer la langue
+const currentPath = Astro.url.pathname;
+const newPath = currentPath.replace(`/${currentLang}/`, `/${targetLang}/`);
+---
+
+<a
+  href={newPath}
+  class="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-white bg-gradient-to-br from-gray-800 to-gray-900 rounded-full border border-gray-700 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 ease-in-out hover:from-gray-700 hover:to-gray-800 active:translate-y-0 active:shadow-md"
+>
+  {currentLang === "fr" ? "EN" : "FR"}
+</a>

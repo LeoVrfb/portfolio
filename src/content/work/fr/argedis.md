@@ -1,5 +1,5 @@
 ---
-title: TotalEnergies - Argedis | Application
+title: TotalEnergies - Argedis
 publishDate: 2024-12-23 00:00:00
 mediaType: "none"
 img: "/assets/videoArgedis/argedis-img-bg.webp"

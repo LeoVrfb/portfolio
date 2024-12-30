@@ -1,0 +1,21 @@
+{
+    "home": {
+        "hero": {
+            "title": "Hi, I'm Léo Hengebaert",
+            "tagline": "A Front-End Developer currently based in Paris",
+            "role1": "Web developer",
+            "role2": "Websites Creator",
+            "portrait-alt": "Portrait of Léo Hengebaert"
+        },
+        "work": {
+            "title": "Selected Work",
+            "description": "Take a look below at my 3 last projects that I'm proud of.",
+            "view-all": "View All"
+        },
+        "services": {
+            "title": "My services",
+            "description": "Want me to build your website ? Select the offer you need",
+            "see-more": "See more"
+        }
+    }
+}

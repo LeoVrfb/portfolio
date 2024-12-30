@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { getLangFromUrl } from "../i18n/utils";
 import {
   FaCheckCircle,
   FaTimesCircle,
@@ -12,10 +13,11 @@ interface Props {
 }
 
 const { services } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
 
 const getMissingFeatures = (currentService: CollectionEntry<"service">) => {
-  if (currentService.data.title === "Landing Page") {
-    const siteVitrine = services.find((s) => s.data.title === "Site Vitrine");
+  if (currentService.data.order === 1) {
+    const siteVitrine = services.find((s) => s.data.order === 2);
     return siteVitrine
       ? siteVitrine.data.features.filter(
           (feature: string) => !currentService.data.features.includes(feature)
@@ -23,8 +25,8 @@ const getMissingFeatures = (currentService: CollectionEntry<"service">) => {
       : [];
   }
 
-  if (currentService.data.title === "Site Vitrine") {
-    const ecommerce = services.find((s) => s.data.title === "Site E-commerce");
+  if (currentService.data.order === 2) {
+    const ecommerce = services.find((s) => s.data.order === 3);
     return ecommerce
       ? ecommerce.data.features.filter(
           (feature: string) => !currentService.data.features.includes(feature)
@@ -47,7 +49,7 @@ const getMissingFeatures = (currentService: CollectionEntry<"service">) => {
                 ? "bg-gradient-to-br from-purple-500/20 to-indigo-500/20 border-2 border-purple-400/50"
                 : "bg-white/10 border border-white/10"
             }`}
-            data-slug={service.slug}
+            data-slug={service.id.split("/")[1]}
           >
             {service.data.is_best_deal && (
               <div class="absolute top-2 right-2 sm:right-4 md:right-3">
@@ -57,7 +59,7 @@ const getMissingFeatures = (currentService: CollectionEntry<"service">) => {
               </div>
             )}
 
-            <div class="p-8 pb-28 relative h-full">
+            <div class="p-8 pt-10 pb-28 relative h-full">
               <div class="text-center mb-8">
                 <h2 class="text-2xl font-bold text-white mb-4">
                   {service.data.title}
@@ -90,7 +92,7 @@ const getMissingFeatures = (currentService: CollectionEntry<"service">) => {
 
               <div class="absolute bottom-10 left-0 right-0 px-8">
                 <a
-                  href={`/services/${service.slug}`}
+                  href={`/${lang}/services/${service.id.split("/")[1]}`}
                   class={`flex items-center justify-between w-full px-6 py-3 rounded-lg transition-all duration-300
                   ${
                     service.data.is_best_deal
@@ -112,9 +114,9 @@ const getMissingFeatures = (currentService: CollectionEntry<"service">) => {
   </div>
 </div>
 
-<script>
-  function handleSectionClick(slug: string) {
-    window.location.href = `/services/${slug}`;
+<script define:vars={{ lang }}>
+  function handleSectionClick(slug) {
+    window.location.href = `/${lang}/services/${slug}`;
   }
 
   document.addEventListener("DOMContentLoaded", function () {

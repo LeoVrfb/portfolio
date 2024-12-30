@@ -1,14 +1,12 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
-
-import BaseLayout from "../../layouts/BaseLayout.astro";
-
-import ContactCTA from "../../components/ContactCTA.astro";
-import Hero from "../../components/Hero.astro";
-import Icon from "../../components/Icon.astro";
-import Pill from "../../components/Pill.astro";
-import MediaDisplay from "../../components/MediaDisplay.astro";
-import ReactIcon from "../../components/ReactIcon.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import { getLangFromUrl } from "../../../i18n/utils";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ContactCTA from "../../../components/ContactCTA.astro";
+import Hero from "../../../components/Hero.astro";
+import Icon from "../../../components/Icon.astro";
+import MediaDisplay from "../../../components/MediaDisplay.astro";
+import Pill from "../../../components/Pill.astro";
 
 interface Props {
   entry: CollectionEntry<"work">;
@@ -20,9 +18,13 @@ export const prerender = true;
 // Read more about dynamic routes and this `getStaticPaths` function in the Astro docs:
 // https://docs.astro.build/en/core-concepts/routing/#dynamic-routes
 export async function getStaticPaths() {
-  const work = await getCollection("work");
-  return work.map((entry) => ({
-    params: { slug: entry.slug },
+  const lang = "en";
+  const works = await getCollection("work", ({ id }) => {
+    return id.startsWith(`${lang}/`);
+  });
+
+  return works.map((entry) => ({
+    params: { slug: entry.slug.split("/")[1] }, // Remove language prefix from slug
     props: { entry },
   }));
 }

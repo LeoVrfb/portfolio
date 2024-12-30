@@ -1,5 +1,5 @@
 ---
-title: Aéroports de Paris - Extime | Jeu Concours
+title: Aéroports De Paris - Extime
 publishDate: 2024-12-03
 mediaType: "none"
 img: "/assets/sweetime/sweetime-factory-img.webp"

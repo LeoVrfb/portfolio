@@ -1,11 +1,13 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { getLangFromUrl } from "../i18n/utils";
 
 interface Props {
   project: CollectionEntry<"work">;
 }
 
 const { data, slug } = Astro.props.project;
+const lang = getLangFromUrl(Astro.url);
 
 // Détermine quelle image afficher
 const previewImage =
@@ -14,7 +16,7 @@ const previewImage =
     : data.img; // Image simple par défaut
 ---
 
-<a class="card" href={`/work/${slug}`}>
+<a class="card" href={`/${lang}/work/${slug.split("/")[1]}`}>
   <span class="title">{data.title}</span>
   <img
     src={previewImage}
@@ -28,7 +30,7 @@ const previewImage =
   .card {
     display: grid;
     grid-template: auto 1fr / auto 1fr;
-    height: 11rem;
+    height: 18rem;
     background: var(--gradient-subtle);
     border: 1px solid var(--gray-800);
     border-radius: 0.75rem;

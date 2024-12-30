@@ -1,5 +1,5 @@
 ---
-title: Nettoyage du Hurepoix | Site vitrine
+title: Nettoyage Du Hurepoix
 publishDate: 2024-03-20 00:00:00
 mediaType: "carousel"
 images:
