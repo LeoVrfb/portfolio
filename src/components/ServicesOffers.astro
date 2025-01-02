@@ -1,0 +1,190 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import {
+  FaWordpress,
+  FaCode,
+  FaArrowRight,
+  FaRocket,
+  FaPaintBrush,
+  FaCogs,
+} from "react-icons/fa";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<div class="px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Solution Standard -->
+      <a
+        href={`/${lang}/services`}
+        class="group relative h-full block transition-transform duration-300 hover:scale-[1.02]"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-indigo-500/10 rounded-2xl"
+        >
+        </div>
+        <div
+          class="relative h-full overflow-hidden rounded-2xl backdrop-blur-sm bg-white/10 border border-white/20"
+        >
+          <div class="p-8 h-full flex flex-col">
+            <div
+              class="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl mb-6 mx-auto shadow-lg"
+            >
+              <FaWordpress className="w-8 h-8 text-white" />
+            </div>
+
+            <h3 class="text-2xl font-bold text-white text-center mb-4">
+              {t("servicesOffers.standardSolution")}
+            </h3>
+
+            <div class="text-center space-y-2 mb-6">
+              <div
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/20 to-indigo-500/20 border border-purple-500/30 hover:from-purple-500/30 hover:to-indigo-500/30 hover:border-purple-400/40 transition-all duration-300"
+              >
+                <FaWordpress className="w-5 h-5 text-purple-300" />
+                <span class="text-purple-200 font-medium">WordPress</span>
+                <span class="text-purple-400">+</span>
+                <div
+                  class="w-5 h-5 rounded-full border-2 border-purple-300 flex items-center justify-center"
+                >
+                  <span class="text-purple-300 font-bold text-sm">D</span>
+                </div>
+                <span class="text-purple-200 font-medium">Divi</span>
+              </div>
+            </div>
+
+            <div class="space-y-4 mb-8">
+              <div class="flex items-center gap-3 text-purple-100">
+                <FaRocket className="flex-shrink-0 text-green-400" />
+                <span>{t("servicesOffers.standardDescription")}</span>
+              </div>
+              <div class="flex items-center gap-3 text-purple-100">
+                <FaPaintBrush className="flex-shrink-0 text-green-400" />
+                <span>{t("servicesOffers.standardFeatures.0")}</span>
+              </div>
+              <div class="flex items-center gap-3 text-purple-100">
+                <FaCogs className="flex-shrink-0 text-green-400" />
+                <span>{t("servicesOffers.standardFeatures.1")}</span>
+              </div>
+            </div>
+
+            <div class="text-center mb-8">
+              <div class="text-sm text-purple-200 mb-2">
+                {t("servicesOffers.standardPrice")}
+              </div>
+              <div
+                class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300"
+              >
+                {t("servicesOffers.standardPriceValue")}
+              </div>
+            </div>
+
+            <div
+              class="flex items-center justify-between w-full px-6 py-4 rounded-xl bg-gradient-to-r from-purple-500 to-indigo-600 text-white shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:from-purple-600 group-hover:to-indigo-700 mt-auto"
+            >
+              <span class="font-semibold"
+                >{t("servicesOffers.discoverOffers")}</span
+              >
+              <div
+                class="bg-white/10 w-8 h-8 rounded-full flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 transform group-hover:translate-x-1"
+              >
+                <FaArrowRight />
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Solution Sur Mesure -->
+      <a
+        href={`/${lang}/devis`}
+        class="group relative h-full block transition-transform duration-300 hover:scale-[1.02]"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-r from-pink-500/10 to-rose-500/10 rounded-2xl"
+        >
+        </div>
+        <div
+          class="relative h-full overflow-hidden rounded-2xl backdrop-blur-sm bg-white/10 border border-white/20"
+        >
+          <div class="p-8 h-full flex flex-col">
+            <div
+              class="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl mb-6 mx-auto shadow-lg"
+            >
+              <FaCode className="w-8 h-8 text-white" />
+            </div>
+
+            <h3 class="text-2xl font-bold text-white text-center mb-4">
+              {t("servicesOffers.customSolution")}
+            </h3>
+
+            <div class="text-purple-200 text-center mb-6">
+              <div
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-500/20 to-rose-500/20 border border-pink-500/30 hover:from-pink-500/30 hover:to-rose-500/30 hover:border-pink-400/40 transition-all duration-300"
+              >
+                {t("servicesOffers.customDescription")}
+              </div>
+            </div>
+
+            <div class="space-y-4 mb-8">
+              <div class="flex items-center gap-3 text-purple-100">
+                <FaRocket className="flex-shrink-0 text-pink-400" />
+                <span>{t("servicesOffers.customFeatures.0")}</span>
+              </div>
+              <div class="flex items-center gap-3 text-purple-100">
+                <FaPaintBrush className="flex-shrink-0 text-pink-400" />
+                <span>{t("servicesOffers.customFeatures.1")}</span>
+              </div>
+              <div class="flex items-center gap-3 text-purple-100">
+                <FaCogs className="flex-shrink-0 text-pink-400" />
+                <span>{t("servicesOffers.customFeatures.1")}</span>
+              </div>
+            </div>
+
+            <div class="text-center mb-8">
+              <div class="text-purple-200 font-medium">
+                {t("servicesOffers.complexProject")}
+              </div>
+              <div
+                class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-rose-300"
+              >
+                {t("servicesOffers.customQuoteValue")}
+              </div>
+            </div>
+
+            <div
+              class="flex items-center justify-between w-full px-6 py-4 rounded-xl bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:from-pink-600 group-hover:to-rose-700 mt-auto"
+            >
+              <span class="font-semibold"
+                >{t("servicesOffers.customQuote")}</span
+              >
+              <div
+                class="bg-white/10 w-8 h-8 rounded-full flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 transform group-hover:translate-x-1"
+              >
+                <FaArrowRight />
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ lang }}>
+  function handleSectionClick(slug) {
+    window.location.href = `/${lang}/services/${slug}`;
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const sections = document.querySelectorAll("[data-slug]");
+    sections.forEach((section) => {
+      const slug = section.getAttribute("data-slug");
+      if (slug) {
+        section.addEventListener("click", () => handleSectionClick(slug));
+      }
+    });
+  });
+</script>

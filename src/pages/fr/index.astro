@@ -14,6 +14,7 @@ import ContactCTA from "../../components/ContactCTA.astro";
 import Skills from "../../components/Skills.astro";
 import ServiceList from "../../components/ServiceList.astro";
 import Pill from "../../components/Pill.astro";
+import ServicesOffers from "../../components/ServicesOffers.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -80,12 +81,12 @@ const services = (
           </Grid>
         </div>
 
-        <div class="cta">
+        <!-- <div class="cta">
           <CallToAction href="/fr/work/">
             {t("home.work.view-all")}
             <Icon icon="arrow-right" size="1.2em" />
           </CallToAction>
-        </div>
+        </div> -->
       </section>
 
       <section class="section with-background with-cta">
@@ -95,15 +96,15 @@ const services = (
         </header>
 
         <div class="gallery">
-          <ServiceList services={services} />
+          <ServicesOffers />
         </div>
 
-        <div class="cta">
+        <!-- <div class="cta">
           <CallToAction href="/fr/services/">
             {t("home.services.see-more")}
             <Icon icon="arrow-right" size="1.2em" />
           </CallToAction>
-        </div>
+        </div> -->
       </section>
     </main>
 
