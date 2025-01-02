@@ -12,7 +12,7 @@ const t = useTranslations(lang);
 const textLinks: { label: string; href: string }[] = [
   { label: String(t("nav.home")), href: `/${lang}` },
   { label: String(t("nav.work")), href: `/${lang}/work` },
-  { label: String(t("nav.services")), href: `/${lang}/services` },
+  { label: String(t("nav.services")), href: `/${lang}/#services` },
   { label: String(t("nav.about")), href: `/${lang}/about` },
 ];
 
@@ -180,6 +180,34 @@ const iconLinks: {
     }
   }
   customElements.define("menu-button", MenuButton);
+
+  // Exécute le code côté client
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('a[href*="#"]').forEach((anchor) => {
+      anchor.addEventListener(
+        "click",
+        function (this: HTMLAnchorElement, e: Event) {
+          e.preventDefault();
+          const href = this.getAttribute("href");
+          if (!href) return;
+          // Gestion des URLs avec langue (ex: /fr/#services)
+          const id = href.includes("#") ? href.split("#")[1] : "";
+
+          if (id) {
+            const element = document.getElementById(id);
+            if (element) {
+              element.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+              // Mise à jour de l'URL sans rechargement
+              history.pushState(null, "", href);
+            }
+          }
+        }
+      );
+    });
+  });
 </script>
 
 <style>
