@@ -29,6 +29,7 @@ export async function getStaticPaths() {
   }));
 }
 
+const lang = getLangFromUrl(Astro.url);
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
@@ -40,7 +41,7 @@ const { Content } = await entry.render();
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <a
             class="inline-flex items-center text-gray-400 hover:text-white transition-colors mb-8"
-            href="/work/"
+            href=`/${lang}/work/`
           >
             <Icon icon="arrow-left" />
             <span class="ml-2">Work</span>

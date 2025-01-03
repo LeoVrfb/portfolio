@@ -35,7 +35,7 @@ export const ui = {
     "work.description": "Learn about Léo Hengebaert's most recent projects",
     "work.tagline":
       "See my most recent projects below to get an idea of my past experience.",
-    "services.title": "My Services",
+    "services.title": "Standard Sites with WordPress + Divi",
     "services.description":
       "Learn about Léo Hengebaert's different offers to select the one that suits your needs",
     "services.tagline":
@@ -132,7 +132,7 @@ export const ui = {
       "Découvrez les projets les plus récents de Léo Hengebaert",
     "work.tagline":
       "Découvrez ci-dessous mes projets les plus récents pour avoir une idée de mon expérience.",
-    "services.title": "Sites Standards avec Wordpress + Divi",
+    "services.title": "Site Standards avec Wordpress + Divi",
     "services.description":
       "Découvrez les différentes offres de Léo Hengebaert pour sélectionner celle qui correspond à vos besoins",
     "services.tagline":

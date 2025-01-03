@@ -16,48 +16,173 @@ const lang = getLangFromUrl(Astro.url);
     <main class="wrapper stack gap-8">
       <Hero
         title="Request Your Custom Quote"
-        tagline="Start your project with me"
+        tagline="Let's bring your project to life"
         align="center"
       />
       <div
         class="mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl"
       >
-        <form id="contactForm" class="space-y-4">
+        <form id="contactForm" class="space-y-6">
+          <!-- Basic Information -->
           <div class="grid grid-cols-2 gap-4">
             <input
               type="text"
               name="name"
-              placeholder="First Name*"
+              placeholder="Your Name*"
               required
               class="col-span-1 w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all"
             />
             <input
-              type="text"
-              name="surname"
-              placeholder="Last Name*"
+              type="email"
+              name="email"
+              placeholder="Email*"
               required
               class="col-span-1 w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all"
             />
           </div>
-          <input
-            type="email"
-            name="email"
-            placeholder="Email*"
+
+          <!-- Optional Contact Info -->
+          <div class="grid grid-cols-2 gap-4">
+            <input
+              type="text"
+              name="companyName"
+              placeholder="Company Name (if applicable)"
+              class="col-span-1 w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all"
+            />
+            <input
+              type="tel"
+              name="phone"
+              placeholder="Phone Number (optional)"
+              class="col-span-1 w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all"
+            />
+          </div>
+
+          <!-- Project Type -->
+          <select
+            name="projectType"
             required
-            class="w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all"
-          />
+            class="w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all"
+          >
+            <option value="">Type of Project*</option>
+            <option value="website">Website Creation</option>
+            <option value="webapp">Web Application</option>
+            <option value="ecommerce">E-commerce</option>
+            <option value="redesign">Website Redesign</option>
+            <option value="other">Other</option>
+          </select>
+
+          <!-- Project Details -->
           <textarea
-            name="message"
-            placeholder="Your message*"
+            name="projectDescription"
+            placeholder="Describe your project and its main objectives*"
             required
-            rows="6"
+            rows="4"
             class="w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all resize-none"
           ></textarea>
+
+          <!-- Target Audience -->
+          <textarea
+            name="targetAudience"
+            placeholder="Who is your target audience? (age range, interests, needs)*"
+            required
+            rows="3"
+            class="w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all resize-none"
+          ></textarea>
+
+          <!-- Features -->
+          <textarea
+            name="features"
+            placeholder="What key features or functionalities do you need?*"
+            required
+            rows="4"
+            class="w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all resize-none"
+          ></textarea>
+
+          <!-- Design Preferences -->
+          <textarea
+            name="designPreferences"
+            placeholder="Do you have any specific design preferences? (style, colors, examples of websites you like)"
+            rows="3"
+            class="w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all resize-none"
+          ></textarea>
+
+          <!-- Content -->
+          <div class="space-y-3">
+            <p class="text-white text-sm">Content Status*</p>
+            <div class="flex gap-4">
+              <label class="flex items-center gap-2 text-white">
+                <input
+                  type="radio"
+                  name="contentStatus"
+                  value="ready"
+                  required
+                />
+                <span>I have the content ready</span>
+              </label>
+              <label class="flex items-center gap-2 text-white">
+                <input
+                  type="radio"
+                  name="contentStatus"
+                  value="partial"
+                  required
+                />
+                <span>I need partial help</span>
+              </label>
+              <label class="flex items-center gap-2 text-white">
+                <input
+                  type="radio"
+                  name="contentStatus"
+                  value="need"
+                  required
+                />
+                <span>I need help with content</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Timeline and Budget -->
+          <div class="grid grid-cols-2 gap-4">
+            <select
+              name="timeline"
+              required
+              class="col-span-1 w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all"
+            >
+              <option value="">Expected Timeline*</option>
+              <option value="asap">As soon as possible</option>
+              <option value="1-2">1-2 months</option>
+              <option value="2-3">2-3 months</option>
+              <option value="3-6">3-6 months</option>
+              <option value="flexible">Flexible</option>
+            </select>
+
+            <select
+              name="budget"
+              required
+              class="col-span-1 w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all"
+            >
+              <option value="">Budget Range*</option>
+              <option value="<5k">Less than 5k€</option>
+              <option value="5k-10k">5k€ - 10k€</option>
+              <option value="10k-20k">10k€ - 20k€</option>
+              <option value="20k+">20k€+</option>
+              <option value="unknown">I need guidance</option>
+            </select>
+          </div>
+
+          <!-- Additional Information -->
+          <textarea
+            name="additionalInfo"
+            placeholder="Any additional information or specific requirements?"
+            rows="3"
+            class="w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all resize-none"
+          ></textarea>
+
           <button
             type="submit"
-            class="w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white py-3 px-6 rounded-lg hover:from-purple-600 hover:to-indigo-700 transition-all duration-300"
+            class="w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white py-4 px-6 rounded-lg hover:from-purple-600 hover:to-indigo-700 transition-all duration-300 flex items-center justify-center gap-2"
           >
-            Send
+            <span>Send Quote Request</span>
+            <FaArrowRight />
           </button>
         </form>
 
@@ -66,17 +191,17 @@ const lang = getLangFromUrl(Astro.url);
           <div class="text-center py-8 space-y-4">
             <FaCheckCircle className="text-green-400 w-16 h-16 mx-auto" />
             <h3 class="text-2xl font-bold text-white">
-              Message sent successfully!
+              Quote request sent successfully!
             </h3>
             <p class="text-purple-200">
-              Thank you for your interest. We have received your message and
-              will respond to you as soon as possible.
+              Thank you for providing these details. I will carefully review
+              your project requirements and get back to you with a custom quote
+              within 48 hours.
             </p>
           </div>
         </div>
       </div>
     </main>
-    <ContactCTA />
   </div>
 </BaseLayout>
 
