@@ -1,16 +1,17 @@
 ---
+import { FaPaperPlane } from "react-icons/fa";
 import CallToAction from "./CallToAction.astro";
-import Icon from "./Icon.astro";
-import { getLangFromUrl } from "../i18n/utils";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <aside>
-  <h2>Interested in working together?</h2>
+  <h2>{t("contactCTA.title")}</h2>
   <CallToAction href={`/${lang}/contact`}>
-    Send Me a Message
-    <Icon icon="paper-plane-tilt" size="1.2em" />
+    {t("contactCTA.message")}
+    <FaPaperPlane size="1.2em" style={{ marginLeft: "0.5rem" }} />
   </CallToAction>
 </aside>
 

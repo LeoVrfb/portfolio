@@ -4,10 +4,16 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ContactCTA from "../../components/ContactCTA.astro";
 import Hero from "../../components/Hero.astro";
-import ServicesOffers from "../../components/ServicesOffers.astro";
+import ServiceList from "../../components/ServiceList.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+const services = (
+  await getCollection("service", ({ id }) => {
+    return id.startsWith(`${lang}/`);
+  })
+).sort((a, b) => a.data.order - b.data.order);
 ---
 
 <BaseLayout
@@ -17,11 +23,11 @@ const t = useTranslations(lang);
   <div class="stack gap-20">
     <main class="wrapper stack gap-8">
       <Hero
-        title={t("home.services.title") as string}
-        tagline={t("home.services.description") as string}
+        title={t("services.title") as string}
+        tagline={t("services.tagline") as string}
         align="center"
       />
-      <ServicesOffers />
+      <ServiceList services={services} />
     </main>
     <ContactCTA />
   </div>

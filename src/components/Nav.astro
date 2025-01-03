@@ -1,4 +1,5 @@
 ---
+import { FaLaptopCode, FaCogs } from "react-icons/fa";
 import Icon from "./Icon.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 import type { iconPaths } from "./IconPaths";
@@ -12,8 +13,9 @@ const t = useTranslations(lang);
 const textLinks: { label: string; href: string }[] = [
   { label: String(t("nav.home")), href: `/${lang}` },
   { label: String(t("nav.work")), href: `/${lang}/work` },
-  { label: String(t("nav.services")), href: `/${lang}/#services` },
+  { label: String(t("nav.services")), href: `/${lang}/services` },
   { label: String(t("nav.about")), href: `/${lang}/about` },
+  { label: String(t("nav.contact")), href: `/${lang}/contact` },
 ];
 
 /** Icon links to social media — edit these with links to your profiles! */
@@ -38,15 +40,13 @@ const iconLinks: {
 
 <nav>
   <div class="menu-header">
-    <a href=`/${lang}` class="site-title">
-      <Icon
-        icon="terminal-window"
-        color="var(--accent-regular)"
-        size="1.6em"
-        gradient
-      />
-      Léo Hengebaert
-    </a>
+    <div>
+      <a href={`/${lang}`} class="site-title">
+        <FaLaptopCode size="1.6em" color="var(--accent-regular)" />
+        Léo Hengebaert
+      </a>
+    </div>
+
     <div class="menu-controls">
       <div class="mobile-language-switch">
         <LanguageSwitch />

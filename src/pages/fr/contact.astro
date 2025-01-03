@@ -2,6 +2,7 @@
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Hero from "../../components/Hero.astro";
+import { FaCheckCircle } from "react-icons/fa"; // Import the success icon
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -18,8 +19,11 @@ const t = useTranslations(lang);
         tagline="Envoyez-moi un message pour discuter de votre projet"
         align="center"
       />
-      <div class="mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <form class="space-y-4">
+
+      <div
+        class="mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl"
+      >
+        <form id="contactForm" class="space-y-4">
           <div class="grid grid-cols-2 gap-4">
             <input
               type="text"
@@ -57,7 +61,78 @@ const t = useTranslations(lang);
             Envoyer
           </button>
         </form>
+
+        <!-- Message de succès (caché par défaut) -->
+        <div id="successMessage" class="hidden">
+          <div class="text-center py-8 space-y-4">
+            <FaCheckCircle className="text-green-400 w-16 h-16 mx-auto" />
+            <h3 class="text-2xl font-bold text-white">
+              Message envoyé avec succès !
+            </h3>
+            <p class="text-purple-200">
+              Merci pour votre intérêt. Nous avons bien reçu votre message et
+              nous vous répondrons dans les plus brefs délais.
+            </p>
+          </div>
+        </div>
       </div>
     </main>
   </div>
 </BaseLayout>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("contactForm") as HTMLFormElement; // Cast to HTMLFormElement
+    const successMessage = document.getElementById("successMessage");
+    const errorMessage = document.getElementById("errorMessage");
+
+    if (form) {
+      // Check if the form exists
+      form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        const formData = new FormData(form);
+        const formObject = {
+          name: formData.get("name"),
+          surname: formData.get("surname"),
+          email: formData.get("email"),
+          message: formData.get("message"),
+        };
+
+        try {
+          const response = await fetch("/api/send-email", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formObject),
+          });
+
+          if (response.ok) {
+            // Hide the form and show the success message
+            form.classList.add("hidden");
+            if (successMessage) {
+              successMessage.classList.remove("hidden");
+            }
+            if (errorMessage) {
+              errorMessage.classList.add("hidden");
+            }
+            form.reset(); // Réinitialiser le formulaire
+          } else {
+            const result = await response.json();
+            throw new Error(result.error || "Une erreur est survenue");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          if (errorMessage) {
+            errorMessage.classList.remove("hidden");
+          }
+          if (successMessage) {
+            successMessage.classList.add("hidden");
+          }
+        }
+      });
+    } else {
+      console.error("Form not found");
+    }
+  });
+</script>

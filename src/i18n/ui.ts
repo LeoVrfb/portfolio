@@ -24,6 +24,7 @@ export const ui = {
     "nav.work": "Work",
     "nav.services": "Services",
     "nav.about": "About",
+    "nav.contact": "Contact",
     "skills.dev.title": "Front-End Developer",
     "skills.dev.description":
       "Working at Artefact since January 2024, a leading AI and Data consulting firm, I joined their innovative advertising agency's creative Studio (Artefact 3000). I combine technical expertise with creative design thinking to craft great digital experiences, working alongside talented designers and developers to shape the future of digital advertising.",
@@ -97,6 +98,9 @@ export const ui = {
     "servicesOffers.customQuote": "Request a Quote",
     "servicesOffers.complexProject": "Complex project?",
     "servicesOffers.customQuoteValue": "Custom Quote",
+
+    "contactCTA.title": "Interested in working together?",
+    "contactCTA.message": "Send Me a Message",
   },
   fr: {
     "home.hero.title": "Hello ! Je suis Léo Hengebaert",
@@ -116,6 +120,7 @@ export const ui = {
     "nav.work": "Projets",
     "nav.services": "Services",
     "nav.about": "À propos",
+    "nav.contact": "Contact",
     "skills.dev.title": "Développeur Front-End",
     "skills.dev.description":
       "Travaillant chez Artefact depuis janvier 2024, une société leader du conseil en IA et Data, j'ai rejoint le Studio de leur agence publicitaire : Artefact 3000. J'utilise mes compétences pour créer les meilleurs expériences digitales possibles, collaborant avec des designers et développeurs talentueux pour façonner l'avenir de la pub digitale !",
@@ -192,5 +197,8 @@ export const ui = {
     "servicesOffers.customQuote": "Demander un devis",
     "servicesOffers.complexProject": "Projet complexe ?",
     "servicesOffers.customQuoteValue": "Devis personnalisé",
+
+    "contactCTA.title": "Intéressé à travailler ensemble ?",
+    "contactCTA.message": "Envoyez-moi un message",
   },
 } as const;
