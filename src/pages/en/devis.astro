@@ -6,6 +6,7 @@ import Hero from "../../components/Hero.astro";
 import { FaArrowRight, FaCheckCircle } from "react-icons/fa";
 
 const lang = getLangFromUrl(Astro.url);
+let isSubmitting = false;
 ---
 
 <BaseLayout
@@ -160,9 +161,20 @@ const lang = getLangFromUrl(Astro.url);
             rows="3"
             class="form-textarea"></textarea>
 
-          <button type="submit" class="form-button">
-            <span>Send quote request</span>
-            <FaArrowRight />
+          <button type="submit" class="form-button" disabled={isSubmitting}>
+            {
+              isSubmitting ? (
+                <div class="flex items-center gap-2">
+                  <div class="loader" />
+                  <span>Sending...</span>
+                </div>
+              ) : (
+                <>
+                  <span>Send quote request</span>
+                  <FaArrowRight />
+                </>
+              )
+            }
           </button>
         </form>
 
@@ -183,11 +195,6 @@ const lang = getLangFromUrl(Astro.url);
 </BaseLayout>
 
 <style>
-  .form-bg-container {
-    background-color: var(--form-bg-container);
-    border: 1px solid var(--form-container-border);
-  }
-
   .form-input,
   .form-select,
   .form-textarea {
@@ -200,9 +207,34 @@ const lang = getLangFromUrl(Astro.url);
     transition: all 0.2s ease-in-out;
   }
 
+  .form-bg-container {
+    background-color: var(--form-bg-container);
+    border: 1px solid var(--form-container-border);
+  }
+
   .form-input::placeholder,
   .form-textarea::placeholder {
     color: var(--form-placeholder);
+  }
+
+  .form-input:focus,
+  .form-select:focus,
+  .form-textarea:focus {
+    outline: none;
+    ring: 2px;
+    ring-color: var(--form-ring);
+  }
+
+  .form-label {
+    color: var(--form-text);
+    font-size: 0.875rem;
+  }
+
+  .form-radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--form-text);
   }
 
   .form-button {
@@ -232,33 +264,78 @@ const lang = getLangFromUrl(Astro.url);
 
   .success-icon {
     color: var(--form-success-icon);
+    width: 4rem;
+    height: 4rem;
+    margin: 0 auto;
   }
 
   .success-title {
+    font-size: 1.5rem;
+    font-weight: bold;
     color: var(--form-text);
   }
 
   .success-message {
     color: var(--form-success-text);
   }
+
+  .form-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .loader {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ffffff;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    animation: rotation 1s linear infinite;
+  }
+
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 </style>
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("contactForm") as HTMLFormElement; // Cast to HTMLFormElement
+    const form = document.getElementById("contactForm") as HTMLFormElement;
+    const formContainer = document.getElementById("formContainer");
     const successMessage = document.getElementById("successMessage");
-    const errorMessage = document.getElementById("errorMessage");
+    let isSubmitting = false;
 
     if (form) {
-      // Check if the form exists
       form.addEventListener("submit", async function (event) {
         event.preventDefault();
+
+        if (isSubmitting) return;
+        isSubmitting = true;
+
+        const submitButton = form.querySelector('button[type="submit"]');
+        if (submitButton) submitButton.disabled = true;
+
         const formData = new FormData(form);
         const formObject = {
           name: formData.get("name"),
-          surname: formData.get("surname"),
+          companyName: formData.get("companyName"),
           email: formData.get("email"),
-          message: formData.get("message"),
+          phone: formData.get("phone"),
+          projectType: formData.get("projectType"),
+          projectDescription: formData.get("projectDescription"),
+          targetAudience: formData.get("targetAudience"),
+          features: formData.get("features"),
+          designPreferences: formData.get("designPreferences"),
+          contentStatus: formData.get("contentStatus"),
+          timeline: formData.get("timeline"),
+          budget: formData.get("budget"),
+          additionalInfo: formData.get("additionalInfo"),
         };
 
         try {
@@ -271,31 +348,24 @@ const lang = getLangFromUrl(Astro.url);
           });
 
           if (response.ok) {
-            // Hide the form and show the success message
             form.classList.add("hidden");
             if (successMessage) {
               successMessage.classList.remove("hidden");
+              successMessage.classList.add("animate-fade-in");
             }
-            if (errorMessage) {
-              errorMessage.classList.add("hidden");
-            }
-            form.reset(); // Reset the form
+            form.reset();
           } else {
             const result = await response.json();
             throw new Error(result.error || "An error occurred");
           }
         } catch (error) {
           console.error("Error:", error);
-          if (errorMessage) {
-            errorMessage.classList.remove("hidden");
-          }
-          if (successMessage) {
-            successMessage.classList.add("hidden");
-          }
+          alert("An error occurred while sending the message.");
+        } finally {
+          isSubmitting = false;
+          if (submitButton) submitButton.disabled = false;
         }
       });
-    } else {
-      console.error("Form not found");
     }
   });
 </script>

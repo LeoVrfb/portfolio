@@ -32,6 +32,7 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const formId = entry.data.form_id || "contactForm";
+let isSubmitting = false;
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description}>
@@ -145,9 +146,24 @@ const formId = entry.data.form_id || "contactForm";
                   placeholder="Votre message*"
                   required
                   class="service-form-input h-32 resize-none"></textarea>
-                <button type="submit" class="service-form-button">
-                  <span>Envoyer votre demande</span>
-                  <FaArrowRight />
+                <button
+                  type="submit"
+                  class="service-form-button"
+                  disabled={isSubmitting}
+                >
+                  {
+                    isSubmitting ? (
+                      <div class="flex items-center gap-2">
+                        <div class="loader" />
+                        <span>Envoi en cours...</span>
+                      </div>
+                    ) : (
+                      <>
+                        <span>Envoyer votre demande</span>
+                        <FaArrowRight />
+                      </>
+                    )
+                  }
                 </button>
               </form>
             </div>
@@ -285,59 +301,32 @@ const formId = entry.data.form_id || "contactForm";
   .service-success-text {
     color: var(--service-success-text);
   }
-</style>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const forms = document.querySelectorAll("form");
-    const formContainer = document.getElementById("formContainer");
-    const successMessage = document.getElementById("successMessage");
+  .service-form-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
 
-    forms.forEach((form) => {
-      form.addEventListener("submit", async function (event) {
-        event.preventDefault();
+  .loader {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ffffff;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    animation: rotation 1s linear infinite;
+  }
 
-        const formData = new FormData(form);
-        const formObject = {
-          name: formData.get("name"),
-          surname: formData.get("surname"),
-          email: formData.get("email"),
-          phone: formData.get("phone"),
-          message: formData.get("message"),
-          siteType: form.id.replace("contactForm", ""),
-        };
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 
-        try {
-          const response = await fetch("/api/send-email", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formObject),
-          });
-
-          const result = await response.json();
-
-          if (response.ok) {
-            // Cacher le formulaire et afficher le message de succès
-            if (formContainer && successMessage) {
-              formContainer.classList.add("hidden");
-              successMessage.classList.remove("hidden");
-              successMessage.classList.add("animate-fade-in");
-            }
-          } else {
-            throw new Error(result.error || "Une erreur est survenue");
-          }
-        } catch (error) {
-          console.error("Error:", error);
-          alert("Une erreur est survenue lors de l'envoi du message.");
-        }
-      });
-    });
-  });
-</script>
-
-<style>
+  /* Animation */
   .animate-fade-in {
     animation: fadeIn 0.5s ease-in;
   }
@@ -353,3 +342,66 @@ const formId = entry.data.form_id || "contactForm";
     }
   }
 </style>
+
+<script define:vars={{ formId }}>
+  document.addEventListener("DOMContentLoaded", function () {
+    const forms = document.querySelectorAll("form");
+    const formContainer = document.getElementById("formContainer");
+    const successMessage = document.getElementById("successMessage");
+    let isSubmitting = false;
+
+    forms.forEach((form) => {
+      const submitButton = form.querySelector('button[type="submit"]');
+
+      form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        if (isSubmitting) return;
+        isSubmitting = true;
+        submitButton.disabled = true;
+
+        // Récupère le service depuis l'URL
+        const path = window.location.pathname;
+        const serviceSlug = path.split("/").pop();
+
+        const formData = new FormData(form);
+        const formObject = {
+          name: formData.get("name"),
+          surname: formData.get("surname"),
+          email: formData.get("email"),
+          phone: formData.get("phone"),
+          message: formData.get("message"),
+          service: serviceSlug, // Ajoute le service aux données
+        };
+
+        try {
+          const response = await fetch("/api/send-email", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formObject),
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            if (formContainer && successMessage) {
+              formContainer.classList.add("hidden");
+              successMessage.classList.remove("hidden");
+              successMessage.classList.add("animate-fade-in");
+            }
+          } else {
+            throw new Error(result.error || "Une erreur est survenue");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("Une erreur est survenue lors de l'envoi du message.");
+        } finally {
+          isSubmitting = false;
+          submitButton.disabled = false;
+        }
+      });
+    });
+  });
+</script>
