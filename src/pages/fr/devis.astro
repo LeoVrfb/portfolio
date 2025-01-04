@@ -20,7 +20,7 @@ const lang = getLangFromUrl(Astro.url);
         align="center"
       />
       <div
-        class="mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl"
+        class="form-bg-container mx-auto px-4 sm:px-6 lg:px-8 py-12 backdrop-blur-lg rounded-2xl shadow-xl"
       >
         <form id="contactForm" class="space-y-6">
           <!-- Informations de base -->
@@ -30,14 +30,14 @@ const lang = getLangFromUrl(Astro.url);
               name="name"
               placeholder="Votre Nom*"
               required
-              class="col-span-1 w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all"
+              class="form-input"
             />
             <input
               type="email"
               name="email"
               placeholder="Email*"
               required
-              class="col-span-1 w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all"
+              class="form-input"
             />
           </div>
 
@@ -47,22 +47,18 @@ const lang = getLangFromUrl(Astro.url);
               type="text"
               name="companyName"
               placeholder="Nom de l'entreprise (si applicable)"
-              class="col-span-1 w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all"
+              class="form-input"
             />
             <input
               type="tel"
               name="phone"
               placeholder="Numéro de téléphone (optionnel)"
-              class="col-span-1 w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all"
+              class="form-input"
             />
           </div>
 
           <!-- Type de projet -->
-          <select
-            name="projectType"
-            required
-            class="w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all"
-          >
+          <select name="projectType" required class="form-select">
             <option value="">Type de Projet*</option>
             <option value="website">Création de Site Web</option>
             <option value="webapp">Application Web</option>
@@ -77,8 +73,7 @@ const lang = getLangFromUrl(Astro.url);
             placeholder="Décrivez votre projet et ses objectifs principaux*"
             required
             rows="4"
-            class="w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all resize-none"
-          ></textarea>
+            class="form-textarea"></textarea>
 
           <!-- Public cible -->
           <textarea
@@ -86,8 +81,7 @@ const lang = getLangFromUrl(Astro.url);
             placeholder="Qui est votre public cible ? (tranche d'âge, centres d'intérêt, besoins)*"
             required
             rows="3"
-            class="w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all resize-none"
-          ></textarea>
+            class="form-textarea"></textarea>
 
           <!-- Fonctionnalités -->
           <textarea
@@ -95,22 +89,20 @@ const lang = getLangFromUrl(Astro.url);
             placeholder="Quelles fonctionnalités clés souhaitez-vous intégrer ?*"
             required
             rows="4"
-            class="w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all resize-none"
-          ></textarea>
+            class="form-textarea"></textarea>
 
           <!-- Préférences de design -->
           <textarea
             name="designPreferences"
             placeholder="Avez-vous des préférences de design particulières ? (style, couleurs, exemples de sites que vous aimez)"
             rows="3"
-            class="w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all resize-none"
-          ></textarea>
+            class="form-textarea"></textarea>
 
           <!-- Contenu -->
           <div class="space-y-3">
-            <p class="text-white text-sm">État du contenu*</p>
+            <p class="form-label">État du contenu*</p>
             <div class="flex gap-4">
-              <label class="flex items-center gap-2 text-white">
+              <label class="form-radio-label">
                 <input
                   type="radio"
                   name="contentStatus"
@@ -119,7 +111,7 @@ const lang = getLangFromUrl(Astro.url);
                 />
                 <span>J'ai le contenu prêt</span>
               </label>
-              <label class="flex items-center gap-2 text-white">
+              <label class="form-radio-label">
                 <input
                   type="radio"
                   name="contentStatus"
@@ -128,7 +120,7 @@ const lang = getLangFromUrl(Astro.url);
                 />
                 <span>J'ai besoin d'aide partielle</span>
               </label>
-              <label class="flex items-center gap-2 text-white">
+              <label class="form-radio-label">
                 <input
                   type="radio"
                   name="contentStatus"
@@ -142,11 +134,7 @@ const lang = getLangFromUrl(Astro.url);
 
           <!-- Délais et Budget -->
           <div class="grid grid-cols-2 gap-4">
-            <select
-              name="timeline"
-              required
-              class="col-span-1 w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all"
-            >
+            <select name="timeline" required class="form-select">
               <option value="">Délai souhaité*</option>
               <option value="asap">Dès que possible</option>
               <option value="1-2">1-2 mois</option>
@@ -155,11 +143,7 @@ const lang = getLangFromUrl(Astro.url);
               <option value="flexible">Flexible</option>
             </select>
 
-            <select
-              name="budget"
-              required
-              class="col-span-1 w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all"
-            >
+            <select name="budget" required class="form-select">
               <option value="">Budget prévu*</option>
               <option value="<5k">Moins de 5k€</option>
               <option value="5k-10k">5k€ - 10k€</option>
@@ -174,26 +158,20 @@ const lang = getLangFromUrl(Astro.url);
             name="additionalInfo"
             placeholder="Avez-vous d'autres informations ou des besoins spécifiques à partager ?"
             rows="3"
-            class="w-full px-4 py-3 rounded-lg bg-white/5 border border-purple-300/20 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all resize-none"
-          ></textarea>
+            class="form-textarea"></textarea>
 
-          <button
-            type="submit"
-            class="w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white py-4 px-6 rounded-lg hover:from-purple-600 hover:to-indigo-700 transition-all duration-300 flex items-center justify-center gap-2"
-          >
+          <button type="submit" class="form-button">
             <span>Envoyer la demande de devis</span>
             <FaArrowRight />
           </button>
         </form>
 
-        <!-- Message de succès (caché par défaut) -->
+        <!-- Message de succès -->
         <div id="successMessage" class="hidden">
           <div class="text-center py-8 space-y-4">
-            <FaCheckCircle className="text-green-400 w-16 h-16 mx-auto" />
-            <h3 class="text-2xl font-bold text-white">
-              Demande envoyée avec succès !
-            </h3>
-            <p class="text-purple-200">
+            <FaCheckCircle className="success-icon" />
+            <h3 class="success-title">Demande envoyée avec succès !</h3>
+            <p class="success-message">
               Merci pour ces informations. J'examinerai attentivement les
               détails de votre projet et vous enverrai un devis personnalisé
               sous 48 heures.
@@ -204,6 +182,92 @@ const lang = getLangFromUrl(Astro.url);
     </main>
   </div>
 </BaseLayout>
+
+<style>
+  .form-input,
+  .form-select,
+  .form-textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--form-bg);
+    border: 1px solid var(--form-border);
+    color: var(--form-text);
+    transition: all 0.2s ease-in-out;
+  }
+
+  .form-bg-container {
+    background-color: var(--form-bg-container);
+    border: 1px solid var(--form-container-border);
+  }
+
+  .form-input::placeholder,
+  .form-textarea::placeholder {
+    color: var(--form-placeholder);
+  }
+
+  .form-input:focus,
+  .form-select:focus,
+  .form-textarea:focus {
+    outline: none;
+    ring: 2px;
+    ring-color: var(--form-ring);
+  }
+
+  .form-label {
+    color: var(--form-text);
+    font-size: 0.875rem;
+  }
+
+  .form-radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--form-text);
+  }
+
+  .form-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    background: linear-gradient(
+      to right,
+      var(--form-button-from),
+      var(--form-button-to)
+    );
+    color: var(--form-button-text);
+    transition: all 0.3s ease;
+  }
+
+  .form-button:hover {
+    background: linear-gradient(
+      to right,
+      var(--form-button-hover-from),
+      var(--form-button-hover-to)
+    );
+  }
+
+  .success-icon {
+    color: var(--form-success-icon);
+    width: 4rem;
+    height: 4rem;
+    margin: 0 auto;
+  }
+
+  .success-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--form-text);
+  }
+
+  .success-message {
+    color: var(--form-success-text);
+  }
+</style>
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
