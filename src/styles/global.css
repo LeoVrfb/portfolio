@@ -100,6 +100,105 @@
   --form-button-text: #FFFFFF;                  /* Blanc pour le texte du bouton */
   --form-success-text: #6D28D9;                 /* Violet-700 */
   --form-success-icon: rgb(34, 197, 94);        /* Green-500 */
+
+  /* Standard site offer colors - Light theme */
+  --standard-gradient-bg-from: rgba(168, 85, 247, 0.05);
+  --standard-gradient-bg-to: rgba(79, 70, 229, 0.05);
+  --standard-card-bg: rgba(255, 255, 255, 0.9);
+  --standard-card-border: rgba(168, 85, 247, 0.2);
+  --standard-icon-from: rgb(168, 85, 247);
+  --standard-icon-to: rgb(79, 70, 229);
+  --standard-title: rgb(79, 70, 229);
+  --standard-tag-bg-from: rgba(168, 85, 247, 0.1);
+  --standard-tag-bg-to: rgba(79, 70, 229, 0.1);
+  --standard-tag-border: rgba(168, 85, 247, 0.2);
+  --standard-tag-text: rgb(107, 33, 168);
+  --standard-tag-accent: rgb(147, 51, 234);
+  --standard-feature-text: rgb(88, 28, 135);
+  --standard-feature-icon: rgb(22, 163, 74);
+  --standard-price-gradient-from: rgb(147, 51, 234);
+  --standard-price-gradient-to: rgb(236, 72, 153);
+  --standard-button-from: rgb(168, 85, 247);
+  --standard-button-to: rgb(79, 70, 229);
+  --standard-button-hover-from: rgb(147, 51, 234);
+  --standard-button-hover-to: rgb(67, 56, 202);
+
+  /* Personalized web application colors - Light theme */
+  --custom-gradient-bg-from: rgba(236, 72, 153, 0.05);
+  --custom-gradient-bg-to: rgba(244, 63, 94, 0.05);
+  --custom-card-bg: rgba(255, 255, 255, 0.9);
+  --custom-card-border: rgba(236, 72, 153, 0.2);
+  --custom-icon-from: rgb(236, 72, 153);
+  --custom-icon-to: rgb(225, 29, 72);
+  --custom-title: rgb(219, 39, 119);
+  --custom-tag-bg-from: rgba(236, 72, 153, 0.1);
+  --custom-tag-bg-to: rgba(244, 63, 94, 0.1);
+  --custom-tag-border: rgba(236, 72, 153, 0.2);
+  --custom-tag-text: rgb(157, 23, 77);
+  --custom-feature-text: rgb(190, 24, 93);
+  --custom-feature-icon: rgb(219, 39, 119);
+  --custom-price-gradient-from: rgb(219, 39, 119);
+  --custom-price-gradient-to: rgb(225, 29, 72);
+  --custom-button-from: rgb(236, 72, 153);
+  --custom-button-to: rgb(225, 29, 72);
+  --custom-button-hover-from: rgb(219, 39, 119);
+  --custom-button-hover-to: rgb(190, 18, 60);
+
+  /* WordPress services colors - Light theme */
+  --wp-card-bg: rgba(255, 255, 255, 0.9);
+  --wp-card-border: rgba(79, 70, 229, 0.2);
+  --wp-card-featured-from: rgba(168, 85, 247, 0.1);
+  --wp-card-featured-to: rgba(79, 70, 229, 0.1);
+  --wp-card-featured-border: rgba(168, 85, 247, 0.3);
+  --wp-title: rgb(67, 56, 202);
+  --wp-price-from: rgb(109, 40, 217);
+  --wp-price-to: rgb(219, 39, 119);
+  --wp-feature-text: rgb(67, 56, 202);
+  --wp-feature-icon-check: rgb(22, 163, 74);
+  --wp-feature-icon-times: rgb(220, 38, 38);
+  --wp-feature-disabled: rgba(67, 56, 202, 0.5);
+  --wp-badge-from: rgb(250, 204, 21);
+  --wp-badge-to: rgb(249, 115, 22);
+  --wp-badge-text: rgb(88, 28, 135);
+  --wp-button-from: rgb(168, 85, 247);
+  --wp-button-to: rgb(79, 70, 229);
+  --wp-button-hover-from: rgb(147, 51, 234);
+  --wp-button-hover-to: rgb(67, 56, 202);
+  --wp-button-text: #ffffff;
+  --wp-button-simple-bg: rgba(107, 114, 128, 0.8);
+  --wp-button-simple-hover: rgba(75, 85, 99, 0.9);
+  --wp-button-simple-text: #ffffff;
+  --wp-button-simple-icon-bg: rgba(255, 255, 255, 0.2);
+
+  /* Slug service colors - Light theme */
+  --service-nav-text: rgb(67, 56, 202);          /* indigo-700 */
+  --service-nav-hover: rgb(147, 51, 234);        /* purple-600 */
+  --service-title: rgb(67, 56, 202);             /* indigo-700 */
+  --service-description: rgb(88, 28, 135);        /* purple-900 */
+  
+  --service-card-bg: rgba(255, 255, 255, 0.9);
+  --service-card-hover: rgba(255, 255, 255, 0.95);
+  --service-card-border: rgba(147, 51, 234, 0.2); /* purple-600/20 */
+  --service-card-title: rgb(67, 56, 202);        /* indigo-700 */
+  --service-card-text: rgb(88, 28, 135);         /* purple-900 */
+  --service-icon-star: rgb(234, 179, 8);         /* yellow-600 */
+  --service-icon-briefcase: rgb(147, 51, 234);   /* purple-600 */
+  --service-icon-check: rgb(22, 163, 74);        /* green-600 */
+  
+  --service-form-bg: rgba(255, 255, 255, 0.9);
+  --service-form-border: rgba(147, 51, 234, 0.2); /* purple-600/20 */
+  --service-form-title: rgb(67, 56, 202);        /* indigo-700 */
+  --service-form-input-bg: rgba(255, 255, 255, 0.8);
+  --service-form-input-border: rgba(147, 51, 234, 0.2);
+  --service-form-input-text: rgb(88, 28, 135);    /* purple-900 */
+  --service-form-input-placeholder: rgb(147, 51, 234); /* purple-600 */
+  --service-form-button-from: rgb(168, 85, 247);  /* purple-500 */
+  --service-form-button-to: rgb(79, 70, 229);     /* indigo-600 */
+  --service-form-button-hover-from: rgb(147, 51, 234); /* purple-600 */
+  --service-form-button-hover-to: rgb(67, 56, 202);    /* indigo-700 */
+  --service-success-icon: rgb(22, 163, 74);       /* green-600 */
+  --service-success-title: rgb(67, 56, 202);      /* indigo-700 */
+  --service-success-text: rgb(88, 28, 135);       /* purple-900 */
 }
 
 :root.theme-dark {
@@ -166,6 +265,103 @@
   --form-button-text: #FFFFFF;                  /* Blanc pour le texte du bouton */
   --form-success-text: rgb(216, 180, 254);
   --form-success-icon: rgb(74, 222, 128);
+
+  /* Standard site offer colors - Dark theme */
+  --standard-gradient-bg-from: rgba(168, 85, 247, 0.1);
+  --standard-gradient-bg-to: rgba(79, 70, 229, 0.1);
+  --standard-card-bg: rgba(255, 255, 255, 0.1);
+  --standard-card-border: rgba(255, 255, 255, 0.2);
+  --standard-icon-from: rgb(168, 85, 247);
+  --standard-icon-to: rgb(79, 70, 229);
+  --standard-title: #ffffff;
+  --standard-tag-bg-from: rgba(168, 85, 247, 0.2);
+  --standard-tag-bg-to: rgba(79, 70, 229, 0.2);
+  --standard-tag-border: rgba(168, 85, 247, 0.3);
+  --standard-tag-text: rgb(233, 213, 255);
+  --standard-tag-accent: rgb(192, 132, 252);
+  --standard-feature-text: rgb(243, 232, 255);
+  --standard-feature-icon: rgb(74, 222, 128);
+  --standard-price-gradient-from: rgb(192, 132, 252);
+  --standard-price-gradient-to: rgb(249, 168, 212);
+  --standard-button-from: rgb(168, 85, 247);
+  --standard-button-to: rgb(79, 70, 229);
+  --standard-button-hover-from: rgb(147, 51, 234);
+  --standard-button-hover-to: rgb(67, 56, 202);
+
+  /* Personalized web application colors - Dark theme */
+  --custom-gradient-bg-from: rgba(236, 72, 153, 0.1);
+  --custom-gradient-bg-to: rgba(244, 63, 94, 0.1);
+  --custom-card-bg: rgba(255, 255, 255, 0.1);
+  --custom-card-border: rgba(255, 255, 255, 0.2);
+  --custom-icon-from: rgb(236, 72, 153);
+  --custom-icon-to: rgb(225, 29, 72);
+  --custom-title: #ffffff;
+  --custom-tag-bg-from: rgba(236, 72, 153, 0.2);
+  --custom-tag-bg-to: rgba(244, 63, 94, 0.2);
+  --custom-tag-border: rgba(236, 72, 153, 0.3);
+  --custom-tag-text: rgb(233, 213, 255);
+  --custom-feature-text: rgb(243, 232, 255);
+  --custom-feature-icon: rgb(244, 114, 182);
+  --custom-price-gradient-from: rgb(244, 114, 182);
+  --custom-price-gradient-to: rgb(253, 164, 175);
+  --custom-button-from: rgb(236, 72, 153);
+  --custom-button-to: rgb(225, 29, 72);
+  --custom-button-hover-from: rgb(219, 39, 119);
+  --custom-button-hover-to: rgb(190, 18, 60);
+
+  /* WordPress services colors - Dark theme */
+  --wp-card-bg: rgba(255, 255, 255, 0.1);
+  --wp-card-border: rgba(255, 255, 255, 0.1);
+  --wp-card-featured-from: rgba(168, 85, 247, 0.2);
+  --wp-card-featured-to: rgba(79, 70, 229, 0.2);
+  --wp-card-featured-border: rgba(168, 85, 247, 0.5);
+  --wp-title: #ffffff;
+  --wp-price-from: rgb(192, 132, 252);               /* purple-400 */
+  --wp-price-to: rgb(249, 168, 212);                /* pink-300 */
+  --wp-feature-text: rgb(243, 232, 255);            /* purple-100 */
+  --wp-feature-icon-check: rgb(74, 222, 128);       /* green-400 */
+  --wp-feature-icon-times: rgb(248, 113, 113);      /* red-400 */
+  --wp-feature-disabled: rgba(233, 213, 255, 0.5);  /* purple-200/50 */
+  --wp-badge-from: rgb(250, 204, 21);              /* yellow-400 */
+  --wp-badge-to: rgb(249, 115, 22);                /* orange-500 */
+  --wp-badge-text: rgb(88, 28, 135);               /* purple-900 */
+  --wp-button-from: rgb(168, 85, 247);             /* purple-500 */
+  --wp-button-to: rgb(79, 70, 229);                /* indigo-600 */
+  --wp-button-hover-from: rgb(147, 51, 234);       /* purple-600 */
+  --wp-button-hover-to: rgb(67, 56, 202);          /* indigo-700 */
+  --wp-button-text: #ffffff;
+  --wp-button-simple-bg: rgba(255, 255, 255, 0.1);
+  --wp-button-simple-hover: rgba(255, 255, 255, 0.2);
+
+  /* Slug service colors - Dark theme */
+  --service-nav-text: #ffffff;
+  --service-nav-hover: rgb(216, 180, 254);        /* purple-300 */
+  --service-title: #ffffff;
+  --service-description: rgb(233, 213, 255);      /* purple-200 */
+  
+  --service-card-bg: rgba(255, 255, 255, 0.1);
+  --service-card-hover: rgba(255, 255, 255, 0.15);
+  --service-card-border: ""; /* purple-300/20 */
+  --service-card-title: #ffffff;
+  --service-card-text: rgb(243, 232, 255);        /* purple-100 */
+  --service-icon-star: rgb(250, 204, 21);         /* yellow-400 */
+  --service-icon-briefcase: rgb(192, 132, 252);   /* purple-400 */
+  --service-icon-check: rgb(74, 222, 128);        /* green-400 */
+  
+  --service-form-bg: rgba(255, 255, 255, 0.1);
+  --service-form-border: "";
+  --service-form-title: #ffffff;
+  --service-form-input-bg: rgba(255, 255, 255, 0.05);
+  --service-form-input-border: rgba(216, 180, 254, 0.2);
+  --service-form-input-text: #ffffff;
+  --service-form-input-placeholder: rgb(216, 180, 254);
+  --service-form-button-from: rgb(168, 85, 247);
+  --service-form-button-to: rgb(79, 70, 229);
+  --service-form-button-hover-from: rgb(147, 51, 234);
+  --service-form-button-hover-to: rgb(67, 56, 202);
+  --service-success-icon: rgb(74, 222, 128);
+  --service-success-title: #ffffff;
+  --service-success-text: rgb(233, 213, 255);
 }
 
 html,

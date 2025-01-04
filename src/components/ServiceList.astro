@@ -43,28 +43,25 @@ const getMissingFeatures = (currentService: CollectionEntry<"service">) => {
       {
         services.map((service) => (
           <div
-            class={`relative group overflow-hidden rounded-2xl backdrop-blur-lg transition-transform duration-300 hover:scale-[1.01] cursor-pointer
-            ${
-              service.data.is_best_deal
-                ? "bg-gradient-to-br from-purple-500/20 to-indigo-500/20 border-2 border-purple-400/50"
-                : "bg-white/10 border border-white/10"
+            class={`relative group overflow-hidden rounded-2xl backdrop-blur-lg transition-transform duration-300 hover:scale-[1.01] cursor-pointer ${
+              service.data.is_best_deal ? "wp-card-featured" : "wp-card"
             }`}
             data-slug={service.id.split("/")[1]}
           >
             {service.data.is_best_deal && (
               <div class="absolute top-2 right-2 sm:right-4 md:right-3">
-                <span class="inline-flex items-center gap-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-purple-900 px-4 py-1 rounded-full text-sm font-semibold shadow-lg scale-[0.70] sm:scale-[0.75] md:scale-[0.95]">
-                  <FaCrown className="text-purple-900" /> Best Deal
+                <span class="wp-badge inline-flex items-center gap-1 px-4 py-1 rounded-full text-sm font-semibold shadow-lg scale-[0.70] sm:scale-[0.75] md:scale-[0.95]">
+                  <FaCrown /> Best Deal
                 </span>
               </div>
             )}
 
             <div class="p-8 pt-10 pb-28 relative h-full">
               <div class="text-center mb-8">
-                <h2 class="text-2xl font-bold text-white mb-4">
+                <h2 class="text-2xl font-bold wp-title mb-4">
                   {service.data.title}
                 </h2>
-                <div class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300">
+                <div class="text-4xl font-bold wp-price">
                   {service.data.price}€
                 </div>
               </div>
@@ -73,19 +70,19 @@ const getMissingFeatures = (currentService: CollectionEntry<"service">) => {
                 {service.data.features.map((feature: string) => (
                   <li class="flex items-start gap-3 group">
                     <FaCheckCircle
-                      className="text-green-400 flex-shrink-0 mt-1 transform group-hover:scale-110 transition-transform"
+                      className="wp-feature-icon-check flex-shrink-0 mt-1 transform group-hover:scale-110 transition-transform"
                       size="1.2em"
                     />
-                    <span class="text-purple-100">{feature}</span>
+                    <span class="wp-feature-text">{feature}</span>
                   </li>
                 ))}
                 {getMissingFeatures(service).map((feature: string) => (
-                  <li class="flex items-start gap-3 opacity-50">
+                  <li class="flex items-start gap-3 wp-feature-disabled">
                     <FaTimesCircle
-                      className="text-red-400 flex-shrink-0 mt-1"
+                      className="wp-feature-icon-times flex-shrink-0 mt-1"
                       size="1.2em"
                     />
-                    <span class="text-purple-200">{feature}</span>
+                    <span>{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -93,16 +90,13 @@ const getMissingFeatures = (currentService: CollectionEntry<"service">) => {
               <div class="absolute bottom-10 left-0 right-0 px-8">
                 <a
                   href={`/${lang}/services/${service.id.split("/")[1]}`}
-                  class={`flex items-center justify-between w-full px-6 py-3 rounded-lg transition-all duration-300
-                  ${
-                    service.data.is_best_deal
-                      ? "bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl"
-                      : "bg-white/10 hover:bg-white/20 text-white"
+                  class={`flex items-center justify-between w-full px-6 py-3 rounded-lg transition-all duration-300 ${
+                    service.data.is_best_deal ? "wp-button" : "wp-button-simple"
                   }`}
                 >
                   <span>Découvrir {service.data.title}</span>
                   <div class="bg-white/10 w-8 h-8 rounded-full flex items-center justify-center group-hover:bg-white/20 transition-colors">
-                    <FaArrowRight className="text-white" />
+                    <FaArrowRight />
                   </div>
                 </a>
               </div>
@@ -113,6 +107,88 @@ const getMissingFeatures = (currentService: CollectionEntry<"service">) => {
     </div>
   </div>
 </div>
+
+<style>
+  .wp-card {
+    background-color: var(--wp-card-bg);
+    border: 1px solid var(--wp-card-featured-border);
+  }
+
+  .wp-card-featured {
+    background: linear-gradient(
+      to bottom right,
+      var(--wp-card-featured-from),
+      var(--wp-card-featured-to)
+    );
+    border: 2px solid var(--wp-card-featured-border);
+  }
+
+  .wp-title {
+    color: var(--wp-title);
+  }
+
+  .wp-price {
+    background: linear-gradient(
+      to right,
+      var(--wp-price-from),
+      var(--wp-price-to)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .wp-feature-text {
+    color: var(--wp-feature-text);
+  }
+
+  .wp-feature-icon-check {
+    color: var(--wp-feature-icon-check);
+  }
+
+  .wp-feature-icon-times {
+    color: var(--wp-feature-icon-times);
+  }
+
+  .wp-feature-disabled {
+    opacity: 0.5;
+  }
+
+  .wp-badge {
+    background: linear-gradient(
+      to right,
+      var(--wp-badge-from),
+      var(--wp-badge-to)
+    );
+    color: var(--wp-badge-text);
+  }
+
+  .wp-button {
+    background: linear-gradient(
+      to right,
+      var(--wp-button-from),
+      var(--wp-button-to)
+    );
+    color: var(--wp-button-text);
+  }
+
+  .wp-button:hover {
+    background: linear-gradient(
+      to right,
+      var(--wp-button-hover-from),
+      var(--wp-button-hover-to)
+    );
+  }
+
+  .wp-button-simple {
+    background-color: var(--wp-button-simple-bg);
+    color: var(--wp-button-text);
+  }
+
+  .wp-button-simple:hover {
+    background-color: var(--wp-button-simple-hover);
+  }
+</style>
 
 <script define:vars={{ lang }}>
   function handleSectionClick(slug) {
