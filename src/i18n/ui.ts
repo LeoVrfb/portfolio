@@ -39,7 +39,7 @@ export const ui = {
     "services.description":
       "Learn about Léo Hengebaert's different offers to select the one that suits your needs",
     "services.tagline":
-      "Discover our offers below and find out which one best suits your project!",
+      "Discover my offers below and find out which one best suits your project!",
     "about.title": "About",
     "about.description": "Learn more about Léo Hengebaert",
     "about.tagline":
@@ -136,7 +136,7 @@ export const ui = {
     "services.description":
       "Découvrez les différentes offres de Léo Hengebaert pour sélectionner celle qui correspond à vos besoins",
     "services.tagline":
-      "Découvrez nos offres en cliquant ci-dessous et savoir laquelle correspond le mieux à votre projet !",
+      "Découvrez my offres en cliquant ci-dessous et savoir laquelle correspond le mieux à votre projet !",
 
     "about.title": "À propos",
     "about.description": "En savoir plus sur Léo Hengebaert",
