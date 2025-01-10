@@ -43,7 +43,7 @@ const getMissingFeatures = (currentService: CollectionEntry<"service">) => {
       {
         services.map((service) => (
           <div
-            class={`relative group overflow-hidden rounded-2xl backdrop-blur-lg transition-transform duration-300 hover:scale-[1.01] cursor-pointer ${
+            class={`relative group overflow-hidden rounded-xl backdrop-blur-lg transition-transform duration-300 hover:scale-[1.01] cursor-pointer ${
               service.data.is_best_deal ? "wp-card-featured" : "wp-card"
             }`}
             data-slug={service.id.split("/")[1]}
@@ -111,7 +111,6 @@ const getMissingFeatures = (currentService: CollectionEntry<"service">) => {
 <style>
   .wp-card {
     background-color: var(--wp-card-bg);
-    border: 1px solid var(--wp-card-featured-border);
   }
 
   .wp-card-featured {
@@ -120,7 +119,7 @@ const getMissingFeatures = (currentService: CollectionEntry<"service">) => {
       var(--wp-card-featured-from),
       var(--wp-card-featured-to)
     );
-    border: 2px solid var(--wp-card-featured-border);
+    border: 1px solid var(--wp-card-featured-border);
   }
 
   .wp-title {
