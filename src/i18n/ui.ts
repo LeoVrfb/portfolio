@@ -16,7 +16,7 @@ export const ui = {
     "home.work.description":
       "Take a look below at my 3 last projects that I'm proud of.",
     "home.work.view-all": "View All",
-    "home.services.title": "My services",
+    "home.services.title": "My Services",
     "home.services.description":
       "Have a project in mind? Choose the solution below that best suits your needs: quick and efficient creation or custom design.",
     "home.services.see-more": "See more",
@@ -28,18 +28,18 @@ export const ui = {
     "skills.dev.title": "Front-End Developer",
     "skills.dev.description":
       "Working at Artefact since January 2024, a leading AI and Data consulting firm, I joined their innovative advertising agency's creative Studio (Artefact 3000). I combine technical expertise with creative design thinking to craft great digital experiences, working alongside talented designers and developers to shape the future of digital advertising.",
-    "skills.creator.title": "Digital Creator",
+    "skills.creator.title": "Creator of Websites",
     "skills.creator.description":
       "Beyond my full-time role, I have the pleasure to help businesses and individuals bring their web projects to life. From business showcases to e-commerce platforms, I provide end-to-end guidance in creating scalable web solutions. My approach combines technical expertise with strategic planning to deliver the right solution for your specific needs, ensuring a professional and lasting online presence.",
     "work.title": "My Work",
     "work.description": "Learn about Léo Hengebaert's most recent projects",
     "work.tagline":
       "See my most recent projects below to get an idea of my past experience.",
-    "services.title": "Standard Sites with WordPress + Divi",
+    "services.title": "Your Website in 7 Days",
     "services.description":
       "Learn about Léo Hengebaert's different offers to select the one that suits your needs",
     "services.tagline":
-      "Check my different offers to select the one that suits your needs",
+      "Discover our offers below and find out which one best suits your project!",
     "about.title": "About",
     "about.description": "Learn more about Léo Hengebaert",
     "about.tagline":
@@ -84,14 +84,14 @@ export const ui = {
       "French: Native language.",
       "English: Fluent (reading, writing, speaking).",
     ],
-    "servicesOffers.standardSolution": "Standard Sites",
+    "servicesOffers.standardSolution": "Standard Site",
     "servicesOffers.standardDescription": "Fast and professional creation",
     "servicesOffers.standardFeatures.0": "Modern and customizable design",
     "servicesOffers.standardFeatures.1": "Simplified maintenance",
     "servicesOffers.standardPrice": "Starting from",
     "servicesOffers.standardPriceValue": "299€",
     "servicesOffers.discoverOffers": "Discover Our Offers",
-    "servicesOffers.customSolution": "Custom Projects",
+    "servicesOffers.customSolution": "Custom Project",
     "servicesOffers.customDescription": "Personnalized web application",
     "servicesOffers.customFeatures.0": "Unique and tailored design",
     "servicesOffers.customFeatures.1": "Optimized technical solutions",
@@ -106,13 +106,13 @@ export const ui = {
     "home.hero.title": "Hello ! Je suis Léo Hengebaert",
     "home.hero.tagline": "Développeur Front-End actuellement basé à Paris",
     "home.hero.role1": "Développeur web",
-    "home.hero.role2": "Créateur Digital",
+    "home.hero.role2": "Créateur de Sites et Projets Web",
     "home.hero.portrait-alt": "Portrait de Léo Hengebaert",
     "home.work.title": "Projets Sélectionnés",
     "home.work.description":
       "Découvrez ci-dessous mes 3 derniers projets dont je suis fier.",
     "home.work.view-all": "Voir Tout",
-    "home.services.title": "Mes services",
+    "home.services.title": "Mes Services",
     "home.services.description":
       "Un projet à réaliser ? Choisissez la solution ci-dessous qui correspond le mieux à vos besoins : la création rapide et efficace ou la conception sur mesure.",
     "home.services.see-more": "Voir plus",
@@ -124,7 +124,7 @@ export const ui = {
     "skills.dev.title": "Développeur Front-End",
     "skills.dev.description":
       "Travaillant chez Artefact depuis janvier 2024, une société leader du conseil en IA et Data, j'ai rejoint le Studio de leur agence publicitaire : Artefact 3000. J'utilise mes compétences pour créer les meilleurs expériences digitales possibles, collaborant avec des designers et développeurs talentueux pour façonner l'avenir de la pub digitale !",
-    "skills.creator.title": "Créateur Digital",
+    "skills.creator.title": "Concepteur de Sites Web",
     "skills.creator.description":
       "En dehors de mon métier, j'ai aussi le plaisir d'aider des entreprises et des particuliers à donner vie à leurs projets web. Des vitrines d'entreprise aux plateformes e-commerce, je fournis un accompagnement de bout en bout dans la création de solutions adaptées à chaque besoin. Mon approche va de l'expertise technique à la réalisation complète, pour délivrer un porduit moderne et qualitatif, assurant une présence en ligne professionnelle et durable.",
     "work.title": "Mes Projets",
@@ -132,11 +132,12 @@ export const ui = {
       "Découvrez les projets les plus récents de Léo Hengebaert",
     "work.tagline":
       "Découvrez ci-dessous mes projets les plus récents pour avoir une idée de mon expérience.",
-    "services.title": "Site Standards avec Wordpress + Divi",
+    "services.title": "Votre Site Web en 7 Jours",
     "services.description":
       "Découvrez les différentes offres de Léo Hengebaert pour sélectionner celle qui correspond à vos besoins",
     "services.tagline":
-      "Consultez mes différentes offres pour sélectionner celle qui correspond à vos besoins",
+      "Découvrez nos offres en cliquant ci-dessous et savoir laquelle correspond le mieux à votre projet !",
+
     "about.title": "À propos",
     "about.description": "En savoir plus sur Léo Hengebaert",
     "about.tagline":
@@ -183,15 +184,15 @@ export const ui = {
       "Français : Langue maternelle.",
       "Anglais : Courant (lecture, écriture, oral).",
     ],
-    "servicesOffers.standardSolution": "Sites Standards",
+    "servicesOffers.standardSolution": "Site Standard",
     "servicesOffers.standardDescription": "Création rapide et professionnelle",
     "servicesOffers.standardFeatures.0": "Design moderne et personnalisable",
     "servicesOffers.standardFeatures.1": "Maintenance simplifiée",
     "servicesOffers.standardPrice": "À partir de",
     "servicesOffers.standardPriceValue": "299€",
     "servicesOffers.discoverOffers": "Découvrir nos offres",
-    "servicesOffers.customSolution": "Projets Sur Mesure",
-    "servicesOffers.customDescription": "Applications web personnalisées",
+    "servicesOffers.customSolution": "Projet Sur Mesure",
+    "servicesOffers.customDescription": "Application web personnalisée",
     "servicesOffers.customFeatures.0": "Design unique et sur mesure",
     "servicesOffers.customFeatures.1": "Solutions techniques optimisées",
     "servicesOffers.customQuote": "Demander un devis",

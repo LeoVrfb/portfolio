@@ -10,6 +10,9 @@ import {
   FaCheckCircle,
   FaArrowRight,
 } from "react-icons/fa";
+import { FiFileText } from "react-icons/fi";
+import { HiOutlineDocument } from "react-icons/hi2";
+import { HiPlusCircle } from "react-icons/hi2";
 
 interface Props {
   entry: CollectionEntry<"service">;
@@ -37,11 +40,11 @@ let isSubmitting = false;
 
 <BaseLayout title={entry.data.title} description={entry.data.description}>
   <div class="min-h-screen">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
       <!-- En-tête avec navigation -->
       <nav class="mb-8">
         <a
-          href="/fr/services"
+          href="/fr/servicesWordpress"
           class="inline-flex items-center service-nav-link"
         >
           <Icon icon="arrow-left" />
@@ -62,27 +65,57 @@ let isSubmitting = false;
       <!-- Contenu Principal -->
       <div class="grid lg:grid-cols-2 gap-12 items-start">
         <!-- Colonne de gauche : Description du service -->
-        <div class="space-y-8 order-2 lg:order-1">
+        <div class="space-y-8 order-1">
           {
             entry.data.service_details.map((detail: any) => (
               <div class="service-card">
                 {detail.title && (
-                  <h2 class="text-2xl font-bold flex items-center gap-3 mb-6 service-card-title">
+                  <h2 class="text-2xl font-bold flex items-center gap-4 mb-6 service-card-title">
                     {detail.title.includes("Pourquoi") ? (
-                      <FaStar className="service-icon-star" size="1.2em" />
+                      <FaStar className="service-icon-star" size="1.5em" />
                     ) : (
                       <FaBriefcase
-                        className="service-icon-briefcase"
+                        className="service-icon-briefcase "
                         size="1.2em"
                       />
                     )}
+
                     {detail.title}
                   </h2>
                 )}
                 {detail.content && (
-                  <p class="service-card-text leading-relaxed mb-6">
-                    {detail.content}
-                  </p>
+                  <div class="service-card-text leading-relaxed mb-6">
+                    {detail.content.split("\n").map((line) => {
+                      if (line.trim().startsWith("→")) {
+                        return (
+                          <p class="flex items-start gap-2 ml-4 mb-2">
+                            <span class="text-purple-400 text-lg w-5 h-5 flex items-center mt-1">
+                              →
+                            </span>
+                            <span>{line.trim().substring(1)}</span>
+                          </p>
+                        );
+                      } else if (
+                        line.trim().startsWith("•") &&
+                        line.includes("€")
+                      ) {
+                        return (
+                          <p class="flex items-start gap-2 ml-4 mb-2">
+                            <HiPlusCircle className="text-emerald-400 w-5 h-5 flex-shrink-0" />
+                            <span>{line.trim().substring(1)}</span>
+                          </p>
+                        );
+                      } else if (line.trim().startsWith("•")) {
+                        return (
+                          <p class="flex items-start gap-2 ml-4 mb-2">
+                            <HiOutlineDocument className="text-sky-300 w-5 h-5 flex-shrink-0" />
+                            <span>{line.trim().substring(1)}</span>
+                          </p>
+                        );
+                      }
+                      return <p class="mb-4">{line}</p>;
+                    })}
+                  </div>
                 )}
                 {detail.list_items && (
                   <ul class="space-y-4">
@@ -92,10 +125,60 @@ let isSubmitting = false;
                           className="service-icon-check flex-shrink-0 mt-1 transform group-hover:scale-110 transition-transform"
                           size="1.2em"
                         />
-                        <span class="service-card-text">{item}</span>
+                        <span
+                          set:html={item.replace(
+                            /\*\*(.*?)\*\*/g,
+                            '<strong class="font-semibold">$1</strong>'
+                          )}
+                        />
                       </li>
                     ))}
                   </ul>
+                )}
+                {detail.extra_options && (
+                  <div class="space-y-2 mb-6">
+                    {detail.extra_options.map((item) => (
+                      <p class="flex items-start gap-2 ml-4">
+                        <HiPlusCircle className="text-cyan-400 w-5 h-5 flex-shrink-0 mt-0.5" />
+                        <span
+                          set:html={item.replace(
+                            /\*\*(.*?)\*\*/g,
+                            '<strong class="font-semibold">$1</strong>'
+                          )}
+                        />
+                      </p>
+                    ))}
+                  </div>
+                )}
+                {detail.note && (
+                  <p class="text-sm italic mt-2 mb-6">{detail.note}</p>
+                )}
+                {detail.use_cases && (
+                  <div class="space-y-2 mb-6">
+                    {detail.use_cases.map((item) => (
+                      <p class="flex items-start gap-2 ml-4">
+                        <span class="text-purple-400 text-lg w-5 h-5 flex items-center mt-1">
+                          →
+                        </span>
+                        <span>{item}</span>
+                      </p>
+                    ))}
+                  </div>
+                )}
+                {detail.pages && (
+                  <div class="space-y-2 mb-6">
+                    {detail.pages.map((item) => (
+                      <p class="flex items-start gap-2 ml-4">
+                        <HiOutlineDocument className="text-yellow-200  w-5 h-5 flex-shrink-0 mt-0.5" />
+                        <span
+                          set:html={item.replace(
+                            /\*\*(.*?)\*\*/g,
+                            '<strong class="font-semibold">$1</strong>'
+                          )}
+                        />
+                      </p>
+                    ))}
+                  </div>
                 )}
               </div>
             ))
@@ -103,7 +186,7 @@ let isSubmitting = false;
         </div>
 
         <!-- Colonne de droite : Formulaire -->
-        <div class="order-1 lg:order-2 lg:sticky lg:top-8">
+        <div class="order-2 lg:sticky lg:top-8">
           <div class="service-form">
             <!-- Conteneur du formulaire -->
             <div id="formContainer">
@@ -305,6 +388,10 @@ let isSubmitting = false;
   .service-form-button:disabled {
     opacity: 0.7;
     cursor: not-allowed;
+  }
+
+  .extra-option-icon {
+    margin-bottom: 12%;
   }
 
   .loader {

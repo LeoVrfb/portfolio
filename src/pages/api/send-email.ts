@@ -83,19 +83,19 @@ Message: ${data.message}`;
       case "quote":
         return `
           <p>${greeting},</p>
-          <p>Merci pour votre demande de devis personnalisé. Nous allons étudier attentivement votre projet et reviendrons vers vous avec une proposition détaillée sous 48 heures.</p>
+          <p>Merci pour votre demande de devis personnalisé. Je vais étudier attentivement votre projet et reviendrai vers vous avec une proposition détaillée sous 48 heures.</p>
           <p>Cordialement,</p>
           <p>Votre équipe</p>`;
       case "service":
         return `
           <p>${greeting},</p>
-          <p>Merci de nous avoir contacté concernant notre service "${data.service}". Nous avons bien reçu votre message et nous reviendrons vers vous sous peu.</p>
+          <p>Merci de m'avoir contacté concernant mon service "${data.service}". J'ai bien reçu votre message et je reviendrai vers vous sous peu.</p>
           <p>Cordialement,</p>
           <p>Votre équipe</p>`;
       default:
         return `
           <p>${greeting},</p>
-          <p>Merci pour votre message. Nous l'avons bien reçu et nous vous répondrons dans les plus brefs délais.</p>
+          <p>Merci pour votre message. Je l'ai bien reçu et je vous répondrai dans les plus brefs délais.</p>
           <p>Cordialement,</p>
           <p>Votre équipe</p>`;
     }
