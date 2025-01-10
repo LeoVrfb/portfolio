@@ -27,7 +27,7 @@ export const ui = {
     "nav.contact": "Contact",
     "skills.dev.title": "Front-End Developer",
     "skills.dev.description":
-      "Working at Artefact since January 2024, a leading AI and Data consulting firm, I joined their innovative advertising agency's creative Studio (Artefact 3000). I combine technical expertise with creative design thinking to craft great digital experiences, working alongside talented designers and developers to shape the future of digital advertising.",
+      "I'm currently a front-end developer at Artefact, one of Europe's leading consultancy firms in Data and AI. I collaborate with talented designers and developers to shape the future of digital advertising! To learn more about my journey, I invite you to check out the 'About' section.",
     "skills.creator.title": "Creator of Websites",
     "skills.creator.description":
       "Beyond my full-time role, I have the pleasure to help businesses and individuals bring their web projects to life. From business showcases to e-commerce platforms, I provide end-to-end guidance in creating scalable web solutions. My approach combines technical expertise with strategic planning to deliver the right solution for your specific needs, ensuring a professional and lasting online presence.",
@@ -50,15 +50,15 @@ export const ui = {
       "As a Front-End Developer at Artefact 3000, I specialize in creating engaging digital experiences. My journey in web development is driven by a passion for clean code and innovative solutions. Beyond my full-time role, I enjoy helping businesses establish their online presence through custom web solutions.",
     "about.sections.about.title": "About me",
     "about.sections.about.p1":
-      "Hi there! I'm Léo Hengebaert, a front-end developer based in Paris. I'm proud to currently work at Artefact, one of Europe's leading marketing and digital transformation consulting firms. Specializing in Artificial Intelligence (AI) and Data, Artefact delivers exceptional solutions to clients (LVMH, L'Oréal, Orange, SNCF, and many others...) to tackle the most complex challenges in the digital world.",
+      "Hi there! I'm Léo Hengebaert, a front-end developer based in Paris. I'm proud to currently work at Artefact, one of Europe's leading consultancy firms in Data and Artificial Intelligence (AI). Specialized in marketing and digital transformation, Artefact has built a strong reputation with its prestigious clients (LVMH, L'Oréal, Samsung, BNP Paribas, Chanel, Danone, and many others).",
     "about.sections.about.p2":
-      "With a diverse team of passionate talents, Artefact has created a future-friendly advertising agency called Artefact 3000. This led me to join Artefact 3000's studio, a treasure trove for web artists, where designers and developers can unleash their digital potential to the fullest.",
+      "Within Artefact 3000's Studio, their creative agency, I've had the opportunity to work on various projects for clients such as Argedis (TotalEnergies' retail subsidiary), Extime (ADP Group's luxury retail brand), and Robertet (a world leader in perfumery). These experiences have significantly enhanced my development skills.",
     "about.sections.about.p3":
-      "Before joining Artefact, I had the privilege of working at Qare, an innovative company in the field of telemedicine and a major player in online healthcare. At Qare, I contributed to developing solutions that make access to healthcare easier for everyone, a mission that deeply resonates with my personal values.",
+      "Before joining Artefact, I had the privilege of working at Qare, an innovative company in telemedicine and a major player in online healthcare. At Qare, I contributed to developing solutions that make healthcare accessible to everyone, a mission that deeply resonates with my personal values.",
     "about.sections.about.p4":
-      "As a tech professional, I'm driven by a constant desire to learn and improve. My vision is one where technology enriches and enhances everyone's lives, where innovation is synonymous with inclusion and progress. My dedication to my work is reflected in every line of code I write, in every project I undertake.",
+      "As a tech professional, I am driven by a constant desire to learn and improve. My vision is one where technology enriches and enhances everyone's lives, where innovation means mutual support and care for the most vulnerable. My dedication to my work is reflected in every line of code I write, in every project I undertake.",
     "about.sections.about.p5":
-      "With a unique blend of experience at industry leaders like Artefact and Qare, I'm ready to tackle the most complex challenges and strive to shape the future of the web as best I can. Join me in this exciting adventure where technology meets creativity to create a better world, one project at a time.",
+      "With unique experience gained from tech industry leaders, I'm ready to tackle the most complex challenges and strive to shape the future of the web as best I can. Join me in this exciting adventure where technology meets creativity to create a better world, one project at a time. 😊",
 
     "about.sections.education.title": "Education",
     "about.sections.education.content":
@@ -67,11 +67,17 @@ export const ui = {
     "about.sections.skills.title": "My Skills",
     "about.sections.skills.technical.title": "Main Technical Skills:",
     "about.sections.skills.technical.items": [
-      "Programming Languages: JavaScript, TypeScript",
-      "Frameworks and Libraries: React, Next",
-      "Development Tools: Git, Github, Gitlab",
-      "Testing and Debugging: Jest, React Testing Library, Cypress",
-    ] as string[],
+      "Languages: TypeScript, JavaScript",
+      "Frameworks: React, Next.js",
+      "Styling: Tailwind CSS",
+      "Store: Zustand",
+      "Versioning: Git, GitHub",
+      "Deployment: Vercel",
+      "Testing: React Testing Library",
+      "CMS: WordPress, Divi",
+      "Headless CMS: Contentful",
+      "Internationalization: React-i18next",
+    ],
     "about.sections.skills.professional.title": "Main Professional Skills:",
     "about.sections.skills.professional.items": [
       "Project Management: Agile/Scrum, sprint management, estimation, review, planning. Jira, Confluence, Slack.",
@@ -123,10 +129,10 @@ export const ui = {
     "nav.contact": "Contact",
     "skills.dev.title": "Développeur Front-End",
     "skills.dev.description":
-      "Travaillant chez Artefact depuis janvier 2024, une société leader du conseil en IA et Data, j'ai rejoint le Studio de leur agence publicitaire : Artefact 3000. J'utilise mes compétences pour créer les meilleurs expériences digitales possibles, collaborant avec des designers et développeurs talentueux pour façonner l'avenir de la pub digitale !",
+      "Je suis actuellement développeur front-end chez Artefact, un des leaders européens du conseil en Data et IA. Je collabore avec des designers et développeurs de talents pour façonner l'avenir de la pub digitale ! Pour en savoir plus sur mon parcours, je vous invite à consulter la section 'À propos' du site.",
     "skills.creator.title": "Concepteur de Sites Web",
     "skills.creator.description":
-      "En dehors de mon métier, j'ai aussi le plaisir d'aider des entreprises et des particuliers à donner vie à leurs projets web. Des vitrines d'entreprise aux plateformes e-commerce, je fournis un accompagnement de bout en bout dans la création de solutions adaptées à chaque besoin. Mon approche va de l'expertise technique à la réalisation complète, pour délivrer un porduit moderne et qualitatif, assurant une présence en ligne professionnelle et durable.",
+      "En plus de mon métier, j'ai aussi le plaisir d'aider des entreprises et des particuliers à donner vie à leurs projets web. Des vitrines d'entreprise aux plateformes e-commerce, je fournis un accompagnement de bout en bout dans la création de solutions adaptées à chaque besoin.",
     "work.title": "Mes Projets",
     "work.description":
       "Découvrez les projets les plus récents de Léo Hengebaert",
@@ -148,15 +154,15 @@ export const ui = {
       "En tant que Développeur Front-End chez Artefact 3000, je me spécialise dans la création d'expériences digitales engageantes. Mon parcours dans le développement web est guidé par une passion pour le code propre et les solutions innovantes. Au-delà de mon rôle à temps plein, j'aide les entreprises à établir leur présence en ligne grâce à des solutions web personnalisées.",
     "about.sections.about.title": "À propos de moi",
     "about.sections.about.p1":
-      "Bonjour ! Je suis Léo Hengebaert, développeur front-end basé à Paris. Je suis fier de travailler actuellement chez Artefact, l'une des principales sociétés de conseil en marketing et transformation digitale en Europe. Spécialisée en Intelligence Artificielle (IA) et Data, Artefact propose des solutions exceptionnelles à ses clients (LVMH, L'Oréal, Orange, SNCF, et bien d'autres...) pour relever les défis les plus complexes du monde numérique.",
+      "Bonjour ! Je suis Léo Hengebaert, développeur front-end basé à Paris. Je suis fier de travailler actuellement chez Artefact, un des leaders européens du conseil en Data et en Intelligence Artificielle (IA). Spécialisé dans le marketing et la transformation digitale, Artefact s'est bâti une solide réputation avec sa clientèle prestigieuse (LVMH, L'Oréal, Samsung, BNP Paribas, Chanel, Danone, et tant d'autres).",
     "about.sections.about.p2":
-      "Avec une équipe diversifiée de talents passionnés, Artefact a créé une agence de publicité tournée vers l'avenir appelée Artefact 3000. Cela m'a conduit à rejoindre le studio d'Artefact 3000, un véritable trésor pour les artistes du web, où designers et développeurs peuvent exploiter pleinement leur potentiel numérique.",
+      "Au sein du Studio d'Artefact 3000, leur agence creative, j'ai eu l'opportunité de travailler sur des projets variés pour des clients comme Argedis (filiale de distribution de TotalEnergies), Extime (la marque retail de luxe du Groupe ADP), ou encore Robertet (leader mondial de la parfumerie). Ces expériences m'ont permis de développer significativement mes compétences de développeur.",
     "about.sections.about.p3":
       "Avant de rejoindre Artefact, j'ai eu le privilège de travailler chez Qare, une entreprise innovante dans le domaine de la télémédecine et un acteur majeur de la santé en ligne. Chez Qare, j'ai contribué au développement de solutions qui facilitent l'accès aux soins pour tous, une mission qui résonne profondément avec mes valeurs personnelles.",
     "about.sections.about.p4":
-      "En tant que professionnel de la tech, je suis animé par un désir constant d'apprendre et de m'améliorer. Ma vision est celle d'une technologie qui enrichit et améliore la vie de chacun, où l'innovation est synonyme d'inclusion et de progrès. Mon dévouement à mon travail se reflète dans chaque ligne de code que j'écris, dans chaque projet que j'entreprends.",
+      "En tant que professionnel de la tech, je suis animé par un désir constant d'apprendre et de m'améliorer. Ma vision est celle d'une technologie qui enrichit et améliore la vie de chacun, où l'innovation est synonyme d'entre-aide et de soutien envers les plus fragiles. Mon dévouement à mon travail se reflète dans chaque ligne de code que j'écris, dans chaque projet que j'entreprends.",
     "about.sections.about.p5":
-      "Avec une expérience unique acquise auprès de leaders du secteur comme Artefact et Qare, je suis prêt à relever les défis les plus complexes et à m'efforcer de façonner l'avenir du web du mieux possible. Rejoignez-moi dans cette aventure passionnante où la technologie rencontre la créativité pour créer un monde meilleur, un projet à la fois.",
+      "Avec une expérience unique acquise auprès de leaders du secteur de la tech, je suis prêt à relever les défis les plus complexes et à m'efforcer de façonner l'avenir du web du mieux possible. Rejoignez-moi dans cette aventure passionnante où la technologie rencontre la créativité pour créer un monde meilleur, un projet à la fois. 😊",
 
     "about.sections.education.title": "Formation",
     "about.sections.education.content":
@@ -166,11 +172,17 @@ export const ui = {
     "about.sections.skills.technical.title":
       "Principales Compétences Techniques :",
     "about.sections.skills.technical.items": [
-      "Langages de programmation : JavaScript, TypeScript",
-      "Frameworks et Bibliothèques : React, Next",
-      "Outils de développement : Git, Github, Gitlab",
-      "Tests et Débogage : Jest, React Testing Library, Cypress",
-    ] as string[],
+      "Langages : TypeScript, JavaScript",
+      "Frameworks : React, Next.js",
+      "Styling : Tailwind CSS",
+      "Store : Zustand",
+      "Versioning : Git, GitHub",
+      "Déploiement : Vercel",
+      "Testing : React Testing Library",
+      "CMS : WordPress, Divi",
+      "Headless CMS : Contentful",
+      "Internationalisation : React-i18next",
+    ],
     "about.sections.skills.professional.title":
       "Principales Compétences Professionnelles :",
     "about.sections.skills.professional.items": [

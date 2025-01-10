@@ -47,39 +47,63 @@ const t = useTranslations(lang);
 
       <section>
         <h2 class="section-title">{t("about.sections.skills.title")}</h2>
-        <div class="content">
-          <ol>
-            <li>
-              {t("about.sections.skills.technical.title")}
-              <ul>
-                {
-                  (t("about.sections.skills.technical.items") as string[]).map(
-                    (item: string) => <li>{item}</li>
+        <div class="content skills-container">
+          <div class="skill-category">
+            <div class="skill-header">
+              <i class="fas fa-code text-2xl text-cyan-400"></i>
+              <h3>{t("about.sections.skills.technical.title")}</h3>
+            </div>
+            <ul class="skill-list">
+              {
+                (t("about.sections.skills.technical.items") as string[]).map(
+                  (item) => (
+                    <li class="skill-item">
+                      <span class="skill-bullet">▹</span>
+                      {item}
+                    </li>
                   )
-                }
-              </ul>
-            </li>
-            <li>
-              {t("about.sections.skills.professional.title")}
-              <ul>
-                {
-                  (
-                    t("about.sections.skills.professional.items") as string[]
-                  ).map((item: string) => <li>{item}</li>)
-                }
-              </ul>
-            </li>
-            <li>
-              {t("about.sections.skills.languages.title")}
-              <ul>
-                {
-                  (t("about.sections.skills.languages.items") as string[]).map(
-                    (item: string) => <li>{item}</li>
+                )
+              }
+            </ul>
+          </div>
+
+          <div class="skill-category">
+            <div class="skill-header">
+              <i class="fas fa-briefcase text-2xl text-purple-400"></i>
+              <h3>{t("about.sections.skills.professional.title")}</h3>
+            </div>
+            <ul class="skill-list">
+              {
+                (t("about.sections.skills.professional.items") as string[]).map(
+                  (item) => (
+                    <li class="skill-item">
+                      <span class="skill-bullet">▹</span>
+                      {item}
+                    </li>
                   )
-                }
-              </ul>
-            </li>
-          </ol>
+                )
+              }
+            </ul>
+          </div>
+
+          <div class="skill-category">
+            <div class="skill-header">
+              <i class="fas fa-globe text-2xl text-emerald-400"></i>
+              <h3>{t("about.sections.skills.languages.title")}</h3>
+            </div>
+            <ul class="skill-list">
+              {
+                (t("about.sections.skills.languages.items") as string[]).map(
+                  (item) => (
+                    <li class="skill-item">
+                      <span class="skill-bullet">▹</span>
+                      {item}
+                    </li>
+                  )
+                )
+              }
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -338,5 +362,61 @@ const t = useTranslations(lang);
   }
   section:nth-child(4) {
     animation-delay: 0.9s;
+  }
+
+  .skills-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .skill-category {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: transform 0.3s ease;
+  }
+
+  .skill-category:hover {
+    transform: translateY(-5px);
+  }
+
+  .skill-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .skill-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--gray-200);
+  }
+
+  .skill-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .skill-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    color: var(--gray-300);
+  }
+
+  .skill-bullet {
+    color: var(--accent-regular);
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: 768px) {
+    .skills-container {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
