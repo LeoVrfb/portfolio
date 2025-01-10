@@ -136,7 +136,7 @@ export const ui = {
     "services.description":
       "Découvrez les différentes offres de Léo Hengebaert pour sélectionner celle qui correspond à vos besoins",
     "services.tagline":
-      "Découvrez my offres en cliquant ci-dessous et savoir laquelle correspond le mieux à votre projet !",
+      "Découvrez mes offres en cliquant ci-dessous et savoir laquelle correspond le mieux à votre projet !",
 
     "about.title": "À propos",
     "about.description": "En savoir plus sur Léo Hengebaert",
