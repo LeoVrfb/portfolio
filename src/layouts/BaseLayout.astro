@@ -18,6 +18,51 @@ const { title, description } = Astro.props;
 <html lang="en">
   <head>
     <MainHead title={title} description={description} />
+    <!-- Métadonnées de base -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO -->
+    <meta
+      name="description"
+      content="Développeur front-end basé à Paris, spécialisé en React, Next.js, Wordpress et divi, hostinger"
+    />
+    <meta
+      name="keywords"
+      content="développeur, front-end, React, Next.js, Paris, Wordpress, divi, hostinger, site web, web development"
+    />
+    <meta name="author" content="Léo Hengebaert" />
+
+    <!-- Open Graph / Social Media -->
+    <meta
+      property="og:title"
+      content="Léo Hengebaert - Développeur Front-end"
+    />
+    <meta
+      property="og:description"
+      content="Développeur front-end basé à Paris, spécialisé en React et Next.js, Wordpress et divi, hostinger"
+    />
+    <meta
+      property="og:image"
+      content="https://leohengebaert.fr/assets/social/og-image.png"
+    />
+    <meta property="og:url" content="https://leohengebaert.fr" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Léo Hengebaert - Développeur Front-end"
+    />
+    <meta
+      name="twitter:description"
+      content="Développeur front-end basé à Paris, spécialisé en React et Next.js"
+    />
+    <meta
+      name="twitter:image"
+      content="https://leohengebaert.fr/assets/social/og-image.png"
+    />
   </head>
   <body>
     <div class="stack backgrounds">
