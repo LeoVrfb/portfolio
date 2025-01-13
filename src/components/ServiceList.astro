@@ -46,7 +46,7 @@ const getMissingFeatures = (currentService: CollectionEntry<"service">) => {
             class={`relative group overflow-hidden rounded-xl backdrop-blur-lg transition-transform duration-300 hover:scale-[1.01] cursor-pointer ${
               service.data.is_best_deal ? "wp-card-featured" : "wp-card"
             }`}
-            data-slug={service.id.split("/")[1]}
+            data-slug={service.id.split("/")[1].replace(".md", "")}
           >
             {service.data.is_best_deal && (
               <div class="absolute top-2 right-2 sm:right-4 md:right-3">
@@ -89,7 +89,7 @@ const getMissingFeatures = (currentService: CollectionEntry<"service">) => {
 
               <div class="absolute bottom-10 left-0 right-0 px-8">
                 <a
-                  href={`/${lang}/services/${service.id.split("/")[1]}`}
+                  href={`/${lang}/services/${service.id.split("/")[1].replace(".md", "")}`}
                   class={`flex items-center justify-between w-full px-6 py-3 rounded-lg transition-all duration-300 ${
                     service.data.is_best_deal ? "wp-button" : "wp-button-simple"
                   }`}
@@ -191,7 +191,7 @@ const getMissingFeatures = (currentService: CollectionEntry<"service">) => {
 
 <script define:vars={{ lang }}>
   function handleSectionClick(slug) {
-    window.location.href = `/${lang}/services/${slug}`;
+    window.location.href = `/${lang}/services/${slug.replace(".md", "")}`;
   }
 
   document.addEventListener("DOMContentLoaded", function () {

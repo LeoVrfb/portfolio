@@ -26,7 +26,9 @@ export async function getStaticPaths() {
   });
 
   return services.map((entry) => ({
-    params: { slug: entry.id.split("/")[1] }, // Remove language prefix from slug
+    params: {
+      slug: entry.id.split("/")[1].replace(".md", ""), // Remove language prefix and .md extension
+    },
     props: { entry },
   }));
 }
