@@ -61,6 +61,6 @@ service_details:
       - "**Galerie Interactive** : Galerie d'images avec lightbox Divi (25€)"
       - "**Pop-up de Newsletter** : Intégration d'une pop-up Divi avec formulaire d'inscription (30€)"
       - "**Témoignages Slider** : Carrousel de témoignages avec le module Divi (25€)"
-    note: "Une landing page étant par nature une page unique, nous ne proposons pas d'ajout de pages supplémentaires. Si vous avez besoin de 
+    note: "Une landing page étant par nature une page unique, je ne propose pas d'ajout de pages supplémentaires. Si vous avez besoin de 
     plusieurs pages, le Site Vitrine sera plus adapté à vos besoins. Chaque option rajoutera des délais de livraison."
 ---
