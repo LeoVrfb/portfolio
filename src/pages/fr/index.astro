@@ -35,21 +35,23 @@ const services = (
   <div class="stack gap-20 lg:gap-48">
     <div class="wrapper stack gap-8 lg:gap-20">
       <header class="hero">
-        <Hero
-          title={t("home.hero.title") as string}
-          tagline={t("home.hero.tagline") as string}
-          align="start"
-        >
-          <div class="roles">
-            <Pill
-              ><Icon icon="code" size="1.33em" /> {t("home.hero.role1")}</Pill
-            >
-            <Pill
-              ><Icon icon="rocket-launch" size="1.33em" />
-              {t("home.hero.role2")}</Pill
-            >
-          </div>
-        </Hero>
+        <div class="animated-hero">
+          <Hero
+            title={t("home.hero.title") as string}
+            tagline={t("home.hero.tagline") as string}
+            align="start"
+          >
+            <div class="roles">
+              <Pill
+                ><Icon icon="code" size="1.33em" /> {t("home.hero.role1")}</Pill
+              >
+              <Pill
+                ><Icon icon="rocket-launch" size="1.33em" />
+                {t("home.hero.role2")}</Pill
+              >
+            </div>
+          </Hero>
+        </div>
 
         <img
           alt={t("home.hero.portrait-alt") as string}
@@ -256,3 +258,63 @@ const services = (
     }
   }
 </style>
+
+<script>
+  import { animate, stagger, spring } from "@motionone/dom";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const title = document.querySelector(".animated-hero .title");
+    const tagline = document.querySelector(".animated-hero .tagline");
+    const roles = document.querySelectorAll(".animated-hero .roles > *");
+
+    // Animation moderne du titre avec flou
+    if (title) {
+      animate(
+        title,
+        {
+          opacity: [0, 1],
+          filter: ["blur(10px)", "blur(0px)"],
+          transform: ["scale(1.1)", "scale(1)"],
+        },
+        {
+          duration: 0.8,
+          easing: [0.25, 0.1, 0.25, 1],
+        }
+      );
+    }
+
+    // Tagline avec effet de balayage
+    if (tagline) {
+      animate(
+        tagline,
+        {
+          opacity: [0, 1],
+          filter: ["blur(8px)", "blur(0px)"],
+          transform: ["translateX(-10px)", "translateX(0)"],
+        },
+        {
+          duration: 0.7,
+          delay: 0.2,
+          easing: [0.25, 0.1, 0.25, 1],
+        }
+      );
+    }
+
+    // Pills avec effet de cascade moderne
+    if (roles.length) {
+      animate(
+        roles,
+        {
+          opacity: [0, 1],
+          filter: ["blur(8px)", "blur(0px)"],
+          transform: ["translateY(10px) scale(0.95)", "translateY(0) scale(1)"],
+        },
+        {
+          duration: 0.5,
+          delay: stagger(0.1, { start: 0.4 }),
+          easing: [0.25, 0.1, 0.25, 1],
+        }
+      );
+    }
+  });
+</script>

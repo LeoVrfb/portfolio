@@ -20,6 +20,7 @@
     "@fontsource/plus-jakarta-sans": "^5.1.1",
     "@fontsource/space-grotesk": "^5.1.1",
     "@fontsource/syne": "^5.1.1",
+    "@motionone/dom": "^10.18.0",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
     "@types/react-i18next": "^7.8.3",
