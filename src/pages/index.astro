@@ -1,5 +1,8 @@
 ---
-// Redirection vers la langue par défaut
+const userLang =
+  Astro.request.headers.get("accept-language")?.split(",")[0].split("-")[0] ||
+  "en";
+const defaultLang = userLang === "fr" ? "fr" : "en";
 ---
 
-<meta http-equiv="refresh" content="0;url=/en" />
+<meta http-equiv="refresh" content={`0;url=/${defaultLang}`} />
