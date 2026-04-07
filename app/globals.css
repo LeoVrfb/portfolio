@@ -1,0 +1,101 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-100% - var(--gap))); }
+  }
+  @keyframes marquee-vertical {
+    from { transform: translateY(0); }
+    to { transform: translateY(calc(-100% - var(--gap))); }
+  }
+}
+
+:root {
+  /* Palette : dark forest/teal + sage green accent */
+  --background: hsl(158 24% 7%);          /* #0d1512 — vert forêt très foncé */
+  --foreground: hsl(180 20% 98%);         /* #f9fbfb — blanc légèrement frais */
+  --card: hsl(158 22% 10%);
+  --card-foreground: hsl(180 20% 98%);
+  --primary: hsl(180 20% 98%);
+  --primary-foreground: hsl(158 24% 7%);
+  --secondary: hsl(284 20% 18%);
+  --secondary-foreground: hsl(284 24% 80%);
+  --muted: hsl(158 18% 13%);
+  --muted-foreground: hsl(158 10% 50%);
+  --accent: hsl(163 24% 54%);             /* #6ea696 — sage green */
+  --accent-foreground: hsl(158 24% 7%);
+  --destructive: hsl(0 65% 55%);
+  --border: hsl(163 30% 90% / 7%);
+  --input: hsl(163 30% 90% / 9%);
+  --ring: hsl(163 24% 54%);
+  --radius: 0.625rem;
+  /* Palette étendue */
+  --sage: hsl(163 24% 54%);               /* #6ea696 */
+  --lavender: hsl(284 55% 75%);
+  --mauve: hsl(328 55% 68%);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  html {
+    @apply font-sans;
+    color-scheme: dark;
+  }
+}
+
+/* Container responsive — s'adapte aux grands écrans */
+@layer utilities {
+  .layout-container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    max-width: 72rem; /* 1152px — md/lg */
+  }
+
+  @media (min-width: 1280px) {
+    .layout-container { max-width: 80rem; } /* 1280px — xl */
+  }
+
+  @media (min-width: 1536px) {
+    .layout-container { max-width: 90rem; } /* 1440px — 2xl */
+  }
+
+  @media (min-width: 1920px) {
+    .layout-container { max-width: 104rem; } /* 1664px — 4K */
+  }
+}

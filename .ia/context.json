@@ -1,0 +1,67 @@
+{
+  "projet": "portfolio-leo-hengebaert",
+  "description": "Portfolio personnel de Léo Hengebaert, développeur web freelance. Vitrine + services (3 formules) + projets + contact.",
+  "stack": {
+    "framework": "Next.js 16 App Router",
+    "css": "Tailwind CSS v4",
+    "ui": "shadcn/ui",
+    "animations": "Framer Motion",
+    "icons": "Lucide React",
+    "toasts": "Sonner",
+    "email": "Resend (à configurer)",
+    "deploy": "Vercel"
+  },
+  "design": {
+    "theme": "dark only",
+    "accent": "oklch(0.62 0.22 260) — bleu-indigo",
+    "background": "oklch(0.08 0 0) — presque noir",
+    "typo": "Geist Sans (système Next.js)"
+  },
+  "pages": {
+    "/": "Home : Hero + Projets sélectionnés + Services/Tarifs + CTA Contact",
+    "/projets": "Liste de tous les projets",
+    "/projets/[slug]": "Page détail d'un projet",
+    "/services": "Page services complète avec formules, options à la carte, FAQ",
+    "/a-propos": "Bio, expériences, stack technique",
+    "/contact": "Formulaire de contact"
+  },
+  "projets": [
+    {
+      "slug": "argedis-totalenergies",
+      "client": "TotalEnergies — Argedis",
+      "tags": ["Next.js", "Contentful", "GraphQL"]
+    },
+    {
+      "slug": "sweetime-adp-extime",
+      "client": "Aéroports de Paris — Extime",
+      "tags": ["Next.js 13", "MongoDB", "Docker"]
+    },
+    {
+      "slug": "hurepoix-nettoyage",
+      "client": "Hurepoix Nettoyage",
+      "tags": ["Next.js", "Tailwind CSS", "Resend"]
+    }
+  ],
+  "services": {
+    "formules": [
+      { "nom": "Essentiel", "prix": "600€", "delai": "5-7j" },
+      { "nom": "Standard", "prix": "1200€", "delai": "10-15j" },
+      { "nom": "Premium", "prix": "2200€+", "delai": "3-4 semaines" }
+    ],
+    "options_carte": [
+      "Page supplémentaire — 150€",
+      "Logo — 200€",
+      "Google Business Profile — 80€",
+      "Pixel Meta — 60€",
+      "GA4 — 50€",
+      "Maintenance — 50€/mois",
+      "Modif post-livraison — 60€/h"
+    ]
+  },
+  "todo": {
+    "animations": "Ajouter les effets du repo /animations (spotlight hero, marquee stack, scroll reveal projets)",
+    "email": "Configurer Resend avec domaine vérifié pour le formulaire de contact",
+    "assets": "Vérifier que les images /assets/nettoyage-hurepoix/ existent",
+    "seo": "Ajouter sitemap.xml + robots.txt + og:image"
+  }
+}
