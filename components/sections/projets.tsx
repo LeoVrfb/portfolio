@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight, ArrowUpRight } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
 import { motion } from "motion/react"
 import { projets } from "@/lib/projets"
 
@@ -39,14 +39,14 @@ export function ProjetsSection() {
             className="hidden md:flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group cursor-pointer"
           >
             Voir tout
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </Link>
         </motion.div>
 
         {/* Liste */}
-        <ul className="divide-y divide-border">
-          {projets.map((projet, i) => {
-            const tagStyle = TAG_COLORS[i % TAG_COLORS.length]
+        <ul className="divide-y divide-border/50">
+          {projets.slice(0, 3).map((projet, i) => {
+            const year = projet.date.split("-")[0]
             return (
               <motion.li
                 key={projet.slug}
@@ -57,32 +57,49 @@ export function ProjetsSection() {
               >
                 <Link
                   href={`/projets/${projet.slug}`}
-                  className="group flex items-center gap-6 py-6 transition-colors cursor-pointer"
+                  className="group flex items-center gap-6 py-7 transition-colors cursor-pointer"
                 >
-                  {/* Thumbnail */}
-                  <div className="relative w-20 h-14 rounded-lg overflow-hidden shrink-0 border border-border">
-                    <Image
-                      src={projet.img}
-                      alt={projet.titre}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                      sizes="80px"
-                    />
+                  {/* Vignette — image seule, sans overlay logo */}
+                  <div className="relative w-20 h-14 rounded-xl overflow-hidden shrink-0 border border-border/60">
+                    {projet.img ? (
+                      <Image
+                        src={projet.img}
+                        alt={projet.client}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        sizes="80px"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 bg-linear-to-br from-accent/20 to-zinc-900" />
+                    )}
                   </div>
 
-                  {/* Index + Info */}
+                  {/* Infos */}
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-3 mb-1">
-                      <span className="font-mono text-[10px] text-foreground/20 select-none">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <span className="text-[10px] text-muted-foreground uppercase tracking-[0.25em]">
-                        {projet.client}
+                    {/* Ligne 1 : logo + client (grand) + année */}
+                    <div className="flex items-center gap-2.5 mb-1">
+                      {projet.logo && (
+                        <div className="relative w-5 h-5 shrink-0">
+                          <Image
+                            src={projet.logo}
+                            alt={`Logo ${projet.clientShort ?? projet.client}`}
+                            fill
+                            className="object-contain"
+                            sizes="20px"
+                          />
+                        </div>
+                      )}
+                      <h3 className="text-lg font-bold leading-tight truncate transition-colors" style={{ color: "var(--accent)" }}>
+                        {projet.clientShort ?? projet.client}
+                      </h3>
+                      <span className="text-xs text-foreground/30 font-mono shrink-0">
+                        {year}
                       </span>
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground group-hover:text-accent transition-colors leading-tight truncate">
+                    {/* Ligne 2 : titre secondaire */}
+                    <p className="text-sm text-foreground/45 leading-snug truncate">
                       {projet.titre}
-                    </h3>
+                    </p>
                   </div>
 
                   {/* Tags */}
@@ -121,7 +138,7 @@ export function ProjetsSection() {
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
           >
             Voir tous les projets
-            <ArrowRight className="w-4 h-4" />
+            <ArrowUpRight className="w-4 h-4" />
           </Link>
         </motion.div>
       </div>

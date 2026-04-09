@@ -2,8 +2,13 @@ export type Projet = {
   slug: string;
   titre: string;
   client: string;
-  contexte: "pro" | "perso";
+  clientShort?: string;
+  logo?: string;
+  logos?: string[];
+  contexte: "agence" | "freelance" | "perso";
   description: string;
+  descriptionPublic?: string;
+  descriptionTech?: string;
   intro: string;
   img: string;
   images?: string[];
@@ -11,82 +16,149 @@ export type Projet = {
   tags: string[];
   technologies?: { nom: string; detail: string }[];
   caracteristiques?: string[];
+  pointsCles?: { label: string; items: string[] }[];
+  imageCaptions?: string[];
   challenges?: { titre: string; solution: string }[];
   resultats?: string;
+  credits?: { nom: string; role: string }[];
   date: string;
   url?: string;
+  enCours?: boolean;
 };
 
 export const projets: Projet[] = [
   {
     slug: "argedis-totalenergies",
-    titre: "Application interactive — producteurs locaux",
+    titre: "Carte interactive des producteurs locaux",
     client: "TotalEnergies · Argedis",
-    contexte: "pro",
+    clientShort: "TotalEnergies",
+    logo: "/logo-total.webp",
+    logos: ["/logo-total.webp", "/logo-argedis.png"],
+    contexte: "agence",
     description:
-      "Application déployée sur tablettes en stations-service pour mettre en avant les producteurs locaux partenaires sur une carte interactive.",
-    intro: `En tant que développeur front-end chez Artefact 3000, j'ai participé à la conception et au développement d'une application interactive pour Argedis, filiale de TotalEnergies. Déployée sur des tablettes dans les stations-service à l'échelle nationale, l'app permet aux clients de découvrir les producteurs locaux partenaires proches de chaque station — avec leur distance, leurs spécialités régionales et leurs coordonnées.`,
+      "Application tactile déployée sur des centaines de tablettes en stations TotalEnergies pour mettre en avant les producteurs locaux partenaires — administrée et mise à jour en continu.",
+    descriptionPublic:
+      "**Une interface pensée pour tous.** Simple, fluide, immédiate. Les visiteurs d'une station comprennent en un instant qui sont les producteurs locaux à proximité, où ils se trouvent, et ce qu'ils fabriquent.\n\n**Chaque région a son univers.** La carte change selon le territoire. Les couleurs changent. Les icônes changent. Chaque territoire a sa propre identité visuelle — un travail de design poussé pour ancrer l'utilisateur dans son terroir.\n\n**De producteur en producteur.** L'expérience est pensée pour la flânerie : un bouton, et on passe au suivant. Simple, accessible, sans friction — même pour les utilisateurs les moins à l'aise avec le digital.",
+    descriptionTech:
+      "Architecture Next.js 14 App Router entièrement statique. Toutes les routes [region]/[locale]/[station]/[producer] sont pré-générées au build via generateStaticParams — l'application fonctionne hors ligne une fois l'APK installé sur la tablette. Les contenus sont gérés via Contentful et mis à jour automatiquement toutes les 24h via un rebuild déclenché côté serveur. Application packagée en APK Android via @ducanh2912/next-pwa pour contourner les limitations d'installation sur les tablettes propriétaires des stations. Disponible en français et en anglais via le routing i18n natif Next.js.",
+    intro: `Si vous passez dans une station TotalEnergies, vous apercevrez certainement des écrans dans le rayon produits locaux — j'étais en charge de développer cette application. Développé chez Artefact 3000 pour Argedis, filiale de TotalEnergies, c'est une application **d'envergure nationale** qui met en valeur les producteurs locaux partenaires, déployée sur des centaines de tablettes à travers toute la France.`,
     img: "/assets/videoArgedis/argedis-img-bg.webp",
     images: [
-      "/assets/videoArgedis/argedis-img.png",
+      "/assets/videoArgedis/argedis-img-bg.webp",
       "/assets/videoArgedis/argedis-img1.png",
       "/assets/videoArgedis/argedis-img2.png",
       "/assets/videoArgedis/argedis-img3.png",
+      "/assets/videoArgedis/argedis-view-prod.png",
+      "/assets/videoArgedis/argedis-view-prod-en.png",
     ],
     video: "/assets/videoArgedis/argedis-record.mov",
-    tags: ["Next.js", "Contentful", "GraphQL", "Tailwind CSS", "PWA"],
+    tags: ["Next.js", "Contentful", "GraphQL", "APK Android"],
     technologies: [
       {
-        nom: "Next.js 13 (App Router)",
+        nom: "Next.js (App Router)",
         detail:
-          "Gestion asynchrone dans les composants serveur et performances optimales pour les tablettes.",
+          "Une route dynamique par région (/[region]), toutes les pages pré-générées au build via generateStaticParams. La sélection de la station, du producteur et de la langue est entièrement gérée par état client — aucun changement d'URL.",
       },
       {
         nom: "Contentful (Headless CMS)",
         detail:
-          "Gestion des contenus : photos, textes, et coordonnées des producteurs, modifiables sans redeploiement.",
+          "Gestion de l'ensemble des contenus : textes, photos, Lottie et coordonnées de chaque producteur. Modifiable par les équipes Argedis sans intervention développeur. Les données FR et EN sont chargées simultanément à l'ouverture.",
       },
       {
-        nom: "GraphQL",
-        detail: "Appels API structurés et efficaces pour ne charger que les données nécessaires.",
-      },
-      {
-        nom: "PWA → APK",
+        nom: "PWA → APK Android",
         detail:
-          "Initialement une PWA, convertie en APK pour compatibilité avec l'OS Android des tablettes en station.",
+          "L'application est packagée en APK pour l'installation sur les tablettes Android des stations. Grâce à la génération statique complète, elle fonctionne entièrement hors ligne. Le contenu se met à jour régulièrement via un rebuild automatique.",
       },
     ],
-    caracteristiques: [
-      "Carte interactive avec positionnement précis des producteurs locaux par région",
-      "Compatibilité offline : application statique accessible hors connexion",
-      "Déploiement national sur les tablettes Android des stations",
-      "Navigation fluide entre fiches fournisseurs et cartes régionales",
+    pointsCles: [
+      {
+        label: "Enjeux",
+        items: [
+          "Des centaines de tablettes déployées dans des stations TotalEnergies à travers toute la France",
+          "Des centaines de stations, et encore plus de producteurs référencés",
+        ],
+      },
+      {
+        label: "Défis",
+        items: [
+          "Fonctionnement hors ligne — l'application est packagée en APK Android, aucune connexion requise",
+          "Contenu mis à jour régulièrement, sans intervention technique",
+        ],
+      },
+      {
+        label: "Intérêt",
+        items: [
+          "Interface 100% tactile, disponible en français et en anglais",
+          "Chaque région dispose de son univers visuel propre",
+        ],
+      },
+    ],
+    imageCaptions: [
+      "Chaque région a son univers. L'image de la carte principale est un Lottie intégré — fond animé aux références culturelles locales — qui change entièrement d'une région à l'autre : **Provence-Alpes-Côte d'Azur** dans ses teintes dorées, **Bourgogne-Franche-Comté** dans ses violets profonds, **Bretagne** dans ses bleus océaniques.\n\nUn radial gradient adapte dynamiquement le fond à la couleur dominante du Lottie. Sur la carte, chaque producteur est positionné à sa place exacte sur le territoire, relié au logo TotalEnergies par des traits en pointillé. Une main animée invite l'utilisateur à parcourir les producteurs dans le sens des aiguilles d'une montre.",
+      "Au clic sur un portrait, la carte s'efface et laisse place à la fiche complète : photo, story, produits, distance depuis la station. **Précédent** et **suivant** à portée de doigt.\n\nLa navigation entre producteurs s'accompagne d'un crossfade sur la photo (Framer Motion) et d'une animation fluide sur la hauteur du conteneur, qui s'ajuste selon la longueur du texte de chaque producteur.\n\nLe basculement **FR / EN** ne recharge pas la page — les deux versions sont chargées à l'ouverture de l'application.",
     ],
     challenges: [
       {
-        titre: "Positionnement pixel-perfect",
+        titre: "Transition carte principale → carte producteur",
         solution:
-          "Positionnement des producteurs sur des cartes régionales via des coordonnées x/y stockées dans Contentful, rendues fidèlement sur toutes résolutions de tablettes.",
+          "Au clic sur un producteur, la grande carte Lottie se réduit et se déplace pour rejoindre exactement la position de la carte producteur, puis disparaît en fondu. La carte producteur apparaît au même instant avec un léger scale et un délai coordonné via Framer Motion — pour que les deux cartes ne soient jamais visibles simultanément et que la transition paraisse continue.",
       },
       {
-        titre: "Compatibilité Android",
+        titre: "Animations de navigation entre producteurs",
         solution:
-          "Passage de la PWA à un APK pour contourner les limitations d'installation sur les tablettes propriétaires des stations.",
+          "Deux effets simultanés : un crossfade sur la photo (la photo suivante monte en opacité via Framer Motion pendant que l'actuelle disparaît) et une animation de hauteur sur le conteneur de texte. Comme height: auto ne s'anime pas nativement, un useRef mesure la hauteur réelle du contenu à chaque changement et met à jour un state en pixels — la transition CSS prend ensuite le relais.",
+      },
+      {
+        titre: "Positionnement pixel-perfect sur des centaines de cartes",
+        solution:
+          "Chaque producteur est positionné via des coordonnées x/y stockées dans Contentful. Le système s'adapte à toutes les résolutions de tablette pour un rendu fidèle sur chaque carte régionale.",
+      },
+      {
+        titre: "PWA → APK Android",
+        solution:
+          "Les PWA ne sont plus acceptées sur Android — et ne le seront bientôt plus non plus sur iOS. Impossible d'installer l'application comme une simple web app. Il a fallu convertir l'application en APK natif via un wrapper, en veillant à ce que le comportement reste identique — notamment le mode hors ligne.",
+      },
+      {
+        titre: "Génération statique complète (generateStaticParams)",
+        solution:
+          "Toutes les pages régions sont pré-générées au build via generateStaticParams — l'équivalent App Router des anciens getStaticProps / getStaticPaths. C'est aussi ce qui rend l'APK viable offline : toutes les données, images et contenus sont embarqués au build. Changement de producteur, navigation FR/EN — tout est instantané, sans aucun appel réseau.",
+      },
+      {
+        titre: "Langue sans routing",
+        solution:
+          "Le basculement FR/EN ne passe pas par l'URL. Les deux versions des données Contentful sont chargées simultanément à l'initialisation. Un simple état client permute entre les deux — invisible pour l'utilisateur, immédiat à l'écran.",
+      },
+      {
+        titre: "Maintenance à l'échelle de centaines de producteurs",
+        solution:
+          "L'architecture Contentful permet à des équipes non-développeurs de gérer l'ensemble du contenu — ajout de producteurs, mise à jour des textes, photos, Lottie — sans aucune intervention technique.",
       },
     ],
     resultats:
-      "L'application a renforcé la visibilité des producteurs locaux et amélioré l'expérience client dans les stations Total. Déployée à l'échelle nationale, elle a touché des centaines de producteurs et mis en avant les spécialités régionales dans une interface claire.",
-    date: "2024-12",
+      "Des centaines de stations TotalEnergies équipées à travers toute la France. Les producteurs locaux disposent d'une vitrine digitale permanente, visible par des millions de voyageurs. Un produit vivant, maintenu et enrichi en continu depuis 2024.",
+    credits: [
+      { nom: "Mathieu Crochet", role: "Manager & aide au développement · Artefact 3000" },
+      { nom: "Dwizil Sèche", role: "Designer associé · Artefact 3000" },
+      { nom: "Pauline Ravel", role: "Designer associé · Artefact 3000" },
+    ],
+    date: "2024-02",
   },
   {
     slug: "sweetime-adp-extime",
     titre: "Jeu à gratter virtuel",
-    client: "Aéroports de Paris · Extime",
-    contexte: "pro",
+    client: "Aéroports de Paris (Groupe ADP) · Extime",
+    clientShort: "Aéroports de Paris (Groupe ADP)",
+    logo: "/logo-adp.png",
+    logos: ["/logo-adp.png", "/logo-extime.png"],
+    contexte: "agence",
     description:
       "Jeu concours digital pour les voyageurs d'ADP : un ticket à gratter virtuel pour gagner des réductions dans les boutiques Extime.",
+    descriptionPublic:
+      "Dans les aéroports de Paris, les voyageurs pouvaient tenter leur chance en grattant un ticket virtuel pour remporter des réductions dans les boutiques Extime. Une expérience rapide, tactile, conçue pour être jouée en quelques secondes avant d'embarquer.",
+    descriptionTech:
+      "Next.js 13 avec App Router et Server Components. Base de données MongoDB via Mongoose pour la gestion des participations et la déduplication (une tentative par appareil). Containerisation Docker pour le déploiement sur l'infrastructure ADP. Internationalisation complète FR/EN pour les voyageurs internationaux. Animation de grattage custom sur canvas.",
     intro: `Pour Extime, la marque retail des Aéroports de Paris, j'ai développé un jeu concours digital permettant aux voyageurs de tenter leur chance via un mécanisme de grattage virtuel. En cas de gain, ils recevaient un code de réduction valable dans les boutiques de l'aéroport. L'application était déployée sur l'ensemble des terminaux de Roissy.`,
-    img: "/assets/sweetime/sweetime-factory-img.webp",
+    img: "/assets/sweetime/sweetime-nano.png",
     video: "/assets/sweetime/sweetime-record.mov",
     tags: ["Next.js 13", "MongoDB", "Mongoose", "Docker", "i18n", "Tailwind CSS"],
     technologies: [
@@ -134,11 +206,15 @@ export const projets: Projet[] = [
     slug: "hurepoix-nettoyage",
     titre: "Site vitrine entreprise de nettoyage",
     client: "Hurepoix Nettoyage",
-    contexte: "perso",
+    contexte: "freelance",
     description:
       "Site vitrine moderne pour une entreprise de nettoyage professionnelle en Essonne. Design soigné, SEO optimisé, formulaire de devis.",
+    descriptionPublic:
+      "Hurepoix Nettoyage avait besoin d'un site qui inspire confiance au premier coup d'œil. Design sur mesure, sans template, avec un formulaire de devis en ligne et une galerie de réalisations. Résultat : leurs premières demandes en ligne ont suivi dans les jours après la mise en ligne.",
+    descriptionTech:
+      "Site statique Next.js optimisé pour le SEO local : balises title/description sur mesure, sitemap XML, Schema.org LocalBusiness. Formulaire de devis avec Resend pour l'envoi d'emails directs. Déploiement Vercel avec certificat SSL et domaine personnalisé configuré. Score Lighthouse > 95 sur tous les axes.",
     intro: `Création du site vitrine de Hurepoix Nettoyage, entreprise de nettoyage professionnel basée en Essonne. Le site présente les prestations, les zones d'intervention, des photos des réalisations et dispose d'un formulaire de demande de devis en ligne. Design entièrement personnalisé, optimisé pour le référencement local et responsive sur tous les appareils.`,
-    img: "/assets/nettoyage-hurepoix/img1.jpg",
+    img: "/assets/nettoyage-hurepoix/net-hur.png",
     images: [
       "/assets/nettoyage-hurepoix/img2.jpg",
       "/assets/nettoyage-hurepoix/img3.jpg",
@@ -173,6 +249,189 @@ export const projets: Projet[] = [
       "Site livré en moins de 10 jours, référencé sur Google dès la première semaine. Le client a reçu ses premières demandes de devis en ligne dans les jours suivant la mise en ligne.",
     date: "2024-11",
     url: "https://hurepoix-nettoyage.fr",
+  },
+  {
+    slug: "bnp-paribas-elearning",
+    titre: "Plateforme e-learning IA",
+    client: "BNP Paribas",
+    clientShort: "BNP Paribas",
+    contexte: "agence",
+    description:
+      "Plateforme e-learning interne pour initier des milliers de collaborateurs de BNP Paribas aux fondamentaux et aux usages de l'IA.",
+    descriptionPublic:
+      "Un parcours e-learning interactif conçu pour des milliers d'employés de BNP Paribas, pour les former aux enjeux et aux usages pratiques de l'intelligence artificielle. Interface claire, contenu progressif, expérience engageante qui rend l'IA accessible à tous les profils.",
+    descriptionTech:
+      "Architecture Next.js App Router avec système de modules et de chapitres à progression persistante. Animations Framer Motion pour rendre l'apprentissage dynamique. Intégration d'un back-office pour la gestion du contenu pédagogique. Déployé sur l'infrastructure interne BNP avec contraintes SSO.",
+    intro: `Dans le cadre d'un projet stratégique chez Artefact pour BNP Paribas, j'ai développé une plateforme e-learning interne pour former les collaborateurs aux fondamentaux de l'IA. Le parcours couvre les concepts clés, les cas d'usage métier et les bonnes pratiques d'utilisation des outils IA — le tout dans une interface conçue pour être engageante et accessible à des profils non-techniques.`,
+    img: "",
+    tags: ["Next.js", "TypeScript", "Framer Motion", "Tailwind CSS"],
+    technologies: [
+      {
+        nom: "Next.js App Router",
+        detail: "Architecture modulaire avec gestion de la progression côté serveur.",
+      },
+      {
+        nom: "Framer Motion",
+        detail: "Transitions et animations pour rendre l'apprentissage dynamique et engageant.",
+      },
+      {
+        nom: "TypeScript",
+        detail: "Typage strict pour une base de code maintenable sur le long terme.",
+      },
+    ],
+    caracteristiques: [
+      "Parcours de formation en modules et chapitres progressifs",
+      "Suivi de progression persistant par utilisateur",
+      "Interface adaptée aux profils non-techniques",
+      "Déployé sur l'environnement interne BNP Paribas",
+    ],
+    date: "2025-04",
+  },
+  {
+    slug: "make-a-scene",
+    titre: "App de prompting pour la génération d'images IA",
+    client: "Artefact (interne)",
+    contexte: "agence",
+    description:
+      "Application interne Artefact pour apprendre à prompter efficacement les modèles de génération d'images IA.",
+    descriptionPublic:
+      "Make a Scene est une application pédagogique conçue pour Artefact : elle guide les utilisateurs pas à pas pour apprendre à rédiger des prompts efficaces et générer des images avec l'IA. Ludique, visuel, immédiatement engageant — l'apprentissage par la pratique.",
+    descriptionTech:
+      "Intégration d'une API de génération d'images. Frontend React/Next.js avec système de niveaux et de progression. État global géré avec Zustand. Feedback visuel en temps réel sur la qualité des prompts.",
+    intro: `Make a Scene est un projet interne développé pour Artefact afin de former les équipes à la génération d'images par IA. L'application propose un parcours interactif pour apprendre à structurer et optimiser ses prompts — avec génération en direct pour voir l'impact immédiat de chaque modification.`,
+    img: "",
+    tags: ["Next.js", "TypeScript", "OpenAI API", "Tailwind CSS", "Zustand"],
+    technologies: [
+      {
+        nom: "OpenAI / Génération d'images",
+        detail: "Intégration d'une API de génération d'images pour le feedback en temps réel.",
+      },
+      {
+        nom: "Zustand",
+        detail: "Gestion de l'état de progression et des sessions utilisateur.",
+      },
+      {
+        nom: "Next.js",
+        detail: "Server Actions pour sécuriser les appels API sans exposer les clés.",
+      },
+    ],
+    caracteristiques: [
+      "Parcours d'apprentissage par niveaux progressifs",
+      "Génération d'images en temps réel pour voir l'impact des prompts",
+      "Système de score et de progression",
+      "Interface conçue pour être utilisée en équipe en ateliers",
+    ],
+    date: "2025-10",
+  },
+  {
+    slug: "bald-artiste",
+    titre: "Site vitrine artiste peintre",
+    client: "Bald",
+    contexte: "freelance",
+    description:
+      "Site portfolio pour Bald, peintre abstrait — galerie d'œuvres en plein écran, bio et contact.",
+    descriptionPublic:
+      "Création du site portfolio de Bald, peintre abstrait. Une expérience visuelle qui met en valeur les œuvres : galerie en plein écran, transitions fluides, design épuré qui laisse toute la place à la peinture. Le site, c'est le musée.",
+    descriptionTech:
+      "Site Next.js statique avec optimisation d'images Next/Image pour des chargements rapides. Galerie avec lightbox custom et transitions Framer Motion. Entièrement statique pour des performances maximales. Déployé sur Vercel avec domaine personnalisé.",
+    intro: `Portfolio digital pour Bald, peintre abstrait. L'enjeu était simple : que le site disparaisse au profit de l'œuvre. Design minimaliste, galerie en plein écran, navigation fluide entre les séries. Un site qui respire.`,
+    img: "",
+    tags: ["Next.js", "Tailwind CSS", "Framer Motion", "Vercel"],
+    technologies: [
+      {
+        nom: "Next.js (statique)",
+        detail: "Site entièrement statique pour des performances maximales et un hébergement simple.",
+      },
+      {
+        nom: "Framer Motion",
+        detail: "Transitions entre les œuvres et animations d'entrée pour une navigation fluide.",
+      },
+      {
+        nom: "Next/Image",
+        detail: "Optimisation automatique des images haute résolution des œuvres.",
+      },
+    ],
+    caracteristiques: [
+      "Galerie en plein écran avec navigation au clavier",
+      "Lightbox custom pour explorer les détails des œuvres",
+      "Design minimaliste centré sur les visuels",
+      "Optimisation des images haute résolution",
+    ],
+    date: "2026-02",
+  },
+  {
+    slug: "memorized",
+    titre: "Assistant de mémoire personnel",
+    client: "Projet personnel",
+    contexte: "perso",
+    description:
+      "App de mémorisation basée sur la répétition espacée — à commercialiser prochainement.",
+    descriptionPublic:
+      "Memorized est un assistant qui vous aide à retenir ce qui compte vraiment : concepts, idées, apprentissages. Basé sur la répétition espacée et des revues intelligentes. En cours de développement, bientôt disponible.",
+    descriptionTech:
+      "Stack Next.js + Convex pour la base de données temps réel. Algorithme de répétition espacée (SM-2) implémenté côté serveur. Authentification avec Clerk. UI responsive avec shadcn/ui. Architecture pensée pour une commercialisation SaaS.",
+    intro: `Memorized est un projet personnel que je développe pour mieux retenir mes apprentissages. L'application utilise l'algorithme de répétition espacée SM-2 pour planifier automatiquement les révisions au bon moment. Je prévois de le commercialiser prochainement en SaaS.`,
+    img: "",
+    tags: ["Next.js", "Convex", "Clerk", "TypeScript", "shadcn/ui"],
+    technologies: [
+      {
+        nom: "Convex",
+        detail: "Base de données temps réel avec synchronisation instantanée entre sessions.",
+      },
+      {
+        nom: "Algorithme SM-2",
+        detail: "Répétition espacée : chaque révision est planifiée au moment optimal pour maximiser la rétention.",
+      },
+      {
+        nom: "Clerk",
+        detail: "Authentification complète avec gestion des sessions multi-appareils.",
+      },
+    ],
+    caracteristiques: [
+      "Révisions planifiées par l'algorithme SM-2",
+      "Synchronisation temps réel entre appareils",
+      "Interface épurée pour une session de révision sans friction",
+      "Architecture prête pour une commercialisation SaaS",
+    ],
+    date: "2025-03",
+    enCours: true,
+  },
+  {
+    slug: "prof-de-langue",
+    titre: "Plateforme SaaS pour profs de langue",
+    client: "Projet personnel",
+    contexte: "perso",
+    description:
+      "Plateforme SaaS en cours de création pour les professeurs de langues indépendants : gestion élèves, planning, facturation.",
+    descriptionPublic:
+      "Un outil conçu pour les professeurs de langues indépendants : gestion des élèves, planning de cours, suivi de progression et facturation intégrée. Tout ce dont un prof freelance a besoin, au même endroit. Projet en cours de développement.",
+    descriptionTech:
+      "Architecture SaaS multi-tenant avec Next.js App Router. Paiements Stripe Connect pour la facturation entre profs et élèves. Base de données PostgreSQL via Supabase. Auth.js pour l'authentification. Panel d'administration dédié par enseignant.",
+    intro: `Une plateforme SaaS que je développe pour les professeurs de langues indépendants. L'objectif : leur donner un outil professionnel complet pour gérer leur activité — sans avoir à jongler entre 3 outils différents. En cours de développement.`,
+    img: "",
+    tags: ["Next.js", "Supabase", "Stripe", "TypeScript", "PostgreSQL"],
+    technologies: [
+      {
+        nom: "Supabase (PostgreSQL)",
+        detail: "Base de données relationnelle avec Row Level Security pour l'isolation multi-tenant.",
+      },
+      {
+        nom: "Stripe Connect",
+        detail: "Facturation et paiements entre enseignants et élèves via la marketplace Stripe.",
+      },
+      {
+        nom: "Next.js App Router",
+        detail: "Architecture full-stack avec Server Actions pour les mutations et les formulaires.",
+      },
+    ],
+    caracteristiques: [
+      "Gestion des élèves et des cours par enseignant",
+      "Planning de cours avec vue calendrier",
+      "Facturation intégrée via Stripe",
+      "Multi-tenant : chaque prof a son espace isolé",
+    ],
+    date: "2025-03",
+    enCours: true,
   },
 ];
 
