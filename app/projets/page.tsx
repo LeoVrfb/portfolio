@@ -20,7 +20,7 @@ export default function ProjetsPage() {
           <br />
           <span className="text-foreground/20">sélectionnés.</span>
         </h1>
-        <p className="text-muted-foreground text-base max-w-lg leading-relaxed">
+        <p className="text-foreground/70 text-base max-w-lg leading-relaxed">
           Une sélection de projets qui m'ont particulièrement marqué — réalisés en entreprise, en freelance ou pour moi-même. Applications, plateformes et sites web.
         </p>
       </div>

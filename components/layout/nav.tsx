@@ -107,7 +107,7 @@ export function Nav() {
                     "relative z-10 text-sm transition-colors duration-200 cursor-pointer tracking-wide",
                     isActive
                       ? "text-white font-medium"
-                      : "text-zinc-500 hover:text-zinc-200"
+                      : "text-foreground/75 hover:text-white"
                   )}
                 >
                   {label}
@@ -152,7 +152,7 @@ export function Nav() {
                     "flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-colors",
                     isActive
                       ? "text-white font-medium"
-                      : "text-zinc-500 hover:text-zinc-200 hover:bg-white/4"
+                      : "text-foreground/75 hover:text-white hover:bg-white/4"
                   )}
                 >
                   {isActive && <span className="w-1 h-1 rounded-full bg-accent" />}

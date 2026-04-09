@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight, Search, X } from "lucide-react";
@@ -69,10 +69,10 @@ const CONTEXT_LABEL: Record<Projet["contexte"], string> = {
   perso: "Perso",
 };
 
-const CONTEXT_CLASS: Record<Projet["contexte"], string> = {
-  agence: "border-accent/30 bg-accent/10 text-accent",
-  freelance: "border-(--lavender)/30 bg-(--lavender)/10 text-(--lavender)",
-  perso: "border-zinc-700/50 bg-zinc-900/50 text-zinc-400",
+const CONTEXT_STYLE: Record<Projet["contexte"], React.CSSProperties> = {
+  agence:    { color: "var(--accent)",  borderColor: "rgba(162,226,208,0.5)",  background: "rgba(162,226,208,0.13)" },
+  freelance: { color: "var(--mauve)",   borderColor: "rgba(199,142,204,0.55)", background: "rgba(199,142,204,0.14)" },
+  perso:     { color: "#94a3b8",        borderColor: "rgba(148,163,184,0.35)", background: "rgba(148,163,184,0.1)"  },
 };
 
 function ProjectCard({ projet, index }: { projet: Projet; index: number }) {
@@ -110,10 +110,8 @@ function ProjectCard({ projet, index }: { projet: Projet; index: number }) {
       {/* Top row: context badge · enCours · arrow */}
       <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
         <span
-          className={cn(
-            "text-[10px] font-semibold px-2.5 py-1 rounded-full border backdrop-blur-sm uppercase tracking-wider",
-            CONTEXT_CLASS[projet.contexte]
-          )}
+          className="text-[10px] font-semibold px-2.5 py-1 rounded-full border backdrop-blur-sm uppercase tracking-wider"
+          style={CONTEXT_STYLE[projet.contexte]}
         >
           {CONTEXT_LABEL[projet.contexte]}
         </span>
@@ -152,7 +150,8 @@ function ProjectCard({ projet, index }: { projet: Projet; index: number }) {
             </div>
           )}
         </div>
-        <p className="text-xs text-zinc-400">{projet.titre}</p>
+        <p className="text-xs text-white/80">{projet.titre}</p>
+        <p className="text-[10px] text-white/45 mt-1 font-mono tracking-wider">{projet.date.slice(0, 4)}</p>
       </div>
 
       {/* Description — fades in at the bottom where the title was */}
@@ -186,7 +185,7 @@ function FilterPills({
             "text-xs px-3 py-1.5 rounded-full border transition-all duration-150 cursor-pointer",
             value === opt.value
               ? "border-accent/60 bg-accent/10 text-accent"
-              : "border-foreground/20 text-foreground/60 hover:text-foreground/90 hover:border-foreground/40"
+              : "border-foreground/20 text-foreground/90 hover:border-foreground/40"
           )}
         >
           {opt.label}
@@ -233,7 +232,7 @@ export function ProjetsGrid() {
             placeholder="Rechercher un projet..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-8 pr-8 py-2 rounded-lg border border-foreground/15 bg-foreground/5 text-sm text-foreground/80 placeholder:text-foreground/30 focus:outline-none focus:border-foreground/30 transition-colors"
+            className="w-full pl-8 pr-8 py-2 rounded-lg border border-foreground/15 bg-foreground/5 text-sm text-foreground/80 placeholder:text-foreground/80 focus:outline-none focus:border-foreground/30 transition-colors"
           />
           {search && (
             <button
@@ -249,7 +248,7 @@ export function ProjetsGrid() {
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
           {/* Type */}
           <div className="flex items-center gap-2.5">
-            <span className="text-xs text-foreground/70 font-medium uppercase tracking-wider shrink-0">
+            <span className="text-xs text-foreground font-medium uppercase tracking-wider shrink-0">
               Type
             </span>
             <FilterPills
@@ -267,7 +266,7 @@ export function ProjetsGrid() {
 
           {/* Année */}
           <div className="flex items-center gap-2.5">
-            <span className="text-xs text-foreground/70 font-medium uppercase tracking-wider shrink-0">
+            <span className="text-xs text-foreground font-medium uppercase tracking-wider shrink-0">
               Année
             </span>
             <FilterPills

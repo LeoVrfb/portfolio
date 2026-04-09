@@ -14,7 +14,7 @@ const TAG_COLORS = [
 
 export function ProjetsSection() {
   return (
-    <section className="py-28 bg-background">
+    <section className="pt-14 pb-24 bg-background">
       <div className="layout-container">
         {/* Header */}
         <motion.div
@@ -25,7 +25,7 @@ export function ProjetsSection() {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <div>
-            <p className="text-xs uppercase tracking-[0.4em] text-muted-foreground font-medium mb-3">
+            <p className="text-xs uppercase tracking-[0.4em] text-accent font-medium mb-3">
               Projets sélectionnés
             </p>
             <h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-tighter leading-[0.95]">

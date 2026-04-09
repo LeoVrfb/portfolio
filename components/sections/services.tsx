@@ -82,7 +82,7 @@ export function ServicesSection() {
             const cardColors = [
               { border: "border-accent/40 bg-accent/5 shadow-accent/10", price: "text-accent" },
               { border: "border-[var(--lavender)]/50 bg-[var(--lavender)]/5 shadow-[var(--lavender)]/10", price: "text-[var(--lavender)]" },
-              { border: "border-[var(--mauve)]/40 bg-[var(--mauve)]/5 shadow-[var(--mauve)]/10", price: "text-[var(--mauve)]" },
+              { border: "border-[var(--gold)]/40 bg-[var(--gold)]/5 shadow-[var(--gold)]/10", price: "text-[var(--gold)]" },
             ]
             const c = formule.highlighted ? cardColors[1] : i === 0 ? cardColors[0] : cardColors[2]
             return (
@@ -112,22 +112,22 @@ export function ServicesSection() {
                       {formule.prix}
                     </span>
                   </div>
-                  <p className="text-sm font-medium text-muted-foreground italic mb-2">
+                  <p className="text-sm font-medium text-accent italic mb-2">
                     « {formule.accroche} »
                   </p>
-                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground/60">
+                  <div className="flex items-center gap-1.5 text-xs text-foreground/90">
                     <Clock className="w-3.5 h-3.5" />
                     {formule.delai}
                   </div>
                 </div>
 
-                <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
+                <p className="text-sm text-foreground/65 mb-6 leading-relaxed">
                   {formule.description}
                 </p>
 
                 <ul className="space-y-2.5 mb-8 flex-1">
                   {formule.inclus.map((item) => (
-                    <li key={item} className="flex items-start gap-2.5 text-sm text-foreground/70">
+                    <li key={item} className="flex items-start gap-2.5 text-sm text-foreground/90">
                       <Check className="w-3.5 h-3.5 mt-0.5 shrink-0 text-accent" />
                       {item}
                     </li>

@@ -110,7 +110,9 @@ export default function ServicesPage() {
             className={`relative rounded-2xl border p-8 flex flex-col ${
               formule.highlighted
                 ? "border-accent/50 bg-accent/5"
-                : "border-border/50 bg-card"
+                : formule.nom === "Premium"
+                  ? "border-[var(--gold)]/30 bg-[var(--gold)]/5"
+                  : "border-border/50 bg-card"
             }`}
           >
             {formule.highlighted && (
@@ -125,11 +127,16 @@ export default function ServicesPage() {
               <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-2">
                 {formule.nom}
               </p>
-              <div className="text-4xl font-bold mb-2">{formule.prix}</div>
+              <div
+                className="text-4xl font-bold mb-2"
+                style={formule.nom === "Premium" ? { color: "var(--gold)" } : undefined}
+              >
+                {formule.prix}
+              </div>
               <p className="text-sm font-medium text-muted-foreground italic mb-2">
                 « {formule.accroche} »
               </p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-foreground/90">
                 Délai : {formule.delai}
               </p>
             </div>
@@ -140,7 +147,7 @@ export default function ServicesPage() {
 
             <div className="flex-1 space-y-2 mb-8">
               {formule.inclus.map((item) => (
-                <div key={item} className="flex items-start gap-2.5 text-sm">
+                  <div key={item} className="flex items-start gap-2.5 text-sm text-foreground/90">
                   <Check size={14} className="text-accent mt-0.5 shrink-0" />
                   <span>{item}</span>
                 </div>

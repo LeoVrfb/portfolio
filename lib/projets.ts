@@ -52,7 +52,7 @@ export const projets: Projet[] = [
       "/assets/videoArgedis/argedis-view-prod-en.png",
     ],
     video: "/assets/videoArgedis/argedis-record.mov",
-    tags: ["Next.js", "Contentful", "GraphQL", "APK Android"],
+    tags: ["Next.js", "Contentful", "GraphQL", "Framer Motion", "APK Android"],
     technologies: [
       {
         nom: "Next.js (App Router)",
@@ -63,6 +63,11 @@ export const projets: Projet[] = [
         nom: "Contentful (Headless CMS)",
         detail:
           "Gestion de l'ensemble des contenus : textes, photos, Lottie et coordonnées de chaque producteur. Modifiable par les équipes Argedis sans intervention développeur. Les données FR et EN sont chargées simultanément à l'ouverture.",
+      },
+      {
+        nom: "Framer Motion",
+        detail:
+          "Utilisé pour les transitions entre producteurs (crossfade photo + hauteur animée du conteneur de texte via useRef), la transition carte principale → carte producteur, et les animations d'apparition/disparition via AnimatePresence.",
       },
       {
         nom: "PWA → APK Android",
@@ -145,7 +150,7 @@ export const projets: Projet[] = [
   },
   {
     slug: "sweetime-adp-extime",
-    titre: "Jeu à gratter virtuel",
+    titre: "Jeu à gratter virtuel — Sweetime Factory",
     client: "Aéroports de Paris (Groupe ADP) · Extime",
     clientShort: "Aéroports de Paris (Groupe ADP)",
     logo: "/logo-adp.png",
@@ -154,53 +159,101 @@ export const projets: Projet[] = [
     description:
       "Jeu concours digital pour les voyageurs d'ADP : un ticket à gratter virtuel pour gagner des réductions dans les boutiques Extime.",
     descriptionPublic:
-      "Dans les aéroports de Paris, les voyageurs pouvaient tenter leur chance en grattant un ticket virtuel pour remporter des réductions dans les boutiques Extime. Une expérience rapide, tactile, conçue pour être jouée en quelques secondes avant d'embarquer.",
-    descriptionTech:
-      "Next.js 13 avec App Router et Server Components. Base de données MongoDB via Mongoose pour la gestion des participations et la déduplication (une tentative par appareil). Containerisation Docker pour le déploiement sur l'infrastructure ADP. Internationalisation complète FR/EN pour les voyageurs internationaux. Animation de grattage custom sur canvas.",
-    intro: `Pour Extime, la marque retail des Aéroports de Paris, j'ai développé un jeu concours digital permettant aux voyageurs de tenter leur chance via un mécanisme de grattage virtuel. En cas de gain, ils recevaient un code de réduction valable dans les boutiques de l'aéroport. L'application était déployée sur l'ensemble des terminaux de Roissy.`,
+      "**Un ticket, une chance.** Le voyageur arrive sur l'écran d'accueil, invité à tenter sa chance. Il saisit son email — la carte se retourne alors pour révéler sa zone de grattage. Tout est pensé pour être joué en quelques secondes, debout, avant d'embarquer.\n\n**Gratter pour révéler.** La récompense est cachée sous une surface tactile dessinée sur canvas. Le joueur gratte avec le doigt — et le gain apparaît automatiquement : **sucette**, **réduction -5%** ou **réduction -20%**.\n\n**Une expérience en six étapes.** Accueil → saisie email → flip de carte → grattage → résultat gagnant ou écran dommage. Chaque transition est animée, chaque étape se succède sans rechargement — une expérience fluide du début à la fin.",
+    intro: `Pour Extime, la marque de luxe travel retail des Aéroports de Paris, j'ai développé un jeu concours digital qui a touché **des centaines de milliers d'utilisateurs** en quelques semaines seulement. Les voyageurs recevaient un **bon physique avec QR code** à l'achat en boutique — en le scannant, ils accédaient au jeu et pouvaient gratter un ticket virtuel pour remporter une **récompense** : **sucette** ou **code de réduction** valable dans les boutiques de l'aéroport.`,
     img: "/assets/sweetime/sweetime-nano.png",
     video: "/assets/sweetime/sweetime-record.mov",
-    tags: ["Next.js 13", "MongoDB", "Mongoose", "Docker", "i18n", "Tailwind CSS"],
+    tags: ["Next.js", "MongoDB", "Canvas", "Storybook", "Lottie", "i18next"],
     technologies: [
       {
-        nom: "Next.js 13",
-        detail: "Server Components et App Router pour des performances optimales et un rendu hybride.",
+        nom: "Next.js (App Router)",
+        detail:
+          "L'interface est côté client, mais exposer MongoDB directement au navigateur serait une faille critique — sur une opération de cette envergure, le moindre bug d'attribution pourrait distribuer des centaines de récompenses en masse et pénaliser la marque. Les API routes Next.js tournent côté serveur et servent de proxy sécurisé : elles valident chaque requête avant tout accès à la base. Contrairement à un projet React seul, Next.js permet de coexister interface et logique serveur dans un même repo, sans avoir à déployer un backend séparé.",
       },
       {
         nom: "MongoDB + Mongoose",
-        detail: "Gestion des participations, stockage des gagnants et prévention des tentatives multiples.",
-      },
-      {
-        nom: "Docker",
-        detail: "Containerisation du projet pour un déploiement cohérent sur l'infrastructure ADP.",
-      },
-      {
-        nom: "i18n",
         detail:
-          "Application disponible en français et en anglais pour les voyageurs internationaux.",
+          "La base devait absorber des milliers d'appels simultanés en pic sur une opération courte. MongoDB est parfaitement adapté à cette charge en écriture, avec des requêtes atomiques (findOneAndUpdate) pour éviter les doublons sous forte concurrence. La structure de document flexible correspond bien aux configs de probabilité variables par boutique.",
+      },
+      {
+        nom: "Canvas API",
+        detail:
+          "Le grattage est impossible à reproduire fidèlement avec du HTML/CSS standard. Canvas permet un contrôle pixel par pixel : dessiner la couche opaque puis l'effacer en mode destination-out pour révéler progressivement la récompense sous le doigt.",
+      },
+      {
+        nom: "Storybook",
+        detail:
+          "Avant de construire le funnel, les composants graphiques étaient nombreux (états de la carte, animations candy, cadre décoratif). Storybook a permis de valider chaque composant visuellement en isolation, sans avoir à naviguer dans tout le flow à chaque modification.",
+      },
+      {
+        nom: "react-lottie + Framer Motion",
+        detail:
+          "Deux besoins d'animation distincts : la pluie de bonbons est une séquence Lottie fournie par le design (jouée une seule fois au gain), les transitions et décorations candy utilisent Framer Motion pour le contrôle programmatique. Utiliser Lottie pour les animations pré-rendues évite de les recréer à la main.",
+      },
+      {
+        nom: "i18next",
+        detail:
+          "Pas de navigation, pas de rechargement — le terminal identifie l'utilisateur via les paramètres UTM dans l'URL. i18next permet de basculer entre français et anglais instantanément côté client, sans changement de route.",
       },
     ],
-    caracteristiques: [
-      "Mécanique de grattage virtuel animée, responsive et accessible",
-      "Système anti-fraude : une participation par appareil / session",
-      "Génération et envoi automatique de codes de réduction aux gagnants",
-      "Disponible en français et en anglais",
+    pointsCles: [
+      {
+        label: "Enjeux",
+        items: [
+          "Opération d'1 à 2 semaines sur l'ensemble des terminaux de Roissy — des centaines de milliers d'utilisateurs en très peu de temps",
+          "Disponibilité critique : aucune interruption tolérée pendant le jeu concours",
+        ],
+      },
+      {
+        label: "Défis",
+        items: [
+          "Anti-fraude double couche : cookie client par terminal + vérification MongoDB par email",
+          "Distribution probabiliste avec stocks limités — si une tranche est épuisée, le tirage atterrit sur 'Dommage', sans rebond vers un autre gain",
+        ],
+      },
+      {
+        label: "Intérêt",
+        items: [
+          "Expérience gamifiée complète : flip de carte, grattage tactile, pluie de bonbons Lottie et QR code à capturer",
+          "Disponible en français et en anglais, sans création de compte",
+        ],
+      },
     ],
     challenges: [
       {
-        titre: "Gestion des participations en temps réel",
+        titre: "Canvas scratch card et cadre responsive",
         solution:
-          "Architecture MongoDB optimisée pour gérer les pics de trafic aux heures de départ, avec déduplication côté serveur.",
+          "L'image de couverture est dessinée sur un canvas avec drawImage. Pour effacer les pixels sous le doigt, globalCompositeOperation est passé en destination-out — ce mode rend les pixels transparents au lieu d'ajouter de la couleur. Le long du trajet, des cercles de rayon 25px sont dessinés à chaque pixel de distance via Math.sin/cos(angle), ce qui crée un tracé lisse même à vitesse élevée. Le pourcentage gratté est calculé en échantillonnant 1 pixel sur 32 et en comptant ceux dont l'alpha vaut 0. Quand le seuil est atteint, le canvas disparaît avec une transition CSS opacity et est retiré du DOM. Le cadre décoratif rouge et blanc (style bonbon) est lui aussi dessiné sur canvas avec drawImage : les dimensions réelles du container sont mesurées par un useRef et le cadre est redessiné à chaque changement de taille, ce qui évite tout écrasement sur les petits écrans.",
       },
       {
-        titre: "Expérience tactile dans un environnement aéroport",
+        titre: "Card flip + funnel en state machine",
         solution:
-          "Interface conçue pour être utilisée debout, sans compte, en quelques secondes — optimisée pour les terminaux tactiles.",
+          "ReactCardFlip enveloppe le formulaire email (face avant) et la carte à gratter (face arrière). Le flip se déclenche uniquement après validation de l'email et attribution du gain — la récompense est donc connue avant que la carte ne se retourne. L'ensemble du funnel est modélisé en state machine à 6 états : main, form, flip, scratch, congrats, dommage.",
+      },
+      {
+        titre: "Anti-fraude : QR code physique + double vérification",
+        solution:
+          "L'accès au jeu passe par un QR code remis physiquement en boutique (Relay, Extime Duty Free...) — impossible d'y accéder sans ce bon. L'URL embarque les paramètres utm_source et utm_term qui identifient la borne exacte. Deux vérifications s'enchaînent ensuite : un cookie nommé utm_source-utm_term côté client bloque immédiatement toute tentative répétée depuis le même appareil, sans solliciter le serveur. Si le cookie est effacé, la vérification serveur prend le relais — l'email est comparé à la liste des joueurs enregistrés pour cette boutique dans MongoDB. La personne ne peut pas rejouer, qu'elle ait gagné ou perdu. En revanche, si quelqu'un utilise une adresse email différente après avoir vidé son cache, la première couche est contournable — le système repose donc sur la bonne foi et sur la contrainte du QR code physique à usage unique.",
+      },
+      {
+        titre: "Distribution probabiliste et gestion des stocks épuisés",
+        solution:
+          "Trois types de récompenses, chacun avec sa tranche de probabilité sur 100 : réduction -20% (5%), sucette (15%), réduction -5% (80%). Le flux complet tient en 4 appels API séquentiels : vérification si l'email a déjà joué pour ce magasin, tirage aléatoire et sélection du premier code disponible (isFind: false) dont la plage min/max correspond au nombre tiré, marquage du code comme utilisé, puis ajout de l'email dans la liste du store. Si le tirage tombe hors de toutes les plages ou que le stock est épuisé, l'API retourne 404 et le front bascule sur l'écran 'Dommage' — pas de rebond. Le stock par récompense est contrôlé via nb_gift_max (null = illimité) et nb_gift_find. Chaque code porte un champ award au format type_magasin (ex: sucette_edfp, 5%_relay) que le front parse pour afficher le bon message de gain.",
+      },
+      {
+        titre: "Animations : fond SVG rotatif, Lottie et Framer Motion",
+        solution:
+          "Le fond est un SVG de 4096×4096px positionné en absolu et animé par une rotation CSS permanente — deux vitesses selon l'écran (rapide sur l'accueil, lente ensuite). La pluie de bonbons au gain est une animation Lottie qui joue en une seule passe puis se masque via un callback onComplete. Les décorations candy (cannes, bonbons) glissent depuis les bords de l'écran via Framer Motion AnimatePresence dès que l'utilisateur quitte l'écran principal.",
       },
     ],
+    credits: [
+      { nom: "Mathieu Crochet", role: "Manager & architecture backend · Artefact 3000" },
+      { nom: "Vincent Blecher", role: "Head of Design · Artefact 3000" },
+      { nom: "Pauline Chapelle", role: "Designer · Artefact 3000" },
+    ],
     resultats:
-      "L'opération a attiré plusieurs centaines de milliers de participants avec un taux d'engagement supérieur aux attentes. Le jeu a contribué à augmenter le trafic en boutique pendant la période concernée.",
-    date: "2024-12",
+      "L'opération a attiré plusieurs centaines de milliers de participants sur une à deux semaines, avec un taux d'engagement supérieur aux attentes. Le jeu a contribué à augmenter le trafic dans les boutiques Extime pendant la période.",
+    date: "2024-11",
   },
   {
     slug: "hurepoix-nettoyage",

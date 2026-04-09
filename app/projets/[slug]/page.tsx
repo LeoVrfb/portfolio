@@ -34,7 +34,7 @@ function renderHighlight(text: string): React.ReactNode {
   const parts = text.split(/(\*\*[^*]+\*\*)/g);
   return parts.map((part, i) =>
     /^\*\*[^*]+\*\*$/.test(part) ? (
-      <strong key={i} className="font-semibold" style={{ color: "var(--accent)" }}>
+      <strong key={i} className="font-semibold accent-text" style={{ color: "var(--accent)" }}>
         {part.slice(2, -2)}
       </strong>
     ) : part
@@ -88,37 +88,6 @@ export default async function ProjetPage({ params }: Props) {
               {projet.client}
             </h1>
 
-            {/* Logos + année + badges */}
-            <div className="flex items-center gap-3 mb-4 flex-wrap">
-              {(projet.logos ?? (projet.logo ? [projet.logo] : [])).map((src, i) => (
-                <div key={i} className="relative w-9 h-9 shrink-0 rounded-lg overflow-hidden bg-white p-1">
-                  <Image src={src} alt="" fill className="object-contain p-0.5" sizes="36px" />
-                </div>
-              ))}
-              <span className="text-xs font-mono text-foreground/30 font-semibold">{year}</span>
-              <span
-                className="text-[10px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider"
-                style={
-                  projet.contexte === "agence"
-                    ? { color: "var(--accent)", borderColor: "var(--accent)", background: "hsl(163 24% 54% / 0.08)" }
-                    : projet.contexte === "freelance"
-                    ? { color: "var(--lavender)", borderColor: "var(--lavender)", background: "hsl(240 24% 70% / 0.08)" }
-                    : { color: "var(--mauve)", borderColor: "var(--mauve)", background: "hsl(328 24% 61% / 0.08)" }
-                }
-              >
-                {projet.contexte === "agence"
-                  ? "Mission studio · Artefact 3000"
-                  : projet.contexte === "freelance"
-                  ? "Freelance"
-                  : "Projet perso"}
-              </span>
-              {projet.enCours && (
-                <span className="text-[10px] font-medium px-2.5 py-1 rounded-full bg-zinc-800 border border-zinc-700 text-zinc-400 uppercase tracking-wider">
-                  En cours
-                </span>
-              )}
-            </div>
-
             {/* Titre app */}
             <p className="text-sm uppercase tracking-widest mb-6" style={{ color: "var(--accent)" }}>
               {projet.titre}
@@ -134,21 +103,21 @@ export default async function ProjetPage({ params }: Props) {
           <div className="space-y-3 lg:pt-2">
             <div className="p-5 rounded-xl border border-border bg-card space-y-4">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.25em] mb-1.5 font-semibold" style={{ color: "var(--accent)" }}>Client</p>
-                <div className="flex items-center gap-2 flex-wrap">
+                <p className="text-[10px] uppercase tracking-[0.25em] mb-2 font-semibold" style={{ color: "var(--accent)" }}>Client</p>
+                <div className="flex items-center gap-2.5 flex-wrap mb-1.5">
                   {(projet.logos ?? (projet.logo ? [projet.logo] : [])).map((src, i) => (
-                    <div key={i} className="relative w-6 h-6 shrink-0 rounded overflow-hidden bg-white p-0.5">
-                      <Image src={src} alt="" fill className="object-contain" sizes="24px" />
+                    <div key={i} className="relative w-9 h-9 shrink-0 rounded-lg overflow-hidden bg-white p-1">
+                      <Image src={src} alt="" fill className="object-contain p-0.5" sizes="36px" />
                     </div>
                   ))}
-                  <p className="text-sm font-semibold text-foreground">{projet.client}</p>
                 </div>
+                <p className="text-sm font-semibold text-foreground">{projet.client}</p>
               </div>
               <div>
                 <p className="text-[10px] uppercase tracking-[0.25em] mb-1.5 font-semibold" style={{ color: "var(--accent)" }}>Contexte</p>
                 <div className="flex items-center gap-1.5 text-sm text-foreground/80">
                   {projet.contexte === "agence" ? (
-                    <><Briefcase size={11} className="text-(--lavender)" /><span>Artefact 3000</span></>
+                    <><Briefcase size={11} className="text-(--lavender)" /><span>Mission studio · Artefact 3000</span></>
                   ) : projet.contexte === "freelance" ? (
                     <><User size={11} className="text-(--mauve)" /><span>Projet freelance</span></>
                   ) : (
@@ -206,8 +175,8 @@ export default async function ProjetPage({ params }: Props) {
             {/* Vidéo ou image principale */}
             <div>
               {projet.video ? (
-                <div>
-                  <video src={projet.video} autoPlay muted loop playsInline className="w-full block rounded-xl" />
+                <div className="flex justify-center">
+                  <video src={projet.video} autoPlay muted loop playsInline className="max-h-[520px] w-auto block rounded-xl" />
                 </div>
               ) : projet.img ? (
                 <div className="relative aspect-video rounded-xl overflow-hidden border border-border/60">
@@ -227,13 +196,13 @@ export default async function ProjetPage({ params }: Props) {
 
         {/* Points clés — labels en en-tête + liste unique, centré */}
         {projet.pointsCles && projet.pointsCles.length > 0 && (
-          <div className="flex flex-col items-center text-center">
-            <p className="text-xs font-medium uppercase tracking-wider text-foreground/35 mb-4">
+          <div className="flex flex-col items-center">
+            <p className="text-sm font-bold uppercase tracking-wider text-foreground mb-5">
               {projet.pointsCles.map((g) => g.label).join(" · ")}
             </p>
             <ul className="flex flex-col gap-2.5">
               {projet.pointsCles.flatMap((group) => group.items).map((item, i) => (
-                <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/65 leading-relaxed">
+                <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/65 leading-relaxed text-left">
                   <span className="w-1.5 h-1.5 rounded-full shrink-0 mt-[7px]" style={{ background: "var(--accent)" }} />
                   {item}
                 </li>

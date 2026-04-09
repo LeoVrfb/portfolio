@@ -25,8 +25,8 @@ function NeonText({
   delay?: number
   dimmed?: boolean
 }) {
-  const glowColor = dimmed ? "rgba(110,166,150,0.15)" : "rgba(110,166,150,0.5)"
-  const glowIntense = dimmed ? "rgba(110,166,150,0.08)" : "rgba(110,166,150,0.25)"
+  const glowColor = dimmed ? "rgba(150,210,190,0.15)" : "rgba(150,210,190,0.5)"
+  const glowIntense = dimmed ? "rgba(150,210,190,0.08)" : "rgba(150,210,190,0.25)"
 
   return (
     <motion.span
@@ -52,15 +52,19 @@ function NeonText({
 }
 
 
-function GlassButton({ children, href }: { children: React.ReactNode; href: string }) {
+function GlassButton({ children, href, variant = "green" }: { children: React.ReactNode; href: string; variant?: "green" | "mauve" }) {
+  const wrap = variant === "mauve" ? "glass-btn-wrap-mauve" : "glass-btn-wrap-dark"
+  const btn = variant === "mauve" ? "glass-btn-mauve" : "glass-btn-dark"
+  const txt = variant === "mauve" ? "glass-btn-text-mauve" : "glass-btn-text-dark"
+  const shadow = variant === "mauve" ? "glass-btn-shadow-mauve" : "glass-btn-shadow-dark"
   return (
     <>
       <style>{GLASS_CSS}</style>
-      <div className="glass-btn-wrap-dark text-base">
-        <Link href={href} className="glass-btn-dark cursor-pointer">
-          <span className="glass-btn-text-dark">{children}</span>
+      <div className={`${wrap} text-base`}>
+        <Link href={href} className={`${btn} cursor-pointer`}>
+          <span className={txt}>{children}</span>
         </Link>
-        <div className="glass-btn-shadow-dark" />
+        <div className={shadow} />
       </div>
     </>
   )
@@ -116,7 +120,7 @@ export function HeroSection() {
               transition={{ duration: 0.6, delay: 0.75, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="w-12 h-px bg-accent" />
-              <p className="text-sm text-muted-foreground tracking-widest uppercase font-medium">
+              <p className="text-sm text-foreground/80 tracking-widest uppercase font-medium">
                 Développeur front-end & créateur de sites web
               </p>
             </motion.div>
@@ -143,15 +147,10 @@ export function HeroSection() {
               transition={{ duration: 0.6, delay: 1.0, ease: "easeOut" }}
             >
               <GlassButton href="/projets">Mes projets</GlassButton>
-              <Link
-                href="/services"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-foreground/10 text-muted-foreground text-sm font-medium hover:bg-foreground/5 hover:border-foreground/20 transition-all duration-200 cursor-pointer"
-              >
-                Mes services
-              </Link>
+              <GlassButton href="/services" variant="mauve">Mes services</GlassButton>
               <Link
                 href="/contact"
-                className="group inline-flex items-center gap-2 text-muted-foreground text-sm font-medium hover:text-foreground transition-colors cursor-pointer"
+                className="group inline-flex items-center gap-2 text-foreground/75 text-sm font-medium hover:text-accent transition-colors cursor-pointer"
               >
                 Me contacter
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -170,7 +169,7 @@ export function HeroSection() {
               href="https://linkedin.com/in/leo-hengebaert"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+              className="text-foreground/60 hover:text-accent transition-colors cursor-pointer"
               aria-label="LinkedIn"
             >
               <Linkedin className="w-5 h-5" />
@@ -179,7 +178,7 @@ export function HeroSection() {
               href="https://instagram.com/leohengebaert"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+              className="text-foreground/60 hover:text-accent transition-colors cursor-pointer"
               aria-label="Instagram"
             >
               <Instagram className="w-5 h-5" />
@@ -188,7 +187,7 @@ export function HeroSection() {
               href="https://github.com/LeoVrfb"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+              className="text-foreground/60 hover:text-accent transition-colors cursor-pointer"
               aria-label="GitHub"
             >
               <Github className="w-5 h-5" />
@@ -344,4 +343,93 @@ const GLASS_CSS = `
 .glass-btn-dark:active::after { --gb-angle-1: -75deg; }
 
 .glass-btn-wrap-dark:has(.glass-btn-dark:active) { transform: rotate3d(1, 0, 0, 20deg); }
+
+/* === Variante mauve === */
+.glass-btn-wrap-mauve {
+  --anim-time: 400ms;
+  --anim-ease: cubic-bezier(0.25, 1, 0.5, 1);
+  position: relative; z-index: 2; border-radius: 999vw;
+  background: transparent; pointer-events: none;
+  transition: all var(--anim-time) var(--anim-ease); display: inline-block;
+}
+.glass-btn-shadow-mauve {
+  --shadow-fix: 2em;
+  position: absolute;
+  width: calc(100% + var(--shadow-fix)); height: calc(100% + var(--shadow-fix));
+  top: calc(0% - var(--shadow-fix) / 2); left: calc(0% - var(--shadow-fix) / 2);
+  filter: blur(clamp(2px, 0.125em, 12px)); overflow: visible; pointer-events: none;
+}
+.glass-btn-shadow-mauve::after {
+  content: ""; position: absolute; z-index: 0; inset: 0; border-radius: 999vw;
+  background: linear-gradient(180deg, rgba(199,142,204,0.2), rgba(199,142,204,0.08));
+  width: calc(100% - var(--shadow-fix) - 0.25em); height: calc(100% - var(--shadow-fix) - 0.25em);
+  top: calc(var(--shadow-fix) - 0.5em); left: calc(var(--shadow-fix) - 0.875em);
+  padding: 0.125em; box-sizing: border-box;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude; -webkit-mask-composite: xor;
+  transition: all var(--anim-time) var(--anim-ease);
+}
+@property --gm-angle-1 { syntax: "<angle>"; inherits: false; initial-value: -75deg; }
+@property --gm-angle-2 { syntax: "<angle>"; inherits: false; initial-value: -45deg; }
+.glass-btn-mauve {
+  --border-w: clamp(1px, 0.0625em, 4px);
+  all: unset; cursor: pointer; position: relative; display: inline-block;
+  -webkit-tap-highlight-color: rgba(0,0,0,0); pointer-events: auto; z-index: 3;
+  background: linear-gradient(-75deg, rgba(199,142,204,0.06), rgba(199,142,204,0.14), rgba(199,142,204,0.06));
+  border-radius: 999vw;
+  box-shadow:
+    inset 0 0.125em 0.125em rgba(255,255,255,0.05),
+    inset 0 -0.125em 0.125em rgba(199,142,204,0.12),
+    0 0.25em 0.125em -0.125em rgba(0,0,0,0.5),
+    0 0 0.1em 0.25em inset rgba(199,142,204,0.08);
+  backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+  -webkit-backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+  transition: all var(--anim-time) var(--anim-ease);
+}
+.glass-btn-mauve:hover {
+  transform: scale(0.975);
+  box-shadow:
+    inset 0 0.125em 0.125em rgba(255,255,255,0.05),
+    inset 0 -0.125em 0.125em rgba(199,142,204,0.18),
+    0 0.15em 0.05em -0.1em rgba(0,0,0,0.6),
+    0 0 0.05em 0.1em inset rgba(199,142,204,0.14),
+    0 0 0.6em 0.05em rgba(199,142,204,0.15);
+}
+.glass-btn-text-mauve {
+  position: relative; display: block; user-select: none;
+  letter-spacing: -0.01em; font-weight: 700; font-size: 0.875rem;
+  color: rgba(225,188,228,1);
+  -webkit-font-smoothing: antialiased;
+  text-shadow: 0em 0.1em 0.3em rgba(199,142,204,0.4);
+  transition: all var(--anim-time) var(--anim-ease);
+  padding-inline: 1.75em; padding-block: 0.9em;
+}
+.glass-btn-text-mauve::after {
+  content: ""; display: block; position: absolute; z-index: 3;
+  width: calc(100% - var(--border-w)); height: calc(100% - var(--border-w));
+  top: calc(0% + var(--border-w) / 2); left: calc(0% + var(--border-w) / 2);
+  box-sizing: border-box; border-radius: 999vw; overflow: clip;
+  background: linear-gradient(var(--gm-angle-2), rgba(255,255,255,0) 0%, rgba(255,255,255,0.08) 40% 50%, rgba(255,255,255,0) 55%);
+  mix-blend-mode: screen; pointer-events: none;
+  background-size: 200% 200%; background-position: 0% 50%; background-repeat: no-repeat;
+  transition: background-position calc(var(--anim-time) * 1.25) var(--anim-ease), --gm-angle-2 calc(var(--anim-time) * 1.25) var(--anim-ease);
+}
+.glass-btn-mauve:hover .glass-btn-text-mauve::after { background-position: 25% 50%; }
+.glass-btn-mauve:active .glass-btn-text-mauve::after { background-position: 50% 15%; --gm-angle-2: -15deg; }
+.glass-btn-mauve::after {
+  content: ""; position: absolute; z-index: 1; inset: 0; border-radius: 999vw;
+  width: calc(100% + var(--border-w)); height: calc(100% + var(--border-w));
+  top: calc(0% - var(--border-w) / 2); left: calc(0% - var(--border-w) / 2);
+  padding: var(--border-w); box-sizing: border-box;
+  background:
+    conic-gradient(from var(--gm-angle-1) at 50% 50%, rgba(199,142,204,0.5), rgba(199,142,204,0) 5% 40%, rgba(199,142,204,0.5) 50%, rgba(199,142,204,0) 60% 95%, rgba(199,142,204,0.5)),
+    linear-gradient(180deg, rgba(199,142,204,0.2), rgba(199,142,204,0.1));
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude; -webkit-mask-composite: xor;
+  transition: all var(--anim-time) var(--anim-ease), --gm-angle-1 500ms ease;
+  box-shadow: inset 0 0 0 calc(var(--border-w) / 2) rgba(199,142,204,0.3);
+}
+.glass-btn-mauve:hover::after { --gm-angle-1: -125deg; }
+.glass-btn-mauve:active::after { --gm-angle-1: -75deg; }
+.glass-btn-wrap-mauve:has(.glass-btn-mauve:active) { transform: rotate3d(1, 0, 0, 20deg); }
 `

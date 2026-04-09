@@ -12,7 +12,7 @@ const ROLES = [
     role: "Développeur",
     roleBold: "Front-End",
     description:
-      "Je suis développeur front-end chez Artefact, leader européen du conseil en Data & IA. Je collabore avec des designers et des ingénieurs pour façonner des interfaces à fort impact.",
+      "Je conçois des interfaces web exigeantes — applications, plateformes, outils data. Pour des marques comme TotalEnergies, Aéroports de Paris et BNP Paribas.",
     cta: "Mon parcours",
     href: "/a-propos",
     side: "left",
@@ -31,20 +31,20 @@ const ROLES = [
 
 export function AboutIntro() {
   return (
-    <section className="py-20 bg-background border-b border-border/40">
+    <section className="pt-8 pb-6 bg-background border-b border-border/40">
       <div className="layout-container">
         <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border/40">
           {ROLES.map((item, i) => (
             <motion.div
               key={item.num}
-              className={`flex flex-col justify-between py-10 ${i === 0 ? "md:pr-12" : "md:pl-12"}`}
+              className={`flex flex-col justify-between py-6 ${i === 0 ? "md:pr-12" : "md:pl-12"}`}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.55, delay: i * 0.1, ease: "easeOut" }}
             >
               {/* Numéro */}
-              <span className="font-mono text-xs text-muted-foreground/40 mb-6 select-none">
+              <span className="font-mono text-xs text-foreground/90 mb-6 select-none">
                 {item.num}
               </span>
 
@@ -58,7 +58,7 @@ export function AboutIntro() {
               </div>
 
               {/* Description */}
-              <p className="text-sm text-muted-foreground leading-relaxed mb-8 max-w-xs">
+              <p className="text-sm text-foreground/65 leading-relaxed mb-8 max-w-xs">
                 {item.description}
               </p>
 

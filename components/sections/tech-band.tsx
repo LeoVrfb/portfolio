@@ -30,7 +30,7 @@ const ITEMS: Item[] = [
 ]
 
 const colorMap: Record<Item["color"], string> = {
-  muted: "text-zinc-400 hover:text-white",
+  muted: "text-white hover:text-white/80",
   lavender: "hover:opacity-70",
   mauve: "hover:opacity-70",
   accent: "text-accent hover:opacity-80",
@@ -38,11 +38,11 @@ const colorMap: Record<Item["color"], string> = {
 
 export function TechBand() {
   return (
-    <section className="py-5 border-y border-white/5 bg-background overflow-hidden cursor-pointer">
-      <Marquee pauseOnHover className="[--duration:55s] [--gap:0rem]">
+    <section className="py-6 border-y border-white/5 bg-background overflow-hidden cursor-pointer">
+      <Marquee pauseOnHover className="[--duration:70s] [--gap:0rem]">
         {ITEMS.map((item) => {
           const isLink = !!item.href
-          const baseClass = `text-xs font-semibold uppercase tracking-[0.18em] select-none transition-all duration-200 ${
+          const baseClass = `text-xl font-black uppercase tracking-[0.08em] select-none transition-all duration-200 ${
             isLink ? "cursor-pointer" : "cursor-default"
           } ${colorMap[item.color]}`
 
@@ -56,7 +56,7 @@ export function TechBand() {
           const content = (
             <>
               {item.text}
-              <span className="mx-8 text-zinc-600">·</span>
+              <span className="mx-6 text-zinc-700">/</span>
             </>
           )
 
