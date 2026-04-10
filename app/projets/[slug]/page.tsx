@@ -207,36 +207,25 @@ export default async function ProjetPage({ params }: Props) {
       <div className="max-w-4xl mx-auto px-6 lg:px-10 space-y-10 sm:space-y-16">
         <div className="h-px bg-border/40" />
 
-        {/* BLOC 1 — Vidéo GAUCHE / Description DROITE
-            Si pas de vidéo ni d'image : description seule, pleine largeur */}
+        {/* BLOC 1 — Vidéo / Image EN HAUT, Description EN DESSOUS */}
         {(projet.video || projet.img || projet.descriptionPublic) && (
-          projet.video || projet.img ? (
-            <div className="grid md:grid-cols-2 gap-8 items-start">
-              {/* Vidéo ou image principale */}
-              <div>
-                {projet.video ? (
-                  <div className="flex justify-center">
-                    <video src={projet.video} autoPlay muted loop playsInline preload="auto" className="max-h-[520px] w-auto block rounded-xl" />
-                  </div>
-                ) : projet.img ? (
-                  <div className="relative aspect-video rounded-xl overflow-hidden border border-border/60">
-                    <Image src={projet.img} alt={projet.titre} fill className="object-cover" priority sizes="(max-width: 768px) 100vw, 50vw" />
-                  </div>
-                ) : null}
+          <div className="space-y-7">
+            {projet.video ? (
+              <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-border/60">
+                <video src={projet.video} autoPlay muted loop playsInline preload="auto" className="w-full h-full object-cover" />
               </div>
+            ) : projet.img ? (
+              <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-border/60">
+                <Image src={projet.img} alt={projet.titre} fill className="object-cover" priority sizes="100vw" />
+              </div>
+            ) : null}
 
-              {/* Description éditoriale avec highlights */}
-              {projet.descriptionPublic && (
-                <div className="pt-1">
-                  {renderParagraphs(projet.descriptionPublic)}
-                </div>
-              )}
-            </div>
-          ) : projet.descriptionPublic ? (
-            <div className="max-w-2xl">
-              {renderParagraphs(projet.descriptionPublic)}
-            </div>
-          ) : null
+            {projet.descriptionPublic && (
+              <div className="max-w-2xl">
+                {renderParagraphs(projet.descriptionPublic)}
+              </div>
+            )}
+          </div>
         )}
 
         {/* Points clés — labels en en-tête + liste unique, centré */}
