@@ -208,39 +208,51 @@ export default async function ProjetPage({ params }: Props) {
       <div className="max-w-4xl mx-auto px-6 lg:px-10 space-y-10 sm:space-y-14">
         <div className="h-px bg-border/40" />
 
-        {/* BLOC 1 — Vidéo / Image EN HAUT, Description EN DESSOUS */}
+        {/* BLOC 1 — Paysage (wideMedia) : vidéo/image pleine largeur, texte en dessous
+                    Portrait : vidéo/image à gauche, texte à droite */}
         {(projet.video || projet.img || projet.descriptionPublic) && (
           <div className="space-y-5">
             {(projet.video || projet.img) && projet.videoTitle && (
               <p className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--accent)" }}>{projet.videoTitle}</p>
             )}
-            {projet.video ? (
-              projet.wideMedia ? (
-                <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-border/60">
-                  <video src={projet.video} autoPlay muted loop playsInline preload="auto" className="w-full h-full object-cover" />
-                </div>
-              ) : (
-                <div className="flex justify-center">
-                  <video src={projet.video} autoPlay muted loop playsInline preload="auto" className="rounded-xl border border-border/60 max-h-[560px] w-auto" />
-                </div>
-              )
-            ) : projet.img ? (
-              projet.wideMedia ? (
-                <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-border/60">
-                  <Image src={projet.img} alt={projet.titre} fill className="object-cover" priority sizes="100vw" />
-                </div>
-              ) : (
-                <div className="flex justify-center">
-                  <div className="relative rounded-xl overflow-hidden border border-border/60 max-h-[560px]">
-                    <Image src={projet.img} alt={projet.titre} width={400} height={800} className="w-auto max-h-[560px] object-contain" priority />
-                  </div>
-                </div>
-              )
-            ) : null}
 
-            {projet.descriptionPublic && (
-              <div className="max-w-2xl pt-2">
-                {renderParagraphs(projet.descriptionPublic)}
+            {projet.wideMedia ? (
+              /* ── Paysage : empilé ── */
+              <>
+                {projet.video ? (
+                  <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-border/60">
+                    <video src={projet.video} autoPlay muted loop playsInline preload="auto" className="w-full h-full object-cover" />
+                  </div>
+                ) : projet.img ? (
+                  <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-border/60">
+                    <Image src={projet.img} alt={projet.titre} fill className="object-cover" priority sizes="100vw" />
+                  </div>
+                ) : null}
+                {projet.descriptionPublic && (
+                  <div className="max-w-2xl pt-2">
+                    {renderParagraphs(projet.descriptionPublic)}
+                  </div>
+                )}
+              </>
+            ) : (
+              /* ── Portrait : vidéo à gauche, texte à droite ── */
+              <div className="flex flex-col md:grid md:grid-cols-[auto_1fr] gap-8 md:gap-10 items-start">
+                {(projet.video || projet.img) && (
+                  <div>
+                    {projet.video ? (
+                      <video src={projet.video} autoPlay muted loop playsInline preload="auto" className="rounded-xl border border-border/60 max-h-[520px] w-auto" />
+                    ) : (
+                      <div className="relative rounded-xl overflow-hidden border border-border/60">
+                        <Image src={projet.img!} alt={projet.titre} width={400} height={800} className="w-auto max-h-[520px] object-contain" priority />
+                      </div>
+                    )}
+                  </div>
+                )}
+                {projet.descriptionPublic && (
+                  <div className="pt-1">
+                    {renderParagraphs(projet.descriptionPublic)}
+                  </div>
+                )}
               </div>
             )}
           </div>
