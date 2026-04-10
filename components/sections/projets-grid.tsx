@@ -9,21 +9,44 @@ import { cn } from "@/lib/utils";
 
 // ─── helpers ───────────────────────────────────────────────────────────────
 
-// Mosaic layout (4 rows, fills perfectly with 8 cards):
-// Row 1: C0(8, ×2 rows) + C1(4)
-// Row 2: C0 cont.       + C2(4)
-// Row 3: C3(5) + C4(4) + C5(3)
-// Row 4: C6(4) + C7(8)
+// Layout adaptatif : remplit chaque ligne sans trou quelle que soit la quantité.
+// Cas spécial pour 8 projets : mosaïque asymétrique (5+4+3 / 4+8).
+// Autres quantités : lignes de 3 tierces (4+4+4), leftover en demi ou pleine largeur.
 function getCardClasses(index: number, total: number) {
-  if (index === 0) return cn("col-span-12 lg:col-span-8", total >= 3 && "lg:row-span-2");
-  if (index === 1) return "col-span-12 sm:col-span-6 lg:col-span-4";
-  if (index === 2) return "col-span-12 sm:col-span-6 lg:col-span-4";
-  if (index === 3) return "col-span-12 sm:col-span-6 lg:col-span-5";
-  if (index === 4) return "col-span-12 sm:col-span-4 lg:col-span-4";
-  if (index === 5) return "col-span-12 sm:col-span-4 lg:col-span-3";
-  if (index === 6) return "col-span-12 sm:col-span-4 lg:col-span-4";
-  if (index === 7) return "col-span-12 sm:col-span-6 lg:col-span-8";
-  return "col-span-12 sm:col-span-6 lg:col-span-4";
+  // ── Hero ──
+  if (index === 0) {
+    if (total === 1) return "col-span-12";
+    return cn("col-span-12 lg:col-span-8", total >= 3 && "lg:row-span-2");
+  }
+  // ── Compagnons à droite du hero ──
+  if (index === 1 || index === 2) return "col-span-12 sm:col-span-6 lg:col-span-4";
+
+  // ── Cas spécial 8 projets : layout asymétrique ──
+  if (total === 8) {
+    if (index === 3) return "col-span-12 sm:col-span-6 lg:col-span-5";
+    if (index === 4) return "col-span-12 sm:col-span-4 lg:col-span-4";
+    if (index === 5) return "col-span-12 sm:col-span-4 lg:col-span-3";
+    if (index === 6) return "col-span-12 sm:col-span-4 lg:col-span-4";
+    if (index === 7) return "col-span-12 sm:col-span-6 lg:col-span-8";
+  }
+
+  // ── Algorithme générique : lignes sans trou ──
+  const rest = total - 3; // cartes après les 3 premières (hero + 2 compagnons)
+  if (rest <= 0) return "col-span-12 sm:col-span-6 lg:col-span-4";
+  if (rest === 1) return "col-span-12";
+  if (rest === 2) return "col-span-12 sm:col-span-6";
+
+  const restIndex = index - 3; // position 0-based dans le groupe "rest"
+  const fullRows = Math.floor(rest / 3); // lignes complètes de 3
+  const leftover = rest % 3; // cartes restantes (0, 1 ou 2)
+
+  if (restIndex < fullRows * 3) return "col-span-12 sm:col-span-4 lg:col-span-4";
+
+  // Gestion du leftover final
+  if (leftover === 1) return "col-span-12";
+  if (leftover === 2) return "col-span-12 sm:col-span-6";
+
+  return "col-span-12 sm:col-span-4 lg:col-span-4";
 }
 
 // ─── PlaceholderBg ─────────────────────────────────────────────────────────

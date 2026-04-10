@@ -31,6 +31,117 @@ export type Projet = {
 
 export const projets: Projet[] = [
   {
+    slug: "bnp-paribas-elearning",
+    titre: "Module e-learning IA générative",
+    client: "BNP Paribas",
+    clientShort: "BNP Paribas",
+    logo: "/assets/bnp/logo-bnp.webp",
+    contexte: "agence",
+    description:
+      "Module e-learning gamifié déployé en interne chez BNP Paribas — 6 chapitres, 5 types de mini-jeux, 6 vidéos générées par IA, un personnage guide, conforme SCORM 1.2.",
+    descriptionPublic:
+      "L'écran d'introduction : à gauche, AI-nstein — un personnage IA inspiré d'Einstein — guide l'utilisateur via une interface de chat, envoyant des messages et posant des questions. À droite, le module de cours principal affiche le contenu interactif du chapitre en cours. En bas, une barre de progression suit l'avancement sur l'ensemble des six chapitres. Les jeux interactifs arrivent dans les chapitres suivants.",
+    intro: `Un des projets qui m'a le plus stimulé. Développé chez Artefact 3000 pour **BNP Paribas**, ce module e-learning gamifié forme des milliers de collaborateurs aux fondamentaux de l'IA générative. **6 chapitres, 5 types de mini-jeux, 6 vidéos générées par IA**, un personnage guide. Et surtout, un pari que peu d'agences tentent : **remplacer Articulate Storyline par une app React complète**, packagée en SCORM 1.2 pour s'intégrer dans n'importe quel LMS d'entreprise.`,
+    img: "/assets/bnp/bnp-miniature.webp",
+    video: "/assets/bnp/bnp-demo.mp4",
+    videoTitle: "L'écran d'introduction",
+    wideMedia: true,
+    sliderSets: [
+      {
+        title: "Les mini-jeux interactifs",
+        description: "Cinq types de mini-jeux distincts, développés from scratch avec PixiJS. DataShield : intercepter des données sensibles en chute libre. Un catégoriseur de prompts en glisser-déposer. Une chasse aux hallucinations. Et pour le chapitre 5, le convoi de presse : un objet physique invisible représente la malle sur le tapis roulant, synchronisé image par image avec la vidéo, pour déclencher l'entrée dans les pressoirs au bon moment.",
+        images: [
+          "/assets/bnp/chap2-game-datashield-play.webp",
+          "/assets/bnp/chap3-game-dnd-prompt-build.webp",
+          "/assets/bnp/chap3-game-trustworthy-prompt.webp",
+          "/assets/bnp/chap4-game-hallucination-play.webp",
+          "/assets/bnp/chap4-game-hallucination-wrong.webp",
+          "/assets/bnp/chap5-game-conveyor-marketing.webp",
+          "/assets/bnp/chap5-game-conveyor-planning.webp",
+        ],
+      },
+      {
+        title: "Apprentissage, récaps & résultats",
+        description: "Entre chaque jeu, le module alterne vidéos IA génératives, récapitulatifs visuels et corrections détaillées. La méthode RISPO synthétise les cinq critères d'un bon prompt en une formule mémorisable. Les écrans de résultats distinguent clairement le juste du faux, avec explication. En bout de parcours : un passeport de compétences qui valide l'ensemble des chapitres.",
+        images: [
+          "/assets/bnp/chap1-video-ia-presenter.webp",
+          "/assets/bnp/chap2-recap-allowed-vs-forbidden.webp",
+          "/assets/bnp/chap3-rispo-method.webp",
+          "/assets/bnp/chap3-game-dnd-prompt-result.webp",
+          "/assets/bnp/chap4-game-hallucination-result.webp",
+          "/assets/bnp/chap6-quiz-dnd-do-or-dont.webp",
+          "/assets/bnp/chap6-quiz-mcq-carbon.webp",
+          "/assets/bnp/chap6-end-passport.webp",
+        ],
+      },
+    ],
+    tags: ["React", "Vite", "TypeScript", "PixiJS", "GSAP", "Framer Motion", "react-beautiful-dnd", "SCORM 1.2", "Accessibilité", "i18n", "Storybook"],
+    technologies: [
+      {
+        nom: "React + Vite (SPA statique)",
+        detail:
+          "Le LMS de BNP n'accepte que des applications statiques packagées en SCORM — pas de serveur, pas d'API externe. React + Vite permet de produire un build autonome que n'importe quel LMS peut lire, là où Next.js nécessite un serveur Node.js.",
+      },
+      {
+        nom: "SCORM 1.2 (imsmanifest + pipwerks)",
+        detail:
+          "Standard e-learning des années 2000, utilisé par les LMS d'entreprise. Un package SCORM, c'est une archive ZIP avec un manifest XML qui décrit le module, et une API JavaScript que le LMS expose à la page. `pipwerks-scorm-api-wrapper` abstrait les appels LMS (`LMSSetValue`, `LMSCommit`, etc.) pour remonter score, progression et complétion depuis React vers le LMS de BNP.",
+      },
+      {
+        nom: "PixiJS",
+        detail:
+          "Les mini-jeux (jeu de briques, bouclier de données, détection d'hallucinations) nécessitaient un rendu canvas hautes performances. PixiJS offre un moteur WebGL avec fallback Canvas 2D, parfaitement adapté aux animations complexes d'objets en mouvement.",
+      },
+      {
+        nom: "react-beautiful-dnd",
+        detail:
+          "Utilisé pour les jeux de glisser-déposer : classement de sources, association de concepts. La bibliothèque gère les accessoires d'accessibilité (ARIA, navigation clavier) nativement, ce qui a facilité l'implémentation du mode accessibilité complet.",
+      },
+      {
+        nom: "GSAP + Framer Motion",
+        detail:
+          "GSAP pilote les transitions orchestrées (entrées de chapitres, timelines synchronisées texte/image/son). Framer Motion gère les animations des composants React (apparition de bulles de chat, transitions de cartes de quiz).",
+      },
+      {
+        nom: "Storybook",
+        detail:
+          "L'UI comptait des dizaines de composants spécifiques : bulles de chat, cartes de quiz, barres de progression circulaire, écrans de résultats. Storybook a permis de les valider visuellement et fonctionnellement en isolation, avant de les câbler dans la machine à états.",
+      },
+    ],
+    challenges: [
+      {
+        titre: "Remplacer Articulate Storyline par React au sein de l'agence",
+        solution:
+          "Les modules SCORM d'Artefact étaient produits avec Articulate Storyline — outil no-code, rapide, mais design contraint, animations impossibles, aucune interactivité custom. Des freelances étaient payés pour produire des slides. L'idée : prouver qu'on pouvait livrer la même compatibilité SCORM 1.2 avec une vraie app React — et changer le workflow de l'agence pour tous les futurs clients e-learning. La technique existe, mais elle est rarement mise en œuvre dans un contexte agence où Articulate est la norme.",
+      },
+      {
+        titre: "Comprendre et implémenter le protocole SCORM 1.2",
+        solution:
+          "SCORM 1.2 est un standard des années 2000. Un package SCORM, c'est une archive ZIP avec un manifest XML (`imsmanifest.xml`) qui décrit le module, et une API JavaScript (`LMSInitialize`, `LMSSetValue`, `LMSCommit`, etc.) que le LMS expose à la page. J'ai étudié la spec, compris le protocole de communication, puis intégré `pipwerks-scorm-api-wrapper` pour abstraire les appels LMS — ce qui a permis de remonter score, progression et statut de complétion vers le LMS de BNP depuis l'app React.",
+      },
+      {
+        titre: "Machine à états pour un flow pédagogique complexe",
+        solution:
+          "6 chapitres, une intro, une séquence finale, des dizaines d'étapes conditionnelles selon les réponses de l'utilisateur — sans routing serveur possible. L'ensemble du flow est modélisé via des stores Zustand en machine à états. Chaque étape expose ses conditions d'entrée et de sortie, sa contribution à la progression, et son rendu conditionnel.",
+      },
+      {
+        titre: "Mini-jeux canvas dans une SPA statique",
+        solution:
+          "Chaque chapitre a son propre mini-jeu — jeu de briques avec raquette et balle (PixiJS), bouclier qui intercepte des données en chute, chasse aux hallucinations IA, catégoriseur de packages. Intégrer PixiJS dans React a demandé de gérer manuellement le cycle de vie des scènes canvas pour éviter les fuites mémoire entre transitions de chapitres.",
+      },
+      {
+        titre: "Accessibilité complète — navigation clavier, audio description, zoom",
+        solution:
+          "BNP imposait une conformité accessibilité stricte. À l'ouverture du module, l'utilisateur choisit sa langue, active ou désactive l'audio description, règle le niveau de zoom, et choisit entre navigation classique et navigation au clavier (Tab). En mode clavier, chaque élément focusable est annoncé à la voix avant interaction — l'utilisateur entend ce sur quoi il est positionné avant de valider avec Entrée. On a même poussé jusqu'à implémenter le drag & drop au clavier, avant de le désactiver en production pour ne pas surcharger l'expérience. C'est probablement la partie la plus longue et la plus fastidieuse du projet — chaque composant, chaque jeu, chaque transition devait être testé avec tabindex, attributs aria et annonces vocales.",
+      },
+    ],
+    credits: [
+      { nom: "Mathieu Crochet", role: "Manager & architecture · Artefact 3000" },
+      { nom: "Vincent Blecher", role: "Head of Design · Artefact 3000" },
+    ],
+    date: "2025-04",
+  },
+  {
     slug: "argedis-totalenergies",
     titre: "Carte interactive des producteurs locaux",
     client: "TotalEnergies · Argedis",
@@ -305,117 +416,6 @@ export const projets: Projet[] = [
       "Site livré en moins de 10 jours, référencé sur Google dès la première semaine. Le client a reçu ses premières demandes de devis en ligne dans les jours suivant la mise en ligne.",
     date: "2024-11",
     url: "https://hurepoix-nettoyage.fr",
-  },
-  {
-    slug: "bnp-paribas-elearning",
-    titre: "Module e-learning IA générative",
-    client: "BNP Paribas",
-    clientShort: "BNP Paribas",
-    logo: "/assets/bnp/logo-bnp.webp",
-    contexte: "agence",
-    description:
-      "Module e-learning gamifié déployé en interne chez BNP Paribas — 6 chapitres, 5 types de mini-jeux, 6 vidéos générées par IA, un personnage guide, conforme SCORM 1.2.",
-    descriptionPublic:
-      "L'écran d'introduction : à gauche, AI-nstein — un personnage IA inspiré d'Einstein — guide l'utilisateur via une interface de chat, envoyant des messages et posant des questions. À droite, le module de cours principal affiche le contenu interactif du chapitre en cours. En bas, une barre de progression suit l'avancement sur l'ensemble des six chapitres. Les jeux interactifs arrivent dans les chapitres suivants.",
-    intro: `Un des projets qui m'a le plus stimulé. Développé chez Artefact 3000 pour **BNP Paribas**, ce module e-learning gamifié forme des milliers de collaborateurs aux fondamentaux de l'IA générative. **6 chapitres, 5 types de mini-jeux, 6 vidéos générées par IA**, un personnage guide. Et surtout, un pari que peu d'agences tentent : **remplacer Articulate Storyline par une app React complète**, packagée en SCORM 1.2 pour s'intégrer dans n'importe quel LMS d'entreprise.`,
-    img: "/assets/bnp/bnp-miniature.webp",
-    video: "/assets/bnp/bnp-demo.mp4",
-    videoTitle: "L'écran d'introduction",
-    wideMedia: true,
-    sliderSets: [
-      {
-        title: "Les mini-jeux interactifs",
-        description: "Cinq types de mini-jeux distincts, développés from scratch avec PixiJS. DataShield : intercepter des données sensibles en chute libre. Un catégoriseur de prompts en glisser-déposer. Une chasse aux hallucinations. Et pour le chapitre 5, le convoi de presse : un objet physique invisible représente la malle sur le tapis roulant, synchronisé image par image avec la vidéo, pour déclencher l'entrée dans les pressoirs au bon moment.",
-        images: [
-          "/assets/bnp/chap2-game-datashield-play.webp",
-          "/assets/bnp/chap3-game-dnd-prompt-build.webp",
-          "/assets/bnp/chap3-game-trustworthy-prompt.webp",
-          "/assets/bnp/chap4-game-hallucination-play.webp",
-          "/assets/bnp/chap4-game-hallucination-wrong.webp",
-          "/assets/bnp/chap5-game-conveyor-marketing.webp",
-          "/assets/bnp/chap5-game-conveyor-planning.webp",
-        ],
-      },
-      {
-        title: "Apprentissage, récaps & résultats",
-        description: "Entre chaque jeu, le module alterne vidéos IA génératives, récapitulatifs visuels et corrections détaillées. La méthode RISPO synthétise les cinq critères d'un bon prompt en une formule mémorisable. Les écrans de résultats distinguent clairement le juste du faux, avec explication. En bout de parcours : un passeport de compétences qui valide l'ensemble des chapitres.",
-        images: [
-          "/assets/bnp/chap1-video-ia-presenter.webp",
-          "/assets/bnp/chap2-recap-allowed-vs-forbidden.webp",
-          "/assets/bnp/chap3-rispo-method.webp",
-          "/assets/bnp/chap3-game-dnd-prompt-result.webp",
-          "/assets/bnp/chap4-game-hallucination-result.webp",
-          "/assets/bnp/chap6-quiz-dnd-do-or-dont.webp",
-          "/assets/bnp/chap6-quiz-mcq-carbon.webp",
-          "/assets/bnp/chap6-end-passport.webp",
-        ],
-      },
-    ],
-    tags: ["React", "Vite", "TypeScript", "PixiJS", "GSAP", "Framer Motion", "react-beautiful-dnd", "SCORM 1.2", "Accessibilité", "i18n", "Storybook"],
-    technologies: [
-      {
-        nom: "React + Vite (SPA statique)",
-        detail:
-          "Le LMS de BNP n'accepte que des applications statiques packagées en SCORM — pas de serveur, pas d'API externe. React + Vite permet de produire un build autonome que n'importe quel LMS peut lire, là où Next.js nécessite un serveur Node.js.",
-      },
-      {
-        nom: "SCORM 1.2 (imsmanifest + pipwerks)",
-        detail:
-          "Standard e-learning des années 2000, utilisé par les LMS d'entreprise. Un package SCORM, c'est une archive ZIP avec un manifest XML qui décrit le module, et une API JavaScript que le LMS expose à la page. `pipwerks-scorm-api-wrapper` abstrait les appels LMS (`LMSSetValue`, `LMSCommit`, etc.) pour remonter score, progression et complétion depuis React vers le LMS de BNP.",
-      },
-      {
-        nom: "PixiJS",
-        detail:
-          "Les mini-jeux (jeu de briques, bouclier de données, détection d'hallucinations) nécessitaient un rendu canvas hautes performances. PixiJS offre un moteur WebGL avec fallback Canvas 2D, parfaitement adapté aux animations complexes d'objets en mouvement.",
-      },
-      {
-        nom: "react-beautiful-dnd",
-        detail:
-          "Utilisé pour les jeux de glisser-déposer : classement de sources, association de concepts. La bibliothèque gère les accessoires d'accessibilité (ARIA, navigation clavier) nativement, ce qui a facilité l'implémentation du mode accessibilité complet.",
-      },
-      {
-        nom: "GSAP + Framer Motion",
-        detail:
-          "GSAP pilote les transitions orchestrées (entrées de chapitres, timelines synchronisées texte/image/son). Framer Motion gère les animations des composants React (apparition de bulles de chat, transitions de cartes de quiz).",
-      },
-      {
-        nom: "Storybook",
-        detail:
-          "L'UI comptait des dizaines de composants spécifiques : bulles de chat, cartes de quiz, barres de progression circulaire, écrans de résultats. Storybook a permis de les valider visuellement et fonctionnellement en isolation, avant de les câbler dans la machine à états.",
-      },
-    ],
-    challenges: [
-      {
-        titre: "Remplacer Articulate Storyline par React au sein de l'agence",
-        solution:
-          "Les modules SCORM d'Artefact étaient produits avec Articulate Storyline — outil no-code, rapide, mais design contraint, animations impossibles, aucune interactivité custom. Des freelances étaient payés pour produire des slides. L'idée : prouver qu'on pouvait livrer la même compatibilité SCORM 1.2 avec une vraie app React — et changer le workflow de l'agence pour tous les futurs clients e-learning. La technique existe, mais elle est rarement mise en œuvre dans un contexte agence où Articulate est la norme.",
-      },
-      {
-        titre: "Comprendre et implémenter le protocole SCORM 1.2",
-        solution:
-          "SCORM 1.2 est un standard des années 2000. Un package SCORM, c'est une archive ZIP avec un manifest XML (`imsmanifest.xml`) qui décrit le module, et une API JavaScript (`LMSInitialize`, `LMSSetValue`, `LMSCommit`, etc.) que le LMS expose à la page. J'ai étudié la spec, compris le protocole de communication, puis intégré `pipwerks-scorm-api-wrapper` pour abstraire les appels LMS — ce qui a permis de remonter score, progression et statut de complétion vers le LMS de BNP depuis l'app React.",
-      },
-      {
-        titre: "Machine à états pour un flow pédagogique complexe",
-        solution:
-          "6 chapitres, une intro, une séquence finale, des dizaines d'étapes conditionnelles selon les réponses de l'utilisateur — sans routing serveur possible. L'ensemble du flow est modélisé via des stores Zustand en machine à états. Chaque étape expose ses conditions d'entrée et de sortie, sa contribution à la progression, et son rendu conditionnel.",
-      },
-      {
-        titre: "Mini-jeux canvas dans une SPA statique",
-        solution:
-          "Chaque chapitre a son propre mini-jeu — jeu de briques avec raquette et balle (PixiJS), bouclier qui intercepte des données en chute, chasse aux hallucinations IA, catégoriseur de packages. Intégrer PixiJS dans React a demandé de gérer manuellement le cycle de vie des scènes canvas pour éviter les fuites mémoire entre transitions de chapitres.",
-      },
-      {
-        titre: "Accessibilité complète — navigation clavier, audio description, zoom",
-        solution:
-          "BNP imposait une conformité accessibilité stricte. À l'ouverture du module, l'utilisateur choisit sa langue, active ou désactive l'audio description, règle le niveau de zoom, et choisit entre navigation classique et navigation au clavier (Tab). En mode clavier, chaque élément focusable est annoncé à la voix avant interaction — l'utilisateur entend ce sur quoi il est positionné avant de valider avec Entrée. On a même poussé jusqu'à implémenter le drag & drop au clavier, avant de le désactiver en production pour ne pas surcharger l'expérience. C'est probablement la partie la plus longue et la plus fastidieuse du projet — chaque composant, chaque jeu, chaque transition devait être testé avec tabindex, attributs aria et annonces vocales.",
-      },
-    ],
-    credits: [
-      { nom: "Mathieu Crochet", role: "Manager & architecture · Artefact 3000" },
-      { nom: "Vincent Blecher", role: "Head of Design · Artefact 3000" },
-    ],
-    date: "2025-04",
   },
   {
     slug: "make-a-scene",
