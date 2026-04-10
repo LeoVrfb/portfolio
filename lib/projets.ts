@@ -12,6 +12,7 @@ export type Projet = {
   intro: string;
   img: string;
   images?: string[];
+  sliderSets?: { title: string; description: string; images: string[] }[];
   video?: string;
   videoTitle?: string;
   wideMedia?: boolean;
@@ -321,15 +322,34 @@ export const projets: Projet[] = [
     video: "/assets/bnp/bnp-demo.mp4",
     videoTitle: "L'écran d'introduction",
     wideMedia: true,
-    images: [
-      "/assets/bnp/chap1-video-ia-presenter.webp",
-      "/assets/bnp/chap2-game-datashield-play.webp",
-      "/assets/bnp/chap2-recap-allowed-vs-forbidden.webp",
-      "/assets/bnp/chap3-rispo-method.webp",
-      "/assets/bnp/chap3-game-dnd-prompt-build.webp",
-      "/assets/bnp/chap4-game-hallucination-play.webp",
-      "/assets/bnp/chap5-game-conveyor-marketing.webp",
-      "/assets/bnp/chap6-end-passport.webp",
+    sliderSets: [
+      {
+        title: "Les mini-jeux interactifs",
+        description: "Cinq types de mini-jeux distincts, développés from scratch avec PixiJS. DataShield : intercepter des données sensibles en chute libre. Un catégoriseur de prompts en glisser-déposer. Une chasse aux hallucinations. Et pour le chapitre 5, le convoi de presse : un objet physique invisible représente la malle sur le tapis roulant, synchronisé image par image avec la vidéo, pour déclencher l'entrée dans les pressoirs au bon moment.",
+        images: [
+          "/assets/bnp/chap2-game-datashield-play.webp",
+          "/assets/bnp/chap3-game-dnd-prompt-build.webp",
+          "/assets/bnp/chap3-game-trustworthy-prompt.webp",
+          "/assets/bnp/chap4-game-hallucination-play.webp",
+          "/assets/bnp/chap4-game-hallucination-wrong.webp",
+          "/assets/bnp/chap5-game-conveyor-marketing.webp",
+          "/assets/bnp/chap5-game-conveyor-planning.webp",
+        ],
+      },
+      {
+        title: "Apprentissage, récaps & résultats",
+        description: "Entre chaque jeu, le module alterne vidéos IA génératives, récapitulatifs visuels et corrections détaillées. La méthode RISPO synthétise les cinq critères d'un bon prompt en une formule mémorisable. Les écrans de résultats distinguent clairement le juste du faux, avec explication. En bout de parcours : un passeport de compétences qui valide l'ensemble des chapitres.",
+        images: [
+          "/assets/bnp/chap1-video-ia-presenter.webp",
+          "/assets/bnp/chap2-recap-allowed-vs-forbidden.webp",
+          "/assets/bnp/chap3-rispo-method.webp",
+          "/assets/bnp/chap3-game-dnd-prompt-result.webp",
+          "/assets/bnp/chap4-game-hallucination-result.webp",
+          "/assets/bnp/chap6-quiz-dnd-do-or-dont.webp",
+          "/assets/bnp/chap6-quiz-mcq-carbon.webp",
+          "/assets/bnp/chap6-end-passport.webp",
+        ],
+      },
     ],
     tags: ["React", "Vite", "TypeScript", "PixiJS", "GSAP", "Framer Motion", "react-beautiful-dnd", "SCORM 1.2", "Accessibilité", "i18n", "Storybook"],
     technologies: [

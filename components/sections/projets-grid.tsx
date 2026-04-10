@@ -9,13 +9,21 @@ import { cn } from "@/lib/utils";
 
 // ─── helpers ───────────────────────────────────────────────────────────────
 
-function getCardClasses(index: number) {
-  if (index === 0) return "col-span-12 lg:col-span-8 lg:row-span-2";
+// Mosaic layout (4 rows, fills perfectly with 8 cards):
+// Row 1: C0(8, ×2 rows) + C1(4)
+// Row 2: C0 cont.       + C2(4)
+// Row 3: C3(5) + C4(4) + C5(3)
+// Row 4: C6(4) + C7(8)
+function getCardClasses(index: number, total: number) {
+  if (index === 0) return cn("col-span-12 lg:col-span-8", total >= 3 && "lg:row-span-2");
   if (index === 1) return "col-span-12 sm:col-span-6 lg:col-span-4";
   if (index === 2) return "col-span-12 sm:col-span-6 lg:col-span-4";
-  if (index % 3 === 0) return "col-span-12 sm:col-span-6 lg:col-span-5";
-  if (index % 3 === 1) return "col-span-12 sm:col-span-6 lg:col-span-4";
-  return "col-span-12 sm:col-span-6 lg:col-span-3";
+  if (index === 3) return "col-span-12 sm:col-span-6 lg:col-span-5";
+  if (index === 4) return "col-span-12 sm:col-span-4 lg:col-span-4";
+  if (index === 5) return "col-span-12 sm:col-span-4 lg:col-span-3";
+  if (index === 6) return "col-span-12 sm:col-span-4 lg:col-span-4";
+  if (index === 7) return "col-span-12 sm:col-span-6 lg:col-span-8";
+  return "col-span-12 sm:col-span-6 lg:col-span-4";
 }
 
 // ─── PlaceholderBg ─────────────────────────────────────────────────────────
@@ -78,7 +86,7 @@ const CONTEXT_STYLE: Record<Projet["contexte"], React.CSSProperties> = {
   perso:     { color: "#94a3b8",        borderColor: "rgba(148,163,184,0.35)", background: "rgba(148,163,184,0.1)"  },
 };
 
-function ProjectCard({ projet, index }: { projet: Projet; index: number }) {
+function ProjectCard({ projet, index, total }: { projet: Projet; index: number; total: number }) {
   const hasImage = Boolean(projet.img);
   const isLarge = index === 0;
 
@@ -87,7 +95,7 @@ function ProjectCard({ projet, index }: { projet: Projet; index: number }) {
       href={`/projets/${projet.slug}`}
       className={cn(
         "group relative overflow-hidden rounded-2xl cursor-pointer block",
-        getCardClasses(index)
+        getCardClasses(index, total)
       )}
     >
       {/* Background */}
@@ -304,9 +312,9 @@ export function ProjetsGrid() {
 
       {/* Grid */}
       {filtered.length > 0 ? (
-        <div className="grid grid-cols-12 gap-3 sm:gap-4 grid-flow-dense [grid-auto-rows:300px]">
+        <div className="grid grid-cols-12 gap-3 sm:gap-4 grid-flow-dense auto-rows-[360px]">
           {filtered.map((projet, index) => (
-            <ProjectCard key={projet.slug} projet={projet} index={index} />
+            <ProjectCard key={projet.slug} projet={projet} index={index} total={filtered.length} />
           ))}
         </div>
       ) : (

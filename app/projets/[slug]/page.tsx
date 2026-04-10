@@ -369,6 +369,24 @@ export default async function ProjetPage({ params }: Props) {
           <ProjetGallery images={projet.images} />
         )}
 
+        {/* SLIDER SETS — sections thématiques avec titre + description */}
+        {projet.sliderSets && projet.sliderSets.map((set, si) => (
+          <div key={si} className="space-y-5">
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.25em] mb-2" style={{ color: "var(--accent)" }}>
+                {String(si + 1).padStart(2, "0")} —
+              </p>
+              <h3 className="text-xl font-bold text-foreground mb-3">{set.title}</h3>
+              <p className="text-sm text-foreground/70 leading-relaxed max-w-2xl">{set.description}</p>
+            </div>
+            <ProjetImageSlider
+              images={set.images}
+              alt={`${projet.titre} — ${set.title}`}
+              wide={!!projet.wideMedia}
+            />
+          </div>
+        ))}
+
         {/* ── SÉPARATEUR ── */}
         <div className="h-px bg-border/40" />
 
