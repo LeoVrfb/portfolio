@@ -318,7 +318,7 @@ export const projets: Projet[] = [
     intro: `Un des projets qui m'a le plus stimulé. Développé chez Artefact 3000 pour **BNP Paribas**, ce module e-learning gamifié forme des milliers de collaborateurs aux fondamentaux de l'IA générative. **6 chapitres, 5 types de mini-jeux, 6 vidéos générées par IA**, un personnage guide. Et surtout, un pari que peu d'agences tentent : **remplacer Articulate Storyline par une app React complète**, packagée en SCORM 1.2 pour s'intégrer dans n'importe quel LMS d'entreprise.`,
     img: "/assets/bnp/bnp-miniature.webp",
     video: "/assets/bnp/bnp-demo.mp4",
-    videoTitle: "Vue générale de l'application",
+    videoTitle: "L'écran d'introduction",
     tags: ["React", "Vite", "TypeScript", "PixiJS", "GSAP", "Framer Motion", "react-beautiful-dnd", "SCORM 1.2", "Accessibilité", "i18n", "Storybook"],
     technologies: [
       {
