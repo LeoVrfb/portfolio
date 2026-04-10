@@ -97,8 +97,8 @@ export default async function ProjetPage({ params }: Props) {
             <div className="sm:hidden mb-5 space-y-2.5">
               <div className="flex flex-wrap items-center gap-2">
                 {(projet.logos ?? (projet.logo ? [projet.logo] : [])).map((src, i) => (
-                  <div key={i} className="relative w-7 h-7 shrink-0 rounded-md overflow-hidden bg-white p-0.5">
-                    <Image src={src} alt="" fill className="object-contain" sizes="28px" />
+                  <div key={i} className="shrink-0 rounded-md overflow-hidden bg-white px-1.5 py-0.5 flex items-center h-7">
+                    <img src={src} alt="" className="h-5 w-auto max-w-[64px] object-contain" />
                   </div>
                 ))}
                 <span className="text-[11px] px-2.5 py-1 rounded-full border border-white/10 bg-white/4 text-foreground/55">
@@ -144,8 +144,8 @@ export default async function ProjetPage({ params }: Props) {
                 <p className="text-[10px] uppercase tracking-[0.25em] mb-2 font-semibold" style={{ color: "var(--accent)" }}>Client</p>
                 <div className="flex items-center gap-2.5 flex-wrap mb-1.5">
                   {(projet.logos ?? (projet.logo ? [projet.logo] : [])).map((src, i) => (
-                    <div key={i} className="relative w-9 h-9 shrink-0 rounded-lg overflow-hidden bg-white p-1">
-                      <Image src={src} alt="" fill className="object-contain p-0.5" sizes="36px" />
+                    <div key={i} className="shrink-0 rounded-lg overflow-hidden bg-white px-2 py-1 flex items-center h-9">
+                      <img src={src} alt="" className="h-6 w-auto max-w-[80px] object-contain" />
                     </div>
                   ))}
                 </div>
