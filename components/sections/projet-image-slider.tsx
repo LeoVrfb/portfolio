@@ -8,9 +8,10 @@ import { cn } from "@/lib/utils"
 interface ProjetImageSliderProps {
   images: string[]
   alt: string
+  wide?: boolean
 }
 
-export function ProjetImageSlider({ images, alt }: ProjetImageSliderProps) {
+export function ProjetImageSlider({ images, alt, wide = false }: ProjetImageSliderProps) {
   const count = images.length
   if (count === 0) return null
 
@@ -108,8 +109,8 @@ export function ProjetImageSlider({ images, alt }: ProjetImageSliderProps) {
   const dotIdx = count > 1 ? (idx - 1 + count) % count : 0
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <div className="flex items-center gap-3 md:gap-5">
+    <div className={cn("flex flex-col items-center gap-4", wide && "w-full")}>
+      <div className={cn("flex items-center gap-3 md:gap-5", wide && "w-full")}>
         {count > 1 && (
           <button
             onClick={goPrev}
@@ -121,14 +122,17 @@ export function ProjetImageSlider({ images, alt }: ProjetImageSliderProps) {
         )}
 
         <div
-          className="overflow-hidden rounded-xl w-[260px]"
+          className={cn(
+            "overflow-hidden rounded-xl",
+            wide ? "flex-1 aspect-video" : "w-[260px]"
+          )}
           style={{ touchAction: "pan-y" }}
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
           <div
-            className="flex"
+            className="flex h-full"
             style={{
               transform: `translateX(calc(-${idx * 100}% + ${dragOffset}px))`,
               transition: animated && dragOffset === 0
@@ -138,16 +142,29 @@ export function ProjetImageSlider({ images, alt }: ProjetImageSliderProps) {
             onTransitionEnd={handleTransitionEnd}
           >
             {loopImages.map((src, i) => (
-              <Image
-                key={i}
-                src={src}
-                alt={`${alt} — vue ${i}`}
-                width={540}
-                height={960}
-                className="shrink-0 w-full h-auto select-none"
-                quality={90}
-                draggable={false}
-              />
+              wide ? (
+                <div key={i} className="shrink-0 w-full h-full relative">
+                  <Image
+                    src={src}
+                    alt={`${alt} — vue ${i}`}
+                    fill
+                    className="object-cover select-none"
+                    quality={90}
+                    draggable={false}
+                  />
+                </div>
+              ) : (
+                <Image
+                  key={i}
+                  src={src}
+                  alt={`${alt} — vue ${i}`}
+                  width={540}
+                  height={960}
+                  className="shrink-0 w-full h-auto select-none"
+                  quality={90}
+                  draggable={false}
+                />
+              )
             ))}
           </div>
         </div>

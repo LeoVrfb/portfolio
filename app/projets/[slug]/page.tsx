@@ -63,8 +63,9 @@ export default async function ProjetPage({ params }: Props) {
   if (projet.video) preload(projet.video, { as: "video" });
   if (projet.img) preload(projet.img, { as: "image" });
 
-  // Quand une vidéo existe, images[0] est le fond de la vidéo → on le skippe dans le zigzag
-  const zigzagImages = projet.video
+  // Quand une vidéo existe ET que images[0] === img (ex: TotalEnergies), on skippe le doublon
+  // Pour wideMedia (BNP), images[0] est distinct du miniature → pas de skip
+  const zigzagImages = projet.video && !projet.wideMedia
     ? (projet.images?.slice(1) ?? [])
     : (projet.images ?? []);
 
@@ -214,13 +215,27 @@ export default async function ProjetPage({ params }: Props) {
               <p className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--accent)" }}>{projet.videoTitle}</p>
             )}
             {projet.video ? (
-              <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-border/60">
-                <video src={projet.video} autoPlay muted loop playsInline preload="auto" className="w-full h-full object-cover" />
-              </div>
+              projet.wideMedia ? (
+                <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-border/60">
+                  <video src={projet.video} autoPlay muted loop playsInline preload="auto" className="w-full h-full object-cover" />
+                </div>
+              ) : (
+                <div className="flex justify-center">
+                  <video src={projet.video} autoPlay muted loop playsInline preload="auto" className="rounded-xl border border-border/60 max-h-[560px] w-auto" />
+                </div>
+              )
             ) : projet.img ? (
-              <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-border/60">
-                <Image src={projet.img} alt={projet.titre} fill className="object-cover" priority sizes="100vw" />
-              </div>
+              projet.wideMedia ? (
+                <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-border/60">
+                  <Image src={projet.img} alt={projet.titre} fill className="object-cover" priority sizes="100vw" />
+                </div>
+              ) : (
+                <div className="flex justify-center">
+                  <div className="relative rounded-xl overflow-hidden border border-border/60 max-h-[560px]">
+                    <Image src={projet.img} alt={projet.titre} width={400} height={800} className="w-auto max-h-[560px] object-contain" priority />
+                  </div>
+                </div>
+              )
             ) : null}
 
             {projet.descriptionPublic && (
@@ -260,10 +275,16 @@ export default async function ProjetPage({ params }: Props) {
           </ul>
         )}
 
-        {/* BLOC 2 — Slider si >= 3 images / double si 2 / simple si 1
-            Mobile : flex-col-reverse → image en premier, texte en dessous
-            Desktop (md+) : texte gauche, image droite */}
-        {zigzagImages.length >= 3 ? (
+        {/* BLOC 2 — Wide media : slider full-width 16:9 / Portrait : zigzag classique */}
+        {projet.wideMedia && zigzagImages.length > 0 ? (
+          <div className="space-y-4">
+            <ProjetImageSlider
+              images={zigzagImages}
+              alt={projet.titre}
+              wide
+            />
+          </div>
+        ) : zigzagImages.length >= 3 ? (
           <div className="flex flex-col-reverse md:grid md:grid-cols-[1fr_auto] gap-8 md:gap-10 items-center">
             <div>
               {(projet.imageCaptions?.[0] ?? projet.descriptionPublic) && renderParagraphs(projet.imageCaptions?.[0] ?? projet.descriptionPublic ?? "")}
@@ -313,8 +334,8 @@ export default async function ProjetPage({ params }: Props) {
           </div>
         ) : null}
 
-        {/* BLOC 3 — Slider (FR + EN) ou image seule / Texte DROITE */}
-        {zigzagImages.length >= 3 && (() => {
+        {/* BLOC 3 — Portrait seulement : Slider (FR + EN) ou image seule / Texte DROITE */}
+        {!projet.wideMedia && zigzagImages.length >= 3 && (() => {
           const bloc3Images = zigzagImages.length >= 5
             ? zigzagImages.slice(-2)
             : [zigzagImages[zigzagImages.length - 1]];

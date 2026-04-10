@@ -10,9 +10,9 @@ import { cn } from "@/lib/utils";
 // ─── helpers ───────────────────────────────────────────────────────────────
 
 function getCardClasses(index: number) {
-  if (index === 0) return "col-span-12 lg:col-span-8 h-[480px]";
-  if (index === 1) return "col-span-12 sm:col-span-6 lg:col-span-4 h-[480px]";
-  return "col-span-12 sm:col-span-6 lg:col-span-4 h-[360px]";
+  if (index === 0) return "col-span-12 lg:col-span-8 aspect-video";
+  if (index === 1) return "col-span-12 sm:col-span-6 lg:col-span-4 aspect-video";
+  return "col-span-12 sm:col-span-6 lg:col-span-4 aspect-video";
 }
 
 // ─── PlaceholderBg ─────────────────────────────────────────────────────────

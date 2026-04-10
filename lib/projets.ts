@@ -14,6 +14,7 @@ export type Projet = {
   images?: string[];
   video?: string;
   videoTitle?: string;
+  wideMedia?: boolean;
   tags: string[];
   technologies?: { nom: string; detail: string }[];
   caracteristiques?: string[];
@@ -319,6 +320,17 @@ export const projets: Projet[] = [
     img: "/assets/bnp/bnp-miniature.webp",
     video: "/assets/bnp/bnp-demo.mp4",
     videoTitle: "L'écran d'introduction",
+    wideMedia: true,
+    images: [
+      "/assets/bnp/chap1-video-ia-presenter.webp",
+      "/assets/bnp/chap2-game-datashield-play.webp",
+      "/assets/bnp/chap2-recap-allowed-vs-forbidden.webp",
+      "/assets/bnp/chap3-rispo-method.webp",
+      "/assets/bnp/chap3-game-dnd-prompt-build.webp",
+      "/assets/bnp/chap4-game-hallucination-play.webp",
+      "/assets/bnp/chap5-game-conveyor-marketing.webp",
+      "/assets/bnp/chap6-end-passport.webp",
+    ],
     tags: ["React", "Vite", "TypeScript", "PixiJS", "GSAP", "Framer Motion", "react-beautiful-dnd", "SCORM 1.2", "Accessibilité", "i18n", "Storybook"],
     technologies: [
       {
