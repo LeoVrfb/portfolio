@@ -31,7 +31,7 @@ const ROLES = [
 
 export function AboutIntro() {
   return (
-    <section className="pt-8 pb-6 bg-background border-b border-border/40">
+    <section className="pt-16 pb-10 bg-background border-b border-border/40">
       <div className="layout-container">
         <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border/40">
           {ROLES.map((item, i) => (

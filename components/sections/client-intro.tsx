@@ -158,20 +158,13 @@ export function ClientIntro() {
   const [fading, setFading] = useState(false)
 
   useEffect(() => {
-    if (sessionStorage.getItem("intro-seen")) {
-      setShow(false)
-      return
-    }
     const sw = (window.innerWidth * 0.82) / 1100
     const sh = (window.innerHeight * 0.82) / 600
     setScale(Math.min(sw, sh, 1.4))
     setShow(true)
 
     const fade = setTimeout(() => setFading(true), 4800)
-    const done = setTimeout(() => {
-      sessionStorage.setItem("intro-seen", "1")
-      setShow(false)
-    }, 5500)
+    const done = setTimeout(() => setShow(false), 5500)
     return () => {
       clearTimeout(fade)
       clearTimeout(done)
@@ -180,10 +173,7 @@ export function ClientIntro() {
 
   const handleSkip = () => {
     setFading(true)
-    setTimeout(() => {
-      sessionStorage.setItem("intro-seen", "1")
-      setShow(false)
-    }, 700)
+    setTimeout(() => setShow(false), 700)
   }
 
   if (show !== true) return null

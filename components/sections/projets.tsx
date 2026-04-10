@@ -14,7 +14,7 @@ const TAG_COLORS = [
 
 export function ProjetsSection() {
   return (
-    <section className="pt-14 pb-24 bg-background">
+    <section className="pt-20 pb-16 bg-background">
       <div className="layout-container">
         {/* Header */}
         <motion.div
@@ -76,25 +76,27 @@ export function ProjetsSection() {
 
                   {/* Infos */}
                   <div className="flex-1 min-w-0">
-                    {/* Ligne 1 : client (grand) + logos + année */}
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="text-lg font-bold leading-tight truncate transition-colors" style={{ color: "var(--accent)" }}>
+                    {/* Ligne 1 : client (prioritaire) + logos + année en flex-wrap */}
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mb-1">
+                      <h3 className="text-lg font-bold leading-tight transition-colors" style={{ color: "var(--accent)" }}>
                         {projet.clientShort ?? projet.client}
                       </h3>
-                      {(projet.logos ?? (projet.logo ? [projet.logo] : [])).map((src, li) => (
-                        <div key={li} className="relative w-5 h-5 rounded-md overflow-hidden shrink-0 bg-white/90">
-                          <Image
-                            src={src}
-                            alt={`Logo ${projet.clientShort ?? projet.client}`}
-                            fill
-                            className="object-contain p-0.5"
-                            sizes="20px"
-                          />
-                        </div>
-                      ))}
-                      <span className="text-xs text-foreground/90 font-mono shrink-0">
-                        {year}
-                      </span>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        {(projet.logos ?? (projet.logo ? [projet.logo] : [])).map((src, li) => (
+                          <div key={li} className="relative w-5 h-5 rounded-md overflow-hidden bg-white/90">
+                            <Image
+                              src={src}
+                              alt={`Logo ${projet.clientShort ?? projet.client}`}
+                              fill
+                              className="object-contain p-0.5"
+                              sizes="20px"
+                            />
+                          </div>
+                        ))}
+                        <span className="text-xs text-foreground/90 font-mono">
+                          {year}
+                        </span>
+                      </div>
                     </div>
                     {/* Ligne 2 : titre secondaire */}
                     <p className="text-sm text-foreground/75 leading-snug truncate">
