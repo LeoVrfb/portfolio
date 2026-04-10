@@ -312,14 +312,14 @@ export const projets: Projet[] = [
     logo: "/assets/bnp/logo-bnp.webp",
     contexte: "agence",
     description:
-      "Module e-learning gamifié déployé en interne chez BNP Paribas pour former des milliers de collaborateurs aux fondamentaux de l'IA générative — 6 chapitres, 5 mini-jeux, conforme SCORM.",
+      "Module e-learning gamifié déployé en interne chez BNP Paribas — 6 chapitres, 5 types de mini-jeux, 6 vidéos générées par IA, un personnage guide, conforme SCORM 1.2.",
     descriptionPublic:
       "L'écran d'introduction : à gauche, AI-nstein — un personnage IA inspiré d'Einstein — guide l'utilisateur via une interface de chat, envoyant des messages et posant des questions. À droite, le module de cours principal affiche le contenu interactif du chapitre en cours. En bas, une barre de progression suit l'avancement sur l'ensemble des six chapitres. Les jeux interactifs arrivent dans les chapitres suivants.",
-    intro: `Un des projets qui m'a le plus stimulé. Développé chez Artefact 3000 pour **BNP Paribas**, ce module e-learning gamifié forme des milliers de collaborateurs aux fondamentaux de l'IA générative. Six chapitres, cinq mini-jeux en temps réel, un personnage IA comme guide. Et surtout, un pari que peu d'agences tentent : **remplacer Articulate Storyline par une app React complète**, packagée en SCORM 1.2 pour s'intégrer dans n'importe quel LMS d'entreprise.`,
+    intro: `Un des projets qui m'a le plus stimulé. Développé chez Artefact 3000 pour **BNP Paribas**, ce module e-learning gamifié forme des milliers de collaborateurs aux fondamentaux de l'IA générative. **6 chapitres, 5 types de mini-jeux, 6 vidéos générées par IA**, un personnage guide. Et surtout, un pari que peu d'agences tentent : **remplacer Articulate Storyline par une app React complète**, packagée en SCORM 1.2 pour s'intégrer dans n'importe quel LMS d'entreprise.`,
     img: "/assets/bnp/bnp-miniature.webp",
     video: "/assets/bnp/bnp-demo.mp4",
     videoTitle: "Vue générale de l'application",
-    tags: ["React", "Vite", "TypeScript", "PixiJS", "GSAP", "Framer Motion", "SCORM 1.2", "Accessibilité", "i18n", "Storybook"],
+    tags: ["React", "Vite", "TypeScript", "PixiJS", "GSAP", "Framer Motion", "react-beautiful-dnd", "SCORM 1.2", "Accessibilité", "i18n", "Storybook"],
     technologies: [
       {
         nom: "React + Vite (SPA statique)",
@@ -335,6 +335,11 @@ export const projets: Projet[] = [
         nom: "PixiJS",
         detail:
           "Les mini-jeux (jeu de briques, bouclier de données, détection d'hallucinations) nécessitaient un rendu canvas hautes performances. PixiJS offre un moteur WebGL avec fallback Canvas 2D, parfaitement adapté aux animations complexes d'objets en mouvement.",
+      },
+      {
+        nom: "react-beautiful-dnd",
+        detail:
+          "Utilisé pour les jeux de glisser-déposer : classement de sources, association de concepts. La bibliothèque gère les accessoires d'accessibilité (ARIA, navigation clavier) nativement, ce qui a facilité l'implémentation du mode accessibilité complet.",
       },
       {
         nom: "GSAP + Framer Motion",

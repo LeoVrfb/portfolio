@@ -211,7 +211,7 @@ export default async function ProjetPage({ params }: Props) {
         {(projet.video || projet.img || projet.descriptionPublic) && (
           <div className="space-y-5">
             {(projet.video || projet.img) && projet.videoTitle && (
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/40">{projet.videoTitle}</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--accent)" }}>{projet.videoTitle}</p>
             )}
             {projet.video ? (
               <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-border/60">
