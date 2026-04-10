@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { preload } from "react-dom";
 import { ArrowLeft, ArrowRight, ExternalLink, Briefcase, User } from "lucide-react";
 import { projets, getProjet } from "@/lib/projets";
 import { ProjetGallery } from "@/components/sections/projet-gallery";
@@ -58,6 +59,10 @@ export default async function ProjetPage({ params }: Props) {
   const nextProjet = projets[(idx + 1) % projets.length];
   const year = projet.date.split("-")[0];
 
+  // Preload des assets critiques (vidéo + première image)
+  if (projet.video) preload(projet.video, { as: "video" });
+  if (projet.img) preload(projet.img, { as: "image" });
+
   // Quand une vidéo existe, images[0] est le fond de la vidéo → on le skippe dans le zigzag
   const zigzagImages = projet.video
     ? (projet.images?.slice(1) ?? [])
@@ -84,12 +89,45 @@ export default async function ProjetPage({ params }: Props) {
           {/* Gauche : titre + intro */}
           <div>
             {/* Client */}
-            <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-foreground leading-tight mb-4">
+            <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-foreground leading-tight mb-3">
               {projet.client}
             </h1>
 
+            {/* Mobile only — logos + contexte + année + stack (remplace la carte) */}
+            <div className="sm:hidden mb-5 space-y-2.5">
+              <div className="flex flex-wrap items-center gap-2">
+                {(projet.logos ?? (projet.logo ? [projet.logo] : [])).map((src, i) => (
+                  <div key={i} className="relative w-7 h-7 shrink-0 rounded-md overflow-hidden bg-white p-0.5">
+                    <Image src={src} alt="" fill className="object-contain" sizes="28px" />
+                  </div>
+                ))}
+                <span className="text-[11px] px-2.5 py-1 rounded-full border border-white/10 bg-white/4 text-foreground/55">
+                  {projet.contexte === "agence" ? "Mission studio · Artefact 3000"
+                    : projet.contexte === "freelance" ? "Projet freelance"
+                    : "Projet personnel"}
+                </span>
+                <span className="text-[11px] text-foreground/40 font-mono">{year}</span>
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {projet.tags.map((tag, ti) => (
+                  <span
+                    key={tag}
+                    className="text-[10px] font-medium px-2 py-0.5 rounded-full border"
+                    style={{
+                      color: TAG_COLORS[ti % TAG_COLORS.length].color,
+                      background: TAG_COLORS[ti % TAG_COLORS.length].bg,
+                      borderColor: TAG_COLORS[ti % TAG_COLORS.length].color,
+                      opacity: 0.9,
+                    }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
             {/* Titre app */}
-            <p className="text-sm uppercase tracking-widest mb-6" style={{ color: "var(--accent)" }}>
+            <p className="text-sm uppercase tracking-widest mb-3" style={{ color: "var(--accent)" }}>
               {projet.titre}
             </p>
 
@@ -99,8 +137,8 @@ export default async function ProjetPage({ params }: Props) {
             </p>
           </div>
 
-          {/* Droite : meta card */}
-          <div className="space-y-3 lg:pt-2">
+          {/* Droite : meta card — tablette et desktop seulement */}
+          <div className="space-y-3 lg:pt-2 hidden sm:block">
             <div className="p-5 rounded-xl border border-border bg-card space-y-4">
               <div>
                 <p className="text-[10px] uppercase tracking-[0.25em] mb-2 font-semibold" style={{ color: "var(--accent)" }}>Client</p>
@@ -166,32 +204,39 @@ export default async function ProjetPage({ params }: Props) {
       </div>
 
       {/* ── CONTENU PRINCIPAL — même container ── */}
-      <div className="max-w-4xl mx-auto px-6 lg:px-10 space-y-16">
+      <div className="max-w-4xl mx-auto px-6 lg:px-10 space-y-10 sm:space-y-16">
         <div className="h-px bg-border/40" />
 
-        {/* BLOC 1 — Vidéo GAUCHE / Description DROITE */}
-        {(projet.video || (projet.img && !projet.video)) && (
-          <div className="grid md:grid-cols-2 gap-8 items-start">
-            {/* Vidéo ou image principale */}
-            <div>
-              {projet.video ? (
-                <div className="flex justify-center">
-                  <video src={projet.video} autoPlay muted loop playsInline className="max-h-[520px] w-auto block rounded-xl" />
-                </div>
-              ) : projet.img ? (
-                <div className="relative aspect-video rounded-xl overflow-hidden border border-border/60">
-                  <Image src={projet.img} alt={projet.titre} fill className="object-cover" priority sizes="(max-width: 768px) 100vw, 50vw" />
-                </div>
-              ) : null}
-            </div>
-
-            {/* Description éditoriale avec highlights */}
-            {projet.descriptionPublic && (
-              <div className="pt-1">
-                {renderParagraphs(projet.descriptionPublic)}
+        {/* BLOC 1 — Vidéo GAUCHE / Description DROITE
+            Si pas de vidéo ni d'image : description seule, pleine largeur */}
+        {(projet.video || projet.img || projet.descriptionPublic) && (
+          projet.video || projet.img ? (
+            <div className="grid md:grid-cols-2 gap-8 items-start">
+              {/* Vidéo ou image principale */}
+              <div>
+                {projet.video ? (
+                  <div className="flex justify-center">
+                    <video src={projet.video} autoPlay muted loop playsInline preload="auto" className="max-h-[520px] w-auto block rounded-xl" />
+                  </div>
+                ) : projet.img ? (
+                  <div className="relative aspect-video rounded-xl overflow-hidden border border-border/60">
+                    <Image src={projet.img} alt={projet.titre} fill className="object-cover" priority sizes="(max-width: 768px) 100vw, 50vw" />
+                  </div>
+                ) : null}
               </div>
-            )}
-          </div>
+
+              {/* Description éditoriale avec highlights */}
+              {projet.descriptionPublic && (
+                <div className="pt-1">
+                  {renderParagraphs(projet.descriptionPublic)}
+                </div>
+              )}
+            </div>
+          ) : projet.descriptionPublic ? (
+            <div className="max-w-2xl">
+              {renderParagraphs(projet.descriptionPublic)}
+            </div>
+          ) : null
         )}
 
         {/* Points clés — labels en en-tête + liste unique, centré */}
@@ -223,9 +268,11 @@ export default async function ProjetPage({ params }: Props) {
           </ul>
         )}
 
-        {/* BLOC 2 — Slider si >= 3 images / double si 2 / simple si 1 */}
+        {/* BLOC 2 — Slider si >= 3 images / double si 2 / simple si 1
+            Mobile : flex-col-reverse → image en premier, texte en dessous
+            Desktop (md+) : texte gauche, image droite */}
         {zigzagImages.length >= 3 ? (
-          <div className="grid md:grid-cols-[1fr_auto] gap-10 items-center">
+          <div className="flex flex-col-reverse md:grid md:grid-cols-[1fr_auto] gap-8 md:gap-10 items-center">
             <div>
               {(projet.imageCaptions?.[0] ?? projet.descriptionPublic) && renderParagraphs(projet.imageCaptions?.[0] ?? projet.descriptionPublic ?? "")}
             </div>
@@ -235,7 +282,7 @@ export default async function ProjetPage({ params }: Props) {
             />
           </div>
         ) : zigzagImages.length === 2 ? (
-          <div className="grid md:grid-cols-[1fr_380px] gap-8 items-start">
+          <div className="flex flex-col-reverse md:grid md:grid-cols-[1fr_380px] gap-8 items-start">
             <div>
               {(projet.imageCaptions?.[0] ?? projet.descriptionPublic) && renderParagraphs(projet.imageCaptions?.[0] ?? projet.descriptionPublic ?? "")}
             </div>
@@ -259,7 +306,7 @@ export default async function ProjetPage({ params }: Props) {
             </div>
           </div>
         ) : zigzagImages.length === 1 ? (
-          <div className="grid md:grid-cols-[1fr_180px] gap-8 items-start">
+          <div className="flex flex-col-reverse md:grid md:grid-cols-[1fr_180px] gap-8 items-start">
             <div>
               {(projet.imageCaptions?.[0] ?? projet.descriptionPublic) && renderParagraphs(projet.imageCaptions?.[0] ?? projet.descriptionPublic ?? "")}
             </div>
@@ -268,7 +315,7 @@ export default async function ProjetPage({ params }: Props) {
               alt={`${projet.titre} — vue 1`}
               width={540}
               height={960}
-              className="rounded-xl w-full h-auto -mt-4 md:-mt-6 relative z-10 mx-auto md:mx-0 block"
+              className="rounded-xl w-full h-auto md:-mt-6 relative z-10 mx-auto md:mx-0 block"
               quality={90}
             />
           </div>
