@@ -13,7 +13,7 @@ import { projets } from "@/lib/projets"
 export const metadata: Metadata = {
   title: "À propos — Léo Hengebaert",
   description:
-    "Développeur front-end basé à Paris, spécialisé React & Next.js. Découvrez mon parcours.",
+    "Développeur front-end spécialisé React & Next.js, basé en Île-de-France. Découvrez mon parcours.",
 }
 
 const STATS = [
@@ -122,7 +122,7 @@ export default function AProposPage() {
           <h1 className="text-5xl md:text-6xl font-black text-white tracking-tighter leading-[0.95] mb-10">
             Développeur front-end
             <br />
-            <span className="text-zinc-600">basé à Paris.</span>
+            <span className="text-accent">& créateur de sites.</span>
           </h1>
         </BlurFade>
 

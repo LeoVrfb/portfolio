@@ -4,7 +4,6 @@ import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Check, ArrowLeft, ArrowRight, Clock, MessageCircle, Star, Shield, Zap } from "lucide-react"
-import { toast } from "sonner"
 import type { ServiceDetail } from "@/lib/services"
 
 const WHY_TRUST = [
@@ -17,9 +16,6 @@ const WHY_TRUST = [
 export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
   const router = useRouter()
   const [selectedAddons, setSelectedAddons] = useState<Set<string>>(new Set())
-  const [step, setStep] = useState<"config" | "form">("config")
-  const [form, setForm] = useState({ nom: "", email: "", tel: "", activite: "", message: "" })
-  const [isPending, setIsPending] = useState(false)
 
   const toggleAddon = (id: string) => {
     setSelectedAddons((prev) => {
@@ -41,37 +37,16 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
 
   const selectedAddonLabels = Array.from(selectedAddons)
     .map((id) => service.addons.find((a) => a.id === id)?.label)
-    .filter(Boolean)
+    .filter(Boolean) as string[]
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsPending(true)
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          nom: form.nom,
-          email: form.email,
-          activite: form.activite,
-          formule: service.nom,
-          addons: selectedAddonLabels,
-          totalEstime: hasDevisAddon ? "Sur devis" : `${total} €`,
-          message: form.message,
-        }),
-      })
-      const result = await res.json()
-      if (result.success) {
-        toast.success("Demande envoyée ! Je reviens vers vous sous 24h.")
-        router.push("/")
-      } else {
-        toast.error(result.message ?? "Une erreur est survenue.")
-      }
-    } catch {
-      toast.error("Erreur réseau. Réessayez dans quelques instants.")
-    } finally {
-      setIsPending(false)
+  const handleStartProject = () => {
+    const params = new URLSearchParams()
+    params.set("formule", service.nom)
+    params.set("total", hasDevisAddon ? "devis" : String(total))
+    if (selectedAddonLabels.length > 0) {
+      params.set("addons", selectedAddonLabels.join(","))
     }
+    router.push(`/contact?${params.toString()}`)
   }
 
   return (
@@ -265,82 +240,22 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
 
             {/* CTA */}
             <button
-              onClick={() => setStep("form")}
+              onClick={handleStartProject}
               className="w-full flex items-center justify-center gap-2 py-3.5 px-5 rounded-xl font-bold text-sm cursor-pointer transition-all"
               style={{
-                background: service.highlighted ? "var(--accent)" : "hsl(163 24% 54% / 0.15)",
+                background: service.highlighted ? "var(--accent)" : "hsl(163 52% 76% / 0.15)",
                 color: service.highlighted ? "var(--accent-foreground)" : "var(--accent)",
-                border: service.highlighted ? "none" : "1px solid hsl(163 24% 54% / 0.3)",
+                border: service.highlighted ? "none" : "1px solid hsl(163 52% 76% / 0.3)",
               }}
             >
               Démarrer ce projet
               <ArrowRight className="w-4 h-4" />
             </button>
+
+            <p className="text-[10px] text-muted-foreground text-center">
+              Réponse sous 24h · Devis gratuit sans engagement
+            </p>
           </div>
-
-          {/* Form inline */}
-          {step === "form" && (
-            <form onSubmit={handleSubmit} className="mt-4 rounded-2xl border border-accent/30 bg-card p-6 space-y-4">
-              <p className="text-sm font-bold text-foreground">Vos informations</p>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="text-[10px] uppercase tracking-widest text-muted-foreground block mb-1">Nom *</label>
-                  <input
-                    required
-                    value={form.nom}
-                    onChange={(e) => setForm((f) => ({ ...f, nom: e.target.value }))}
-                    placeholder="Votre nom"
-                    className="w-full px-3 py-2.5 rounded-lg border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/50 transition-colors"
-                  />
-                </div>
-                <div>
-                  <label className="text-[10px] uppercase tracking-widest text-muted-foreground block mb-1">Email *</label>
-                  <input
-                    required
-                    type="email"
-                    value={form.email}
-                    onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-                    placeholder="votre@email.com"
-                    className="w-full px-3 py-2.5 rounded-lg border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/50 transition-colors"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="text-[10px] uppercase tracking-widest text-muted-foreground block mb-1">Votre activité</label>
-                <input
-                  value={form.activite}
-                  onChange={(e) => setForm((f) => ({ ...f, activite: e.target.value }))}
-                  placeholder="Ex: restaurant, artisan, consultant…"
-                  className="w-full px-3 py-2.5 rounded-lg border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/50 transition-colors"
-                />
-              </div>
-
-              <div>
-                <label className="text-[10px] uppercase tracking-widest text-muted-foreground block mb-1">Message</label>
-                <textarea
-                  value={form.message}
-                  onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
-                  placeholder="Décrivez votre projet, vos délais, vos questions…"
-                  rows={4}
-                  className="w-full px-3 py-2.5 rounded-lg border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/50 transition-colors resize-none"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={!form.nom || !form.email || isPending}
-                className="w-full py-3 rounded-xl bg-accent text-accent-foreground text-sm font-bold disabled:opacity-40 disabled:cursor-not-allowed transition-opacity cursor-pointer"
-              >
-                {isPending ? "Envoi…" : "Envoyer ma demande"}
-              </button>
-
-              <p className="text-[10px] text-muted-foreground text-center">
-                Réponse sous 24h · Devis gratuit sans engagement
-              </p>
-            </form>
-          )}
         </div>
       </div>
     </div>

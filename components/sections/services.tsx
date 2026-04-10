@@ -7,56 +7,51 @@ import { BlurFade } from "@/components/animations/blur-fade"
 const formules = [
   {
     nom: "Essentiel",
-    prix: "600 €",
-    accroche: "Être visible sur Google",
+    accroche: "« Être visible sur Google »",
     delai: "5 à 7 jours ouvrés",
-    description: "Un site professionnel et rapide. Vous fournissez les textes et photos.",
-    inclus: [
+    description: "Un site professionnel et rapide. Design adapté à votre identité, mise en ligne incluse.",
+    points: [
       "4 pages : Accueil, À propos, Services, Contact",
-      "Design adapté à votre identité",
-      "Formulaire de contact par email",
       "Responsive mobile",
-      "Mise en ligne + configuration du domaine",
       "Fiche Google Business Profile",
+      "Mise en ligne + domaine configuré",
     ],
     highlighted: false,
     slug: "essentiel",
+    colorClass: "text-accent",
+    borderClass: "border-accent/25 hover:border-accent/40",
   },
   {
     nom: "Standard",
-    prix: "1 200 €",
-    accroche: "Un vrai outil de communication",
+    accroche: "« Un vrai outil de communication »",
     delai: "10 à 15 jours ouvrés",
-    description: "Contenu rédigé, SEO local, Analytics. Le site qui travaille pour vous.",
-    inclus: [
-      "Tout ce qui est dans Essentiel",
-      "Jusqu'à 7 pages",
-      "Rédaction des textes (à partir de votre brief)",
-      "SEO on-page : titres, structure H1/H2, sitemap",
+    description: "Contenu rédigé par mes soins, SEO local, Analytics. Le site qui travaille pour vous.",
+    points: [
+      "Jusqu'à 7 pages avec rédaction des textes",
+      "SEO on-page : H1/H2, sitemap, balises",
       "Google Analytics 4",
-      "1 round de modifications après livraison",
-      "Formulaire de devis ou réservation",
+      "1 round de modifications inclus",
     ],
     highlighted: true,
     slug: "standard",
+    colorClass: "text-[var(--lavender)]",
+    borderClass: "border-[var(--lavender)]/40 hover:border-[var(--lavender)]/60",
   },
   {
     nom: "Premium",
-    prix: "2 200 €+",
-    accroche: "Votre site travaille à votre place",
+    accroche: "« Votre site travaille à votre place »",
     delai: "3 à 4 semaines",
-    description: "Maquette Figma, interface admin, SEO avancé. Zéro compromis.",
-    inclus: [
-      "Tout ce qui est dans Standard",
+    description: "Maquette Figma validée, interface admin, SEO avancé. Zéro compromis.",
+    points: [
       "Maquette Figma avant développement",
-      "Interface admin sur mesure (photos, textes)",
-      "Galerie dynamique avec filtres",
-      "SEO avancé : Schema.org, Core Web Vitals",
+      "Interface admin pour gérer votre contenu",
       "Blog ou actualités (publication autonome)",
-      "Menu interactif ou galerie réalisations",
+      "SEO avancé : Schema.org, Core Web Vitals",
     ],
     highlighted: false,
     slug: "premium",
+    colorClass: "text-[var(--gold)]",
+    borderClass: "border-[var(--gold)]/25 hover:border-[var(--gold)]/40",
   },
 ]
 
@@ -66,34 +61,26 @@ export function ServicesSection() {
       <div className="layout-container">
         <BlurFade delay={0.1} direction="up" inView>
           <div className="mb-16">
-            <p className="text-xs uppercase tracking-[0.45em] text-zinc-600 font-semibold mb-3">
-              Tarifs
+            <p className="text-xs uppercase tracking-[0.45em] text-accent font-semibold mb-3">
+              Sites web sur mesure
             </p>
             <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter leading-tight">
-              3 formules claires.
+              Vous avez un projet web ?
               <br />
-              <span className="text-zinc-600">0 mauvaise surprise.</span>
+              <span className="text-foreground/75">Je suis là pour vous aider.</span>
             </h2>
+            <p className="mt-5 text-base text-foreground/55 max-w-lg leading-relaxed">
+              En parallèle de mon activité en agence, je crée des sites sur mesure pour artisans, restaurants et petites entreprises. Trois formules claires, des livrables précis.
+            </p>
           </div>
         </BlurFade>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-10">
-          {formules.map((formule, i) => {
-            const cardColors = [
-              { border: "border-accent/40 bg-accent/5 shadow-accent/10", price: "text-accent" },
-              { border: "border-[var(--lavender)]/50 bg-[var(--lavender)]/5 shadow-[var(--lavender)]/10", price: "text-[var(--lavender)]" },
-              { border: "border-[var(--gold)]/40 bg-[var(--gold)]/5 shadow-[var(--gold)]/10", price: "text-[var(--gold)]" },
-            ]
-            const c = formule.highlighted ? cardColors[1] : i === 0 ? cardColors[0] : cardColors[2]
-            return (
+          {formules.map((formule, i) => (
             <BlurFade key={formule.nom} delay={0.2 + i * 0.1} direction="up" inView>
               <Link
                 href={`/services/${formule.slug}`}
-                className={`group relative flex flex-col h-full rounded-2xl border p-7 transition-all duration-300 hover:translate-y-[-4px] cursor-pointer ${
-                  formule.highlighted
-                    ? `${c.border} shadow-lg`
-                    : "border-white/7 bg-white/2 hover:border-white/15"
-                }`}
+                className={`group relative flex flex-col h-full rounded-2xl border p-7 bg-white/2 transition-all duration-300 hover:translate-y-[-4px] cursor-pointer ${formule.borderClass}`}
               >
                 {formule.highlighted && (
                   <div className="absolute -top-3.5 left-6">
@@ -103,87 +90,48 @@ export function ServicesSection() {
                   </div>
                 )}
 
-                <div className="mb-6">
-                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.4em] mb-3">
+                <div className="mb-5">
+                  <p className={`text-[10px] font-bold uppercase tracking-[0.4em] mb-2 ${formule.colorClass}`}>
                     {formule.nom}
                   </p>
-                  <div className="flex items-baseline gap-1 mb-2">
-                    <span className={`text-4xl font-bold tracking-tight ${c.price}`}>
-                      {formule.prix}
-                    </span>
-                  </div>
-                  <p className="text-sm font-medium text-accent italic mb-2">
-                    « {formule.accroche} »
+                  <p className={`text-sm font-medium italic mb-3 ${formule.colorClass}`}>
+                    {formule.accroche}
                   </p>
-                  <div className="flex items-center gap-1.5 text-xs text-foreground/90">
+                  <div className="flex items-center gap-1.5 text-xs text-foreground/60">
                     <Clock className="w-3.5 h-3.5" />
                     {formule.delai}
                   </div>
                 </div>
 
-                <p className="text-sm text-foreground/65 mb-6 leading-relaxed">
+                <p className="text-sm text-foreground/65 mb-5 leading-relaxed">
                   {formule.description}
                 </p>
 
-                <ul className="space-y-2.5 mb-8 flex-1">
-                  {formule.inclus.map((item) => (
-                    <li key={item} className="flex items-start gap-2.5 text-sm text-foreground/90">
-                      <Check className="w-3.5 h-3.5 mt-0.5 shrink-0 text-accent" />
+                <ul className="space-y-2 mb-8 flex-1">
+                  {formule.points.map((item) => (
+                    <li key={item} className="flex items-start gap-2.5 text-sm text-foreground/80">
+                      <Check className={`w-3.5 h-3.5 mt-0.5 shrink-0 ${formule.colorClass}`} />
                       {item}
                     </li>
                   ))}
                 </ul>
 
-                <div className={`flex items-center justify-between pt-4 border-t border-white/6 text-sm font-semibold transition-colors ${c.price} group-hover:opacity-80`}>
+                <div className={`flex items-center justify-between pt-4 border-t border-white/6 text-sm font-semibold transition-colors ${formule.colorClass} group-hover:opacity-80`}>
                   <span>Voir la formule</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>
             </BlurFade>
-          )})}
+          ))}
         </div>
 
-        {/* Options à la carte */}
         <BlurFade delay={0.5} direction="up" inView>
-          <div className="rounded-2xl border border-white/7 bg-white/2 p-7 hover:border-white/10 transition-colors">
-            <div className="flex items-start justify-between gap-4 mb-6">
-              <div>
-                <h3 className="font-bold text-white mb-1 text-lg">Options à la carte</h3>
-                <p className="text-sm text-zinc-600">
-                  À ajouter à n'importe quelle formule.
-                </p>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {[
-                { label: "Page supplémentaire", prix: "150 €" },
-                { label: "Création du logo", prix: "200 €" },
-                { label: "Google Business Profile", prix: "80 €" },
-                { label: "Pixel Meta (Facebook Ads)", prix: "60 €" },
-                { label: "Google Analytics 4", prix: "50 €" },
-                { label: "Maintenance mensuelle", prix: "50 €/mois" },
-                { label: "Modification post-livraison", prix: "60 €/h" },
-                { label: "Traduction anglais", prix: "sur devis" },
-              ].map(({ label, prix }) => (
-                <div
-                  key={label}
-                  className="flex flex-col gap-1.5 p-4 rounded-xl bg-white/4 border border-white/5 hover:border-white/10 hover:bg-white/6 transition-all"
-                >
-                  <span className="text-xs text-zinc-500">{label}</span>
-                  <span className="text-sm font-bold text-accent">{prix}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </BlurFade>
-
-        <BlurFade delay={0.6} direction="up" inView>
-          <div className="text-center mt-8">
+          <div className="text-center">
             <Link
               href="/services"
-              className="inline-flex items-center gap-2 text-sm text-zinc-600 hover:text-white transition-colors group"
+              className="inline-flex items-center gap-2 text-sm text-foreground/50 hover:text-accent transition-colors group cursor-pointer"
             >
-              Voir tous les détails
+              Voir toutes les formules & tarifs
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>

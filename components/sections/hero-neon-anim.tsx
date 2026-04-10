@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react"
 
+
+
 const BASE = "https://raw.githubusercontent.com/HoanghoDev/neon_v1/main"
 
 // Dimensions originales 1100×600 → scale 0.75
@@ -281,9 +283,11 @@ const ANIM_CSS = `
 }
 `
 
-export function HeroNeonAnim() {
+export function HeroNeonAnim({ responsive = false }: { responsive?: boolean }) {
   const [playing, setPlaying] = useState(false)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [rScale, setRScale] = useState(0.4)
 
   useEffect(() => {
     const first = setTimeout(() => {
@@ -300,32 +304,61 @@ export function HeroNeonAnim() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!responsive) return
+    const el = containerRef.current
+    if (!el) return
+    const ro = new ResizeObserver(([entry]) => {
+      setRScale(entry.contentRect.width / 1100)
+    })
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [responsive])
+
+  const innerContent = (
+    <>
+      <div className="hna-sphere-wrap">
+        <div className="hna-sphere" />
+      </div>
+      <div className="hna-deco">
+        <div className="hna-deco-ring" />
+        <div className="hna-deco-ring" />
+        <div className="hna-deco-ring" />
+        <div className="hna-deco-dot" />
+        <div className="hna-deco-dot" />
+      </div>
+      <div className="hna-wall-left" />
+      <div className="hna-wall-right" />
+      <div className="hna-hand1" />
+      <div className="hna-hand2" />
+    </>
+  )
+
+  if (responsive) {
+    return (
+      <>
+        <style dangerouslySetInnerHTML={{ __html: ANIM_CSS }} />
+        <div
+          ref={containerRef}
+          style={{ width: "100%", aspectRatio: "11/6", position: "relative", overflow: "hidden", opacity: 0.85 }}
+        >
+          <div
+            className={`hna-inner${playing ? " playing" : ""}`}
+            style={{ position: "absolute", top: 0, left: 0, transform: `scale(${rScale})` }}
+          >
+            {innerContent}
+          </div>
+        </div>
+      </>
+    )
+  }
+
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: ANIM_CSS }} />
       <div className="hna-root">
         <div className={`hna-inner${playing ? " playing" : ""}`}>
-          {/* Sphère centrale — le wrapper flotte, l'inner scale/fade */}
-          <div className="hna-sphere-wrap">
-            <div className="hna-sphere" />
-          </div>
-
-          {/* Éléments décoratifs */}
-          <div className="hna-deco">
-            <div className="hna-deco-ring" />
-            <div className="hna-deco-ring" />
-            <div className="hna-deco-ring" />
-            <div className="hna-deco-dot" />
-            <div className="hna-deco-dot" />
-          </div>
-
-          {/* Cartes latérales */}
-          <div className="hna-wall-left" />
-          <div className="hna-wall-right" />
-
-          {/* Mains — silhouette noire avec bordure néon blanche */}
-          <div className="hna-hand1" />
-          <div className="hna-hand2" />
+          {innerContent}
         </div>
       </div>
     </>

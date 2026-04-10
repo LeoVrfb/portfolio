@@ -31,7 +31,7 @@ export function ProjetsSection() {
             <h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-tighter leading-[0.95]">
               Mes derniers
               <br />
-              <span className="text-foreground/20">projets.</span>
+              <span className="text-accent">projets.</span>
             </h2>
           </div>
           <Link
@@ -76,28 +76,28 @@ export function ProjetsSection() {
 
                   {/* Infos */}
                   <div className="flex-1 min-w-0">
-                    {/* Ligne 1 : logo + client (grand) + année */}
-                    <div className="flex items-center gap-2.5 mb-1">
-                      {projet.logo && (
-                        <div className="relative w-5 h-5 shrink-0">
-                          <Image
-                            src={projet.logo}
-                            alt={`Logo ${projet.clientShort ?? projet.client}`}
-                            fill
-                            className="object-contain"
-                            sizes="20px"
-                          />
-                        </div>
-                      )}
+                    {/* Ligne 1 : client (grand) + logos + année */}
+                    <div className="flex items-center gap-2 mb-1">
                       <h3 className="text-lg font-bold leading-tight truncate transition-colors" style={{ color: "var(--accent)" }}>
                         {projet.clientShort ?? projet.client}
                       </h3>
-                      <span className="text-xs text-foreground/30 font-mono shrink-0">
+                      {(projet.logos ?? (projet.logo ? [projet.logo] : [])).map((src, li) => (
+                        <div key={li} className="relative w-5 h-5 rounded-md overflow-hidden shrink-0 bg-white/90">
+                          <Image
+                            src={src}
+                            alt={`Logo ${projet.clientShort ?? projet.client}`}
+                            fill
+                            className="object-contain p-0.5"
+                            sizes="20px"
+                          />
+                        </div>
+                      ))}
+                      <span className="text-xs text-foreground/90 font-mono shrink-0">
                         {year}
                       </span>
                     </div>
                     {/* Ligne 2 : titre secondaire */}
-                    <p className="text-sm text-foreground/45 leading-snug truncate">
+                    <p className="text-sm text-foreground/75 leading-snug truncate">
                       {projet.titre}
                     </p>
                   </div>
@@ -126,19 +126,19 @@ export function ProjetsSection() {
           })}
         </ul>
 
-        {/* Mobile see all */}
+        {/* Voir tout — bas de liste */}
         <motion.div
-          className="mt-10 flex justify-center md:hidden"
+          className="mt-10 flex justify-center"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
           <Link
             href="/projets"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+            className="inline-flex items-center gap-2 text-sm text-foreground/60 hover:text-accent transition-colors cursor-pointer group"
           >
             Voir tous les projets
-            <ArrowUpRight className="w-4 h-4" />
+            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </Link>
         </motion.div>
       </div>

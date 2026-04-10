@@ -52,11 +52,11 @@ function NeonText({
 }
 
 
-function GlassButton({ children, href, variant = "green" }: { children: React.ReactNode; href: string; variant?: "green" | "mauve" }) {
-  const wrap = variant === "mauve" ? "glass-btn-wrap-mauve" : "glass-btn-wrap-dark"
-  const btn = variant === "mauve" ? "glass-btn-mauve" : "glass-btn-dark"
-  const txt = variant === "mauve" ? "glass-btn-text-mauve" : "glass-btn-text-dark"
-  const shadow = variant === "mauve" ? "glass-btn-shadow-mauve" : "glass-btn-shadow-dark"
+function GlassButton({ children, href, variant = "green" }: { children: React.ReactNode; href: string; variant?: "green" | "mauve" | "blue" }) {
+  const wrap = variant === "mauve" ? "glass-btn-wrap-mauve" : variant === "blue" ? "glass-btn-wrap-blue" : "glass-btn-wrap-dark"
+  const btn = variant === "mauve" ? "glass-btn-mauve" : variant === "blue" ? "glass-btn-blue" : "glass-btn-dark"
+  const txt = variant === "mauve" ? "glass-btn-text-mauve" : variant === "blue" ? "glass-btn-text-blue" : "glass-btn-text-dark"
+  const shadow = variant === "mauve" ? "glass-btn-shadow-mauve" : variant === "blue" ? "glass-btn-shadow-blue" : "glass-btn-shadow-dark"
   return (
     <>
       <style>{GLASS_CSS}</style>
@@ -72,21 +72,16 @@ function GlassButton({ children, href, variant = "green" }: { children: React.Re
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-end overflow-hidden bg-background pb-16 pt-32">
+    <section className="relative min-h-screen flex flex-col justify-end overflow-hidden bg-background pt-32">
       {/* Background boxes */}
       <div className="absolute inset-0 overflow-hidden z-0">
         <div className="absolute inset-0 bg-background z-20 [mask-image:radial-gradient(ellipse_80%_60%_at_50%_0%,transparent_30%,black_100%)] pointer-events-none" />
         <Boxes colors={PALETTE} />
       </div>
 
-
-      {/* Animation neon cartes — décorative, fond droit */}
-      <div className="absolute inset-0 z-1 overflow-hidden pointer-events-none">
-        <HeroNeonAnim />
-      </div>
-
-      <div className="relative z-10 layout-container w-full">
-        <div className="grid lg:grid-cols-[1fr_auto] gap-12 items-end">
+      {/* Content — texte à gauche, socials à droite */}
+      <div className="relative z-10 layout-container w-full pb-10">
+        <div className="grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-10 items-end">
           {/* Left */}
           <div>
             {/* Badge */}
@@ -108,7 +103,7 @@ export function HeroSection() {
             <h1 className="text-[clamp(3.5rem,10vw,8rem)] font-bold leading-[0.92] tracking-tighter text-foreground mb-2">
               <NeonText text="Léo" delay={0.3} />
             </h1>
-            <h1 className="text-[clamp(3.5rem,10vw,8rem)] font-bold leading-[0.92] tracking-tighter text-foreground/20 mb-8">
+            <h1 className="text-[clamp(3.5rem,10vw,8rem)] font-bold leading-[0.92] tracking-tighter text-accent mb-8" style={{ opacity: 0.6 }}>
               <NeonText text="Hengebaert" delay={0.9} dimmed />
             </h1>
 
@@ -120,7 +115,7 @@ export function HeroSection() {
               transition={{ duration: 0.6, delay: 0.75, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="w-12 h-px bg-accent" />
-              <p className="text-sm text-foreground/80 tracking-widest uppercase font-medium">
+              <p className="text-sm text-accent tracking-widest uppercase font-medium">
                 Développeur front-end & créateur de sites web
               </p>
             </motion.div>
@@ -147,7 +142,7 @@ export function HeroSection() {
               transition={{ duration: 0.6, delay: 1.0, ease: "easeOut" }}
             >
               <GlassButton href="/projets">Mes projets</GlassButton>
-              <GlassButton href="/services" variant="mauve">Mes services</GlassButton>
+              <GlassButton href="/services" variant="blue">Mes services</GlassButton>
               <Link
                 href="/contact"
                 className="group inline-flex items-center gap-2 text-foreground/75 text-sm font-medium hover:text-accent transition-colors cursor-pointer"
@@ -194,6 +189,13 @@ export function HeroSection() {
             </a>
             <div className="hidden lg:block w-px h-16 bg-linear-to-b from-muted-foreground/20 to-transparent mt-2" />
           </motion.div>
+        </div>
+      </div>
+
+      {/* Animation neon — juste avant le bandeau, pleine largeur */}
+      <div className="relative z-10 w-full flex justify-center">
+        <div className="w-[min(72vw,1020px)] max-lg:w-[min(90vw,560px)]">
+          <HeroNeonAnim responsive />
         </div>
       </div>
     </section>
@@ -432,4 +434,93 @@ const GLASS_CSS = `
 .glass-btn-mauve:hover::after { --gm-angle-1: -125deg; }
 .glass-btn-mauve:active::after { --gm-angle-1: -75deg; }
 .glass-btn-wrap-mauve:has(.glass-btn-mauve:active) { transform: rotate3d(1, 0, 0, 20deg); }
+
+/* === Variante blue === */
+.glass-btn-wrap-blue {
+  --anim-time: 400ms;
+  --anim-ease: cubic-bezier(0.25, 1, 0.5, 1);
+  position: relative; z-index: 2; border-radius: 999vw;
+  background: transparent; pointer-events: none;
+  transition: all var(--anim-time) var(--anim-ease); display: inline-block;
+}
+.glass-btn-shadow-blue {
+  --shadow-fix: 2em;
+  position: absolute;
+  width: calc(100% + var(--shadow-fix)); height: calc(100% + var(--shadow-fix));
+  top: calc(0% - var(--shadow-fix) / 2); left: calc(0% - var(--shadow-fix) / 2);
+  filter: blur(clamp(2px, 0.125em, 12px)); overflow: visible; pointer-events: none;
+}
+.glass-btn-shadow-blue::after {
+  content: ""; position: absolute; z-index: 0; inset: 0; border-radius: 999vw;
+  background: linear-gradient(180deg, rgba(148,217,249,0.2), rgba(148,217,249,0.08));
+  width: calc(100% - var(--shadow-fix) - 0.25em); height: calc(100% - var(--shadow-fix) - 0.25em);
+  top: calc(var(--shadow-fix) - 0.5em); left: calc(var(--shadow-fix) - 0.875em);
+  padding: 0.125em; box-sizing: border-box;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude; -webkit-mask-composite: xor;
+  transition: all var(--anim-time) var(--anim-ease);
+}
+@property --gb2-angle-1 { syntax: "<angle>"; inherits: false; initial-value: -75deg; }
+@property --gb2-angle-2 { syntax: "<angle>"; inherits: false; initial-value: -45deg; }
+.glass-btn-blue {
+  --border-w: clamp(1px, 0.0625em, 4px);
+  all: unset; cursor: pointer; position: relative; display: inline-block;
+  -webkit-tap-highlight-color: rgba(0,0,0,0); pointer-events: auto; z-index: 3;
+  background: linear-gradient(-75deg, rgba(148,217,249,0.06), rgba(148,217,249,0.14), rgba(148,217,249,0.06));
+  border-radius: 999vw;
+  box-shadow:
+    inset 0 0.125em 0.125em rgba(255,255,255,0.05),
+    inset 0 -0.125em 0.125em rgba(148,217,249,0.12),
+    0 0.25em 0.125em -0.125em rgba(0,0,0,0.5),
+    0 0 0.1em 0.25em inset rgba(148,217,249,0.08);
+  backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+  -webkit-backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+  transition: all var(--anim-time) var(--anim-ease);
+}
+.glass-btn-blue:hover {
+  transform: scale(0.975);
+  box-shadow:
+    inset 0 0.125em 0.125em rgba(255,255,255,0.05),
+    inset 0 -0.125em 0.125em rgba(148,217,249,0.18),
+    0 0.15em 0.05em -0.1em rgba(0,0,0,0.6),
+    0 0 0.05em 0.1em inset rgba(148,217,249,0.14),
+    0 0 0.6em 0.05em rgba(148,217,249,0.15);
+}
+.glass-btn-text-blue {
+  position: relative; display: block; user-select: none;
+  letter-spacing: -0.01em; font-weight: 700; font-size: 0.875rem;
+  color: rgba(185,235,253,1);
+  -webkit-font-smoothing: antialiased;
+  text-shadow: 0em 0.1em 0.3em rgba(148,217,249,0.4);
+  transition: all var(--anim-time) var(--anim-ease);
+  padding-inline: 1.75em; padding-block: 0.9em;
+}
+.glass-btn-text-blue::after {
+  content: ""; display: block; position: absolute; z-index: 3;
+  width: calc(100% - var(--border-w)); height: calc(100% - var(--border-w));
+  top: calc(0% + var(--border-w) / 2); left: calc(0% + var(--border-w) / 2);
+  box-sizing: border-box; border-radius: 999vw; overflow: clip;
+  background: linear-gradient(var(--gb2-angle-2), rgba(255,255,255,0) 0%, rgba(255,255,255,0.08) 40% 50%, rgba(255,255,255,0) 55%);
+  mix-blend-mode: screen; pointer-events: none;
+  background-size: 200% 200%; background-position: 0% 50%; background-repeat: no-repeat;
+  transition: background-position calc(var(--anim-time) * 1.25) var(--anim-ease), --gb2-angle-2 calc(var(--anim-time) * 1.25) var(--anim-ease);
+}
+.glass-btn-blue:hover .glass-btn-text-blue::after { background-position: 25% 50%; }
+.glass-btn-blue:active .glass-btn-text-blue::after { background-position: 50% 15%; --gb2-angle-2: -15deg; }
+.glass-btn-blue::after {
+  content: ""; position: absolute; z-index: 1; inset: 0; border-radius: 999vw;
+  width: calc(100% + var(--border-w)); height: calc(100% + var(--border-w));
+  top: calc(0% - var(--border-w) / 2); left: calc(0% - var(--border-w) / 2);
+  padding: var(--border-w); box-sizing: border-box;
+  background:
+    conic-gradient(from var(--gb2-angle-1) at 50% 50%, rgba(148,217,249,0.5), rgba(148,217,249,0) 5% 40%, rgba(148,217,249,0.5) 50%, rgba(148,217,249,0) 60% 95%, rgba(148,217,249,0.5)),
+    linear-gradient(180deg, rgba(148,217,249,0.2), rgba(148,217,249,0.1));
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude; -webkit-mask-composite: xor;
+  transition: all var(--anim-time) var(--anim-ease), --gb2-angle-1 500ms ease;
+  box-shadow: inset 0 0 0 calc(var(--border-w) / 2) rgba(148,217,249,0.3);
+}
+.glass-btn-blue:hover::after { --gb2-angle-1: -125deg; }
+.glass-btn-blue:active::after { --gb2-angle-1: -75deg; }
+.glass-btn-wrap-blue:has(.glass-btn-blue:active) { transform: rotate3d(1, 0, 0, 20deg); }
 `

@@ -18,9 +18,9 @@ export default function ContactPage() {
         <h1 className="text-5xl font-black tracking-tighter text-white leading-[0.95] mb-6">
           Parlons de
           <br />
-          <span className="text-zinc-600">votre projet.</span>
+          <span className="text-accent">votre projet.</span>
         </h1>
-        <p className="text-base text-zinc-500 leading-relaxed max-w-lg">
+        <p className="text-base text-foreground/55 leading-relaxed max-w-lg">
           Remplissez le formulaire ci-dessous. Je vous réponds sous 24h avec une
           proposition adaptée à votre activité et votre budget.
         </p>
