@@ -10,9 +10,12 @@ import { cn } from "@/lib/utils";
 // ─── helpers ───────────────────────────────────────────────────────────────
 
 function getCardClasses(index: number) {
-  if (index === 0) return "col-span-12 lg:col-span-8 h-[480px]";
-  if (index === 1) return "col-span-12 sm:col-span-6 lg:col-span-4 h-[480px]";
-  return "col-span-12 sm:col-span-6 lg:col-span-4 h-[360px]";
+  if (index === 0) return "col-span-12 lg:col-span-8 lg:row-span-2";
+  if (index === 1) return "col-span-12 sm:col-span-6 lg:col-span-4";
+  if (index === 2) return "col-span-12 sm:col-span-6 lg:col-span-4";
+  if (index % 3 === 0) return "col-span-12 sm:col-span-6 lg:col-span-5";
+  if (index % 3 === 1) return "col-span-12 sm:col-span-6 lg:col-span-4";
+  return "col-span-12 sm:col-span-6 lg:col-span-3";
 }
 
 // ─── PlaceholderBg ─────────────────────────────────────────────────────────
@@ -301,7 +304,7 @@ export function ProjetsGrid() {
 
       {/* Grid */}
       {filtered.length > 0 ? (
-        <div className="grid grid-cols-12 gap-3 sm:gap-4">
+        <div className="grid grid-cols-12 gap-3 sm:gap-4 grid-flow-dense [grid-auto-rows:300px]">
           {filtered.map((projet, index) => (
             <ProjectCard key={projet.slug} projet={projet} index={index} />
           ))}
