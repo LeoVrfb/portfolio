@@ -72,7 +72,7 @@ export default async function ProjetPage({ params }: Props) {
     <div className="pt-28 pb-28">
 
       {/* ── HEADER — légèrement plus large que le contenu ── */}
-      <div className="max-w-5xl mx-auto px-6 lg:px-10 mb-16">
+      <div className="max-w-5xl mx-auto px-6 lg:px-10 mb-8">
         {/* Back */}
         <div className="mb-10">
           <Link
@@ -204,12 +204,15 @@ export default async function ProjetPage({ params }: Props) {
       </div>
 
       {/* ── CONTENU PRINCIPAL — même container ── */}
-      <div className="max-w-4xl mx-auto px-6 lg:px-10 space-y-10 sm:space-y-16">
+      <div className="max-w-4xl mx-auto px-6 lg:px-10 space-y-10 sm:space-y-14">
         <div className="h-px bg-border/40" />
 
         {/* BLOC 1 — Vidéo / Image EN HAUT, Description EN DESSOUS */}
         {(projet.video || projet.img || projet.descriptionPublic) && (
-          <div className="space-y-7">
+          <div className="space-y-5">
+            {(projet.video || projet.img) && projet.videoTitle && (
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/40">{projet.videoTitle}</p>
+            )}
             {projet.video ? (
               <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-border/60">
                 <video src={projet.video} autoPlay muted loop playsInline preload="auto" className="w-full h-full object-cover" />
@@ -221,7 +224,7 @@ export default async function ProjetPage({ params }: Props) {
             ) : null}
 
             {projet.descriptionPublic && (
-              <div className="max-w-2xl">
+              <div className="max-w-2xl pt-2">
                 {renderParagraphs(projet.descriptionPublic)}
               </div>
             )}

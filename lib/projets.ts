@@ -13,6 +13,7 @@ export type Projet = {
   img: string;
   images?: string[];
   video?: string;
+  videoTitle?: string;
   tags: string[];
   technologies?: { nom: string; detail: string }[];
   caracteristiques?: string[];
@@ -313,10 +314,11 @@ export const projets: Projet[] = [
     description:
       "Module e-learning gamifié déployé en interne chez BNP Paribas pour former des milliers de collaborateurs aux fondamentaux de l'IA générative — 6 chapitres, 5 mini-jeux, conforme SCORM.",
     descriptionPublic:
-      "**Pas de slides. Un vrai jeu.** AI-nstein, un personnage IA inspiré d'Einstein, accueille l'utilisateur et orchestre le parcours via une interface de chat. La progression se fait par échanges de messages, entrecoupés de quiz et de mini-jeux interactifs — cinq jeux différents sur six chapitres : jeu de briques, drag & drop, détection d'hallucinations, catégorisation, QCM final.\n\n**Le pari technique.** Jusqu'ici, les modules SCORM étaient produits avec Articulate Storyline — un outil no-code au design limité, sans possibilité d'intégrer des animations avancées. J'ai étudié le protocole SCORM 1.2, compris la structure du manifest XML et les API de communication avec le LMS, pour embarquer une app React complète dans un package lisible par n'importe quel LMS d'entreprise.\n\n**Prêt à déployer dans n'importe quel LMS.** Le module s'intègre directement dans l'infrastructure e-learning de BNP Paribas. La progression, le score et le temps passé de chaque collaborateur remontent automatiquement.",
-    intro: `Un des projets qui m'a le plus stimulé. Développé chez Artefact 3000 pour **BNP Paribas**, ce module e-learning gamifié forme des milliers de collaborateurs aux fondamentaux de l'IA générative — et j'en ai développé l'essentiel seul. Six chapitres, cinq mini-jeux en temps réel, un personnage IA comme guide. Et surtout, un pari que peu d'agences tentent : **remplacer Articulate Storyline par une app React complète**, packagée en SCORM 1.2 pour s'intégrer dans n'importe quel LMS d'entreprise.`,
+      "L'écran d'introduction : à gauche, AI-nstein — un personnage IA inspiré d'Einstein — guide l'utilisateur via une interface de chat, envoyant des messages et posant des questions. À droite, le module de cours principal affiche le contenu interactif du chapitre en cours. En bas, une barre de progression suit l'avancement sur l'ensemble des six chapitres. Les jeux interactifs arrivent dans les chapitres suivants.",
+    intro: `Un des projets qui m'a le plus stimulé. Développé chez Artefact 3000 pour **BNP Paribas**, ce module e-learning gamifié forme des milliers de collaborateurs aux fondamentaux de l'IA générative. Six chapitres, cinq mini-jeux en temps réel, un personnage IA comme guide. Et surtout, un pari que peu d'agences tentent : **remplacer Articulate Storyline par une app React complète**, packagée en SCORM 1.2 pour s'intégrer dans n'importe quel LMS d'entreprise.`,
     img: "/assets/bnp/bnp-miniature.webp",
     video: "/assets/bnp/bnp-demo.mp4",
+    videoTitle: "Vue générale de l'application",
     tags: ["React", "Vite", "TypeScript", "PixiJS", "GSAP", "Framer Motion", "SCORM 1.2", "Accessibilité", "i18n", "Storybook"],
     technologies: [
       {
