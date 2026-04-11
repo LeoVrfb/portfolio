@@ -117,7 +117,7 @@ function ProjectCard({ projet, index, total }: { projet: Projet; index: number; 
     <Link
       href={`/projets/${projet.slug}`}
       className={cn(
-        "group relative overflow-hidden rounded-2xl cursor-pointer block",
+        "group relative overflow-hidden rounded-2xl cursor-pointer block aspect-video",
         getCardClasses(index, total)
       )}
     >
@@ -335,7 +335,7 @@ export function ProjetsGrid() {
 
       {/* Grid */}
       {filtered.length > 0 ? (
-        <div className="grid grid-cols-12 gap-3 sm:gap-4 grid-flow-dense auto-rows-[360px]">
+        <div className="grid grid-cols-12 gap-3 sm:gap-4 grid-flow-dense">
           {filtered.map((projet, index) => (
             <ProjectCard key={projet.slug} projet={projet} index={index} total={filtered.length} />
           ))}
