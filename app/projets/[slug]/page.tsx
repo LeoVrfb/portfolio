@@ -8,6 +8,7 @@ import { ArrowLeft, ArrowRight, ExternalLink, Briefcase, User } from "lucide-rea
 import { projets, getProjet } from "@/lib/projets";
 import { ProjetGallery } from "@/components/sections/projet-gallery";
 import { ProjetImageSlider } from "@/components/sections/projet-image-slider";
+import { WideVideoPlayer } from "@/components/sections/wide-video-player";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -32,22 +33,51 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 function renderHighlight(text: string): React.ReactNode {
-  const parts = text.split(/(\*\*[^*]+\*\*)/g);
-  return parts.map((part, i) =>
-    /^\*\*[^*]+\*\*$/.test(part) ? (
-      <strong key={i} className="font-semibold accent-text" style={{ color: "var(--accent)" }}>
-        {part.slice(2, -2)}
-      </strong>
-    ) : part
-  );
+  const parts = text.split(/(\*\*[^*]+\*\*|__[^_]+__)/g);
+  return parts.map((part, i) => {
+    if (/^\*\*[^*]+\*\*$/.test(part))
+      return <strong key={i} className="font-semibold" style={{ color: "var(--accent)" }}>{part.slice(2, -2)}</strong>;
+    if (/^__[^_]+__$/.test(part))
+      return <strong key={i} className="font-semibold text-foreground">{part.slice(2, -2)}</strong>;
+    return part;
+  });
 }
 
 function renderParagraphs(text: string) {
   return text.split("\n\n").map((para, i) => (
-    <p key={i} className={`text-base text-foreground/80 leading-relaxed${i > 0 ? " mt-4" : ""}`}>
+    <p key={i} className={`text-base text-foreground/88 leading-relaxed${i > 0 ? " mt-4" : ""}`}>
       {renderHighlight(para)}
     </p>
   ));
+}
+
+type Challenge = { titre: string; solution: string };
+
+function TechSection({ challenges }: { challenges: Challenge[] }) {
+  if (!challenges.length) return null;
+  return (
+    <div className="space-y-5">
+      <div className="flex items-center gap-3">
+        <div className="h-px flex-1 bg-white/10" />
+        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-foreground">Côté technique</p>
+        <div className="h-px flex-1 bg-white/10" />
+      </div>
+      <div className="space-y-6">
+        {challenges.map((ch, i) => (
+          <div key={i} className="flex gap-5 items-start">
+            <span
+              className="text-2xl font-black leading-none shrink-0 mt-0.5 select-none"
+              style={{ color: "var(--accent)" }}
+            >?</span>
+            <div>
+              <p className="text-sm font-bold text-foreground mb-1.5">{ch.titre}</p>
+              <p className="text-sm text-foreground/82 leading-relaxed">{ch.solution}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default async function ProjetPage({ params }: Props) {
@@ -57,6 +87,7 @@ export default async function ProjetPage({ params }: Props) {
 
   const idx = projets.findIndex((p) => p.slug === projet.slug);
   const nextProjet = projets[(idx + 1) % projets.length];
+  const prevProjet = projets[(idx - 1 + projets.length) % projets.length];
   const year = projet.date.split("-")[0];
 
   // Preload des assets critiques (vidéo + première image)
@@ -68,6 +99,13 @@ export default async function ProjetPage({ params }: Props) {
   const zigzagImages = projet.video && !projet.wideMedia
     ? (projet.images?.slice(1) ?? [])
     : (projet.images ?? []);
+
+  // Interleave challenges entre BLOC 2 et BLOC 3 pour les projets portrait avec assez d'images
+  const interleaveZigzag =
+    !projet.wideMedia &&
+    !projet.sliderSets &&
+    zigzagImages.length >= 5 &&
+    (projet.challenges?.length ?? 0) > 0;
 
   return (
     <div className="pt-28 pb-28">
@@ -133,7 +171,7 @@ export default async function ProjetPage({ params }: Props) {
             </p>
 
             {/* Intro */}
-            <p className="text-base text-foreground/80 leading-relaxed max-w-xl">
+            <p className="text-base text-foreground/88 leading-relaxed max-w-xl">
               {renderHighlight(projet.intro)}
             </p>
           </div>
@@ -154,7 +192,7 @@ export default async function ProjetPage({ params }: Props) {
               </div>
               <div>
                 <p className="text-[10px] uppercase tracking-[0.25em] mb-1.5 font-semibold" style={{ color: "var(--accent)" }}>Contexte</p>
-                <div className="flex items-center gap-1.5 text-sm text-foreground/80">
+                <div className="flex items-center gap-1.5 text-sm text-foreground/88">
                   {projet.contexte === "agence" ? (
                     <><Briefcase size={11} className="text-(--lavender)" /><span>Mission studio · Artefact 3000</span></>
                   ) : projet.contexte === "freelance" ? (
@@ -166,7 +204,7 @@ export default async function ProjetPage({ params }: Props) {
               </div>
               <div>
                 <p className="text-[10px] uppercase tracking-[0.25em] mb-1.5 font-semibold" style={{ color: "var(--accent)" }}>Année</p>
-                <p className="text-sm font-semibold text-foreground/75">{year}</p>
+                <p className="text-sm font-semibold text-foreground/85">{year}</p>
               </div>
               <div>
                 <p className="text-[10px] uppercase tracking-[0.25em] mb-2 font-semibold" style={{ color: "var(--accent)" }}>Stack</p>
@@ -206,14 +244,19 @@ export default async function ProjetPage({ params }: Props) {
 
       {/* ── CONTENU PRINCIPAL — même container ── */}
       <div className="max-w-4xl mx-auto px-6 lg:px-10 space-y-10 sm:space-y-14">
-        <div className="h-px bg-border/40" />
+        <div className="h-px bg-white/10" />
 
         {/* BLOC 1 — Paysage (wideMedia) : vidéo/image pleine largeur, texte en dessous
                     Portrait : vidéo/image à gauche, texte à droite */}
         {(projet.video || projet.img || projet.descriptionPublic) && (
           <div className="space-y-5">
             {(projet.video || projet.img) && projet.videoTitle && (
-              <p className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--accent)" }}>{projet.videoTitle}</p>
+              <div className="text-center space-y-1">
+                {projet.sliderSets && projet.sliderSets.length > 0 && (
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.25em]" style={{ color: "var(--accent)" }}>01 —</p>
+                )}
+                <p className="text-sm font-bold uppercase tracking-[0.25em]" style={{ color: "var(--accent)" }}>{projet.videoTitle}</p>
+              </div>
             )}
 
             {projet.wideMedia ? (
@@ -221,7 +264,12 @@ export default async function ProjetPage({ params }: Props) {
               <>
                 {projet.video ? (
                   <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-border/60">
-                    <video src={projet.video} autoPlay muted loop playsInline preload="auto" className="w-full h-full object-cover" />
+                    <WideVideoPlayer
+                      src={projet.video}
+                      loopStart={projet.videoLoopStart}
+                      loopEnd={projet.videoLoopEnd}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 ) : projet.img ? (
                   <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-border/60">
@@ -266,7 +314,7 @@ export default async function ProjetPage({ params }: Props) {
             </p>
             <ul className="flex flex-col gap-2.5">
               {projet.pointsCles.flatMap((group) => group.items).map((item, i) => (
-                <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/65 leading-relaxed text-left">
+                <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/80 leading-relaxed text-left">
                   <span className="w-1.5 h-1.5 rounded-full shrink-0 mt-[7px]" style={{ background: "var(--accent)" }} />
                   {item}
                 </li>
@@ -279,7 +327,7 @@ export default async function ProjetPage({ params }: Props) {
         {!projet.pointsCles && projet.caracteristiques && projet.caracteristiques.length > 0 && (
           <ul className="flex flex-col gap-3">
             {projet.caracteristiques.map((item, i) => (
-              <li key={i} className="flex items-start gap-3 text-sm text-foreground/65 leading-relaxed">
+              <li key={i} className="flex items-start gap-3 text-sm text-foreground/80 leading-relaxed">
                 <span className="w-1.5 h-1.5 rounded-full shrink-0 mt-[7px]" style={{ background: "var(--accent)" }} />
                 {item}
               </li>
@@ -346,6 +394,11 @@ export default async function ProjetPage({ params }: Props) {
           </div>
         ) : null}
 
+        {/* Côté technique — entre BLOC 2 et BLOC 3 (projets portrait avec zigzagImages >= 5) */}
+        {interleaveZigzag && projet.challenges && (
+          <TechSection challenges={projet.challenges.slice(0, 2)} />
+        )}
+
         {/* BLOC 3 — Portrait seulement : Slider (FR + EN) ou image seule / Texte DROITE */}
         {!projet.wideMedia && zigzagImages.length >= 3 && (() => {
           const bloc3Images = zigzagImages.length >= 5
@@ -364,31 +417,70 @@ export default async function ProjetPage({ params }: Props) {
           );
         })()}
 
+        {/* Côté technique — après BLOC 3 pour les challenges restants */}
+        {interleaveZigzag && projet.challenges && projet.challenges.length > 2 && (
+          <TechSection challenges={projet.challenges.slice(2)} />
+        )}
+
         {/* Gallery slider si pas de vidéo */}
         {!projet.video && projet.images && projet.images.length > 0 && (
           <ProjetGallery images={projet.images} />
         )}
 
-        {/* SLIDER SETS — sections thématiques avec titre + description */}
-        {projet.sliderSets && projet.sliderSets.map((set, si) => (
-          <div key={si} className="space-y-5">
-            <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.25em] mb-2" style={{ color: "var(--accent)" }}>
-                {String(si + 1).padStart(2, "0")} —
-              </p>
-              <h3 className="text-xl font-bold text-foreground mb-3">{set.title}</h3>
-              <p className="text-sm text-foreground/70 leading-relaxed max-w-2xl">{set.description}</p>
+        {/* ── SLIDERS + DÉFIS : interleaved si les deux existent, standard sinon ── */}
+        {projet.sliderSets && projet.challenges && projet.challenges.length > 0 ? (() => {
+          const splitAt = 2; // défis 1-2 avant slider 0, reste avant slider 1+
+          const sectionOffset = projet.video ? 1 : 0;
+          const batch1 = projet.challenges.slice(0, splitAt);
+          const batch2 = projet.challenges.slice(splitAt);
+
+          const SliderSetBlock = ({ set, si }: { set: { title: string; description: string; images: string[] }; si: number }) => (
+            <div className="space-y-5">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] mb-2" style={{ color: "var(--accent)" }}>
+                  {String(si + 1 + sectionOffset).padStart(2, "0")} —
+                </p>
+                <h3 className="text-xl font-bold text-foreground mb-3">{set.title}</h3>
+                <p className="text-base text-foreground/85 leading-relaxed max-w-2xl">{set.description}</p>
+              </div>
+              <ProjetImageSlider images={set.images} alt={`${projet.titre} — ${set.title}`} wide={!!projet.wideMedia} />
             </div>
-            <ProjetImageSlider
-              images={set.images}
-              alt={`${projet.titre} — ${set.title}`}
-              wide={!!projet.wideMedia}
-            />
-          </div>
-        ))}
+          );
+
+          return (
+            <>
+              {batch1.length > 0 && <TechSection challenges={batch1} />}
+              <SliderSetBlock set={projet.sliderSets![0]} si={0} />
+              {batch2.length > 0 && <TechSection challenges={batch2} />}
+              {projet.sliderSets!.slice(1).map((set, i) => (
+                <SliderSetBlock key={i} set={set} si={i + 1} />
+              ))}
+            </>
+          );
+        })() : (
+          /* Standard : sliderSets sans challenges interleaved */
+          <>
+            {projet.sliderSets && projet.sliderSets.map((set, si) => (
+              <div key={si} className="space-y-5">
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.25em] mb-2" style={{ color: "var(--accent)" }}>
+                    {String(si + 1).padStart(2, "0")} —
+                  </p>
+                  <h3 className="text-xl font-bold text-foreground mb-3">{set.title}</h3>
+                  <p className="text-base text-foreground/85 leading-relaxed max-w-2xl">{set.description}</p>
+                </div>
+                <ProjetImageSlider images={set.images} alt={`${projet.titre} — ${set.title}`} wide={!!projet.wideMedia} />
+              </div>
+            ))}
+            {/* Challenges standard — uniquement si pas déjà interleaved via zigzag */}
+            {!interleaveZigzag && projet.challenges && projet.challenges.length > 0 && (
+              <TechSection challenges={projet.challenges} />
+            )}
+          </>
+        )}
 
         {/* ── SÉPARATEUR ── */}
-        <div className="h-px bg-border/40" />
+        <div className="h-px bg-white/10" />
 
         {/* TECHNOLOGIES */}
         {projet.technologies && projet.technologies.length > 0 && (
@@ -407,32 +499,7 @@ export default async function ProjetPage({ params }: Props) {
                     <p className="text-sm font-semibold mb-0.5" style={{ color: TAG_COLORS[ti % TAG_COLORS.length].color }}>
                       {tech.nom}
                     </p>
-                    <p className="text-sm text-foreground/70 leading-relaxed">{tech.detail}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* DÉFIS */}
-        {projet.challenges && projet.challenges.length > 0 && (
-          <div>
-            <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] mb-6" style={{ color: "var(--accent)" }}>
-              Défis &amp; solutions techniques
-            </h2>
-            <div className="space-y-7">
-              {projet.challenges.map((ch, i) => (
-                <div key={i} className="flex gap-5">
-                  <span
-                    className="text-4xl font-black leading-none shrink-0 select-none tabular-nums mt-0.5"
-                    style={{ color: "rgba(255,255,255,0.12)" }}
-                  >
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div className="pt-1">
-                    <p className="text-sm font-bold text-foreground mb-1.5">{ch.titre}</p>
-                    <p className="text-sm text-foreground/70 leading-relaxed">{ch.solution}</p>
+                    <p className="text-sm text-foreground/82 leading-relaxed">{tech.detail}</p>
                   </div>
                 </div>
               ))}
@@ -446,7 +513,7 @@ export default async function ProjetPage({ params }: Props) {
             <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] mb-2" style={{ color: "var(--accent)" }}>
               Résultats
             </h2>
-            <p className="text-sm text-foreground/80 leading-relaxed">{projet.resultats}</p>
+            <p className="text-sm text-foreground/88 leading-relaxed">{projet.resultats}</p>
           </div>
         )}
 
@@ -459,7 +526,7 @@ export default async function ProjetPage({ params }: Props) {
             <div className="flex flex-wrap gap-x-8 gap-y-3">
               {projet.credits.map((c, i) => (
                 <div key={i}>
-                  <span className="text-sm text-foreground/80 font-medium">{c.nom}</span>
+                  <span className="text-sm text-foreground/88 font-medium">{c.nom}</span>
                   <span className="text-xs text-foreground/35 ml-2">{c.role}</span>
                 </div>
               ))}
@@ -468,7 +535,7 @@ export default async function ProjetPage({ params }: Props) {
         )}
 
         {/* ── SÉPARATEUR ── */}
-        <div className="h-px bg-border/40" />
+        <div className="h-px bg-white/10" />
 
         {/* PROJET SUIVANT */}
         <Link
@@ -488,6 +555,38 @@ export default async function ProjetPage({ params }: Props) {
         </Link>
 
       </div>
+
+      {/* ── BOUTON FLOTTANT — projet précédent (gauche) ── */}
+      <Link
+        href={`/projets/${prevProjet.slug}`}
+        className="fixed bottom-7 left-14 z-50 hidden lg:flex items-center gap-3 pr-4 pl-3 py-3 rounded-2xl bg-card/80 backdrop-blur-md border border-white/8 hover:border-white/18 transition-all group cursor-pointer shadow-xl shadow-black/30"
+      >
+        <ArrowLeft className="w-4 h-4 text-foreground/30 group-hover:text-accent group-hover:-translate-x-0.5 transition-all shrink-0" />
+        <div className="text-left">
+          <p className="text-[9px] uppercase tracking-[0.25em] font-semibold mb-0.5" style={{ color: "var(--accent)" }}>
+            Projet précédent
+          </p>
+          <p className="text-sm font-bold text-foreground/88 group-hover:text-foreground transition-colors leading-tight">
+            {prevProjet.clientShort ?? prevProjet.client}
+          </p>
+        </div>
+      </Link>
+
+      {/* ── BOUTON FLOTTANT — projet suivant, toujours visible ── */}
+      <Link
+        href={`/projets/${nextProjet.slug}`}
+        className="fixed bottom-7 right-14 z-50 hidden lg:flex items-center gap-3 pl-4 pr-3 py-3 rounded-2xl bg-card/80 backdrop-blur-md border border-white/8 hover:border-white/18 transition-all group cursor-pointer shadow-xl shadow-black/30"
+      >
+        <div className="text-right">
+          <p className="text-[9px] uppercase tracking-[0.25em] font-semibold mb-0.5" style={{ color: "var(--accent)" }}>
+            Projet suivant
+          </p>
+          <p className="text-sm font-bold text-foreground/88 group-hover:text-foreground transition-colors leading-tight">
+            {nextProjet.clientShort ?? nextProjet.client}
+          </p>
+        </div>
+        <ArrowRight className="w-4 h-4 text-foreground/30 group-hover:text-accent group-hover:translate-x-0.5 transition-all shrink-0" />
+      </Link>
     </div>
   );
 }

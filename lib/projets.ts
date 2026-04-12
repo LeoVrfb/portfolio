@@ -15,6 +15,8 @@ export type Projet = {
   sliderSets?: { title: string; description: string; images: string[] }[];
   video?: string;
   videoTitle?: string;
+  videoLoopStart?: number; // secondes — la vidéo démarre (et repart) à ce point
+  videoLoopEnd?: number;   // secondes — le loop repart avant ce point
   wideMedia?: boolean;
   tags: string[];
   technologies?: { nom: string; detail: string }[];
@@ -40,11 +42,13 @@ export const projets: Projet[] = [
     description:
       "Module e-learning gamifié déployé en interne chez BNP Paribas — 6 chapitres, 5 types de mini-jeux, 6 vidéos générées par IA, un personnage guide, conforme SCORM 1.2.",
     descriptionPublic:
-      "L'écran d'introduction : à gauche, AI-nstein — un personnage IA inspiré d'Einstein — guide l'utilisateur via une interface de chat, envoyant des messages et posant des questions. À droite, le module de cours principal affiche le contenu interactif du chapitre en cours. En bas, une barre de progression suit l'avancement sur l'ensemble des six chapitres. Les jeux interactifs arrivent dans les chapitres suivants.",
+      "L'**écran d'introduction** : __AI-nstein__ — personnage IA inspiré d'Einstein — guide l'utilisateur via une __interface de chat__, envoyant des messages et posant des questions auxquels on répond en cliquant. En parallèle, le __module de cours principal__ affiche le contenu interactif du chapitre en cours. En bas, une __barre de progression__ suit l'avancement sur l'ensemble des six chapitres. Les jeux interactifs arrivent dans les chapitres suivants.",
     intro: `Un des projets qui m'a le plus stimulé. Développé chez Artefact 3000 pour **BNP Paribas**, ce module e-learning gamifié forme des milliers de collaborateurs aux fondamentaux de l'IA générative. **6 chapitres, 5 types de mini-jeux, 6 vidéos générées par IA**, un personnage guide. Et surtout, un pari que peu d'agences tentent : **remplacer Articulate Storyline par une app React complète**, packagée en SCORM 1.2 pour s'intégrer dans n'importe quel LMS d'entreprise.`,
     img: "/assets/bnp/bnp-miniature.webp",
     video: "/assets/bnp/bnp-demo.mp4",
     videoTitle: "L'écran d'introduction",
+    videoLoopStart: 2,
+    videoLoopEnd: 63.9,
     wideMedia: true,
     sliderSets: [
       {
@@ -62,7 +66,7 @@ export const projets: Projet[] = [
       },
       {
         title: "Apprentissage, récaps & résultats",
-        description: "Entre chaque jeu, le module alterne vidéos IA génératives, récapitulatifs visuels et corrections détaillées. La méthode RISPO synthétise les cinq critères d'un bon prompt en une formule mémorisable. Les écrans de résultats distinguent clairement le juste du faux, avec explication. En bout de parcours : un passeport de compétences qui valide l'ensemble des chapitres.",
+        description: "Chaque chapitre suit le même rythme : une vidéo d'introduction générée par IA, des explications, un jeu interactif, puis un écran de récap ou de résultats qui distingue clairement le juste du faux. En bout de parcours, un passeport de compétences valide l'ensemble des chapitres.",
         images: [
           "/assets/bnp/chap1-video-ia-presenter.webp",
           "/assets/bnp/chap2-recap-allowed-vs-forbidden.webp",
@@ -137,7 +141,8 @@ export const projets: Projet[] = [
     ],
     credits: [
       { nom: "Mathieu Crochet", role: "Manager & architecture · Artefact 3000" },
-      { nom: "Vincent Blecher", role: "Head of Design · Artefact 3000" },
+      { nom: "Vincent Blacher", role: "Head of Design · Artefact 3000" },
+      { nom: "Pauline Ravel", role: "UX Designer · Artefact 3000" },
     ],
     date: "2025-04",
   },
@@ -277,6 +282,18 @@ export const projets: Projet[] = [
     intro: `Pour Extime, la marque de luxe travel retail des Aéroports de Paris, j'ai développé un jeu concours digital qui a touché **des centaines de milliers d'utilisateurs** en quelques semaines seulement. Les voyageurs recevaient un **bon physique avec QR code** à l'achat en boutique — en le scannant, ils accédaient au jeu et pouvaient gratter un ticket virtuel pour remporter une **récompense** : **sucette** ou **code de réduction** valable dans les boutiques de l'aéroport.`,
     img: "/assets/sweetime/sweetime-nano.webp",
     video: "/assets/sweetime/sweetime-record.mp4",
+    sliderSets: [
+      {
+        title: "Le parcours complet",
+        description: "En quelques secondes, le voyageur saisit son email, retourne la carte et gratte pour révéler son lot. Chaque étape s'enchaîne sans rechargement — de l'inscription au bon de réduction, tout est fluide et pensé pour être joué debout, avant l'embarquement.",
+        images: [
+          "/assets/sweetime/sweetime-registration-form.webp",
+          "/assets/sweetime/sweetime-scratch-card-full.webp",
+          "/assets/sweetime/sweetime-scratch-card-revealing.webp",
+          "/assets/sweetime/sweetime-prize-result.webp",
+        ],
+      },
+    ],
     tags: ["Next.js", "MongoDB", "Canvas", "Storybook", "Lottie", "i18next"],
     technologies: [
       {
@@ -362,7 +379,7 @@ export const projets: Projet[] = [
     ],
     credits: [
       { nom: "Mathieu Crochet", role: "Manager & architecture backend · Artefact 3000" },
-      { nom: "Vincent Blecher", role: "Head of Design · Artefact 3000" },
+      { nom: "Vincent Blacher", role: "Head of Design · Artefact 3000" },
       { nom: "Pauline Chapelle", role: "Designer · Artefact 3000" },
     ],
     resultats:
@@ -370,100 +387,102 @@ export const projets: Projet[] = [
     date: "2024-11",
   },
   {
-    slug: "hurepoix-nettoyage",
-    titre: "Site vitrine entreprise de nettoyage",
-    client: "Hurepoix Nettoyage",
-    contexte: "freelance",
-    description:
-      "Site vitrine moderne pour une entreprise de nettoyage professionnelle en Essonne. Design soigné, SEO optimisé, formulaire de devis.",
-    descriptionPublic:
-      "Hurepoix Nettoyage avait besoin d'un site qui inspire confiance au premier coup d'œil. Design sur mesure, sans template, avec un formulaire de devis en ligne et une galerie de réalisations. Résultat : leurs premières demandes en ligne ont suivi dans les jours après la mise en ligne.",
-    descriptionTech:
-      "Site statique Next.js optimisé pour le SEO local : balises title/description sur mesure, sitemap XML, Schema.org LocalBusiness. Formulaire de devis avec Resend pour l'envoi d'emails directs. Déploiement Vercel avec certificat SSL et domaine personnalisé configuré. Score Lighthouse > 95 sur tous les axes.",
-    intro: `Création du site vitrine de Hurepoix Nettoyage, entreprise de nettoyage professionnel basée en Essonne. Le site présente les prestations, les zones d'intervention, des photos des réalisations et dispose d'un formulaire de demande de devis en ligne. Design entièrement personnalisé, optimisé pour le référencement local et responsive sur tous les appareils.`,
-    img: "/assets/nettoyage-hurepoix/net-hur.webp",
-    images: [
-      "/assets/nettoyage-hurepoix/img2.jpg",
-      "/assets/nettoyage-hurepoix/img3.jpg",
-      "/assets/nettoyage-hurepoix/img4.jpg",
-    ],
-    tags: ["Next.js", "Tailwind CSS", "Resend", "Vercel"],
-    technologies: [
-      {
-        nom: "Next.js",
-        detail: "Rendu côté serveur pour une indexation optimale par Google, pages statiques ultra-rapides.",
-      },
-      {
-        nom: "Resend",
-        detail: "Envoi des demandes de devis directement dans la boîte mail du gérant, sans serveur tiers.",
-      },
-      {
-        nom: "Tailwind CSS",
-        detail: "Design sur mesure sans template, adapté à l'identité visuelle de l'entreprise.",
-      },
-      {
-        nom: "Vercel",
-        detail: "Déploiement continu, certificat SSL automatique, domaine personnalisé configuré.",
-      },
-    ],
-    caracteristiques: [
-      "Design sur mesure, sans template WordPress ni Divi",
-      "SEO local optimisé : balises title/description, sitemap, Schema.org",
-      "Formulaire de devis en ligne envoyé directement par email",
-      "Galerie des réalisations avec photos clients",
-    ],
-    resultats:
-      "Site livré en moins de 10 jours, référencé sur Google dès la première semaine. Le client a reçu ses premières demandes de devis en ligne dans les jours suivant la mise en ligne.",
-    date: "2024-11",
-    url: "https://hurepoix-nettoyage.fr",
-  },
-  {
     slug: "make-a-scene",
     titre: "Outil de formation au prompting IA",
-    client: "Artefact (interne)",
+    client: "Artefact",
     contexte: "agence",
     description:
-      "Application interne gamifiée déployée chez Artefact pour former les équipes à la génération d'images par IA et aux techniques de prompting.",
+      "Funnel interactif déployé chez Artefact pour apprendre à construire un prompt structuré et générer des images par IA — étape par étape.",
     descriptionPublic:
-      "**Apprendre le prompting en jouant.** Make a Scene guide les participants à travers des défis progressifs : chaque niveau introduit une nouvelle technique de prompting. Le feedback est immédiat — l'image générée répond directement à la qualité du prompt.\n\n**Une galerie partagée.** Les créations des participants s'affichent dans une galerie collective, ce qui crée une dynamique émulative au sein des équipes.\n\n**Format atelier.** Conçu pour des sessions de formation en groupe, avec un parcours structuré : introduction, phases de jeu, bilan final.",
-    intro: `Développé en interne chez Artefact, Make a Scene est un outil de formation gamifié pour apprendre le **prompt engineering** appliqué à la génération d'images par IA. Plutôt que des slides, les participants jouent — ils formulent des prompts, génèrent des images en temps réel et progressent à travers des défis de complexité croissante.`,
-    img: "",
-    tags: ["Next.js", "TypeScript", "OpenAI API", "Zustand", "Storybook", "next-intl"],
+      "Un __funnel guidé en 3 étapes__ : on sélectionne d'abord le type d'image (**illustration**, **photographie**, **pixel art**…), le sujet, l'action et le lieu. Puis les éléments de style — rendu, ambiance, optique, lumière. Enfin les paramètres techniques (ratio, weirdness, stylization). Chaque mot cliqué s'ajoute à la barre de prompt visible en bas. La __flèche pour avancer__ n'apparaît que lorsque tous les champs sont remplis. On peut revenir sur n'importe quel bloc du prompt en cliquant dessus — le funnel se repositionne exactement sur cette sous-étape. Au bout du funnel, __DALL-E génère 4 images__ en une seule requête. On peut copier le prompt ou télécharger les images.",
+    intro: `Développé en interne chez Artefact, Make a Scene est un outil de formation au **prompt engineering** appliqué à la génération d'images. Plutôt que de lire des guidelines, les participants construisent un prompt mot à mot à travers un funnel guidé — **3 étapes, 14 sous-étapes** — et voient le résultat en temps réel. Chaque option du funnel dispose d'une image de prévisualisation au survol, générée par **DALL-E 3** (87 images en tout). Les 4 résultats finaux sont générés par **DALL-E 2** en une seule requête. L'outil est disponible en anglais et en français.`,
+    img: "/assets/makeAScene/make-a-scene-miniature.webp",
+    logo: "/assets/makeAScene/artefact-logo.webp",
+    video: "/assets/makeAScene/make-a-scene-demo.mp4",
+    videoTitle: "La démo complète",
+    wideMedia: true,
+    sliderSets: [
+      {
+        title: "Le funnel pas à pas",
+        description: "Chaque écran guide l'utilisateur vers un mot clé à sélectionner — type d'image, lieu, rendu, ratio. Le prompt s'assemble en bas de l'écran au fil des choix. La flèche pour avancer n'apparaît que lorsque tous les champs sont remplis.",
+        images: [
+          "/assets/makeAScene/make-a-scene-login.webp",
+          "/assets/makeAScene/make-a-scene-artwork-type.webp",
+          "/assets/makeAScene/make-a-scene-artwork-hover.webp",
+          "/assets/makeAScene/make-a-scene-location.webp",
+          "/assets/makeAScene/make-a-scene-rendering.webp",
+          "/assets/makeAScene/make-a-scene-image-ratio.webp",
+          "/assets/makeAScene/make-a-scene-ratio-hover.webp",
+          "/assets/makeAScene/make-a-scene-other-params.webp",
+        ],
+      },
+      {
+        title: "Du prompt à l'image",
+        description: "Une fois le prompt validé, DALL-E génère 4 variantes en parallèle. Une barre de progression s'affiche pendant la génération, puis les 4 images apparaissent côte à côte — avec le prompt complet en dessous, copiable en un clic.",
+        images: [
+          "/assets/makeAScene/make-a-scene-intro.webp",
+          "/assets/makeAScene/make-a-scene-summary.webp",
+          "/assets/makeAScene/make-a-scene-generation.webp",
+          "/assets/makeAScene/make-a-scene-results.webp",
+        ],
+      },
+    ],
+    tags: ["Next.js", "OpenAI API", "DALL-E 2 + 3", "Zustand", "Storybook", "next-intl", "Embla Carousel"],
     technologies: [
       {
         nom: "Next.js App Router",
         detail:
-          "L'app est structurée en plusieurs phases distinctes — intro, jeu, galerie, bilan. App Router permet de gérer ces transitions proprement, avec des layouts dédiés à chaque partie de la session.",
+          "App structurée en 5 routes distinctes — intro, scene, style, parameters, gallery — chacune avec son layout dédié. La route /gallery affiche les images générées stockées en mémoire (Zustand), sans backend.",
       },
       {
-        nom: "OpenAI API",
+        nom: "OpenAI API — DALL-E 2 + DALL-E 3",
         detail:
-          "Appels à l'API de génération d'images depuis les Server Actions pour protéger la clé API et centraliser la gestion des quotas.",
+          "Double usage : DALL-E 2 pour les 4 images finales (une seule requête POST avec n: 4, ~$0.016/image, résultat en quelques secondes). DALL-E 3 pour les 87 images d'options au survol — générées une fois en script offline, qualité supérieure (~$0.04/image).",
       },
       {
-        nom: "Zustand",
+        nom: "Zustand — useGameStore",
         detail:
-          "L'état du jeu — étape courante, prompts soumis, score — est partagé entre plusieurs composants sans prop drilling. Zustand s'impose pour ce type d'état applicatif transverse.",
+          "Un store unique gère tout l'état du funnel : currentStep, stepsData (valeurs sélectionnées par sous-étape), shouldNavigateToResult (flag de navigation vers la galerie), generatedImages (4 URLs DALL-E). Aucun prop drilling sur les 3 étapes × 14 sous-étapes.",
       },
       {
-        nom: "Storybook",
+        nom: "Storybook — 21 composants",
         detail:
-          "Nombreux composants visuels à valider (cartes de jeu, bulles de résultat, barres de progression) avant intégration dans le flow complet.",
+          "Tous les composants du design system sont développés et validés isolément. Les plus complexes : OptionGroup, PromptBuilder, SliderCard, ImageModal, ImageGallery, ConnectionModal, Carousel.",
+      },
+      {
+        nom: "next-intl",
+        detail:
+          "Interface en anglais et en français — sélecteur de langue en haut à droite. Toutes les questions, options et labels du funnel sont externalisés en fichiers de traduction.",
+      },
+      {
+        nom: "Embla Carousel + Radix UI Slider",
+        detail:
+          "Embla Carousel (avec plugin autoplay) pour les carousels d'options et la galerie. Radix UI Slider pour les 3 paramètres avancés — Variety, Weirdness, Stylization — avec rendu accessible natif.",
       },
     ],
     challenges: [
       {
-        titre: "Flow de session multi-étapes",
+        titre: "Funnel 3 étapes × 14 sous-étapes avec navigation arrière",
         solution:
-          "La session se déroule en phases séquentielles — introduction, prévisualisation, jeu actif, bilan. Chaque phase a des conditions d'entrée et de sortie strictes. Modéliser ce flow proprement, sans que l'utilisateur puisse se retrouver dans un état incohérent, a nécessité une machine à états claire en Zustand.",
+          "Scene (cyan) : 4 sous-étapes — typeOfArtwork, aSubject, doingAnAction, aLocation. Style (violet) : 5 sous-étapes — render, lookAndFeel, style, lensStyle, lighting. Parameters (rose néon) : 5 sous-étapes — imageRatio, others, puis 3 sliders. Chaque bloc du PromptBuilder est un PromptSlotButton cliquable : au clic, goToStep(stepIndex, buttonIndex) dans le store repositionne directement sur la sous-étape correspondante, sans perdre les choix déjà faits.",
       },
       {
-        titre: "Affichage temps réel des générations",
+        titre: "Génération des 4 images en une seule requête",
         solution:
-          "Les images générées par DALL-E peuvent prendre plusieurs secondes. L'interface devait rester responsive pendant l'attente, afficher un état de chargement adapté, puis intégrer le résultat fluidement — tout en gérant les erreurs API sans casser l'expérience.",
+          "Une seule requête POST à l'API OpenAI avec n: 4. OpenAI génère les 4 variantes côté serveur et renvoie 4 URLs dans la même réponse. Pas de Promise.all, pas de polling, pas de SSE — la Server Action attend simplement la réponse complète et la retourne au client.",
+      },
+      {
+        titre: "87 images d'options générées par DALL-E 3",
+        solution:
+          "Chaque mot-clé du funnel dispose d'une image de prévisualisation au survol. Ces 87 images ont été générées une seule fois en script offline avec DALL-E 3 (qualité supérieure, ~$0.04/image) et sont servies en statique — aucun appel API au runtime.",
+      },
+      {
+        titre: "Auth légère par mot de passe de session",
+        solution:
+          "Pas d'OAuth ni de JWT. Un ConnectionModal en entrée d'app demande un mot de passe de session — protection suffisante pour un outil interne. Un composant LogoutButton (documenté en Storybook) permet de réinitialiser la session.",
       },
     ],
-    date: "2025-10",
+    date: "2026-01",
   },
   {
     slug: "bald-artiste",
@@ -512,109 +531,6 @@ export const projets: Projet[] = [
       },
     ],
     date: "2026-02",
-  },
-  {
-    slug: "memorized",
-    titre: "Chatbot IA avec mémoire persistante",
-    client: "Projet personnel",
-    contexte: "perso",
-    description:
-      "SaaS personnel — un ChatGPT amélioré qui se souvient vraiment de l'utilisateur entre les sessions, grâce à un système de mémoire hiérarchique et RAG.",
-    descriptionPublic:
-      "**Un assistant qui vous connaît vraiment.** Contrairement à ChatGPT qui repart de zéro à chaque conversation, Chat Memory retient ce que vous lui avez dit — depuis des semaines, des mois. Il sait que vous apprenez le piano depuis septembre, que vous avez un entretien mardi, que vous avez rompu en janvier.\n\n**Une mémoire que vous contrôlez.** L'application expose un éditeur hiérarchique où vous pouvez consulter, organiser et modifier ce que l'IA retient à votre sujet — par catégories, avec drag & drop.\n\n**RAG pour retrouver le bon souvenir.** Chaque message envoyé est analysé, découpé en chunks et vectorisé. À chaque nouvelle conversation, les souvenirs les plus pertinents sont automatiquement sélectionnés et injectés dans le contexte du modèle.",
-    intro: `Projet personnel SaaS — un assistant conversationnel basé sur GPT-4 qui **se souvient vraiment de vous** entre les sessions. La mémoire est persistante, structurée hiérarchiquement et interrogeable en temps réel via un système RAG (Retrieval-Augmented Generation). L'objectif : un ChatGPT qui accumule du contexte sur vous plutôt que de repartir de zéro à chaque fois.`,
-    img: "",
-    tags: ["Next.js", "Supabase", "pgvector", "OpenAI", "Stripe", "Better Auth", "dnd-kit"],
-    technologies: [
-      {
-        nom: "Supabase + pgvector",
-        detail:
-          "La recherche de souvenirs pertinents repose sur la similarité vectorielle — pgvector stocke les embeddings directement dans PostgreSQL sans infrastructure externe. Supabase apporte la flexibilité du SQL (filtres, jointures, RLS) là où une base vectorielle pure serait limitée.",
-      },
-      {
-        nom: "OpenAI (GPT-4 + embeddings)",
-        detail:
-          "Deux usages distincts : GPT-4 pour la conversation, text-embedding-ada-002 pour vectoriser les souvenirs à indexer. Les embeddings sont générés par batch à l'indexation et en temps réel à la requête.",
-      },
-      {
-        nom: "RAG (Retrieval-Augmented Generation)",
-        detail:
-          "À chaque message, les chunks de mémoire les plus proches sémantiquement de la question sont récupérés et injectés dans le prompt système. Cela permet au modèle de répondre avec un contexte personnalisé sans dépasser la limite de tokens.",
-      },
-      {
-        nom: "Stripe",
-        detail:
-          "Free tier limité à 500 messages, puis abonnement mensuel. Stripe gère les checkouts, les portails client et les webhooks de renouvellement.",
-      },
-    ],
-    challenges: [
-      {
-        titre: "Sélection des souvenirs pertinents sans exploser le contexte",
-        solution:
-          "La mémoire peut contenir des centaines de notes. Injecter tout dans le prompt est impossible — la limite de tokens l'empêche. Le RAG résout ça : chaque souvenir est découpé en chunks d'environ 500 tokens, vectorisé, puis sélectionné par similarité sémantique à la question posée. Seuls les 3-5 chunks les plus pertinents atterrissent dans le contexte.",
-      },
-      {
-        titre: "Éditeur de mémoire hiérarchique avec drag & drop",
-        solution:
-          "L'utilisateur doit pouvoir réorganiser ses catégories et ses notes librement. dnd-kit gère le drag & drop dans une structure d'arbre imbriqué, avec des contraintes de déplacement (une note ne peut pas devenir parente d'une catégorie). C'est l'un des composants les plus complexes de l'app.",
-      },
-      {
-        titre: "Authentification custom sans NextAuth",
-        solution:
-          "Better Auth a été choisi pour un contrôle fin sur le flow d'authentification (email de vérification, reset de mot de passe, gestion des sessions). Plus de configuration initiale que NextAuth, mais plus de flexibilité pour les cas spécifiques du projet.",
-      },
-    ],
-    date: "2025-03",
-    enCours: true,
-  },
-  {
-    slug: "prof-de-langue",
-    titre: "Plateforme d'apprentissage avec répétition espacée",
-    client: "Projet personnel",
-    contexte: "perso",
-    description:
-      "SaaS multi-tenant pour l'apprentissage des langues : répétition espacée, évaluation par IA, gestion prof/élèves — construit sur Next.js 16 et Convex.",
-    descriptionPublic:
-      "**La répétition espacée, mais réellement utile.** Vocabulaire, verbes, phrases — chaque liste suit un algorithme SRS qui planifie les révisions au moment optimal. Le résultat : beaucoup moins de temps passé à réviser, beaucoup plus de rétention à long terme.\n\n**Un prof, des élèves.** Le professeur crée ses listes, les assigne à ses élèves et suit leur progression en temps réel. Chaque élève a son propre espace et son historique de sessions.\n\n**L'IA comme correcteur.** Pour les exercices de production (phrases, conjugaisons), l'IA évalue la réponse, explique l'erreur et génère des exemples supplémentaires à la demande.",
-    intro: `Projet personnel SaaS développé pour apprendre le russe de façon sérieuse — et tester en conditions réelles un système de **répétition espacée** avec évaluation par IA. La plateforme est multi-tenant : un professeur peut créer ses listes de vocabulaire, de verbes et de phrases, les assigner à ses élèves et suivre leur progression.`,
-    img: "",
-    tags: ["Next.js 16", "Convex", "OpenAI", "next-intl", "TypeScript", "shadcn/ui"],
-    technologies: [
-      {
-        nom: "Convex",
-        detail:
-          "Backend temps réel qui remplace à la fois la base de données, l'API et le cache. Les sessions de quiz se synchronisent instantanément — si le professeur met à jour une liste, l'élève voit le changement sans refresh. Convex Auth gère l'authentification avec les rôles prof/élève.",
-      },
-      {
-        nom: "OpenAI (évaluation + TTS)",
-        detail:
-          "Pour les exercices de production libre, GPT-4 évalue la réponse, identifie les erreurs et génère des exemples contextualisés. L'API TTS prononce les mots et phrases pour l'entraînement à l'oral.",
-      },
-      {
-        nom: "Algorithme SRS",
-        detail:
-          "L'algorithme de répétition espacée calcule l'intervalle optimal de révision pour chaque item, basé sur la facilité de rappel et le nombre de répétitions réussies. Implémenté côté serveur dans Convex pour garantir une cohérence entre sessions.",
-      },
-      {
-        nom: "Next.js 16 + next-intl",
-        detail:
-          "Next.js 16 introduit proxy.ts qui remplace middleware.ts pour le routing. next-intl gère les deux langues de l'interface (fr/en) via le routing [locale].",
-      },
-    ],
-    challenges: [
-      {
-        titre: "SRS multi-type (vocabulaire, verbes, phrases)",
-        solution:
-          "Les trois types de contenu ont des structures différentes et des modes d'évaluation distincts. Factoriser le moteur SRS pour qu'il fonctionne uniformément sur ces trois tables — tout en permettant des sessions indépendantes par type — a nécessité une abstraction soigneuse du schéma Convex.",
-      },
-      {
-        titre: "Évaluation IA non déterministe dans un flow de quiz",
-        solution:
-          "Contrairement aux quiz à choix multiples, la correction IA peut varier d'une requête à l'autre pour la même réponse. Cela crée une incertitude sur le scoring SRS. La solution : le résultat IA est affiché à l'utilisateur qui valide ou invalide manuellement, et c'est cette validation qui alimente l'algorithme.",
-      },
-    ],
-    date: "2025-03",
-    enCours: true,
   },
 ];
 

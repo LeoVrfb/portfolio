@@ -21,15 +21,6 @@ function getCardClasses(index: number, total: number) {
   // ── Compagnons à droite du hero ──
   if (index === 1 || index === 2) return "col-span-12 sm:col-span-6 lg:col-span-4";
 
-  // ── Cas spécial 8 projets : layout asymétrique ──
-  if (total === 8) {
-    if (index === 3) return "col-span-12 sm:col-span-6 lg:col-span-5";
-    if (index === 4) return "col-span-12 sm:col-span-4 lg:col-span-4";
-    if (index === 5) return "col-span-12 sm:col-span-4 lg:col-span-3";
-    if (index === 6) return "col-span-12 sm:col-span-4 lg:col-span-4";
-    if (index === 7) return "col-span-12 sm:col-span-6 lg:col-span-8";
-  }
-
   // ── Algorithme générique : lignes sans trou ──
   const rest = total - 3; // cartes après les 3 premières (hero + 2 compagnons)
   if (rest <= 0) return "col-span-12 sm:col-span-6 lg:col-span-4";
