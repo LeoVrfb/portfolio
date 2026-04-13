@@ -237,12 +237,14 @@ export default function DemoPage() {
 
         {/* Texte contenu */}
         <div className="content">
-          {["Nike Air Max", "Nike Air Force", "Nike Zoom"].map((name, i) => (
+          {[
+            { name: "Léo Hengebaert", desc: "Développeur front-end" },
+            { name: "Léo Hengebaert", desc: "React & Next.js · Artefact" },
+            { name: "Léo Hengebaert", desc: "Sites web sur mesure" },
+          ].map(({ name, desc }, i) => (
             <div key={i} className="item" id={`content_${i}`}>
               <h2>{name}</h2>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-              <br />
-              <button>ADD TO CART</button>
+              <p>{desc}</p>
             </div>
           ))}
         </div>

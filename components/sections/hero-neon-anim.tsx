@@ -104,47 +104,31 @@ const ANIM_CSS = `
           drop-shadow(0 0 24px rgba(110,166,150,0.6));
 }
 
-/* ── Sphère ── */
+/* ── Portrait ── */
 .hna-sphere-wrap {
   position: absolute;
   left: 50%;
-  top: 18%;
-  transform: translateX(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%);
   width: 300px;
-  height: 300px;
+  height: 450px;
   animation: hna-float 4s ease-in-out infinite;
 }
 .hna-sphere {
   width: 100%;
   height: 100%;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%,
-    rgba(187,160,197,0.45) 0%,
-    rgba(110,166,150,0.28) 45%,
-    transparent 72%
-  );
-  border: 1.5px solid rgba(255,255,255,0.14);
-  box-shadow:
-    0 0 80px rgba(110,166,150,0.3),
-    0 0 140px rgba(110,166,150,0.12),
-    inset 0 0 40px rgba(180,133,158,0.18);
+  background-image: url(/assets/portrait-professionnel.webp);
+  background-size: cover;
+  background-position: center 8%;
   transform-origin: center center;
-  opacity: 1;
-  transform: scale(1);
-}
-.hna-sphere::after {
-  content: '';
-  position: absolute;
-  top: 12%;
-  left: 18%;
-  width: 42%;
-  height: 32%;
-  background: radial-gradient(ellipse, rgba(255,255,255,0.18), transparent 70%);
-  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0);
+  mask-image: radial-gradient(ellipse 82% 86% at 50% 50%, black 38%, rgba(0,0,0,0.5) 58%, transparent 76%);
+  -webkit-mask-image: radial-gradient(ellipse 82% 86% at 50% 50%, black 38%, rgba(0,0,0,0.5) 58%, transparent 76%);
 }
 @keyframes hna-float {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%       { transform: translateX(-50%) translateY(-22px); }
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50%       { transform: translate(-50%, -50%) translateY(-16px); }
 }
 
 /* ── Cycle 3.5s — claqué
@@ -158,13 +142,12 @@ const ANIM_CSS = `
   animation: hna-sphere-cycle 6.5s linear 0s 1 forwards;
 }
 @keyframes hna-sphere-cycle {
-  0%  { opacity: 1; transform: scale(1); }
-  18% { opacity: 1; transform: scale(1.02); }
+  0%  { opacity: 0; transform: scale(0); }
   30% { opacity: 0; transform: scale(0); }
-  38% { opacity: 1; transform: scale(1.2); }
-  41% { opacity: 1; transform: scale(0.95); }
-  44% { opacity: 1; transform: scale(1); }
-  80% { opacity: 1; transform: scale(1.03); }
+  38% { opacity: 1; transform: scale(1.1); }
+  42% { opacity: 1; transform: scale(0.97); }
+  46% { opacity: 1; transform: scale(1); }
+  80% { opacity: 1; transform: scale(1.02); }
   100%{ opacity: 1; transform: scale(1); }
 }
 
@@ -173,14 +156,14 @@ const ANIM_CSS = `
   animation: hna-float 4s ease-in-out infinite, hna-sphere-flicker 6.5s linear 0s 1 forwards;
 }
 @keyframes hna-sphere-flicker {
-  0%,36%   { filter: none; }
-  38%      { filter: brightness(3) drop-shadow(0 0 40px rgba(110,166,150,1)); }
-  40%      { filter: brightness(1.3) drop-shadow(0 0 18px rgba(110,166,150,0.7)); }
-  42%      { filter: brightness(2.5) drop-shadow(0 0 30px rgba(180,133,158,0.9)); }
-  44%      { filter: brightness(1.1); }
-  55%      { filter: brightness(1.4) drop-shadow(0 0 12px rgba(110,166,150,0.5)); }
-  60%      { filter: brightness(1); }
-  100%     { filter: brightness(1); }
+  0%,37%   { filter: none; }
+  38%      { filter: brightness(1.5) drop-shadow(0 0 28px rgba(110,166,150,0.85)); }
+  41%      { filter: brightness(1.1) drop-shadow(0 0 12px rgba(110,166,150,0.4)); }
+  43%      { filter: brightness(1.3) drop-shadow(0 0 20px rgba(180,133,158,0.6)); }
+  46%      { filter: brightness(1.05); }
+  58%      { filter: brightness(1.08) drop-shadow(0 0 6px rgba(110,166,150,0.25)); }
+  62%      { filter: none; }
+  100%     { filter: none; }
 }
 
 /* ── Éléments décoratifs flottants ── */
@@ -238,6 +221,41 @@ const ANIM_CSS = `
   top: 36%; right: 26%;
   box-shadow: 0 0 8px var(--lavender);
   animation: hna-pulse 2.5s ease-in-out infinite 0.7s;
+}
+
+/* ── Texte sur le mur gauche ── */
+.hna-content {
+  position: absolute;
+  width: 200px;
+  color: rgba(255,255,255,0.9);
+  padding: 20px;
+  top: 38%;
+  left: 13%;
+  opacity: 0;
+  transform: perspective(290px) rotate(-11deg) rotateY(29deg);
+}
+.hna-content h2 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--accent);
+  text-shadow: 0 0 8px var(--accent), 0 0 20px rgba(110,166,150,0.5);
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+.hna-content p {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.75);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.hna-inner.playing .hna-content {
+  animation: hna-content-show 1s ease-out forwards;
+  animation-delay: 2.4s;
+}
+@keyframes hna-content-show {
+  from { opacity: 0; transform: perspective(290px) rotate(-11deg) rotateY(29deg) translateY(8px); }
+  to   { opacity: 1; transform: perspective(290px) rotate(-11deg) rotateY(29deg) translateY(0); }
 }
 
 /* ── Sparks électriques ── */
@@ -392,6 +410,10 @@ export function HeroNeonAnim({ responsive = false, once = false }: { responsive?
       </div>
       <div className="hna-wall-left" />
       <div className="hna-wall-right" />
+      <div className="hna-content">
+        <h2>Léo Hengebaert</h2>
+        <p>Développeur front-end</p>
+      </div>
       <div className="hna-hand1" />
       <div className="hna-hand2" />
       <div className="hna-spark" />
