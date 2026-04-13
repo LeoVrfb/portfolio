@@ -3,7 +3,7 @@ import { Space_Grotesk, DM_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
-import { ClientIntro } from "@/components/sections/client-intro";
+import { IntroOverlay } from "@/components/sections/intro-overlay";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -42,7 +42,7 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${dmMono.variable} dark`}
     >
       <body className="min-h-screen flex flex-col bg-background text-foreground">
-        <ClientIntro />
+        <IntroOverlay />
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />

@@ -1,10 +1,11 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { ArrowRight, Instagram, Linkedin, Github } from "lucide-react"
 import { motion } from "motion/react"
 import { Boxes } from "@/components/animations/background-boxes"
-import { HeroNeonAnim } from "@/components/sections/hero-neon-anim"
+import { onIntroReady } from "@/lib/intro-signal"
 
 const PALETTE = [
   "#6ea696", "#8bbfaf", "#4d8a78",
@@ -71,6 +72,12 @@ function GlassButton({ children, href, variant = "green" }: { children: React.Re
 }
 
 export function HeroSection() {
+  const [ready, setReady] = useState(false)
+
+  useEffect(() => {
+    return onIntroReady(() => setReady(true))
+  }, [])
+
   return (
     <section className="relative min-h-screen flex flex-col justify-end overflow-hidden bg-background pt-32">
       {/* Background boxes */}
@@ -79,8 +86,8 @@ export function HeroSection() {
         <Boxes colors={PALETTE} />
       </div>
 
-      {/* Content — texte à gauche, socials à droite */}
-      <div className="relative z-10 layout-container w-full pb-10">
+      {/* Content — monté uniquement quand l'intro est terminée */}
+      {ready && <div className="relative z-10 layout-container w-full pb-10">
         <div className="grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-10 items-end">
           {/* Left */}
           <div>
@@ -190,14 +197,8 @@ export function HeroSection() {
             <div className="hidden lg:block w-px h-16 bg-linear-to-b from-muted-foreground/20 to-transparent mt-2" />
           </motion.div>
         </div>
-      </div>
+      </div>}
 
-      {/* Animation neon — juste avant le bandeau, pleine largeur */}
-      <div className="relative z-10 w-full flex justify-center">
-        <div className="w-[min(72vw,1020px)] max-lg:w-[min(90vw,560px)]">
-          <HeroNeonAnim responsive />
-        </div>
-      </div>
     </section>
   )
 }

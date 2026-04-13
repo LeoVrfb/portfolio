@@ -1,12 +1,12 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 
 
 
 const BASE = "https://raw.githubusercontent.com/HoanghoDev/neon_v1/main"
 
-// Dimensions originales 1100×600 → scale 0.75
+// Dimensions originales 1100×600 — le scale est géré dynamiquement en mode responsive
 const S = 0.75
 
 const ANIM_CSS = `
@@ -20,7 +20,7 @@ const ANIM_CSS = `
   overflow: hidden;
   pointer-events: none;
   z-index: 1;
-  opacity: 0.85;
+  opacity: 0.92;
 }
 .hna-inner {
   width: 1100px;
@@ -32,34 +32,47 @@ const ANIM_CSS = `
 
 /* ── Cartes latérales ── */
 .hna-wall-left {
-  border: 1.5px solid var(--accent);
+  border: 2px solid var(--accent);
   position: absolute;
   left: 10%;
-  top: 100px;
-  transition: 1s;
+  top: 80px;
+  transition: 0.6s;
   width: 200px;
   border-radius: 5px;
-  height: 400px;
-  box-shadow: 0 0 12px var(--accent), 0 0 30px rgba(110,166,150,0.2);
+  height: 440px;
+  box-shadow: 0 0 18px var(--accent), 0 0 50px rgba(110,166,150,0.35), inset 0 0 20px rgba(110,166,150,0.08);
   transform: perspective(290px) rotate(-11deg) rotateY(29deg);
-  background: rgba(110,166,150,0.03);
+  background: rgba(110,166,150,0.05);
 }
 .hna-wall-right {
-  border: 1.5px solid var(--mauve);
+  border: 2px solid var(--mauve);
   position: absolute;
   left: 72%;
-  top: 100px;
+  top: 80px;
   border-radius: 5px;
-  transition: 1s;
+  transition: 0.6s;
   width: 200px;
-  height: 400px;
-  box-shadow: 0 0 12px var(--mauve), 0 0 30px rgba(180,133,158,0.2);
+  height: 440px;
+  box-shadow: 0 0 18px var(--mauve), 0 0 50px rgba(180,133,158,0.35), inset 0 0 20px rgba(180,133,158,0.08);
   transform: perspective(290px) rotate(11deg) rotateY(-29deg);
-  background: rgba(180,133,158,0.03);
+  background: rgba(180,133,158,0.05);
 }
 
-/* ── Mains — transparentes avec bordure néon blanche ── */
-/* Pas de brightness(0) : image originale visible par transparence + glow blanc en outline */
+/* ── Flicker néon sur les murs ── */
+@keyframes hna-wall-flicker {
+  0%,100% { opacity:1; }
+  7%       { opacity:0.4; }
+  9%       { opacity:1; }
+  18%      { opacity:0.6; }
+  20%      { opacity:1; }
+  55%      { opacity:0.8; }
+  57%      { opacity:0.3; }
+  59%      { opacity:1; }
+}
+.hna-wall-left  { animation: hna-wall-flicker 4s ease-in-out infinite 0.2s; }
+.hna-wall-right { animation: hna-wall-flicker 4s ease-in-out infinite 0.9s; }
+
+/* ── Mains ── */
 .hna-hand1 {
   width: 250px;
   height: 150px;
@@ -71,9 +84,9 @@ const ANIM_CSS = `
   top: 50%;
   right: 45%;
   opacity: 0;
-  filter: drop-shadow(0 0 1px rgba(110,166,150,0.95))
-          drop-shadow(0 0 5px rgba(110,166,150,0.8))
-          drop-shadow(0 0 16px rgba(110,166,150,0.5));
+  filter: drop-shadow(0 0 2px rgba(110,166,150,1))
+          drop-shadow(0 0 8px rgba(110,166,150,0.9))
+          drop-shadow(0 0 24px rgba(110,166,150,0.6));
 }
 .hna-hand2 {
   width: 250px;
@@ -86,34 +99,35 @@ const ANIM_CSS = `
   top: 37%;
   left: 45%;
   opacity: 0;
-  filter: drop-shadow(0 0 1px rgba(110,166,150,0.95))
-          drop-shadow(0 0 5px rgba(110,166,150,0.8))
-          drop-shadow(0 0 16px rgba(110,166,150,0.5));
+  filter: drop-shadow(0 0 2px rgba(110,166,150,1))
+          drop-shadow(0 0 8px rgba(110,166,150,0.9))
+          drop-shadow(0 0 24px rgba(110,166,150,0.6));
 }
 
-/* ── Sphère — wrapper flotte, inner gère UNIQUEMENT scale/opacity ── */
+/* ── Sphère ── */
 .hna-sphere-wrap {
   position: absolute;
   left: 50%;
-  top: 20%;
+  top: 18%;
   transform: translateX(-50%);
-  width: 260px;
-  height: 260px;
-  animation: hna-float 6s ease-in-out infinite;
+  width: 300px;
+  height: 300px;
+  animation: hna-float 4s ease-in-out infinite;
 }
 .hna-sphere {
   width: 100%;
   height: 100%;
   border-radius: 50%;
   background: radial-gradient(circle at 35% 35%,
-    rgba(187,160,197,0.3) 0%,
-    rgba(110,166,150,0.18) 50%,
-    transparent 75%
+    rgba(187,160,197,0.45) 0%,
+    rgba(110,166,150,0.28) 45%,
+    transparent 72%
   );
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1.5px solid rgba(255,255,255,0.14);
   box-shadow:
-    0 0 50px rgba(110,166,150,0.15),
-    inset 0 0 30px rgba(180,133,158,0.1);
+    0 0 80px rgba(110,166,150,0.3),
+    0 0 140px rgba(110,166,150,0.12),
+    inset 0 0 40px rgba(180,133,158,0.18);
   transform-origin: center center;
   opacity: 1;
   transform: scale(1);
@@ -121,46 +135,52 @@ const ANIM_CSS = `
 .hna-sphere::after {
   content: '';
   position: absolute;
-  top: 15%;
-  left: 20%;
-  width: 40%;
-  height: 30%;
-  background: radial-gradient(ellipse, rgba(255,255,255,0.1), transparent 70%);
+  top: 12%;
+  left: 18%;
+  width: 42%;
+  height: 32%;
+  background: radial-gradient(ellipse, rgba(255,255,255,0.18), transparent 70%);
   border-radius: 50%;
 }
 @keyframes hna-float {
   0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%       { transform: translateX(-50%) translateY(-18px); }
+  50%       { transform: translateX(-50%) translateY(-22px); }
 }
 
-/* ── Cycle complet en une seule animation 10s (= intervalle de la boucle)
-   Murs :  delay 2s + durée 3s — se rejoignent au centre à t=3.5s (35%), rouverts à t=5s (50%)
+/* ── Cycle 3.5s — claqué
+   Murs : delay 0.7s + durée 0.65s → fermeture à ~1.07s (30%), rouverts à ~1.35s (38%)
    Sphère :
-     t=0s→2s   (0%→20%)  : visible, légère respiration
-     t=2s→3.5s (20%→35%) : DISPARITION — miroir inverse de l'apparition
-                            scale(1)→scale(1.06)→scale(0), opacity 1→0
-     t=3.5s→5s (35%→50%) : APPARITION — murs en train de s'ouvrir
-                            scale(0)→scale(1.06)→scale(1), opacity 0→1
-     t=5s→10s  (50%→100%): visible, légère respiration ── */
+     0%→18%  (0→0.63s)  : visible
+     18%→30% (0.63→1.07s): disparition
+     35%→40% (1.22→1.4s) : réapparition explosive
+     40%→100%            : visible, respiration ── */
 .hna-inner.playing .hna-sphere {
-  animation: hna-sphere-cycle 10s linear 0s 1 forwards;
+  animation: hna-sphere-cycle 6.5s linear 0s 1 forwards;
 }
 @keyframes hna-sphere-cycle {
-  /* Visible au début */
   0%  { opacity: 1; transform: scale(1); }
-
-  /* DISPARITION — dès que les cartes commencent à se rapprocher (t=2s = 20%) */
-  20% { opacity: 1; transform: scale(1); }
-  35% { opacity: 0; transform: scale(0); }
-
-  /* APPARITION — murs en train de s'ouvrir (t=3.5s→5s = 35%→50%)
-     burst (1.2s) puis settle (0.3s) = miroir temporel de la disparition */
-  47% { opacity: 1; transform: scale(1.06); }
-  50% { opacity: 1; transform: scale(1); }
-
-  /* Visible jusqu'à la fin */
+  18% { opacity: 1; transform: scale(1.02); }
+  30% { opacity: 0; transform: scale(0); }
+  38% { opacity: 1; transform: scale(1.2); }
+  41% { opacity: 1; transform: scale(0.95); }
+  44% { opacity: 1; transform: scale(1); }
   80% { opacity: 1; transform: scale(1.03); }
   100%{ opacity: 1; transform: scale(1); }
+}
+
+/* ── Flicker de la sphère après réapparition ── */
+.hna-inner.playing .hna-sphere-wrap {
+  animation: hna-float 4s ease-in-out infinite, hna-sphere-flicker 6.5s linear 0s 1 forwards;
+}
+@keyframes hna-sphere-flicker {
+  0%,36%   { filter: none; }
+  38%      { filter: brightness(3) drop-shadow(0 0 40px rgba(110,166,150,1)); }
+  40%      { filter: brightness(1.3) drop-shadow(0 0 18px rgba(110,166,150,0.7)); }
+  42%      { filter: brightness(2.5) drop-shadow(0 0 30px rgba(180,133,158,0.9)); }
+  44%      { filter: brightness(1.1); }
+  55%      { filter: brightness(1.4) drop-shadow(0 0 12px rgba(110,166,150,0.5)); }
+  60%      { filter: brightness(1); }
+  100%     { filter: brightness(1); }
 }
 
 /* ── Éléments décoratifs flottants ── */
@@ -168,73 +188,112 @@ const ANIM_CSS = `
   position: absolute;
   width: 100%;
   height: 100%;
-  animation: hna-deco-drift 7s ease-in-out infinite alternate;
+  animation: hna-deco-drift 5s ease-in-out infinite alternate;
 }
 @keyframes hna-deco-drift {
-  0%   { transform: translate(0, 30px); }
+  0%   { transform: translate(0, 24px); }
   100% { transform: translate(0, 0); }
 }
 .hna-deco-ring {
   position: absolute;
   border-radius: 50%;
-  border: 1px solid;
-  opacity: 0.35;
+  border: 1.5px solid;
+  opacity: 0.5;
 }
 .hna-deco-ring:nth-child(1) {
-  width: 50px; height: 50px;
+  width: 60px; height: 60px;
   border-color: var(--accent);
-  top: 28%; left: 27%;
-  box-shadow: 0 0 8px var(--accent);
-  animation: hna-spin 8s linear infinite;
+  top: 26%; left: 24%;
+  box-shadow: 0 0 12px var(--accent), 0 0 24px rgba(110,166,150,0.3);
+  animation: hna-spin 6s linear infinite;
 }
 .hna-deco-ring:nth-child(2) {
-  width: 22px; height: 22px;
+  width: 28px; height: 28px;
   border-color: var(--mauve);
-  top: 62%; right: 26%;
-  box-shadow: 0 0 6px var(--mauve);
-  animation: hna-spin 5s linear infinite reverse;
+  top: 62%; right: 24%;
+  box-shadow: 0 0 10px var(--mauve), 0 0 20px rgba(180,133,158,0.3);
+  animation: hna-spin 4s linear infinite reverse;
 }
 .hna-deco-ring:nth-child(3) {
-  width: 14px; height: 14px;
+  width: 16px; height: 16px;
   border-color: var(--lavender);
-  top: 52%; right: 13%;
-  box-shadow: 0 0 5px var(--lavender);
+  top: 50%; right: 12%;
+  box-shadow: 0 0 8px var(--lavender);
+  animation: hna-spin 7s linear infinite;
 }
 .hna-deco-dot {
   position: absolute;
   border-radius: 50%;
 }
 .hna-deco-dot:nth-child(4) {
-  width: 6px; height: 6px;
+  width: 8px; height: 8px;
   background: var(--accent);
-  top: 48%; left: 33%;
-  box-shadow: 0 0 6px var(--accent);
-  animation: hna-pulse 3s ease-in-out infinite;
+  top: 46%; left: 31%;
+  box-shadow: 0 0 10px var(--accent), 0 0 20px rgba(110,166,150,0.5);
+  animation: hna-pulse 2s ease-in-out infinite;
 }
 .hna-deco-dot:nth-child(5) {
-  width: 4px; height: 4px;
+  width: 5px; height: 5px;
   background: var(--lavender);
-  top: 38%; right: 28%;
-  box-shadow: 0 0 5px var(--lavender);
-  animation: hna-pulse 4s ease-in-out infinite 1s;
+  top: 36%; right: 26%;
+  box-shadow: 0 0 8px var(--lavender);
+  animation: hna-pulse 2.5s ease-in-out infinite 0.7s;
 }
+
+/* ── Sparks électriques ── */
+.hna-spark {
+  position: absolute;
+  width: 2px;
+  border-radius: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.hna-inner.playing .hna-spark:nth-child(1) {
+  height: 22px; background: var(--accent);
+  top: 46%; left: 49%;
+  box-shadow: 0 0 8px var(--accent), 0 0 20px rgba(110,166,150,0.9);
+  animation: hna-spark-zap 0.5s ease-out 1.95s 1 forwards;
+  transform-origin: bottom center;
+}
+.hna-inner.playing .hna-spark:nth-child(2) {
+  height: 16px; background: var(--mauve);
+  top: 42%; left: 51%;
+  box-shadow: 0 0 8px var(--mauve), 0 0 18px rgba(180,133,158,0.9);
+  animation: hna-spark-zap 0.5s ease-out 2.05s 1 forwards;
+  transform: rotate(22deg);
+  transform-origin: bottom center;
+}
+.hna-inner.playing .hna-spark:nth-child(3) {
+  height: 12px; background: white;
+  top: 52%; left: 50%;
+  box-shadow: 0 0 10px white, 0 0 20px rgba(255,255,255,0.6);
+  animation: hna-spark-zap 0.45s ease-out 2.0s 1 forwards;
+  transform: rotate(-18deg);
+  transform-origin: bottom center;
+}
+@keyframes hna-spark-zap {
+  0%   { opacity: 0; transform: scaleY(0); }
+  10%  { opacity: 1; transform: scaleY(1); }
+  30%  { opacity: 0; transform: scaleY(0.5) translateY(-8px); }
+  100% { opacity: 0; }
+}
+
 @keyframes hna-spin {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
 @keyframes hna-pulse {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50%       { opacity: 1;   transform: scale(1.6); }
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(2); }
 }
 
-/* ── Animations mains (déclenchées par .playing) ── */
+/* ── Animations mains ── */
 .hna-inner.playing .hna-hand1 {
-  animation: hna-hand1 3s ease-in-out 0.5s 1 forwards;
+  animation: hna-hand1 1.8s ease-in-out 0.2s 1 forwards;
 }
 .hna-inner.playing .hna-hand2 {
-  animation: hna-hand2 3s ease-in-out 0.5s 1 forwards;
+  animation: hna-hand2 1.8s ease-in-out 0.2s 1 forwards;
 }
-/* Opacity max 0.9 : silhouette noire bien visible, glow blanc en bordure */
 @keyframes hna-hand1 {
   0%   { width:0;     height:0;     transform:rotate(-40deg) translate(0,150px); opacity:0; }
   50%  { width:250px; height:250px; transform:rotate(0);                         opacity:0.9; }
@@ -246,68 +305,72 @@ const ANIM_CSS = `
   100% { width:250px; height:250px; transform:rotate(45deg) translate(-30px,90px); opacity:0; }
 }
 
-/* ── Animations cartes ── */
+/* ── Animations cartes — claquées ── */
 .hna-inner.playing .hna-wall-left {
-  animation: hna-wall-left 3s ease-in-out 2s 1 forwards;
+  animation: hna-wall-flicker 4s ease-in-out infinite 0.2s, hna-wall-left 1.5s cubic-bezier(0.6,0,0.4,1) 1.2s 1 forwards;
 }
 .hna-inner.playing .hna-wall-right {
-  animation: hna-wall-right 3s ease-in-out 2s 1 forwards;
+  animation: hna-wall-flicker 4s ease-in-out infinite 0.9s, hna-wall-right 1.5s cubic-bezier(0.6,0,0.4,1) 1.2s 1 forwards;
 }
 @keyframes hna-wall-left {
   0%   { left:10%; width:200px; transform:perspective(290px) rotate(-11deg) rotateY(29deg); }
-  50%  { left:50%; width:1px;   transform:perspective(290px) rotate(0)      rotateY(29deg); }
+  55%  { left:50%; width:2px;   transform:perspective(290px) rotate(0)      rotateY(29deg); filter:brightness(3) drop-shadow(0 0 12px var(--accent)); }
   100% { left:10%; width:200px; transform:perspective(290px) rotate(-11deg) rotateY(29deg); }
 }
 @keyframes hna-wall-right {
   0%   { left:72%; width:200px; transform:perspective(290px) rotate(11deg) rotateY(-29deg); }
-  50%  { left:50%; width:1px;   transform:perspective(290px) rotate(0)     rotateY(-29deg); }
+  55%  { left:50%; width:2px;   transform:perspective(290px) rotate(0)     rotateY(-29deg); filter:brightness(3) drop-shadow(0 0 12px var(--mauve)); }
   100% { left:72%; width:200px; transform:perspective(290px) rotate(11deg) rotateY(-29deg); }
 }
 .hna-inner.playing .hna-deco-ring:nth-child(1) {
-  animation: hna-spin 8s linear infinite, hna-scatter-1 3.5s ease-out 2.5s 1 forwards;
+  animation: hna-spin 6s linear infinite, hna-scatter-1 1.2s ease-out 1s 1 forwards;
 }
 .hna-inner.playing .hna-deco-ring:nth-child(2) {
-  animation: hna-spin 5s linear infinite reverse, hna-scatter-2 3.5s ease-out 2.5s 1 forwards;
+  animation: hna-spin 4s linear infinite reverse, hna-scatter-2 1.2s ease-out 1s 1 forwards;
 }
 @keyframes hna-scatter-1 {
-  0%   { opacity:0.35; top:28%; left:27%; }
-  40%  { opacity:0;    top:20%; left:15%; }
-  80%  { opacity:0;    top:30%; left:28%; }
-  100% { opacity:0.35; top:28%; left:27%; }
+  0%   { opacity:0.5; top:26%; left:24%; }
+  40%  { opacity:0;   top:16%; left:10%; }
+  80%  { opacity:0;   top:28%; left:25%; }
+  100% { opacity:0.5; top:26%; left:24%; }
 }
 @keyframes hna-scatter-2 {
-  0%   { opacity:0.35; top:62%; right:26%; }
-  40%  { opacity:0;    top:70%; right:18%; }
-  80%  { opacity:0;    top:63%; right:27%; }
-  100% { opacity:0.35; top:62%; right:26%; }
+  0%   { opacity:0.5; top:62%; right:24%; }
+  40%  { opacity:0;   top:74%; right:14%; }
+  80%  { opacity:0;   top:63%; right:25%; }
+  100% { opacity:0.5; top:62%; right:24%; }
 }
 `
 
-export function HeroNeonAnim({ responsive = false }: { responsive?: boolean }) {
+export function HeroNeonAnim({ responsive = false, once = false }: { responsive?: boolean; once?: boolean }) {
   const [playing, setPlaying] = useState(false)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const [rScale, setRScale] = useState(0.4)
+  const [rScale, setRScale] = useState<number | null>(null)
 
   useEffect(() => {
     const first = setTimeout(() => {
       setPlaying(true)
-      intervalRef.current = setInterval(() => {
-        setPlaying(false)
-        setTimeout(() => setPlaying(true), 80)
-      }, 10000)
-    }, 1800)
+      if (!once) {
+        intervalRef.current = setInterval(() => {
+          setPlaying(false)
+          setTimeout(() => setPlaying(true), 60)
+        }, 6500)
+      }
+    }, 300)
 
     return () => {
       clearTimeout(first)
       if (intervalRef.current) clearInterval(intervalRef.current)
     }
-  }, [])
+  }, [once])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!responsive) return
     const el = containerRef.current
     if (!el) return
+    // Calcul synchrone avant le premier paint — évite le saut haut-gauche
+    setRScale(el.getBoundingClientRect().width / 1100)
     const ro = new ResizeObserver(([entry]) => {
       setRScale(entry.contentRect.width / 1100)
     })
@@ -331,6 +394,9 @@ export function HeroNeonAnim({ responsive = false }: { responsive?: boolean }) {
       <div className="hna-wall-right" />
       <div className="hna-hand1" />
       <div className="hna-hand2" />
+      <div className="hna-spark" />
+      <div className="hna-spark" />
+      <div className="hna-spark" />
     </>
   )
 
@@ -342,12 +408,14 @@ export function HeroNeonAnim({ responsive = false }: { responsive?: boolean }) {
           ref={containerRef}
           style={{ width: "100%", aspectRatio: "11/6", position: "relative", overflow: "hidden", opacity: 0.85 }}
         >
-          <div
-            className={`hna-inner${playing ? " playing" : ""}`}
-            style={{ position: "absolute", top: 0, left: 0, transform: `scale(${rScale})` }}
-          >
-            {innerContent}
-          </div>
+          {rScale !== null && (
+            <div
+              className={`hna-inner${playing ? " playing" : ""}`}
+              style={{ position: "absolute", top: 0, left: 0, transform: `scale(${rScale})` }}
+            >
+              {innerContent}
+            </div>
+          )}
         </div>
       </>
     )

@@ -4,11 +4,11 @@ import { ArrowRight } from "lucide-react"
 import {
   SiNextdotjs, SiReact, SiTypescript, SiJavascript,
   SiTailwindcss, SiFramer, SiNodedotjs, SiPostgresql,
-  SiMongodb, SiPrisma, SiGit, SiVercel, SiFigma, SiContentful,
+  SiMongodb, SiGit, SiVercel, SiSupabase, SiStorybook,
+  SiPnpm, SiZod, SiVitest,
 } from "react-icons/si"
 import { BlurFade } from "@/components/animations/blur-fade"
 import { NumberTicker } from "@/components/animations/number-ticker"
-import { projets } from "@/lib/projets"
 
 export const metadata: Metadata = {
   title: "À propos — Léo Hengebaert",
@@ -18,8 +18,9 @@ export const metadata: Metadata = {
 
 const STATS = [
   { value: 3, suffix: "+", label: "ans d'expérience" },
-  { value: projets.length, suffix: "", label: "projets livrés" },
-  { value: 3, suffix: "", label: "entreprises" },
+  { value: 12, suffix: "+", label: "projets livrés" },
+  { value: 2, suffix: "", label: "entreprises (CDI)" },
+  { value: 10, suffix: "+", label: "clients" },
 ]
 
 const EXPERIENCE = [
@@ -74,19 +75,28 @@ const SKILLS: { category: string; items: { name: string; Icon: React.ComponentTy
     ],
   },
   {
-    category: "Styling & Animations",
+    category: "Styling & UI",
     items: [
       { name: "Tailwind CSS", Icon: SiTailwindcss },
-      { name: "Framer Motion", Icon: SiFramer },
+      { name: "shadcn/ui (Radix)", Icon: null },
+      { name: "Motion", Icon: SiFramer },
     ],
   },
   {
-    category: "Back-end",
+    category: "State & Data",
+    items: [
+      { name: "Zustand", Icon: null },
+      { name: "TanStack Query", Icon: null },
+      { name: "React Hook Form + Zod", Icon: SiZod },
+    ],
+  },
+  {
+    category: "Back-end & DB",
     items: [
       { name: "Node.js", Icon: SiNodedotjs },
       { name: "PostgreSQL", Icon: SiPostgresql },
+      { name: "Supabase", Icon: SiSupabase },
       { name: "MongoDB", Icon: SiMongodb },
-      { name: "Prisma", Icon: SiPrisma },
     ],
   },
   {
@@ -94,16 +104,15 @@ const SKILLS: { category: string; items: { name: string; Icon: React.ComponentTy
     items: [
       { name: "Git", Icon: SiGit },
       { name: "Vercel", Icon: SiVercel },
-      { name: "Figma", Icon: SiFigma },
-      { name: "Contentful", Icon: SiContentful },
+      { name: "Storybook", Icon: SiStorybook },
+      { name: "pnpm", Icon: SiPnpm },
+      { name: "Vitest + RTL", Icon: SiVitest },
     ],
   },
   {
     category: "Méthodes",
     items: [
       { name: "Agile / Scrum", Icon: null },
-      { name: "Tests RTL", Icon: null },
-      { name: "Jira", Icon: null },
     ],
   },
 ]
@@ -291,19 +300,19 @@ export default function AProposPage() {
             {SKILLS.map((group) => (
               <div
                 key={group.category}
-                className="p-5 rounded-2xl border border-white/6 bg-white/2 hover:border-white/10 transition-colors"
+                className="p-5 rounded-2xl border border-white/6 bg-white/2 hover:border-accent/20 transition-colors"
               >
-                <p className="text-[10px] uppercase tracking-[0.35em] text-zinc-600 mb-4 font-semibold">
+                <p className="text-[10px] uppercase tracking-[0.35em] text-accent mb-4 font-semibold">
                   {group.category}
                 </p>
                 <div className="space-y-2.5">
                   {group.items.map(({ name, Icon }) => (
                     <div key={name} className="flex items-center gap-2.5">
                       {Icon ? (
-                        <Icon className="w-4 h-4 text-foreground/50 shrink-0" />
+                        <Icon className="w-4 h-4 shrink-0" style={{ color: "var(--accent)" }} />
                       ) : (
                         <span className="w-4 h-4 shrink-0 flex items-center justify-center">
-                          <span className="w-1 h-1 rounded-full bg-foreground/30" />
+                          <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--accent)", opacity: 0.5 }} />
                         </span>
                       )}
                       <p className="text-sm text-foreground/85 font-medium">{name}</p>
