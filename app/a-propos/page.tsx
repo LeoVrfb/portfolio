@@ -309,7 +309,9 @@ export default function AProposPage() {
                   {group.items.map(({ name, Icon }) => (
                     <div key={name} className="flex items-center gap-2.5">
                       {Icon ? (
-                        <Icon className="w-4 h-4 shrink-0" style={{ color: "var(--accent)" }} />
+                        <span className="w-4 h-4 shrink-0 flex items-center justify-center" style={{ color: "var(--accent)" }}>
+                          <Icon className="w-4 h-4" />
+                        </span>
                       ) : (
                         <span className="w-4 h-4 shrink-0 flex items-center justify-center">
                           <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--accent)", opacity: 0.5 }} />
