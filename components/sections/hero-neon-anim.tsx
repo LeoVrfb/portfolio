@@ -123,8 +123,14 @@ const ANIM_CSS = `
   transform-origin: center center;
   opacity: 0;
   transform: scale(0);
-  mask-image: radial-gradient(ellipse 82% 86% at 50% 50%, black 38%, rgba(0,0,0,0.5) 58%, transparent 76%);
-  -webkit-mask-image: radial-gradient(ellipse 82% 86% at 50% 50%, black 38%, rgba(0,0,0,0.5) 58%, transparent 76%);
+  mask-image:
+    linear-gradient(to right, transparent 0%, black 22%, black 78%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, black 18%, black 86%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, black 22%, black 78%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, black 18%, black 86%, transparent 100%);
+  -webkit-mask-composite: source-in;
 }
 @keyframes hna-float {
   0%, 100% { transform: translate(-50%, -50%) translateY(0); }
@@ -142,13 +148,21 @@ const ANIM_CSS = `
   animation: hna-sphere-cycle 6.5s linear 0s 1 forwards;
 }
 @keyframes hna-sphere-cycle {
-  0%  { opacity: 0; transform: scale(0); }
-  30% { opacity: 0; transform: scale(0); }
-  38% { opacity: 1; transform: scale(1.1); }
-  42% { opacity: 1; transform: scale(0.97); }
-  46% { opacity: 1; transform: scale(1); }
-  80% { opacity: 1; transform: scale(1.02); }
-  100%{ opacity: 1; transform: scale(1); }
+  0%, 32.9% { opacity: 0; transform: scale(0); }
+  40%       { opacity: 0.95; transform: scale(1.6); }
+  100%      { opacity: 0.95; transform: scale(1.6); }
+}
+
+/* ── Mobile : portrait qui grossit au-delà des cartes ── */
+@media (max-width: 640px) {
+  .hna-inner.playing .hna-sphere {
+    animation: hna-sphere-cycle-mobile 6.5s linear 0s 1 forwards;
+  }
+  @keyframes hna-sphere-cycle-mobile {
+    0%, 32.9% { opacity: 0; transform: scale(0); }
+    40%     { opacity: 0.9; transform: scale(3.5); }
+    100%    { opacity: 0.9; transform: scale(3.5); }
+  }
 }
 
 /* ── Flicker de la sphère après réapparition ── */
@@ -428,7 +442,7 @@ export function HeroNeonAnim({ responsive = false, once = false }: { responsive?
         <style dangerouslySetInnerHTML={{ __html: ANIM_CSS }} />
         <div
           ref={containerRef}
-          style={{ width: "100%", aspectRatio: "11/6", position: "relative", overflow: "hidden", opacity: 0.85 }}
+          style={{ width: "100%", aspectRatio: "11/6", position: "relative", overflow: "visible", opacity: 0.85 }}
         >
           {rScale !== null && (
             <div
