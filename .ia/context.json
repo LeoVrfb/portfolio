@@ -1,67 +1,46 @@
 {
-  "projet": "portfolio-leo-hengebaert",
-  "description": "Portfolio personnel de Léo Hengebaert, développeur web freelance. Vitrine + services (3 formules) + projets + contact.",
+  "project": "portfolio-leo-hengebaert",
+  "version": "1.0",
+  "last_updated": "2026-03-19",
+  "description": "Portfolio professionnel de Léo Hengebaert — développeur front-end React/Next.js. Sert aussi à démarcher des clients freelance.",
   "stack": {
     "framework": "Next.js 16 App Router",
-    "css": "Tailwind CSS v4",
-    "ui": "shadcn/ui",
-    "animations": "Framer Motion",
-    "icons": "Lucide React",
-    "toasts": "Sonner",
-    "email": "Resend (à configurer)",
-    "deploy": "Vercel"
+    "language": "TypeScript",
+    "styling": "Tailwind CSS v4 + shadcn/ui",
+    "animations": "motion/react (Framer Motion)",
+    "fonts": ["Space Grotesk", "DM Mono", "Bebas Neue"],
+    "icons": "lucide-react",
+    "deploy": "Vercel",
+    "package_manager": "pnpm"
   },
-  "design": {
-    "theme": "dark only",
-    "accent": "oklch(0.62 0.22 260) — bleu-indigo",
-    "background": "oklch(0.08 0 0) — presque noir",
-    "typo": "Geist Sans (système Next.js)"
-  },
-  "pages": {
-    "/": "Home : Hero + Projets sélectionnés + Services/Tarifs + CTA Contact",
-    "/projets": "Liste de tous les projets",
-    "/projets/[slug]": "Page détail d'un projet",
-    "/services": "Page services complète avec formules, options à la carte, FAQ",
-    "/a-propos": "Bio, expériences, stack technique",
+  "routes": {
+    "/": "Page d'accueil — Hero, TechBand, AboutIntro, ProjetsSection, ServicesSection",
+    "/projets": "Liste de tous les projets avec filtres",
+    "/projets/[slug]": "Page détail projet",
+    "/services": "Page tarifs et formules freelance",
+    "/services/[slug]": "Configurateur de formule (essentiel/standard/premium)",
+    "/a-propos": "Page à propos — stats, stack, parcours",
     "/contact": "Formulaire de contact"
   },
-  "projets": [
-    {
-      "slug": "argedis-totalenergies",
-      "client": "TotalEnergies — Argedis",
-      "tags": ["Next.js", "Contentful", "GraphQL"]
-    },
-    {
-      "slug": "sweetime-adp-extime",
-      "client": "Aéroports de Paris — Extime",
-      "tags": ["Next.js 13", "MongoDB", "Docker"]
-    },
-    {
-      "slug": "hurepoix-nettoyage",
-      "client": "Hurepoix Nettoyage",
-      "tags": ["Next.js", "Tailwind CSS", "Resend"]
-    }
-  ],
-  "services": {
-    "formules": [
-      { "nom": "Essentiel", "prix": "600€", "delai": "5-7j" },
-      { "nom": "Standard", "prix": "1200€", "delai": "10-15j" },
-      { "nom": "Premium", "prix": "2200€+", "delai": "3-4 semaines" }
-    ],
-    "options_carte": [
-      "Page supplémentaire — 150€",
-      "Logo — 200€",
-      "Google Business Profile — 80€",
-      "Pixel Meta — 60€",
-      "GA4 — 50€",
-      "Maintenance — 50€/mois",
-      "Modif post-livraison — 60€/h"
-    ]
+  "special_files": {
+    "lib/projets.ts": "Source de vérité pour tous les projets — type Projet + tableau projets[]",
+    "proxy.ts": "Middleware Next.js — redirige /demo vers /",
+    "lib/intro-signal.ts": "Signal module-level pour synchroniser fin intro avec animations hero",
+    "components/sections/intro-overlay.tsx": "Animation intro plein écran (neon, portrait)",
+    "components/sections/hero-neon-anim.tsx": "Animation neon avec portrait professionnel"
   },
-  "todo": {
-    "animations": "Ajouter les effets du repo /animations (spotlight hero, marquee stack, scroll reveal projets)",
-    "email": "Configurer Resend avec domaine vérifié pour le formulaire de contact",
-    "assets": "Vérifier que les images /assets/nettoyage-hurepoix/ existent",
-    "seo": "Ajouter sitemap.xml + robots.txt + og:image"
+  "assets": {
+    "public/assets/bnp/": "BNP Paribas e-learning",
+    "public/assets/videoArgedis/": "TotalEnergies Argedis",
+    "public/assets/sweetime/": "Sweetime ADP Extime",
+    "public/assets/makeAScene/": "Make a Scene Artefact",
+    "public/assets/bald/": "BALD artiste peintre — badge, logo, galerie, hero, feuille d'or"
+  },
+  "nav_links": ["Accueil (/)", "Projets (/projets)", "Services (/services)", "À propos (/a-propos)", "Contact (/contact)"],
+  "theme": "dark mode permanent — background #09090b, accent vert/teal, lavender sky-blue, gold jaune, mauve orchid",
+  "intro_animation": {
+    "component": "IntroOverlay (layout.tsx) → HeroNeonAnim",
+    "duration_ms": 4200,
+    "signal": "signalIntroReady() → HeroSection attend onIntroReady() pour démarrer ses animations"
   }
 }

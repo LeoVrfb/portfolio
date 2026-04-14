@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation"
 import { Metadata } from "next"
+import { Suspense } from "react"
 import { services, getService } from "@/lib/services"
 import { ServiceConfigurator } from "@/components/sections/service-configurator"
 
@@ -30,5 +31,9 @@ export default async function ServicePage({
   const service = getService(slug)
   if (!service) notFound()
 
-  return <ServiceConfigurator service={service} />
+  return (
+    <Suspense fallback={null}>
+      <ServiceConfigurator service={service} />
+    </Suspense>
+  )
 }

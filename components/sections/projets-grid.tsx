@@ -95,9 +95,9 @@ const CONTEXT_LABEL: Record<Projet["contexte"], string> = {
 };
 
 const CONTEXT_STYLE: Record<Projet["contexte"], React.CSSProperties> = {
-  agence:    { color: "var(--accent)",  borderColor: "rgba(162,226,208,0.5)",  background: "rgba(162,226,208,0.13)" },
-  freelance: { color: "var(--mauve)",   borderColor: "rgba(199,142,204,0.55)", background: "rgba(199,142,204,0.14)" },
-  perso:     { color: "#94a3b8",        borderColor: "rgba(148,163,184,0.35)", background: "rgba(148,163,184,0.1)"  },
+  agence:    { color: "var(--accent)",   borderColor: "rgba(162,226,208,0.5)",  background: "rgba(162,226,208,0.13)" },
+  freelance: { color: "var(--lavender)", borderColor: "rgba(156,220,254,0.5)",  background: "rgba(156,220,254,0.13)" },
+  perso:     { color: "var(--gold)",     borderColor: "rgba(220,196,84,0.45)",  background: "rgba(220,196,84,0.12)"  },
 };
 
 function ProjectCard({ projet, index, total }: { projet: Projet; index: number; total: number }) {

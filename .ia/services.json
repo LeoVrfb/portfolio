@@ -1,0 +1,44 @@
+{
+  "services": {
+    "essentiel": {
+      "prix": "599 €",
+      "delai": "1 semaine",
+      "cible": "Artisan/PME, vitrine simple",
+      "inclus": ["4 pages", "Design adapté identité", "Formulaire contact email", "Responsive mobile", "Vercel + domaine", "Google Business Profile"],
+      "e_commerce": false
+    },
+    "standard": {
+      "prix": "1 199 €",
+      "delai": "2 semaines",
+      "cible": "PME qui veut un vrai outil de communication",
+      "inclus": ["Tout Essentiel", "Jusqu'à 7 pages", "Rédaction textes incluse", "SEO on-page", "Google Analytics 4", "1 round de modifications"],
+      "e_commerce": "option +400€"
+    },
+    "premium": {
+      "nom_affiche": "Sur mesure",
+      "prix": "2 199 €+",
+      "delai": "3-4 semaines",
+      "cible": "Projet ambitieux avec interface admin, e-commerce, identité forte",
+      "inclus": ["Tout Standard", "Maquette Figma validée", "Interface admin sur mesure", "Galerie dynamique filtrée", "SEO avancé Schema.org"],
+      "e_commerce": "option +400€"
+    }
+  },
+  "options": {
+    "ecommerce_stripe": { "prix": "+400 €", "dispo_depuis": "standard", "detail": "Stripe Checkout, gestion stock, pages légales e-commerce" },
+    "interface_admin": { "prix": "+300 €", "detail": "Interface back-office sur mesure — gestion textes, photos, produits sans code" },
+    "i18n": { "prix": "+250 €", "detail": "Internationalisation FR/EN — next-intl, routing localisé, SEO bilingue" },
+    "redaction": { "prix": "+200 €", "detail": "Rédaction de tous les textes à partir du brief client" },
+    "logo": { "prix": "+200 €", "detail": "Création du logo et de la charte graphique" },
+    "seo_avance": { "prix": "+200 €", "detail": "Schema.org, Core Web Vitals, indexation avancée" },
+    "photos": { "prix": "+150 €/lot", "detail": "Retouche + conversion WebP — livraison optimisée pour le web" },
+    "page_supp": { "prix": "+150 €", "detail": "Chaque page supplémentaire au-delà du forfait" },
+    "google_business": { "prix": "+80 €", "detail": "Création ou optimisation de la fiche Google Business Profile" },
+    "maintenance": { "prix": "+50 €/mois", "detail": "Mises à jour, corrections, sauvegardes, monitoring" }
+  },
+  "notes": {
+    "positionnement": "Pas de WordPress — du Next.js professionnel, même technologie que TotalEnergies/BNP/ADP. Hébergement Vercel inclus.",
+    "taux_journalier_estime": "250-400 €/jour selon complexité",
+    "reference_bald": "Bald-art.com : ~20 jours de travail (Next.js + Convex + Stripe + i18n + animations + identité visuelle). Valeur marché : 3000-6000€. Vendu 600€ → sous-pricé.",
+    "client_type": "Artisans, restaurants, coaches, artistes, PME locales, entrepreneurs"
+  }
+}

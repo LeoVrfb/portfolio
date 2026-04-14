@@ -7,6 +7,7 @@ import { Menu, X, ArrowRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const links = [
+  { href: "/", label: "Accueil" },
   { href: "/projets", label: "Projets" },
   { href: "/services", label: "Services" },
   { href: "/a-propos", label: "À propos" },
@@ -99,16 +100,12 @@ export function Nav() {
             <span className="text-sm font-bold text-white/85 tracking-tight group-hover:text-white transition-colors">
               Léo Hengebaert
             </span>
-            <span className="hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-accent/25 bg-accent/8 text-[10px] font-semibold text-accent tracking-wide">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-              Disponible
-            </span>
           </Link>
 
           {/* Desktop nav — pill en verre */}
           <div className="nav-pill-glass hidden md:flex items-center gap-1 px-2 py-2">
             {links.map(({ href, label }) => {
-              const isActive = pathname === href || pathname.startsWith(href + "/")
+              const isActive = href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/")
               return (
                 <Link
                   key={href}
@@ -129,13 +126,8 @@ export function Nav() {
             })}
           </div>
 
-          {/* Desktop CTA */}
-          <div className="hidden md:flex items-center">
-            <Link href="/contact" className="nav-cta">
-              Me contacter
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
+          {/* Desktop CTA — supprimé, Contact est dans la nav */}
+          <div className="hidden md:block" />
 
           {/* Mobile toggle */}
           <button
@@ -151,13 +143,7 @@ export function Nav() {
           <div className="md:hidden mt-3 rounded-2xl border border-white/10 bg-zinc-950/90 backdrop-blur-2xl overflow-hidden">
             {/* Header mobile menu */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-white/6">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-bold text-white">Léo Hengebaert</span>
-                <span className="flex items-center gap-1 px-2 py-0.5 rounded-full border border-accent/25 bg-accent/8 text-[10px] font-semibold text-accent">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-                  Disponible
-                </span>
-              </div>
+              <span className="text-sm font-bold text-white">Léo Hengebaert</span>
               <button
                 onClick={() => setOpen(false)}
                 className="p-1.5 rounded-lg text-zinc-500 hover:text-white transition-colors cursor-pointer"
@@ -169,7 +155,7 @@ export function Nav() {
             {/* Links */}
             <div className="p-3 space-y-0.5">
               {links.map(({ href, label }) => {
-                const isActive = pathname === href || pathname.startsWith(href + "/")
+                const isActive = href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/")
                 return (
                   <Link
                     key={href}
@@ -187,23 +173,6 @@ export function Nav() {
                   </Link>
                 )
               })}
-            </div>
-
-            {/* CTA bottom */}
-            <div className="px-3 pb-3 pt-1">
-              <Link
-                href="/contact"
-                onClick={() => setOpen(false)}
-                className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-sm font-bold transition-all cursor-pointer"
-                style={{
-                  background: "linear-gradient(-75deg, rgba(110,166,150,0.12), rgba(110,166,150,0.22), rgba(110,166,150,0.12))",
-                  border: "1px solid rgba(110,166,150,0.30)",
-                  color: "rgba(180,230,215,1)",
-                }}
-              >
-                Me contacter
-                <ArrowRight className="w-4 h-4" />
-              </Link>
             </div>
           </div>
         )}

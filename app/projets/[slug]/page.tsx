@@ -9,6 +9,7 @@ import { projets, getProjet } from "@/lib/projets";
 import { ProjetGallery } from "@/components/sections/projet-gallery";
 import { ProjetImageSlider } from "@/components/sections/projet-image-slider";
 import { WideVideoPlayer } from "@/components/sections/wide-video-player";
+import { BaldIdentityShowcase } from "@/components/sections/bald-identity-showcase";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -33,12 +34,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 function renderHighlight(text: string): React.ReactNode {
-  const parts = text.split(/(\*\*[^*]+\*\*|__[^_]+__)/g);
+  const parts = text.split(/(\*\*[^*]+\*\*|__[^_]+__|~~[^~]+~~)/g);
   return parts.map((part, i) => {
     if (/^\*\*[^*]+\*\*$/.test(part))
       return <strong key={i} className="font-semibold" style={{ color: "var(--accent)" }}>{part.slice(2, -2)}</strong>;
     if (/^__[^_]+__$/.test(part))
       return <strong key={i} className="font-semibold text-foreground">{part.slice(2, -2)}</strong>;
+    if (/^~~[^~]+~~$/.test(part))
+      return <strong key={i} className="font-semibold" style={{ color: "var(--lavender)" }}>{part.slice(2, -2)}</strong>;
     return part;
   });
 }
@@ -52,6 +55,57 @@ function renderParagraphs(text: string) {
 }
 
 type Challenge = { titre: string; solution: string };
+
+function ClientLogo({ projet, size = "lg" }: { projet: typeof import("@/lib/projets").projets[0]; size?: "sm" | "lg" }) {
+  if (projet.slug === "bald-artiste") {
+    const isLg = size === "lg";
+    return (
+      <div
+        className={`shrink-0 rounded-lg overflow-hidden bg-white flex items-center justify-center relative ${isLg ? "w-10 h-10" : "w-8 h-8"}`}
+      >
+        <span
+          aria-hidden
+          style={{
+            position: "absolute", inset: 0,
+            backgroundImage: "url('/assets/bald/bg-logo-yellow.png')",
+            backgroundSize: "cover", backgroundPosition: "center",
+            opacity: 0.65,
+          }}
+        />
+        <span
+          style={{
+            fontFamily: "var(--font-bebas), Impact, sans-serif",
+            fontSize: isLg ? 22 : 17,
+            letterSpacing: "0.06em",
+            lineHeight: 1,
+            color: "#1A1A1A",
+            position: "relative",
+            zIndex: 1,
+          }}
+        >
+          BALD
+        </span>
+      </div>
+    );
+  }
+  const srcs = projet.logos ?? (projet.logo ? [projet.logo] : []);
+  if (srcs.length === 0) return null;
+  return (
+    <>
+      {srcs.map((src, i) =>
+        size === "lg" ? (
+          <div key={i} className="shrink-0 rounded-lg overflow-hidden bg-white px-2 py-1 flex items-center h-9">
+            <img src={src} alt="" className="h-6 w-auto max-w-[80px] object-contain" />
+          </div>
+        ) : (
+          <div key={i} className="shrink-0 rounded-md overflow-hidden bg-white px-1.5 py-0.5 flex items-center h-7">
+            <img src={src} alt="" className="h-5 w-auto max-w-[64px] object-contain" />
+          </div>
+        )
+      )}
+    </>
+  );
+}
 
 function TechSection({ challenges }: { challenges: Challenge[] }) {
   if (!challenges.length) return null;
@@ -90,9 +144,10 @@ export default async function ProjetPage({ params }: Props) {
   const prevProjet = projets[(idx - 1 + projets.length) % projets.length];
   const year = projet.date.split("-")[0];
 
-  // Preload des assets critiques (vidéo + première image)
+  // Preload des assets critiques (vidéo + image principale)
   if (projet.video) preload(projet.video, { as: "video" });
-  if (projet.img) preload(projet.img, { as: "image" });
+  const mainImg = projet.heroImg ?? projet.img;
+  if (mainImg) preload(mainImg, { as: "image" });
 
   // Quand une vidéo existe ET que images[0] === img (ex: TotalEnergies), on skippe le doublon
   // Pour wideMedia (BNP), images[0] est distinct du miniature → pas de skip
@@ -135,11 +190,7 @@ export default async function ProjetPage({ params }: Props) {
             {/* Mobile only — logos + contexte + année + stack (remplace la carte) */}
             <div className="sm:hidden mb-5 space-y-2.5">
               <div className="flex flex-wrap items-center gap-2">
-                {(projet.logos ?? (projet.logo ? [projet.logo] : [])).map((src, i) => (
-                  <div key={i} className="shrink-0 rounded-md overflow-hidden bg-white px-1.5 py-0.5 flex items-center h-7">
-                    <img src={src} alt="" className="h-5 w-auto max-w-[64px] object-contain" />
-                  </div>
-                ))}
+                <ClientLogo projet={projet} size="sm" />
                 <span className="text-[11px] px-2.5 py-1 rounded-full border border-white/10 bg-white/4 text-foreground/55">
                   {projet.contexte === "agence" ? "Mission studio · Artefact 3000"
                     : projet.contexte === "freelance" ? "Projet freelance"
@@ -182,11 +233,7 @@ export default async function ProjetPage({ params }: Props) {
               <div>
                 <p className="text-[10px] uppercase tracking-[0.25em] mb-2 font-semibold" style={{ color: "var(--accent)" }}>Client</p>
                 <div className="flex items-center gap-2.5 flex-wrap mb-1.5">
-                  {(projet.logos ?? (projet.logo ? [projet.logo] : [])).map((src, i) => (
-                    <div key={i} className="shrink-0 rounded-lg overflow-hidden bg-white px-2 py-1 flex items-center h-9">
-                      <img src={src} alt="" className="h-6 w-auto max-w-[80px] object-contain" />
-                    </div>
-                  ))}
+                  <ClientLogo projet={projet} size="lg" />
                 </div>
                 <p className="text-sm font-semibold text-foreground">{projet.client}</p>
               </div>
@@ -271,9 +318,9 @@ export default async function ProjetPage({ params }: Props) {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                ) : projet.img ? (
+                ) : mainImg ? (
                   <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-border/60">
-                    <Image src={projet.img} alt={projet.titre} fill className="object-cover" priority sizes="100vw" />
+                    <Image src={mainImg} alt={projet.titre} fill className="object-cover" priority sizes="100vw" />
                   </div>
                 ) : null}
                 {projet.descriptionPublic && (
@@ -284,9 +331,9 @@ export default async function ProjetPage({ params }: Props) {
               </>
             ) : (
               /* ── Portrait : vidéo à gauche, texte à droite ── */
-              <div className="flex flex-col md:grid md:grid-cols-[auto_1fr] gap-8 md:gap-10 items-start">
+              <div className="flex flex-col md:grid md:grid-cols-[auto_1fr] gap-8 md:gap-10 items-center md:items-start">
                 {(projet.video || projet.img) && (
-                  <div>
+                  <div className="mx-auto md:mx-0">
                     {projet.video ? (
                       <video src={projet.video} autoPlay muted loop playsInline preload="auto" className="rounded-xl border border-border/60 max-h-[520px] w-auto" />
                     ) : (
@@ -443,7 +490,10 @@ export default async function ProjetPage({ params }: Props) {
                 <h3 className="text-xl font-bold text-foreground mb-3">{set.title}</h3>
                 <p className="text-base text-foreground/85 leading-relaxed max-w-2xl">{set.description}</p>
               </div>
-              <ProjetImageSlider images={set.images} alt={`${projet.titre} — ${set.title}`} wide={!!projet.wideMedia} />
+              {projet.customSlider === "bald-identity" && set.images.length === 0
+                ? <BaldIdentityShowcase />
+                : <ProjetImageSlider images={set.images} alt={`${projet.titre} — ${set.title}`} wide={!!projet.wideMedia} />
+              }
             </div>
           );
 
@@ -469,7 +519,10 @@ export default async function ProjetPage({ params }: Props) {
                   <h3 className="text-xl font-bold text-foreground mb-3">{set.title}</h3>
                   <p className="text-base text-foreground/85 leading-relaxed max-w-2xl">{set.description}</p>
                 </div>
-                <ProjetImageSlider images={set.images} alt={`${projet.titre} — ${set.title}`} wide={!!projet.wideMedia} />
+                {projet.customSlider === "bald-identity" && set.images.length === 0
+                  ? <BaldIdentityShowcase />
+                  : <ProjetImageSlider images={set.images} alt={`${projet.titre} — ${set.title}`} wide={!!projet.wideMedia} />
+                }
               </div>
             ))}
             {/* Challenges standard — uniquement si pas déjà interleaved via zigzag */}
@@ -536,6 +589,32 @@ export default async function ProjetPage({ params }: Props) {
 
         {/* ── SÉPARATEUR ── */}
         <div className="h-px bg-white/10" />
+
+        {/* ── CTA SERVICES ── */}
+        <div className="rounded-2xl border border-white/8 bg-white/3 px-7 py-8 flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-8">
+          <div className="flex-1 min-w-0">
+            <p className="text-[10px] uppercase tracking-[0.3em] font-semibold mb-2" style={{ color: "var(--accent)" }}>
+              Vous aimez ce type de site ?
+            </p>
+            <p className="text-base font-bold text-foreground leading-snug">
+              Je crée des sites sur mesure pour artistes, indépendants et petites entreprises.
+            </p>
+            <p className="text-sm text-foreground/50 mt-1.5 leading-relaxed">
+              Identité visuelle, e-commerce, interface d&apos;administration — chaque projet est pensé et codé de A à Z.
+            </p>
+          </div>
+          <Link
+            href="/services"
+            className="shrink-0 inline-flex items-center gap-2 px-5 py-3 rounded-xl font-semibold text-sm transition-all cursor-pointer"
+            style={{
+              background: "var(--accent)",
+              color: "var(--background)",
+            }}
+          >
+            Voir mes formules
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
 
         {/* PROJET SUIVANT */}
         <Link

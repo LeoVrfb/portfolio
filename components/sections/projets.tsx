@@ -26,12 +26,12 @@ export function ProjetsSection() {
         >
           <div>
             <p className="text-xs uppercase tracking-[0.4em] text-accent font-medium mb-3">
-              Projets sélectionnés
+              Réalisations
             </p>
             <h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-tighter leading-[0.95]">
-              Mes derniers
+              Projets
               <br />
-              <span className="text-accent">projets.</span>
+              <span className="text-accent">sélectionnés</span>
             </h2>
           </div>
           <Link

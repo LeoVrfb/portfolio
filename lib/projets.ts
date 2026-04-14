@@ -11,6 +11,7 @@ export type Projet = {
   descriptionTech?: string;
   intro: string;
   img: string;
+  heroImg?: string;
   images?: string[];
   sliderSets?: { title: string; description: string; images: string[] }[];
   video?: string;
@@ -29,6 +30,7 @@ export type Projet = {
   date: string;
   url?: string;
   enCours?: boolean;
+  customSlider?: string;
 };
 
 export const projets: Projet[] = [
@@ -392,10 +394,10 @@ export const projets: Projet[] = [
     client: "Artefact",
     contexte: "agence",
     description:
-      "Funnel interactif déployé chez Artefact pour apprendre à construire un prompt structuré et générer des images par IA — étape par étape.",
+      "Funnel interactif déployé chez Artefact pour apprendre à construire un prompt structuré et générer des images par IA, étape par étape.",
     descriptionPublic:
-      "Un __funnel guidé en 3 étapes__ : on sélectionne d'abord le type d'image (**illustration**, **photographie**, **pixel art**…), le sujet, l'action et le lieu. Puis les éléments de style — rendu, ambiance, optique, lumière. Enfin les paramètres techniques (ratio, weirdness, stylization). Chaque mot cliqué s'ajoute à la barre de prompt visible en bas. La __flèche pour avancer__ n'apparaît que lorsque tous les champs sont remplis. On peut revenir sur n'importe quel bloc du prompt en cliquant dessus — le funnel se repositionne exactement sur cette sous-étape. Au bout du funnel, __DALL-E génère 4 images__ en une seule requête. On peut copier le prompt ou télécharger les images.",
-    intro: `Développé en interne chez Artefact, Make a Scene est un outil de formation au **prompt engineering** appliqué à la génération d'images. Plutôt que de lire des guidelines, les participants construisent un prompt mot à mot à travers un funnel guidé — **3 étapes, 14 sous-étapes** — et voient le résultat en temps réel. Chaque option du funnel dispose d'une image de prévisualisation au survol, générée par **DALL-E 3** (87 images en tout). Les 4 résultats finaux sont générés par **DALL-E 2** en une seule requête. L'outil est disponible en anglais et en français.`,
+      "**Un outil pour apprendre à parler à une IA.**\nPlutôt que lire des guidelines, les participants construisent un prompt mot à mot : type d'image, sujet, action, lieu, style, lumière, ratio. Chaque choix s'ajoute en temps réel à la barre de prompt visible en bas de l'écran.\n\n**Un résultat visible à chaque étape.**\nAu survol de chaque option, une image d'exemple s'affiche pour aider à choisir. On avance seulement quand tous les champs sont remplis, ce qui force la précision du prompt.\n\n**Quatre images générées en quelques secondes.**\nUne fois le funnel terminé, l'outil génère quatre variantes visuelles à partir du prompt construit. Le prompt complet est affiché et copiable. On peut revenir sur n'importe quelle étape et recommencer.\n\n**Disponible en français et en anglais.**\nInterface bilingue, pensée pour des équipes internationales.",
+    intro: `Développé en interne chez **Artefact**, Make a Scene est un outil de formation au **prompt engineering** appliqué à la génération d'images. Plutôt que de lire des guidelines, les participants construisent un prompt mot à mot à travers un funnel guidé : **3 étapes, 14 sous-étapes**. Chaque option dispose d'une image de prévisualisation au survol. Au bout du funnel, 4 variantes sont générées en une seule requête. Disponible en anglais et en français.`,
     img: "/assets/makeAScene/make-a-scene-miniature.webp",
     logo: "/assets/makeAScene/artefact-logo.webp",
     video: "/assets/makeAScene/make-a-scene-demo.mp4",
@@ -418,7 +420,7 @@ export const projets: Projet[] = [
       },
       {
         title: "Du prompt à l'image",
-        description: "Une fois le prompt validé, DALL-E génère 4 variantes en parallèle. Une barre de progression s'affiche pendant la génération, puis les 4 images apparaissent côte à côte — avec le prompt complet en dessous, copiable en un clic.",
+        description: "Une fois le funnel terminé, 4 variantes sont générées. Une barre de progression s'affiche pendant la génération, puis les 4 images apparaissent côte à côte, avec le prompt complet en dessous, copiable en un clic.",
         images: [
           "/assets/makeAScene/make-a-scene-intro.webp",
           "/assets/makeAScene/make-a-scene-summary.webp",
@@ -427,59 +429,54 @@ export const projets: Projet[] = [
         ],
       },
     ],
-    tags: ["Next.js", "OpenAI API", "DALL-E 2 + 3", "Zustand", "Storybook", "next-intl", "Embla Carousel"],
+    tags: ["Next.js", "Génération d'images IA", "Zustand", "Storybook", "next-intl", "Embla Carousel"],
     technologies: [
       {
         nom: "Next.js App Router",
         detail:
-          "App structurée en 5 routes distinctes — intro, scene, style, parameters, gallery — chacune avec son layout dédié. La route /gallery affiche les images générées stockées en mémoire (Zustand), sans backend.",
+          "App structurée en routes distinctes, chacune avec son layout dédié. Les images générées sont stockées en mémoire côté client et affichées sans passer par un backend.",
       },
       {
-        nom: "OpenAI API — DALL-E 2 + DALL-E 3",
+        nom: "API de génération d'images",
         detail:
-          "Double usage : DALL-E 2 pour les 4 images finales (une seule requête POST avec n: 4, ~$0.016/image, résultat en quelques secondes). DALL-E 3 pour les 87 images d'options au survol — générées une fois en script offline, qualité supérieure (~$0.04/image).",
+          "Une seule requête suffit à générer les 4 variantes finales côté serveur. Pas de Promise.all, pas de polling : la Server Action attend la réponse complète et la retourne au client d'un bloc. Les images de prévisualisation du funnel sont générées une fois en script offline et servies en statique, sans aucun appel API au runtime.",
       },
       {
-        nom: "Zustand — useGameStore",
+        nom: "Zustand",
         detail:
-          "Un store unique gère tout l'état du funnel : currentStep, stepsData (valeurs sélectionnées par sous-étape), shouldNavigateToResult (flag de navigation vers la galerie), generatedImages (4 URLs DALL-E). Aucun prop drilling sur les 3 étapes × 14 sous-étapes.",
+          "Un store unique gère tout l'état du funnel : étape courante, valeurs sélectionnées à chaque sous-étape, flag de navigation vers la galerie, URLs des images générées. Aucun prop drilling sur les 3 étapes × 14 sous-étapes.",
       },
       {
-        nom: "Storybook — 21 composants",
+        nom: "Storybook",
         detail:
-          "Tous les composants du design system sont développés et validés isolément. Les plus complexes : OptionGroup, PromptBuilder, SliderCard, ImageModal, ImageGallery, ConnectionModal, Carousel.",
+          "Tous les composants du design system sont développés et validés en isolation avant d'être intégrés. Cela garantit la cohérence visuelle et facilite les retours du client sur chaque brique de l'interface.",
       },
       {
         nom: "next-intl",
         detail:
-          "Interface en anglais et en français — sélecteur de langue en haut à droite. Toutes les questions, options et labels du funnel sont externalisés en fichiers de traduction.",
+          "Interface disponible en anglais et en français. Toutes les questions, options et labels du funnel sont externalisés en fichiers de traduction, avec sélecteur de langue visible.",
       },
       {
         nom: "Embla Carousel + Radix UI Slider",
         detail:
-          "Embla Carousel (avec plugin autoplay) pour les carousels d'options et la galerie. Radix UI Slider pour les 3 paramètres avancés — Variety, Weirdness, Stylization — avec rendu accessible natif.",
+          "Embla pour les carousels d'options et la galerie de résultats. Radix UI Slider pour les 3 paramètres avancés de l'étape finale, avec rendu accessible natif.",
       },
     ],
     challenges: [
       {
         titre: "Funnel 3 étapes × 14 sous-étapes avec navigation arrière",
         solution:
-          "Scene (cyan) : 4 sous-étapes — typeOfArtwork, aSubject, doingAnAction, aLocation. Style (violet) : 5 sous-étapes — render, lookAndFeel, style, lensStyle, lighting. Parameters (rose néon) : 5 sous-étapes — imageRatio, others, puis 3 sliders. Chaque bloc du PromptBuilder est un PromptSlotButton cliquable : au clic, goToStep(stepIndex, buttonIndex) dans le store repositionne directement sur la sous-étape correspondante, sans perdre les choix déjà faits.",
+          "Le funnel est découpé en 3 grandes étapes thématiques, elles-mêmes divisées en 14 sous-étapes. Chaque bloc du prompt assemblé est cliquable : l'utilisateur peut revenir directement sur n'importe quelle sous-étape sans perdre ses choix. Tout l'état du funnel est centralisé dans un store Zustand, ce qui évite le prop drilling et rend la navigation arrière triviale à implémenter.",
       },
       {
         titre: "Génération des 4 images en une seule requête",
         solution:
-          "Une seule requête POST à l'API OpenAI avec n: 4. OpenAI génère les 4 variantes côté serveur et renvoie 4 URLs dans la même réponse. Pas de Promise.all, pas de polling, pas de SSE — la Server Action attend simplement la réponse complète et la retourne au client.",
+          "Plutôt que d'enchaîner plusieurs appels, une seule requête avec le paramètre n: 4 génère les 4 variantes côté serveur en une fois. Pas de Promise.all, pas de polling : la Server Action attend la réponse complète et la retourne au client. Résultat : code simple, délai minimal, pas de gestion d'état intermédiaire.",
       },
       {
-        titre: "87 images d'options générées par DALL-E 3",
+        titre: "Images de prévisualisation au survol sans appel API",
         solution:
-          "Chaque mot-clé du funnel dispose d'une image de prévisualisation au survol. Ces 87 images ont été générées une seule fois en script offline avec DALL-E 3 (qualité supérieure, ~$0.04/image) et sont servies en statique — aucun appel API au runtime.",
-      },
-      {
-        titre: "Auth légère par mot de passe de session",
-        solution:
-          "Pas d'OAuth ni de JWT. Un ConnectionModal en entrée d'app demande un mot de passe de session — protection suffisante pour un outil interne. Un composant LogoutButton (documenté en Storybook) permet de réinitialiser la session.",
+          "Chaque option du funnel dispose d'une image d'exemple visible au survol. Plutôt que de générer ces images à la volée, elles ont été produites une seule fois en script offline et sont servies en statique. Aucun appel API au runtime, aucune latence côté utilisateur.",
       },
     ],
     date: "2026-01",
@@ -488,14 +485,31 @@ export const projets: Projet[] = [
     slug: "bald-artiste",
     titre: "Site e-commerce artiste peintre",
     client: "Bald",
+    logo: "/assets/bald/bald-logo-splash.webp",
     contexte: "freelance",
     description:
-      "Site e-commerce pour Grégoire (Bald), peintre figuratif — galerie filtrable, fiches œuvres, achat en ligne via Stripe.",
+      "Site e-commerce pour Bald, artiste peintre abstrait — galerie filtrable par collection, taille et prix, fiches œuvres avec slider, achat en ligne via Stripe, internationalisation FR/EN.",
     descriptionPublic:
-      "**Le site, c'est le musée.** Les toiles de Grégoire sont présentées en grand format, avec filtres par collection et dimensions. Chaque œuvre a sa fiche détaillée : photos sous plusieurs angles, dimensions, prix, état de disponibilité.\n\n**Acheter en deux clics.** Le tunnel d'achat est intégré directement — Stripe gère le paiement, Convex met à jour la disponibilité de l'œuvre en temps réel pour éviter les doublons de commande.\n\n**Un site pensé pour grandir.** Les collections sont gérées depuis Convex : Grégoire peut ajouter ou retirer des œuvres sans toucher au code.",
-    intro: `Site e-commerce développé en freelance pour Grégoire, peintre figuratif qui vend ses toiles sous le nom **Bald**. L'enjeu : créer une vitrine qui laisse toute la place aux œuvres, tout en permettant à un acheteur de passer commande directement depuis le site — avec une gestion des stocks en temps réel pour éviter de vendre deux fois la même toile.`,
-    img: "",
-    tags: ["Next.js", "Convex", "Stripe", "GSAP", "Lenis", "TypeScript"],
+      "**Une identité visuelle sur mesure.**\nChaque élément graphique a été conçu pour Bald : le logo découpé en deux typographies (BA en encre, LD en feuille d'or), un badge circulaire animé, des coups de pinceau qui s'animent au défilement de la page. Ce genre d'effets visuels ne s'improvise pas avec un template.\n\n**Une galerie pensée pour naviguer facilement.**\nLes visiteurs filtrent les toiles par collection, par dimensions et par prix. L'accès à ce qu'ils cherchent est immédiat, sans rechargement de page.\n\n**Acheter une toile en quelques clics.**\nLe paiement est intégré directement dans le site. Quand une toile est vendue, elle disparaît instantanément. Bald peut ajouter ou retirer des œuvres depuis son espace d'administration, sans toucher au code.\n\n**Le site en français et en anglais.**\nChaque page, chaque fiche et chaque mention légale est disponible dans les deux langues. Un visiteur anglophone arrive automatiquement sur la bonne version.",
+    intro: `Site e-commerce développé en **freelance** pour **Bald**, artiste peintre abstrait. Identité visuelle noir et or construite __from scratch__ : intro animée, badge circulaire rotatif, coups de pinceau au scroll, typographie Bebas Neue. Galerie avec filtres multi-critères, tunnel ~~Stripe~~ complet, backend ~~Convex~~ pour la synchronisation du stock en temps réel, internationalisation FR/EN native. Le genre de site qu'on ne fait pas avec un template.`,
+    img: "/assets/bald/bald-miniature.webp",
+    heroImg: "/assets/bald/bald-hero-accueil.webp",
+    url: "https://bald-art.com",
+    wideMedia: true,
+    customSlider: "bald-identity",
+    sliderSets: [
+      {
+        title: "L'identité visuelle",
+        description: "Chaque élément graphique — le logo, le badge circulaire rotatif, les coups de pinceau au scroll — a été conçu sur mesure et intégré. Noir et or, typographie Bebas Neue, animations GSAP : tout l'univers de BALD est construit from scratch.",
+        images: [],
+      },
+      {
+        title: "La galerie filtrée",
+        description: "La galerie permet de filtrer les œuvres par collection, par dimensions et de les trier par prix croissant ou décroissant. Avec plusieurs dizaines de toiles, le filtrage est instantané côté client — sans rechargement, sans appel réseau.",
+        images: ["/assets/bald/bald-galerie-filtres.webp"],
+      },
+    ],
+    tags: ["Next.js", "Convex", "Stripe", "GSAP", "Lenis", "next-intl", "TypeScript"],
     technologies: [
       {
         nom: "Convex",
@@ -513,6 +527,11 @@ export const projets: Projet[] = [
           "Le site valorise des œuvres d'art : le scroll devait être fluide et les animations soignées. Lenis assure un défilement doux, GSAP gère les animations au scroll et les transitions entre pages.",
       },
       {
+        nom: "next-intl",
+        detail:
+          "Le site est disponible en français et en anglais. Le routing i18n est géré par next-intl avec des fichiers de traduction séparés — chaque page, chaque label, chaque message d'erreur est externalisé.",
+      },
+      {
         nom: "Next.js",
         detail:
           "Les pages de galerie et de fiches œuvres sont générées statiquement pour des performances maximales et un bon référencement. Les mutations (achat, stock) passent par des Server Actions.",
@@ -528,6 +547,16 @@ export const projets: Projet[] = [
         titre: "Galerie filtrable avec tri multi-critères",
         solution:
           "Les œuvres peuvent être filtrées par collection, par dimensions et triées par prix. Avec plusieurs dizaines de toiles, le filtrage devait rester instantané côté client. La logique de filtrage est encapsulée dans un useMemo pour éviter les recalculs à chaque render.",
+      },
+      {
+        titre: "Internationalisation FR/EN complète",
+        solution:
+          "Tout le contenu du site — galerie, fiches œuvres, pages légales, formulaire de contact — est disponible en français et en anglais via next-intl. Le choix de la langue est persisté, et chaque page a son URL localisée pour le SEO.",
+      },
+      {
+        titre: "Pages légales e-commerce",
+        solution:
+          "Une boutique en ligne implique des obligations légales : CGV, politique de confidentialité, politique de retour. Ces pages ont été rédigées et intégrées, avec les spécificités du commerce d'art international (livraison internationale, règles douanières, délai de rétractation).",
       },
     ],
     date: "2026-02",

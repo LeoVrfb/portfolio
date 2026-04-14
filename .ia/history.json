@@ -1,0 +1,25 @@
+{
+  "session": "2026-03-19",
+  "completed": [
+    "Ajout portrait professionnel dans l'animation intro HeroNeonAnim (masque CSS, scale mobile/desktop)",
+    "Intro overlay — synchronisation avec animations Hero via intro-signal.ts",
+    "Protection /demo via proxy.ts (redirect → /)",
+    "Projet BALD : intégration complète — miniature, sliders identité, wideMedia, logo badge circulaire",
+    "BaldIdentityShowcase — composant live (logo gold leaf, badge rotatif, paint splash) — slider 3 slides",
+    "Bebas Neue chargé via next/font/google",
+    "Nav : +Accueil, -Disponible, -Me contacter",
+    "Homepage : labels Réalisations / Projets sélectionnés (sans point)",
+    "Projets page : sans point",
+    "Badges contexte : freelance=lavender, agence=accent, perso=gold",
+    "Mobile vidéos portrait : centrage mx-auto",
+    "Services section : boutons alignés (flex-col + mt-auto)",
+    "Services page : refonte complète — prix psychologiques, e-commerce option, options compactes"
+  ],
+  "projets_dans_portfolio": [
+    "bnp-paribas-elearning",
+    "argedis-totalenergies",
+    "sweetime-adp-extime",
+    "make-a-scene",
+    "bald-artiste"
+  ]
+}

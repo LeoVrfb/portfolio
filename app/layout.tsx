@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, DM_Mono } from "next/font/google";
+import { Space_Grotesk, DM_Mono, Bebas_Neue } from "next/font/google";
 import { Toaster } from "sonner";
 import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
@@ -16,6 +16,12 @@ const dmMono = DM_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
   weight: ["300", "400", "500"],
+});
+
+const bebasNeue = Bebas_Neue({
+  variable: "--font-bebas",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -39,7 +45,7 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${spaceGrotesk.variable} ${dmMono.variable} dark`}
+      className={`${spaceGrotesk.variable} ${dmMono.variable} ${bebasNeue.variable} dark`}
     >
       <body className="min-h-screen flex flex-col bg-background text-foreground">
         <IntroOverlay />
