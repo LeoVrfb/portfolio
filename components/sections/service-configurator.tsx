@@ -131,7 +131,7 @@ function IncludedItem({
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="p-0.5 -mt-0.5 rounded text-white/30 hover:text-accent transition-colors cursor-pointer shrink-0"
+            className="p-0.5 -mt-0.5 rounded text-white/70 hover:text-accent transition-colors cursor-pointer shrink-0"
             aria-expanded={open}
             aria-label={open ? `Masquer le détail de ${titre}` : `Voir le détail de ${titre}`}
           >
@@ -146,7 +146,7 @@ function IncludedItem({
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2, ease }}
-            className="text-xs text-white/55 mt-1 ml-6 leading-relaxed overflow-hidden"
+            className="text-xs text-white/85 mt-1 ml-6 leading-relaxed overflow-hidden"
           >
             {detail}
           </motion.p>
@@ -174,7 +174,7 @@ function SubOptionPanel({
       <div className="flex flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5 mb-1.5">
         <p className="text-[11px] font-semibold uppercase tracking-[0.15em] sm:tracking-[0.18em] text-white/65">{sub.label}</p>
         {sub.helper && (
-          <p className="text-[10px] text-white/40 italic">{sub.helper}</p>
+          <p className="text-[10px] text-white/65 italic">{sub.helper}</p>
         )}
       </div>
 
@@ -449,12 +449,12 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
 
       {/* Scroll hint + note estimation */}
       <FadeUp delay={0.35}>
-        <div className="flex flex-col items-center gap-1.5 pt-10 pb-3 text-white/55">
+        <div className="flex flex-col items-center gap-1.5 pt-10 pb-3 text-white/85">
           <span className="text-[10px] tracking-[0.3em] uppercase font-semibold">Estimez votre projet</span>
           <ChevronDown size={14} className="animate-bounce" />
         </div>
-        <p className="text-[11px] italic text-white/40 text-center max-w-md mx-auto pb-7">
-          Estimation gratuite, aucun paiement à cette étape — vous recevez votre devis détaillé par email.
+        <p className="text-[12px] italic text-white/75 text-center max-w-md mx-auto pb-7">
+          Estimation gratuite, aucun paiement à cette étape. Vous recevez votre devis détaillé par email.
         </p>
       </FadeUp>
 
@@ -491,7 +491,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                 <h2 className="text-[10px] font-bold uppercase tracking-[0.2em] sm:tracking-[0.35em] text-white mb-1">
                   Options supplémentaires
                 </h2>
-                <p className="text-[11px] text-white/40 mb-4">
+                <p className="text-[11px] text-white/65 mb-4">
                   Cochez pour personnaliser votre devis.
                 </p>
                 <StaggerList>
@@ -545,7 +545,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                                   <button
                                     type="button"
                                     onClick={(e) => openInfoDialog(addon.id, e)}
-                                    className="p-0.5 rounded text-white/30 hover:text-accent transition-colors cursor-pointer"
+                                    className="p-0.5 rounded text-white/70 hover:text-accent transition-colors cursor-pointer"
                                     title="En savoir plus"
                                     aria-label={`Plus d'infos sur ${addon.label}`}
                                   >
@@ -553,7 +553,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                                   </button>
                                 )}
                                 <span className={`text-xs font-bold transition-colors ${
-                                  selected ? "text-accent" : "text-white/50"
+                                  selected ? "text-accent" : "text-white"
                                 }`}>
                                   {priceLabel}
                                 </span>
@@ -624,7 +624,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                   <Icon className="w-4 h-4 text-accent" />
                 </div>
                 <p className="text-xs font-semibold text-white">{label}</p>
-                <p className="text-[10px] text-white/40 mt-0.5">{detail}</p>
+                <p className="text-[10px] text-white/70 mt-0.5">{detail}</p>
               </div>
             ))}
           </div>
@@ -681,7 +681,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                   {hasDevis ? `${total} €+` : `${total} €`}
                 </span>
               </div>
-              <p className="text-[10px] text-white/40 mt-1">
+              <p className="text-[11px] text-white/70 mt-1">
                 Hors taxes · Paiement en 2× (acompte + livraison)
               </p>
             </div>
@@ -716,7 +716,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
               <ArrowRight className="w-4 h-4" />
             </button>
 
-            <p className="text-[10px] text-white/40 text-center">
+            <p className="text-[11px] text-white/75 text-center">
               Réponse sous 24h · Estimation gratuite, aucun paiement à cette étape
             </p>
           </div>

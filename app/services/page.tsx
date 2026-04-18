@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { Check, X, ArrowRight, Clock, ShoppingCart, ChevronDown } from "lucide-react";
+import { Check, X, ArrowRight, Clock, ChevronDown } from "lucide-react";
 import { BlurFade } from "@/components/animations/blur-fade";
 
 export const metadata: Metadata = {
@@ -13,86 +13,87 @@ const formules = [
   {
     nom: "Essentiel",
     prix: "590 €",
-    accroche: "Une présence pro sans abonnement à vie",
+    accroche: "Un site simple et propre, fait par un pro, en quelques jours.",
     delai: "5 jours ouvrés",
-    description: "Site vitrine professionnel sur une seule page avec plusieurs sections. Une présence en ligne performante et durable, au-delà de ce qu'un outil no-code peut vraiment offrir.",
-    pourquoi: "Code à vous, hébergement Vercel inclus, sans abonnement à vie. Le coût d'un an de Wix, payé une fois.",
     inclus: [
-      "Une page, plusieurs sections (accueil, services, à propos, contact)",
-      "Design moderne, simple et responsive (mobile, tablette, desktop)",
-      "Formulaire de contact (envoi par email via Resend)",
-      "SEO de base (sitemap, robots, balises, alt text)",
+      "Une page, plusieurs sections",
+      "Design moderne, simple et responsive",
+      "Formulaire de contact",
+      "SEO de base",
       "Galerie 10 images optimisées",
-      "Déploiement Vercel + configuration DNS du domaine",
-      "2h de retouches incluses post-livraison",
+      "Mise en ligne et configuration du domaine",
+      "2h de retouches incluses",
     ],
     non_inclus: [
+      "Pages séparées",
+      "Design 100% personnalisé",
       "Rédaction des textes",
-      "E-commerce",
+      "Google Analytics",
+      "Formation à la gestion du site",
     ],
-    ecommerce: false,
     highlighted: false,
     slug: "essentiel",
     colorClass: "text-accent",
     borderClass: "border-accent/25 bg-accent/[0.03]",
     hoverBorder: "hover:border-accent/50",
-    badgeClass: "",
+    ctaClass: "bg-accent/12 border-accent/30 text-accent group-hover:bg-accent/22",
     priceColor: undefined as string | undefined,
   },
   {
     nom: "Standard",
     prix: "990 €",
-    accroche: "Un site qui travaille pour vous",
+    accroche: "Un vrai site complet, à votre image, pensé pour convaincre vos visiteurs.",
     delai: "10 jours ouvrés",
-    description: "Site complet avec pages séparées, design personnalisé, contenu rédigé, SEO local et Analytics. Conçu pour générer des prospects via Google.",
-    pourquoi: "Le SEO local + GA4 + Google Maps font venir des prospects qualifiés. Pendant que vous bossez, votre site vous trouve des clients.",
     inclus: [
-      "Tout ce qui est dans Essentiel",
-      "5 à 7 pages séparées (Accueil, À propos, Services, Contact + métier)",
-      "Design personnalisé (palette, typo, ambiance)",
-      "Rédaction des textes (à partir d'un brief en visio 1h)",
-      "SEO complet (Schema.org Local Business, OpenGraph)",
-      "Google Analytics 4 (compte client + dashboard)",
+      "Les fondamentaux de l'Essentiel",
+      "5 à 7 pages séparées",
+      "Design personnalisé",
+      "Rédaction des textes",
+      "SEO+",
+      "Google Analytics",
       "Formulaire de devis personnalisé",
       "Formation 30 min en visio",
-      "5h de retouches incluses post-livraison",
+      "5h de retouches incluses",
     ],
-    non_inclus: [] as string[],
-    ecommerce: true,
+    non_inclus: [
+      "Design 100% sur mesure",
+      "Pack animations",
+      "Pack performance",
+      "CMS Headless Sanity",
+      "Multilingue FR + EN",
+      "SEO Pro",
+    ],
     highlighted: true,
     slug: "standard",
     colorClass: "text-[var(--lavender)]",
     borderClass: "border-[var(--lavender)]/30 bg-[var(--lavender)]/[0.03]",
     hoverBorder: "hover:border-[var(--lavender)]/55",
-    badgeClass: "bg-[var(--lavender)] text-black",
+    ctaClass: "bg-[var(--lavender)]/14 border-[var(--lavender)]/35 text-[var(--lavender)] group-hover:bg-[var(--lavender)]/26",
     priceColor: "var(--lavender)",
   },
   {
     nom: "Premium",
     prix: "1 890 €",
-    accroche: "Un site qui vous distingue",
+    accroche: "Un site sur mesure, design 100% unique, autonomie totale sur vos contenus.",
     delai: "3 semaines",
-    description: "Site sur mesure niveau agence. Design 100% custom, animations premium, CMS inclus, performance Lighthouse 95+, multilingue FR+EN.",
-    pourquoi: "Vous gérez votre contenu en autonomie via Sanity, vos visiteurs voient un site qui n'existe nulle part ailleurs.",
     inclus: [
-      "Tout ce qui est dans Standard",
+      "Les fondamentaux du Standard",
       "Jusqu'à 10 pages",
-      "Design 100% sur mesure (3 directions visuelles)",
-      "Animations premium incluses (GSAP, transitions)",
-      "SEO avancé (Schema.org étendu, Search Console)",
-      "Performance optimisée (Lighthouse 95+ garanti)",
-      "CMS Headless Sanity inclus (50 entrées)",
-      "Multilingue FR + EN inclus (textes courts)",
+      "Design 100% sur mesure",
+      "Pack animations inclus",
+      "SEO Pro",
+      "Pack performance inclus",
+      "CMS Headless Sanity inclus",
+      "Multilingue FR + EN inclus",
       "10h de retouches + 1 mois de support post-livraison",
     ],
     non_inclus: [] as string[],
-    ecommerce: true,
     highlighted: false,
     slug: "premium",
     colorClass: "text-[var(--gold)]",
     borderClass: "border-[var(--gold)]/25 bg-[var(--gold)]/[0.03]",
     hoverBorder: "hover:border-[var(--gold)]/50",
-    badgeClass: "",
+    ctaClass: "bg-[var(--gold)]/12 border-[var(--gold)]/30 text-[var(--gold)] group-hover:bg-[var(--gold)]/22",
     priceColor: "var(--gold)",
   },
 ];
@@ -115,8 +116,8 @@ export default function ServicesPage() {
           </h1>
         </BlurFade>
         <BlurFade delay={0.14}>
-          <p className="text-sm text-foreground/50 max-w-xl leading-relaxed">
-            Next.js professionnel — pas WordPress. Chaque formule inclut le déploiement Vercel et la configuration du domaine.
+          <p className="text-sm text-white/65 max-w-xl leading-relaxed">
+            Sites faits main, pas générés par un outil no-code. Chaque formule inclut la mise en ligne et la configuration du domaine.
           </p>
         </BlurFade>
       </div>
@@ -132,7 +133,7 @@ export default function ServicesPage() {
               {formule.highlighted && (
                 <div className="absolute -top-3 left-5">
                   <span className="text-[10px] font-bold px-3 py-1 bg-[var(--lavender)] text-black rounded-full tracking-wide">
-                    Le plus demandé
+                    La formule la plus choisie
                   </span>
                 </div>
               )}
@@ -143,60 +144,41 @@ export default function ServicesPage() {
                   <p className={`text-[10px] font-bold uppercase tracking-[0.4em] ${formule.colorClass}`}>
                     {formule.nom}
                   </p>
-                  <div className="flex items-center gap-1 text-[10px] text-foreground/40">
+                  <div className="flex items-center gap-1 text-[10px] text-white/55">
                     <Clock size={9} />
                     {formule.delai}
                   </div>
                 </div>
                 <div
-                  className="text-3xl font-black tracking-tight leading-none mb-1"
+                  className="text-3xl font-black tracking-tight leading-none mb-2"
                   style={formule.priceColor ? { color: formule.priceColor } : undefined}
                 >
                   {formule.prix}
                 </div>
-                <p className={`text-xs italic ${formule.colorClass} opacity-80`}>
+                <p className={`text-xs italic ${formule.colorClass} opacity-90`}>
                   « {formule.accroche} »
                 </p>
-                {formule.ecommerce && (
-                  <div className="mt-2 inline-flex items-center gap-1 text-[10px] text-[var(--gold)]/80 bg-[var(--gold)]/8 border border-[var(--gold)]/15 px-2 py-0.5 rounded-full">
-                    <ShoppingCart size={9} />
-                    Option e-commerce disponible
-                  </div>
-                )}
               </div>
 
               {/* Features */}
               <div className="p-5 pt-4 flex-1 flex flex-col">
-                <p className="text-xs text-white/60 mb-3 leading-relaxed">
-                  {formule.description}
-                </p>
-
                 <div className="space-y-1.5 mb-4 flex-1">
                   {formule.inclus.map((item) => (
-                    <div key={item} className="flex items-start gap-2 text-xs text-white">
+                    <div key={item} className="flex items-start gap-2 text-xs">
                       <Check size={11} className={`mt-0.5 shrink-0 ${formule.colorClass}`} />
                       <span className="text-white/90">{item}</span>
                     </div>
                   ))}
                   {formule.non_inclus.map((item) => (
                     <div key={item} className="flex items-start gap-2 text-xs">
-                      <X size={11} className="mt-0.5 shrink-0 text-white/25" />
-                      <span className="text-white/40">{item}</span>
+                      <X size={11} className="mt-0.5 shrink-0 text-rose-400/65" />
+                      <span className="text-white/60">{item}</span>
                     </div>
                   ))}
                 </div>
 
-                {/* Pourquoi ce prix */}
-                <div className="text-[10px] text-white/40 border-t border-white/6 pt-3 mb-4 leading-relaxed italic">
-                  {formule.pourquoi}
-                </div>
-
                 <div
-                  className={`block text-center py-2.5 rounded-xl text-xs font-bold transition-all border ${
-                    formule.highlighted
-                      ? "bg-[var(--lavender)]/12 border-[var(--lavender)]/25 text-[var(--lavender)] group-hover:bg-[var(--lavender)]/22"
-                      : "bg-white/4 border-white/7 text-foreground/60 group-hover:bg-white/7 group-hover:text-foreground"
-                  }`}
+                  className={`block text-center py-2.5 rounded-xl text-xs font-bold transition-all border ${formule.ctaClass}`}
                 >
                   Configurer cette formule →
                 </div>
@@ -207,7 +189,7 @@ export default function ServicesPage() {
       </div>
 
       {/* Scroll hint + séparateur */}
-      <div className="flex flex-col items-center gap-2 py-8 text-white/30">
+      <div className="flex flex-col items-center gap-2 py-8 text-white/65">
         <span className="text-[10px] tracking-[0.3em] uppercase">Questions fréquentes</span>
         <ChevronDown size={16} className="animate-bounce" />
       </div>
@@ -218,12 +200,20 @@ export default function ServicesPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {[
             {
-              q: "Pourquoi Next.js et pas WordPress ?",
-              r: "Next.js produit des sites plus rapides, mieux référencés, entièrement sécurisés. Pas d'extensions à maintenir, pas de failles. Même technologie que TotalEnergies ou les Aéroports de Paris.",
+              q: "Pourquoi pas un outil no-code (Wix, Squarespace, Webflow) ?",
+              r: "Les outils no-code sont pratiques pour démarrer, mais ils plafonnent vite : design contraint par les templates, performance limitée, SEO bridé, et code propriétaire que vous ne possédez pas. Je code des sites faits main, performants, et dont vous êtes propriétaire à 100%.",
             },
             {
               q: "Combien de temps pour avoir mon site ?",
               r: "5 jours ouvrés pour l'Essentiel, 10 jours pour le Standard, 3 semaines pour le Premium. Le délai démarre dès réception de vos éléments (textes, photos, logo).",
+            },
+            {
+              q: "Et si je veux une option qui n'est pas dans ma formule ?",
+              r: "Chaque formule a un périmètre clair. Si vous voulez une option qui n'y figure pas (par exemple un design 100% sur mesure ou un CMS en Essentiel), il faut passer à la formule supérieure. Je ne fais pas de mélange à la carte hors des options listées : ça garde les délais courts et les prix clairs.",
+            },
+            {
+              q: "Comment se passe la collaboration concrètement ?",
+              r: "Visio brief de 30 à 60 min pour cadrer le projet, vous m'envoyez vos éléments (textes, photos, logo), je livre une première version sous le délai annoncé, on itère via les heures de retouches incluses, puis on met en ligne. Vous suivez l'avancement via une URL de preview tout du long.",
             },
             {
               q: "Et si je veux modifier mon site après livraison ?",
@@ -231,12 +221,12 @@ export default function ServicesPage() {
             },
             {
               q: "Je n'ai pas de nom de domaine. Que faire ?",
-              r: "Je vous accompagne pour acheter votre domaine en votre nom. Cela vous appartient, vous gardez le contrôle. Le coût (~10-15€/an) reste à votre charge.",
+              r: "Je vous accompagne pour acheter votre domaine en votre nom. Cela vous appartient, vous gardez le contrôle. Le coût (~10 à 15€/an) reste à votre charge.",
             },
           ].map(({ q, r }) => (
-            <div key={q} className="p-5 rounded-2xl border border-white/7 bg-white/2">
-              <h3 className="font-semibold text-sm text-foreground/85 mb-2">{q}</h3>
-              <p className="text-xs text-foreground/50 leading-relaxed">{r}</p>
+            <div key={q} className="p-5 rounded-2xl border border-white/10 bg-white/[0.025]">
+              <h3 className="font-semibold text-sm text-accent mb-2">{q}</h3>
+              <p className="text-xs text-white/85 leading-relaxed">{r}</p>
             </div>
           ))}
         </div>
@@ -244,7 +234,7 @@ export default function ServicesPage() {
 
       {/* CTA */}
       <div className="text-center">
-        <p className="text-foreground/40 mb-4 text-sm">
+        <p className="text-white/75 mb-4 text-sm">
           Pas sûr de quelle formule choisir ?
         </p>
         <Link
