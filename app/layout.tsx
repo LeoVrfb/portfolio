@@ -25,15 +25,49 @@ const bebasNeue = Bebas_Neue({
 });
 
 export const metadata: Metadata = {
-  title: "Léo Hengebaert — Développeur Front-End",
+  metadataBase: new URL("https://leohengebaert.fr"),
+  title: {
+    default: "Léo Hengebaert — Développeur Front-End",
+    template: "%s — Léo Hengebaert",
+  },
   description:
     "Développeur front-end chez Artefact, spécialisé React & Next.js. Je crée aussi des sites web sur mesure pour entreprises et particuliers.",
+  applicationName: "Léo Hengebaert",
+  authors: [{ name: "Léo Hengebaert", url: "https://leohengebaert.fr" }],
+  creator: "Léo Hengebaert",
+  keywords: [
+    "développeur front-end",
+    "freelance",
+    "Next.js",
+    "React",
+    "création de site web",
+    "site vitrine",
+    "site sur mesure",
+  ],
   openGraph: {
     title: "Léo Hengebaert — Développeur Front-End",
     description:
-      "Développeur front-end chez Artefact. Sites web sur mesure pour entreprises et particuliers.",
+      "Développeur front-end chez Artefact. Sites web sur mesure pour entreprises et particuliers, au-delà de ce qu'un outil no-code peut offrir.",
+    url: "https://leohengebaert.fr",
+    siteName: "Léo Hengebaert",
     locale: "fr_FR",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Léo Hengebaert — Développeur Front-End",
+    description:
+      "Développeur front-end chez Artefact. Sites web sur mesure pour entreprises et particuliers.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
