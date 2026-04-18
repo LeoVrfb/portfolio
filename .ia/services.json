@@ -1,44 +1,98 @@
 {
+  "source_de_verite": "documentation/produit/ (formules.md, options.md, cms-sanity.md, maintenance.md, paiement.md, pitch.md). Côté code : lib/services.ts.",
+  "version": "avril 2026",
   "services": {
     "essentiel": {
-      "prix": "599 €",
-      "delai": "1 semaine",
-      "cible": "Artisan/PME, vitrine simple",
-      "inclus": ["4 pages", "Design adapté identité", "Formulaire contact email", "Responsive mobile", "Vercel + domaine", "Google Business Profile"],
-      "e_commerce": false
+      "prix": "590 €",
+      "delai": "5 jours ouvrés",
+      "accroche": "Une présence pro sans abonnement à vie",
+      "cible": "Artisan, freelance, micro-entreprise, lancement de produit, événement",
+      "inclus": [
+        "Une page, plusieurs sections (accueil, services, à propos, contact)",
+        "Design moderne, simple et responsive (short-list de 3 directions visuelles, mobile + tablette + desktop)",
+        "Formulaire de contact (envoi par email via Resend)",
+        "SEO de base (sitemap, robots.txt, balises, alt text)",
+        "Galerie 10 images optimisées",
+        "Déploiement Vercel + configuration DNS du domaine",
+        "2h de retouches incluses post-livraison"
+      ],
+      "ecommerce": "option dynamique : sans panier 190€ ou avec panier 280€ (+90€), 10 produits inclus, paliers 20/30/50 (+30€/+60€/+120€), 50+ sur devis"
     },
     "standard": {
-      "prix": "1 199 €",
-      "delai": "2 semaines",
-      "cible": "PME qui veut un vrai outil de communication",
-      "inclus": ["Tout Essentiel", "Jusqu'à 7 pages", "Rédaction textes incluse", "SEO on-page", "Google Analytics 4", "1 round de modifications"],
-      "e_commerce": "option +400€"
+      "prix": "990 €",
+      "delai": "10 jours ouvrés",
+      "accroche": "Un site qui travaille pour vous",
+      "cible": "Commerçant local, PME, cabinet (avocat, comptable, médecin), refonte de site vieillissant",
+      "inclus": [
+        "Tout ce qui est dans Essentiel",
+        "5 à 7 pages séparées (Accueil, À propos, Services, Contact + 1 à 3 pages métier)",
+        "Design personnalisé (palette, typo, ambiance choisies en visio brief)",
+        "Rédaction des textes (à partir d'un brief client en visio 1h)",
+        "SEO complet (Schema.org Local Business, OpenGraph, H1/H2/H3)",
+        "Google Analytics 4 (compte client + dashboard configuré)",
+        "Formulaire de devis personnalisé",
+        "Formation 30 min en visio",
+        "5h de retouches incluses post-livraison"
+      ],
+      "ecommerce": "option dynamique : sans panier 190€ ou avec panier 280€ (+90€), 10 produits inclus, paliers 20/30/50 (+30€/+60€/+120€), 50+ sur devis",
+      "highlighted": true
     },
     "premium": {
-      "nom_affiche": "Sur mesure",
-      "prix": "2 199 €+",
-      "delai": "3-4 semaines",
-      "cible": "Projet ambitieux avec interface admin, e-commerce, identité forte",
-      "inclus": ["Tout Standard", "Maquette Figma validée", "Interface admin sur mesure", "Galerie dynamique filtrée", "SEO avancé Schema.org"],
-      "e_commerce": "option +400€"
+      "nom_affiche": "Premium",
+      "prix": "1 890 €",
+      "delai": "3 semaines",
+      "accroche": "Un site qui vous distingue",
+      "cible": "Marque établie, entreprise, projet ambitieux (galerie d'art, restaurant gastronomique, cabinet d'architecte)",
+      "inclus": [
+        "Tout ce qui est dans Standard",
+        "Jusqu'à 10 pages",
+        "Design 100% sur mesure (3 directions visuelles proposées en maquette)",
+        "Animations premium incluses (GSAP, transitions, micro-interactions)",
+        "SEO avancé (Schema.org étendu, Search Console, audit contenu)",
+        "Performance optimisée (Lighthouse 95+ garanti)",
+        "CMS Headless Sanity inclus (jusqu'à 50 entrées modifiables)",
+        "Formation 30 min CMS incluse (visio enregistrée)",
+        "Multilingue FR + EN inclus (textes courts)",
+        "10h de retouches incluses",
+        "1 mois de support post-livraison"
+      ],
+      "ecommerce": "option dynamique : sans panier 190€ ou avec panier 280€ (+90€), 10 produits inclus, paliers 20/30/50 (+30€/+60€/+120€), 50+ sur devis"
     }
   },
   "options": {
-    "ecommerce_stripe": { "prix": "+400 €", "dispo_depuis": "standard", "detail": "Stripe Checkout, gestion stock, pages légales e-commerce" },
-    "interface_admin": { "prix": "+300 €", "detail": "Interface back-office sur mesure — gestion textes, photos, produits sans code" },
-    "i18n": { "prix": "+250 €", "detail": "Internationalisation FR/EN — next-intl, routing localisé, SEO bilingue" },
-    "redaction": { "prix": "+200 €", "detail": "Rédaction de tous les textes à partir du brief client" },
-    "logo": { "prix": "+200 €", "detail": "Création du logo et de la charte graphique" },
-    "seo_avance": { "prix": "+200 €", "detail": "Schema.org, Core Web Vitals, indexation avancée" },
-    "photos": { "prix": "+150 €/lot", "detail": "Retouche + conversion WebP — livraison optimisée pour le web" },
-    "page_supp": { "prix": "+150 €", "detail": "Chaque page supplémentaire au-delà du forfait" },
-    "google_business": { "prix": "+80 €", "detail": "Création ou optimisation de la fiche Google Business Profile" },
-    "maintenance": { "prix": "+50 €/mois", "detail": "Mises à jour, corrections, sauvegardes, monitoring" }
+    "ecommerce": { "prix": "190 € → 310 € (dynamique, au-delà sur devis)", "detail": "Option avec 2 sous-options obligatoires dans le configurateur : Type (sans panier 190€ / avec panier +90€) + Volume produits (10 inclus, 20 +30€, 30 +60€, 50 +120€, 50+ sur devis). Paliers volontairement larges pour rester lisibles dans l'UI mobile. Inclus dans tous les cas : Stripe Checkout, emails client+vendeur, pages légales (CGV/retour/RGPD), Search Console. Avec panier ajoute : panier client, filtres galerie, pagination. Au-delà de 50 produits : audit du flux + rythme de mise en ligne avant chiffrage (vraie maintenance catalogue)." },
+    "cms_sanity": { "prix": "150 € → 300 € (dynamique)", "detail": "1 sous-option obligatoire dans le configurateur : Volume entrées (jusqu'à 20 = 150€, 21-50 = 200€, 51-100 = 300€, 100+ sur devis). Inclus en Premium jusqu'à 50 entrées (au-delà : sur devis). Sanity gratuit jusqu'à 10 000 documents côté client." },
+    "seo_avance": { "prix": "+150€ Essentiel / +100€ Standard / inclus Premium", "detail": "Schema.org étendu, OG par page, Search Console, audit contenu, plan de redirection." },
+    "performance": { "prix": "+120€ Essentiel / +100€ Standard / inclus Premium", "detail": "Audit Lighthouse 95+ sur les 4 métriques, WebP + lazy loading, optimisation fonts, code splitting, Core Web Vitals." },
+    "multilingue_court": { "prix": "+150 €", "detail": "FR + EN textes courts via next-intl, toggle langue, URLs localisées, SEO traduit. Inclus en Premium." },
+    "multilingue_long": { "prix": "sur devis", "detail": "Articles de blog longs, descriptions produit détaillées (~30€/tranche de 1000 mots). Langues asiatiques/RTL aussi sur devis." },
+    "redaction": { "prix": "+100 €", "detail": "Tous les textes du site rédigés à partir d'un brief en visio 1h. Inclus en Standard et Premium." },
+    "analytics_ga4": { "prix": "+50 €", "detail": "Compte au nom du client + dashboard configuré. Inclus en Standard et Premium." },
+    "gmb_creation": { "prix": "+80 €", "detail": "Création/optimisation de la fiche Google Business Profile (Google Maps)." },
+    "gmb_suivi_3mois": { "prix": "+150 €", "detail": "Mise à jour photos, réponses aux avis, posts mensuels pendant 3 mois." },
+    "reservation": { "prix": "+80 €", "detail": "Intégration TheFork, Zenchef, Planity, Calendly." },
+    "migration": { "prix": "+200 €", "detail": "Récupération du contenu de l'ancien site + redirections 301 pour préserver le ranking." },
+    "pack_photos": { "prix": "+50 €", "detail": "Intégration de 10 photos fournies par le client (sélection, recadrage, WebP). Pas du shooting. Inclus en Premium." },
+    "animations_premium": { "prix": "+250 € (Standard uniquement)", "detail": "GSAP, transitions, micro-interactions, effets 3D légers. Non dispo en Essentiel. Inclus en Premium." },
+    "page_supplementaire": { "prix": "+60 €", "detail": "Page additionnelle au-delà de la formule. Galerie >20 items : sur devis." },
+    "formation_30min": { "prix": "+50 €", "detail": "Visio enregistrée pour gérer son site. Inclus en Standard et avec tout CMS." },
+    "retouches_au_dela": { "prix": "60 €/h", "detail": "Devis avant chaque intervention. Aucune intervention non validée." },
+    "maintenance_mensuelle": { "prix": "+50 €/mois", "detail": "1h de modifs incluse, mises à jour techniques, monitoring uptime, backup mensuel, réponse sous 48h. Sans engagement." },
+    "maintenance_ecommerce_bonus": { "prix": "+30 €/mois", "detail": "Vérif paiements Stripe hebdo, alertes webhooks, gestion litiges, mises à jour produits, surveillance Resend. À ajouter à la maintenance mensuelle." }
+  },
+  "paiement": {
+    "modalites": "50% à la signature + 50% à la livraison",
+    "methode": "Virement bancaire (recommandé), Stripe possible avec frais 1.5% + 0.25€",
+    "delai_solde": "7 jours après livraison",
+    "devis_validite": "30 jours"
   },
   "notes": {
-    "positionnement": "Pas de WordPress — du Next.js professionnel, même technologie que TotalEnergies/BNP/ADP. Hébergement Vercel inclus.",
-    "taux_journalier_estime": "250-400 €/jour selon complexité",
+    "positionnement": "Pas de WordPress — du Next.js professionnel, même technologie que TotalEnergies/BNP/ADP. Hébergement Vercel inclus. Code transmissible au client.",
+    "client_type": "Artisans, restaurants, coaches, artistes, PME locales, entrepreneurs",
     "reference_bald": "Bald-art.com : ~20 jours de travail (Next.js + Convex + Stripe + i18n + animations + identité visuelle). Valeur marché : 3000-6000€. Vendu 600€ → sous-pricé.",
-    "client_type": "Artisans, restaurants, coaches, artistes, PME locales, entrepreneurs"
+    "red_flags": "Jamais : révisions illimitées, acompte < 50%, hébergement chez moi, rédaction illimitée, modifs gratuites post-livraison, engagement verbal, délais déraisonnables, travail sans CGV.",
+    "projet_urgent": "Délai réduit de 50% = majoration 30%.",
+    "configurateur_dynamique": "Les options ecommerce et cms_sanity ont des sous-options obligatoires (type/volume) dans le configurateur. Tant que toutes les sous-options required ne sont pas renseignées, l'option est marquée en rouge et le bouton 'Démarrer ce projet' est désactivé. Le prix se calcule en direct selon les choix. Le détail long de chaque option s'affiche dans une modale dédiée (icône info à côté du prix), pas inline.",
+    "modale_info_addon": "Le bouton info (icône Info) à droite de chaque addon ouvre une modale Base UI Dialog avec : titre = label de l'addon, description courte, prix, et détail découpé en paragraphes structurés. Remplace l'ancien panneau dépliable inline qui était illisible."
   }
 }

@@ -82,9 +82,13 @@
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
     max-width: 72rem; /* 1152px — md/lg */
+  }
+
+  @media (min-width: 640px) {
+    .layout-container { padding-left: 1.5rem; padding-right: 1.5rem; }
   }
 
   @media (min-width: 1280px) {

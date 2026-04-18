@@ -4,9 +4,8 @@ import { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { toast } from "sonner";
-import { Send, Check, ArrowLeft, X } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
-import { services } from "@/lib/services";
+import { Send, Check, ArrowLeft, AlertCircle } from "lucide-react";
+import { services, type Addon } from "@/lib/services";
 
 type FormData = {
   nom: string;
@@ -16,15 +15,76 @@ type FormData = {
   message: string;
 };
 
+type SubChoices = Record<string, Record<string, string>>;
+
 const formulesOptions = [
   { value: "", label: "Quelle formule vous intéresse ?" },
-  { value: "Essentiel", label: "Essentiel — 599 €" },
-  { value: "Standard", label: "Standard — 1 199 €" },
-  { value: "Premium", label: "Premium — 2 199 €+" },
+  ...services.map((s) => ({ value: s.nom, label: `${s.nom} — ${s.prixBase} €` })),
   { value: "autre", label: "Je ne sais pas encore" },
 ];
 
-const ease = [0.16, 1, 0.3, 1] as const;
+function parseSubChoicesFromUrl(raw: string): SubChoices {
+  const result: SubChoices = {};
+  if (!raw) return result;
+  raw.split(",").filter(Boolean).forEach((entry) => {
+    const [key, value] = entry.split(":");
+    const [addonId, subId] = key?.split(".") ?? [];
+    if (addonId && subId && value) {
+      if (!result[addonId]) result[addonId] = {};
+      result[addonId][subId] = value;
+    }
+  });
+  return result;
+}
+
+function serializeSubChoices(choices: SubChoices, selectedAddonIds: string[]): string {
+  const entries: string[] = [];
+  for (const addonId of selectedAddonIds) {
+    const subs = choices[addonId];
+    if (!subs) continue;
+    for (const [subId, choiceId] of Object.entries(subs)) {
+      entries.push(`${addonId}.${subId}:${choiceId}`);
+    }
+  }
+  return entries.join(",");
+}
+
+function computeAddonPricing(addon: Addon, choices: Record<string, string> | undefined): { prix: number; isDevis: boolean } {
+  if (addon.prix === null) return { prix: 0, isDevis: true };
+  let total = addon.prix;
+  let isDevis = false;
+  if (addon.subOptions) {
+    for (const sub of addon.subOptions) {
+      const choiceId = choices?.[sub.id];
+      if (!choiceId) continue;
+      const choice = sub.choices.find((c) => c.id === choiceId);
+      if (!choice) continue;
+      if (choice.prixDelta === null) {
+        isDevis = true;
+      } else {
+        total += choice.prixDelta;
+      }
+    }
+  }
+  return { prix: total, isDevis };
+}
+
+function isAddonIncomplete(addon: Addon, choices: Record<string, string> | undefined): boolean {
+  if (!addon.subOptions) return false;
+  return addon.subOptions.some((sub) => sub.required && !choices?.[sub.id]);
+}
+
+function getAddonChoicesSummary(addon: Addon, choices: Record<string, string> | undefined): string {
+  if (!addon.subOptions || !choices) return "";
+  const parts: string[] = [];
+  for (const sub of addon.subOptions) {
+    const choiceId = choices[sub.id];
+    if (!choiceId) continue;
+    const choice = sub.choices.find((c) => c.id === choiceId);
+    if (choice) parts.push(choice.label);
+  }
+  return parts.join(" · ");
+}
 
 export function ContactForm() {
   const searchParams = useSearchParams();
@@ -32,15 +92,16 @@ export function ContactForm() {
   const slugPrefill = searchParams.get("slug") ?? "";
   const totalPrefill = searchParams.get("total") ?? "";
   const addonIdsPrefill = searchParams.get("addonIds") ?? "";
+  const subOptionsPrefill = searchParams.get("subOptions") ?? "";
   const fromConfigurator = !!formulePrefill && !!slugPrefill;
 
-  // Trouve le service correspondant pour avoir les données des addons
   const service = useMemo(() => services.find((s) => s.slug === slugPrefill), [slugPrefill]);
 
-  // Addons sélectionnés — initialisés depuis l'URL, modifiables ici
   const [selectedAddonIds, setSelectedAddonIds] = useState<Set<string>>(
     new Set(addonIdsPrefill.split(",").filter(Boolean))
   );
+  // Sub-choices conservés même si l'addon est décoché (UX : recocher restaure)
+  const [subChoices, setSubChoices] = useState<SubChoices>(() => parseSubChoicesFromUrl(subOptionsPrefill));
 
   const toggleAddon = (id: string) => {
     setSelectedAddonIds((prev) => {
@@ -51,36 +112,46 @@ export function ContactForm() {
     });
   };
 
-  // Calcul dynamique du total
-  const total = useMemo(() => {
-    if (!service) return null;
-    const addonsTotal = Array.from(selectedAddonIds).reduce((acc, id) => {
-      const addon = service.addons.find((a) => a.id === id);
-      return acc + (addon?.prix ?? 0);
-    }, 0);
-    return service.prixBase + addonsTotal;
-  }, [service, selectedAddonIds]);
-
-  const hasDevisAddon = useMemo(() =>
-    Array.from(selectedAddonIds).some(
-      (id) => service?.addons.find((a) => a.id === id)?.prix === null
-    ),
-    [service, selectedAddonIds]
-  );
-
   const selectedAddonObjects = useMemo(() => {
     if (!service) return [];
     return Array.from(selectedAddonIds)
       .map((id) => service.addons.find((a) => a.id === id))
-      .filter((a): a is NonNullable<typeof a> => !!a);
+      .filter((a): a is Addon => !!a);
   }, [service, selectedAddonIds]);
 
-  // URL de retour avec l'état courant préservé
+  // Calcul dynamique du total avec sub-options
+  const { total, hasDevis } = useMemo(() => {
+    if (!service) return { total: null as number | null, hasDevis: false };
+    let t = service.prixBase;
+    let devis = false;
+    for (const addon of selectedAddonObjects) {
+      const { prix, isDevis } = computeAddonPricing(addon, subChoices[addon.id]);
+      t += prix;
+      if (isDevis) devis = true;
+    }
+    return { total: t, hasDevis: devis };
+  }, [service, selectedAddonObjects, subChoices]);
+
+  const incompleteAddonIds = useMemo(
+    () =>
+      new Set(
+        selectedAddonObjects
+          .filter((addon) => isAddonIncomplete(addon, subChoices[addon.id]))
+          .map((a) => a.id)
+      ),
+    [selectedAddonObjects, subChoices]
+  );
+
   const backUrl = useMemo(() => {
     if (!slugPrefill) return "/services";
-    const ids = Array.from(selectedAddonIds).join(",");
-    return ids ? `/services/${slugPrefill}?addonIds=${ids}` : `/services/${slugPrefill}`;
-  }, [slugPrefill, selectedAddonIds]);
+    const ids = Array.from(selectedAddonIds);
+    const params = new URLSearchParams();
+    if (ids.length > 0) params.set("addonIds", ids.join(","));
+    const subStr = serializeSubChoices(subChoices, ids);
+    if (subStr) params.set("subOptions", subStr);
+    const qs = params.toString();
+    return qs ? `/services/${slugPrefill}?${qs}` : `/services/${slugPrefill}`;
+  }, [slugPrefill, selectedAddonIds, subChoices]);
 
   const [data, setData] = useState<FormData>({
     nom: "",
@@ -97,18 +168,26 @@ export function ContactForm() {
   }, [searchParams]);
 
   const isValid = data.nom && data.email && data.message;
+  const hasIncompleteAddon = incompleteAddonIds.size > 0;
+  const canSubmit = isValid && !isPending && !hasIncompleteAddon;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isValid) return;
+    if (!isValid || hasIncompleteAddon) return;
 
-    const totalEstime = hasDevisAddon
+    const totalEstime = hasDevis
       ? `${total ?? ""}€+`
       : total
         ? `${total} €`
         : totalPrefill
           ? `${totalPrefill} €`
           : undefined;
+
+    // Liste lisible des addons avec leurs sous-choix
+    const addonsLabels = selectedAddonObjects.map((a) => {
+      const summary = getAddonChoicesSummary(a, subChoices[a.id]);
+      return summary ? `${a.label} (${summary})` : a.label;
+    });
 
     setIsPending(true);
     try {
@@ -117,7 +196,7 @@ export function ContactForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...data,
-          addons: selectedAddonObjects.map((a) => a.label),
+          addons: addonsLabels,
           totalEstime,
         }),
       });
@@ -158,7 +237,7 @@ export function ContactForm() {
             </div>
             <div className="text-right">
               <p className="text-2xl font-black text-accent">
-                {hasDevisAddon ? `${total} €+` : `${total} €`}
+                {hasDevis ? `${total} €+` : `${total} €`}
               </p>
               <p className="text-[10px] text-white/40">Devis estimé</p>
             </div>
@@ -173,15 +252,27 @@ export function ContactForm() {
               <div className="space-y-1">
                 {service.addons.map((addon) => {
                   const selected = selectedAddonIds.has(addon.id);
+                  const incomplete = selected && incompleteAddonIds.has(addon.id);
+                  const summary = selected ? getAddonChoicesSummary(addon, subChoices[addon.id]) : "";
+                  const { prix, isDevis } = computeAddonPricing(addon, subChoices[addon.id]);
+                  const priceLabel = addon.prix === null
+                    ? "Devis"
+                    : incomplete
+                      ? "—"
+                      : isDevis
+                        ? `${prix} €+`
+                        : `+${prix} €`;
                   return (
                     <button
                       key={addon.id}
                       type="button"
                       onClick={() => toggleAddon(addon.id)}
                       className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg border text-left cursor-pointer transition-all ${
-                        selected
-                          ? "border-accent/30 bg-accent/6"
-                          : "border-white/6 hover:border-white/14"
+                        incomplete
+                          ? "border-red-400/50 bg-red-400/5"
+                          : selected
+                            ? "border-accent/30 bg-accent/6"
+                            : "border-white/6 hover:border-white/14"
                       }`}
                     >
                       <div
@@ -191,11 +282,24 @@ export function ContactForm() {
                       >
                         {selected && <Check className="w-2.5 h-2.5 text-background" />}
                       </div>
-                      <span className={`text-xs flex-1 transition-colors ${selected ? "text-white" : "text-white/45"}`}>
-                        {addon.label}
-                      </span>
-                      <span className={`text-xs font-bold shrink-0 transition-colors ${selected ? "text-accent" : "text-white/30"}`}>
-                        {addon.prix !== null ? `+${addon.prix} €` : "Devis"}
+                      <div className="flex-1 min-w-0">
+                        <span className={`text-xs block transition-colors ${selected ? "text-white" : "text-white/45"}`}>
+                          {addon.label}
+                        </span>
+                        {summary && !incomplete && (
+                          <span className="text-[10px] text-white/55 block mt-0.5">{summary}</span>
+                        )}
+                        {incomplete && (
+                          <span className="text-[10px] text-red-400 mt-0.5 flex items-center gap-1">
+                            <AlertCircle className="w-2.5 h-2.5" />
+                            À configurer — retour sur la formule
+                          </span>
+                        )}
+                      </div>
+                      <span className={`text-xs font-bold shrink-0 transition-colors ${
+                        incomplete ? "text-red-400" : selected ? "text-accent" : "text-white/30"
+                      }`}>
+                        {priceLabel}
                       </span>
                     </button>
                   );
@@ -284,9 +388,22 @@ export function ContactForm() {
         />
       </div>
 
+      {hasIncompleteAddon && fromConfigurator && service && (
+        <div className="flex items-start gap-2 px-3 py-2.5 rounded-lg bg-red-400/10 border border-red-400/30 text-xs text-red-300">
+          <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+          <span>
+            Une option a besoin d'être configurée.{" "}
+            <Link href={backUrl} className="underline font-semibold hover:text-red-200">
+              Retour à la formule {service.nom}
+            </Link>{" "}
+            pour terminer la sélection.
+          </span>
+        </div>
+      )}
+
       <button
         type="submit"
-        disabled={!isValid || isPending}
+        disabled={!canSubmit}
         className="w-full flex items-center justify-center gap-2 py-4 px-6 bg-accent text-black text-sm font-bold rounded-xl hover:bg-accent/90 disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
       >
         {isPending ? "Envoi en cours…" : "Envoyer le message"}

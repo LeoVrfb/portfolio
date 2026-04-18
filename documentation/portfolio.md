@@ -83,5 +83,5 @@ Tout est dans `lib/projets.ts`. Type `Projet` :
 
 ## Services
 
-Page `/services` → 3 formules (Essentiel 599€ / Standard 1199€ / Sur mesure 2199€+) + options à la carte.
+Page `/services` → 3 formules (Essentiel 590€ / Standard 990€ / Premium 1890€) + options à la carte. Source de vérité : `documentation/produit/` + `lib/services.ts`.
 Section homepage `ServicesSection` → 2 colonnes (Sites sur mesure / Collaboration) avec boutons alignés via `flex flex-col h-full` + `mt-auto`.
