@@ -4,9 +4,24 @@ import { useState, useRef } from "react"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import { motion, useInView, AnimatePresence } from "motion/react"
-import { Check, ArrowLeft, ArrowRight, Clock, ChevronDown, Info, MessageCircle, Star, Shield, Zap, AlertCircle, Plus, Minus } from "lucide-react"
-import type { Addon, AddonSubOption, ServiceDetail } from "@/lib/services"
-import { AddonInfoDialog } from "@/components/sections/addon-info-dialog"
+import { Check, ArrowLeft, ArrowRight, Clock, ChevronDown, Info, MessageCircle, Star, Shield, Zap, AlertCircle, Plus, Minus, XCircle } from "lucide-react"
+import type { Addon, AddonSubOption, ServiceDetail, ServiceInclus } from "@/lib/services"
+import { AddonInfoDialog, InfoDialog } from "@/components/sections/addon-info-dialog"
+
+// Parse minimaliste **mot** → <strong className="text-accent">. Utilisé dans le pitch.
+function renderRichText(text: string, accentClassName = "text-accent font-bold"): React.ReactNode {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g)
+  return parts.map((part, i) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return (
+        <strong key={i} className={accentClassName}>
+          {part.slice(2, -2)}
+        </strong>
+      )
+    }
+    return <span key={i}>{part}</span>
+  })
+}
 
 const WHY_TRUST = [
   { icon: MessageCircle, label: "Réponse sous 24h", detail: "Je réponds à chaque demande" },
@@ -107,15 +122,14 @@ function StaggerItem({ children, index, className }: { children: React.ReactNode
 }
 
 function IncludedItem({
-  titre,
-  detail,
+  item,
   color,
+  onOpenInfo,
 }: {
-  titre: string
-  detail?: string
+  item: ServiceInclus
   color?: string
+  onOpenInfo: () => void
 }) {
-  const [open, setOpen] = useState(false)
   const accentColor = color ?? "var(--accent)"
   return (
     <li className="py-2 border-b border-white/5 last:border-0">
@@ -125,33 +139,20 @@ function IncludedItem({
           className="text-sm font-semibold leading-snug flex-1 min-w-0"
           style={{ color: accentColor }}
         >
-          {titre}
+          {item.titre}
         </p>
-        {detail && (
+        {item.detail && (
           <button
             type="button"
-            onClick={() => setOpen((v) => !v)}
+            onClick={onOpenInfo}
             className="p-0.5 -mt-0.5 rounded text-white/70 hover:text-accent transition-colors cursor-pointer shrink-0"
-            aria-expanded={open}
-            aria-label={open ? `Masquer le détail de ${titre}` : `Voir le détail de ${titre}`}
+            aria-label={`Voir le détail de ${item.titre}`}
+            title="En savoir plus"
           >
             <Info className="w-3.5 h-3.5" />
           </button>
         )}
       </div>
-      <AnimatePresence>
-        {open && detail && (
-          <motion.p
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2, ease }}
-            className="text-xs text-white/85 mt-1 ml-6 leading-relaxed overflow-hidden"
-          >
-            {detail}
-          </motion.p>
-        )}
-      </AnimatePresence>
     </li>
   )
 }
@@ -278,6 +279,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
   )
   const [submitAttempted, setSubmitAttempted] = useState(false)
   const [infoDialogAddonId, setInfoDialogAddonId] = useState<string | null>(null)
+  const [infoDialogInclusTitre, setInfoDialogInclusTitre] = useState<string | null>(null)
   const [showAllAddons, setShowAllAddons] = useState(false)
 
   const toggleAddon = (id: string) => {
@@ -312,6 +314,10 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
 
   const infoDialogAddon = infoDialogAddonId
     ? service.addons.find((a) => a.id === infoDialogAddonId) ?? null
+    : null
+
+  const infoDialogInclus = infoDialogInclusTitre
+    ? service.inclus.find((item) => item.titre === infoDialogInclusTitre) ?? null
     : null
 
   const selectedAddonObjects = Array.from(selectedAddons)
@@ -405,14 +411,8 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
           </h1>
         </FadeUp>
 
-        <FadeUp delay={0.14}>
-          <p className="text-base text-white/80 leading-relaxed mb-4">
-            {service.description}
-          </p>
-        </FadeUp>
-
         {/* Délai badge */}
-        <FadeUp delay={0.18}>
+        <FadeUp delay={0.14}>
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/4 text-sm text-white/85">
             <Clock className="w-3.5 h-3.5 text-accent" />
             <span>Délai estimé : <strong className="text-white">{service.delai}</strong></span>
@@ -420,30 +420,78 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
         </FadeUp>
       </div>
 
-      {/* Pitch + pourquoi (mini-pitch centré) */}
-      <FadeUp delay={0.23}>
-        <div className="max-w-2xl mx-auto p-6 sm:p-7 rounded-2xl border border-white/12 bg-white/3">
-          <p className="text-base sm:text-lg text-white leading-relaxed italic mb-5 text-center">
-            « {service.accroche} »
+      {/* ── PITCH IMPACTANT ── */}
+      <FadeUp delay={0.18}>
+        <div className="max-w-2xl mx-auto space-y-5">
+          {/* Audiences (chips) */}
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-white/65 mb-2.5">
+              Vous êtes…
+            </p>
+            <div className="flex flex-wrap gap-1.5">
+              {service.audiences.map((aud) => (
+                <span
+                  key={aud}
+                  className="px-2.5 py-1 rounded-full border border-white/15 bg-white/4 text-xs font-semibold text-white"
+                >
+                  {aud}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Promesse */}
+          <p className="text-2xl sm:text-3xl font-black tracking-tight leading-[1.15] text-white">
+            {renderRichText(service.promesse, "text-accent font-black")}
+            <span style={{ color: service.color }}>
+              {" "}Cette formule est faite pour vous.
+            </span>
           </p>
-          <div className="h-px bg-white/8 mb-5" />
-          <p
-            className="text-[10px] font-bold uppercase tracking-[0.3em] mb-4 text-center"
-            style={{ color: service.color }}
-          >
-            Cette formule est faite pour vous si…
-          </p>
-          <ul className="space-y-2.5">
-            {service.pourquoi.map((item, i) => (
-              <li key={i} className="flex items-start gap-2.5 text-sm text-white/85">
-                <ArrowRight
-                  className="w-3.5 h-3.5 shrink-0 mt-1"
-                  style={{ color: service.color }}
-                />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
+
+          {/* Bénéfices clés */}
+          <div className="rounded-2xl border border-white/12 bg-white/3 p-5 sm:p-6">
+            <ul className="space-y-3">
+              {service.benefices.map((b, i) => (
+                <li key={i} className="flex items-start gap-3 text-sm sm:text-base text-white leading-relaxed">
+                  <Check className="w-4 h-4 shrink-0 mt-1" style={{ color: service.color }} />
+                  <span className="flex-1">{renderRichText(b.text, "font-bold text-white")}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Anti-alternative (no-code, WordPress, agence cher) */}
+          {service.antiAlternative && (
+            <div className="rounded-xl border border-rose-400/25 bg-rose-400/5 p-4 sm:p-5 flex items-start gap-3">
+              <XCircle className="w-5 h-5 shrink-0 mt-0.5 text-rose-400" />
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-bold text-rose-300 mb-1">
+                  {service.antiAlternative.titre}
+                </p>
+                <p className="text-sm text-white/85 leading-relaxed">
+                  {renderRichText(service.antiAlternative.description, "font-bold text-white")}
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Cette formule est faite pour vous si... */}
+          <div className="rounded-2xl border border-white/10 bg-white/2 p-5 sm:p-6">
+            <p
+              className="text-[10px] font-bold uppercase tracking-[0.3em] mb-3"
+              style={{ color: service.color }}
+            >
+              Cochez si ça vous parle
+            </p>
+            <ul className="space-y-2">
+              {service.pourquoi.map((item, i) => (
+                <li key={i} className="flex items-start gap-2.5 text-sm text-white/85 leading-relaxed">
+                  <ArrowRight className="w-3.5 h-3.5 shrink-0 mt-1" style={{ color: service.color }} />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </FadeUp>
 
@@ -476,9 +524,9 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                     {service.inclus.map((item, i) => (
                       <StaggerItem key={i} index={i}>
                         <IncludedItem
-                          titre={item.titre}
-                          detail={item.detail}
+                          item={item}
                           color={service.color}
+                          onOpenInfo={() => setInfoDialogInclusTitre(item.titre)}
                         />
                       </StaggerItem>
                     ))}
@@ -728,6 +776,14 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
         addon={infoDialogAddon}
         open={infoDialogAddonId !== null}
         onOpenChange={(open) => !open && setInfoDialogAddonId(null)}
+      />
+
+      <InfoDialog
+        open={infoDialogInclusTitre !== null}
+        onOpenChange={(open) => !open && setInfoDialogInclusTitre(null)}
+        title={infoDialogInclus?.titre ?? ""}
+        priceLabel="Inclus dans la formule"
+        content={infoDialogInclus?.detail}
       />
     </div>
   )
