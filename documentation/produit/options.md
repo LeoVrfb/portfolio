@@ -10,22 +10,24 @@ Toutes les options activables sur une formule. Chaque option a un périmètre ex
 
 | Option | Essentiel | Standard | Premium |
 |---|---|---|---|
-| Page supplémentaire | +60€ | +60€ | +60€ |
+| Page supplémentaire | non dispo | +60€ | +60€ |
 | Rédaction des textes | +100€ | inclus | inclus |
-| Design custom (charte perso) | non dispo | inclus | inclus |
+| Design personnalisé (charte client) | non dispo | inclus | inclus |
 | Design 100% sur mesure | non dispo | non dispo | inclus |
-| **SEO avancé** | +150€ | +100€ | inclus |
-| **Performance (Lighthouse 95+)** | +120€ | +100€ | inclus |
+| SEO de base | inclus | inclus | inclus |
+| **SEO+** | +80€ | inclus | inclus |
+| **SEO Pro** | non dispo | +150€ | inclus |
+| **Pack performance** | +120€ | +100€ | inclus |
 | Google Analytics 4 | +50€ | inclus | inclus |
-| Google Business Profile (création) | +80€ | +80€ | +80€ |
-| Google Business Profile suivi 3 mois | +150€ | +150€ | +150€ |
-| Réservation (Calendly/Planity) | +80€ | +80€ | +80€ |
+| **Google Business Profile** | +80€ (création) | +80€ | +80€ |
+| └ avec suivi 3 mois | +230€ | +230€ | +230€ |
+| Réservation (Calendly/Planity/TheFork…) | +80€ | +80€ | +80€ |
 | **CMS Headless Sanity** | dynamique (150€ → 300€) | dynamique | inclus jusqu'à 50 entrées |
 | Multilingue FR+EN (textes courts) | +150€ | +150€ | inclus |
 | Multilingue (textes longs / articles) | sur devis | sur devis | sur devis |
-| Migration ancien site | +200€ | +200€ | +200€ |
-| Pack 10 photos (intégration) | +50€ | +50€ | inclus |
-| Animations premium (GSAP, 3D) | non dispo | +250€ | inclus |
+| **Refonte d'un site existant** | +200€ | +200€ | +200€ |
+| **Photos / images supplémentaires** | dynamique (30€ → 270€) | dynamique | dynamique |
+| **Pack animations** | non dispo | +250€ | inclus |
 | Formation 30 min | +50€ | inclus | inclus avec CMS |
 | **E-commerce** | dynamique (190€ → 310€) | dynamique | dynamique |
 | Retouches au-delà du forfait | 60€/h | 60€/h | 60€/h |
@@ -107,51 +109,61 @@ Tant que les deux ne sont pas sélectionnées, l'option est marquée en rouge av
 
 ---
 
-## SEO avancé
+## SEO — 3 niveaux
 
-Tout ce qui aide Google à mieux comprendre et indexer le site. Pas la performance technique (voir option « Performance »).
+Le SEO est gradué : SEO de base (inclus partout), SEO+ (cran intermédiaire), SEO Pro (top niveau). Ce n'est pas la performance pure (voir « Pack performance »).
 
-### Inclus
+### SEO de base — inclus dans toutes les formules
 
-- **Schema.org étendu** : LocalBusiness, Product, Article, BreadcrumbList, FAQ selon les pages
-- **OpenGraph + Twitter Cards** : optimisation des aperçus de partage par page
-- **Meta dynamiques par page** : titles et descriptions optimisées avec mots-clés
-- **Sitemap dynamique** : généré automatiquement, soumis à Google
-- **Robots.txt fin** : autorisations précises selon les pages
-- **Inscription Google Search Console** : verification du domaine + soumission sitemap
-- **Audit du contenu** : densité de mots-clés, structure h1/h2/h3, liens internes
-- **Plan de redirection** si le site remplace un ancien (avec option « Migration ancien site »)
+- Sitemap, robots.txt
+- Balises title et meta descriptions sur chaque page
+- Alt text basiques sur les images
 
-### Prix par formule
+### SEO+ — +80€ Essentiel · inclus Standard · inclus Premium
 
-| Essentiel | Standard | Premium |
-|---|---|---|
-| +150€ | +100€ | inclus |
+Le cran intermédiaire entre SEO de base et SEO Pro. Ce qui est inclus de base dans Standard.
 
-Le prix descend en Standard parce qu'une partie du SEO complet est déjà incluse de base (Schema.org Local Business, OG, structure H1/H2/H3).
+- Schema.org Local Business (apparition dans le pack local Google Maps)
+- OpenGraph et Twitter Cards (aperçu propre lors d'un partage sur les réseaux)
+- Descriptions meta optimisées par section
+- Structure h1/h2/h3 logique
+- Alt texts soignés et descriptifs sur toutes les images
 
-### Quand le proposer
+Note : si un client Essentiel veut le top niveau (SEO Pro), il vaut mieux passer en formule Standard ou Premium directement.
 
-- Tout client qui veut être trouvé sur Google (commerçant local, artisan, restaurant)
-- Tout site qui remplace un ancien (préserver le ranking)
-- Tout e-commerce (les fiches produit doivent être indexées correctement)
+### SEO Pro — +150€ Standard · inclus Premium · non dispo Essentiel
+
+Le top niveau, en complément du SEO+ déjà inclus en Standard. Ce qui est inclus de base dans Premium.
+
+- Schema.org étendu (Product, Article, BreadcrumbList, FAQ selon les pages)
+- OpenGraph optimisé page par page
+- Balises meta dynamiques
+- Sitemap dynamique
+- Robots.txt fin
+- Inscription Google Search Console + soumission de la sitemap
+- Audit complet du contenu (densité de mots-clés, structure, liens internes)
+- Plan de redirections 301 si le site remplace un ancien (avec option « Refonte d'un site existant »)
+
+### Quand proposer quoi
+
+- **SEO+** : tout client qui veut être trouvé sur Google sans être expert (commerçant local, artisan, restaurant)
+- **SEO Pro** : tout site qui doit ranker face à de la concurrence forte, tout e-commerce, tout site qui remplace un ancien
 
 ---
 
-## Performance (Lighthouse 95+)
+## Pack performance
 
-Tout ce qui rend le site rapide à charger. Distinct du SEO mais influence indirectement le ranking via Core Web Vitals.
+Optimisation des performances réelles côté visiteur (temps de chargement, fluidité, Core Web Vitals). Distinct du SEO : ici on ne touche pas à la structure de contenu ni aux balises, on travaille uniquement la vitesse et la fluidité d'exécution.
 
 ### Inclus
 
-- **Audit Lighthouse complet** + objectif 95+ sur les 4 métriques (Performance, Accessibilité, SEO, Best Practices)
-- **Toutes les images en WebP** avec lazy loading natif (`loading="lazy"`)
-- **Animations CSS prioritaires** sur GSAP/JS quand possible (moins lourd, mieux pour le CPU mobile)
-- **SVG transformés en composants React** (svgr) pour les icônes (pas de requêtes HTTP supplémentaires)
-- **Optimisation des fonts** : subset, preload, font-display swap, fallback
-- **Audit du bundle JS** + code splitting agressif (chargement à la demande)
-- **Optimisation Core Web Vitals** : LCP, INP, CLS surveillés et corrigés
-- **Compression des assets** (gzip/brotli activés via Vercel)
+- Toutes les images en WebP avec lazy loading natif (`loading="lazy"`)
+- Animations CSS prioritaires sur GSAP/JS quand possible (moins lourd, mieux pour le CPU mobile)
+- SVG transformés en composants React (svgr) pour les icônes (pas de requêtes HTTP supplémentaires)
+- Optimisation des fonts : subset, preload, font-display swap, fallback
+- Audit du bundle JS + code splitting agressif (chargement à la demande)
+- Optimisation des Core Web Vitals (LCP, INP, CLS) surveillés et corrigés
+- Compression des assets (gzip/brotli via Vercel)
 
 ### Prix par formule
 
@@ -162,12 +174,12 @@ Tout ce qui rend le site rapide à charger. Distinct du SEO mais influence indir
 ### Quand le proposer
 
 - Tout site avec beaucoup d'images (e-commerce, galerie, portfolio visuel)
-- Tout site qui doit ranker face à de la concurrence forte
+- Tout site qui doit rester fluide sur mobile (cible jeune, mobile-first)
 - Tout client qui se positionne sur la qualité / le luxe (la perf fait partie de l'expérience)
 
-### Combo SEO + Performance
+### Important : ce n'est pas du SEO
 
-Souvent demandés ensemble. En Essentiel, le combo coûte 270€. C'est un argument à utiliser : *« Pour 270€ supplémentaires, votre site est techniquement irréprochable, optimisé Google, et chargé en 1 seconde sur mobile. »*
+Si le client veut monter le score Lighthouse SEO ou Accessibilité, il faut prendre **SEO+** ou **SEO Pro**, pas le pack performance. Les deux peuvent se combiner pour un site irréprochable.
 
 ---
 
@@ -239,9 +251,11 @@ EN par défaut. Pour ES, IT, DE, etc. : même tarif que FR+EN par langue ajouté
 
 ## Détail des autres options
 
-### Page supplémentaire — +60€/page
+### Page supplémentaire — +60€/page (Standard et Premium uniquement)
 
 Page additionnelle au-delà de ce qui est inclus dans la formule. Conçue dans la même charte graphique, optimisée SEO.
+
+**Non disponible en Essentiel** : la formule Essentiel est volontairement limitée à une seule page (multi-sections). Si un client Essentiel a besoin de plusieurs pages, il vaut mieux passer en Standard.
 
 **Cas particulier** : page galerie/portfolio avec beaucoup de contenu (>20 items) → sur devis (peut atteindre 200-300€).
 
@@ -253,31 +267,44 @@ Rédaction de tous les textes du site à partir d'un brief client (visio 1h). In
 
 Création du compte au nom du client, configuration du tracking, dashboard de base. Inclus en Standard et Premium.
 
-### Google Business Profile (création) — +80€ (toutes formules)
+### Google Business Profile — +80€ (toutes formules)
 
 Création ou optimisation de la fiche Google Business Profile (Google Maps). Photos, horaires, description, catégories. Indispensable pour les commerces locaux.
 
-### Google Business Profile suivi 3 mois — +150€ (toutes formules)
+**Sous-option « Suivi 3 mois » (+150€)** : suivi mensuel pendant 3 mois après la création — mise à jour photos, réponses aux avis, ajout de posts. Une fiche bien gérée peut doubler la visibilité locale.
 
-Suivi mensuel pendant 3 mois : mise à jour photos, réponses aux avis, ajout de posts. Une fiche bien gérée peut doubler la visibilité locale.
+Quand le client coche « Google Business Profile » dans le configurateur, une sous-option apparaît (radio) : *Sans suivi (création seule)* ou *Avec suivi 3 mois (+150€)*. Le total bascule à 80€ ou 230€ selon le choix. Une sélection est obligatoire pour activer le bouton « Démarrer ce projet ».
 
 ### Réservation (Calendly/Planity/etc.) — +80€ (toutes formules)
 
 Intégration d'un bouton de réservation directement sur le site, connecté à l'outil existant du client (TheFork, Zenchef, Planity, Calendly).
 
-### Migration ancien site — +200€ (toutes formules)
+### Refonte d'un site existant — +200€ (toutes formules)
 
-Récupération du contenu de l'ancien site (textes, images, URLs, balises SEO) et réintégration dans le nouveau. Configuration des redirections 301 pour préserver le ranking Google.
+À cocher uniquement si la formule sert à refaire un site qui existe déjà. Inclus : récupération du contenu de l'ancien site (textes, images, balises SEO), intégration dans le nouveau site, mise en place des redirections 301 pour préserver le référencement Google et éviter les 404 sur les anciens liens.
 
-### Pack 10 photos (intégration) — +50€
+À ne pas confondre avec une **migration pure** (changement d'hébergeur sans refaire le site) : pour ce besoin, devis sur mesure.
 
-**Important** : ce n'est PAS du shooting photo (je ne suis pas photographe). C'est l'intégration de photos fournies par le client : sélection éditoriale, recadrage, compression WebP, intégration au bon endroit du site.
+### Photos / images supplémentaires — dynamique (toutes formules)
 
-Pour des photos shootées par un pro : le client passe par un photographe (recommandation possible). Pour des photos générées par IA : sur devis (50-150€ selon volume).
+Intégration de photos fournies par le client (ce n'est PAS du shooting photo) : sélection éditoriale, recadrage, compression WebP, intégration au bon endroit du site. Convient aussi aux images générées par IA fournies par le client.
 
-### Animations premium (GSAP, 3D) — +250€ (Standard uniquement)
+**10 photos incluses dans le prix de base**, puis paliers par tranche.
 
-Animations sur mesure : transitions entre pages, apparitions au scroll, micro-interactions sur boutons et cartes, effets 3D légers si pertinents.
+| Volume | Supplément | Total option |
+|---|---|---|
+| 10 photos | inclus | 0€ (déjà inclus dans la formule) |
+| 20 photos | +30€ | 30€ |
+| 30 photos | +60€ | 60€ |
+| 50 photos | +120€ | 120€ |
+| 100 photos | +270€ | 270€ |
+| 100+ | sur devis | sur devis |
+
+Pour des photos shootées par un pro : le client passe par un photographe (recommandation possible).
+
+### Pack animations — +250€ (Standard) · inclus (Premium) · non dispo (Essentiel)
+
+Animations sur mesure : transitions entre pages, apparitions au scroll, micro-interactions sur boutons et cartes. Le genre d'effets qu'on ne fait pas avec un template no-code.
 
 **Non disponible en Essentiel** : pour pousser à monter en formule. Un site Essentiel reste avec des animations CSS sobres incluses.
 
