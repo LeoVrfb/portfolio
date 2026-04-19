@@ -77,6 +77,7 @@ export type ServiceDetail = {
   // Description SEO (meta tag uniquement)
   description: string
   // Bloc pitch impactant (header configurateur)
+  tagline: string // micro-positionnement psychologique sous le H1 (ex: "Pour démarrer simplement")
   audiences: string[] // ex: ["Artisan", "Commerçant", "Freelance"]
   promesse: string // grosse phrase, syntaxe **mot** acceptée
   benefices: ServiceBenefice[]
@@ -621,6 +622,7 @@ export const services: ServiceDetail[] = [
     delai: "5 jours ouvrés",
     description:
       "Site vitrine professionnel sur une seule page avec plusieurs sections. Pour qui lance son activité ou son projet personnel et veut une présence en ligne sérieuse et durable.",
+    tagline: "Pour démarrer simplement.",
     audiences: [
       "Artisan",
       "Commerçant",
@@ -631,15 +633,15 @@ export const services: ServiceDetail[] = [
     ],
     promesse: "Une présence en ligne **sérieuse**, en **quelques jours**.",
     benefices: [
-      { text: "Code **sur mesure**, pas un template no-code" },
-      { text: "Référencement Google **dès la mise en ligne**" },
-      { text: "**Hébergement inclus**, sans abonnement à vie" },
-      { text: "**2h de retouches** offertes après la livraison" },
+      { text: "Une **présence crédible** dès la mise en ligne" },
+      { text: "**Trouvable sur Google** dès le premier jour" },
+      { text: "**Aucun abonnement** mensuel à payer" },
+      { text: "**2h de retouches** offertes pour ajuster les détails" },
     ],
     antiAlternative: {
       titre: "Pas de no-code",
       description:
-        "Le no-code, c'est rapide à monter. Un site **codé par un pro**, c'est durable, performant et **100% à vous**.",
+        "Le no-code, c'est rapide à monter. Un site **codé sur mesure**, c'est à vous, ça dure et ça s'améliore avec le temps.",
     },
     pourquoi: [
       "Vous lancez votre activité ou votre projet personnel",
@@ -853,6 +855,7 @@ export const services: ServiceDetail[] = [
     delai: "10 jours ouvrés",
     description:
       "Site vitrine multi-pages avec design personnalisé, contenu rédigé, SEO+ inclus et Google Analytics. Pour les activités établies qui veulent un site qui les représente vraiment.",
+    tagline: "Pour développer votre activité.",
     audiences: [
       "Commerçant local",
       "PME",
@@ -864,15 +867,15 @@ export const services: ServiceDetail[] = [
     promesse:
       "Un **vrai site complet** pour convaincre vos visiteurs et **générer des contacts**.",
     benefices: [
-      { text: "Site **multi-pages** structuré pour le SEO" },
-      { text: "**Design personnalisé** à votre charte" },
-      { text: "Outils pros : **Analytics**, **Schema.org**, **OpenGraph**" },
-      { text: "**Formation incluse** pour mettre à jour vos contenus" },
+      { text: "**Plusieurs pages** trouvables sur Google dans votre zone" },
+      { text: "Un design **à votre image**, pas un template recyclé" },
+      { text: "Vous savez **qui visite votre site** et ce qui marche" },
+      { text: "Vous **modifiez vos textes** vous-même, sans me rappeler" },
     ],
     antiAlternative: {
-      titre: "Pas de WordPress",
+      titre: "Pas d'outils no-code",
       description:
-        "WordPress, c'est lent, vulnérable et **coûteux à maintenir** dans la durée. Un site Next.js **codé sur mesure**, c'est rapide, sécurisé et serein pendant 5 ans.",
+        "Wix, Squarespace, Webflow… c'est rapide à monter mais **ça vieillit mal**. Un site **codé sur mesure**, c'est à vous, ça dure et ça s'améliore.",
     },
     pourquoi: [
       "Vous avez une activité établie et vous voulez un site qui la représente vraiment",
@@ -1061,6 +1064,7 @@ export const services: ServiceDetail[] = [
     delai: "3 semaines",
     description:
       "Site sur mesure niveau agence : design 100% custom, pack animations, CMS inclus, pack performance, SEO Pro, multilingue FR + EN. Pour les marques établies qui voient leur site comme un investissement sur 3 à 5 ans.",
+    tagline: "Pour une marque qui veut se démarquer.",
     audiences: [
       "Marque établie",
       "Entreprise",
@@ -1071,10 +1075,10 @@ export const services: ServiceDetail[] = [
     promesse:
       "Le **top niveau** : design unique, **performance maximale**, **autonomie totale**.",
     benefices: [
-      { text: "Design **100% sur mesure**, aucun gabarit" },
-      { text: "**Animations sur mesure** et micro-interactions" },
-      { text: "**CMS inclus** pour modifier vos contenus en autonomie" },
-      { text: "**SEO Pro** et performance optimisés à fond" },
+      { text: "Un design **unique**, conçu juste pour vous" },
+      { text: "Des animations **haut de gamme** qui font la différence" },
+      { text: "Vous gérez **tous vos contenus** sans dépendre d'un dev" },
+      { text: "**Vu en premier** sur Google et chargé en moins d'une seconde" },
     ],
     antiAlternative: {
       titre: "Pas une agence à 8 000€",

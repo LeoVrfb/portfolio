@@ -27,7 +27,7 @@ const WHY_TRUST = [
   { icon: MessageCircle, label: "Réponse sous 24h", detail: "Je réponds à chaque demande" },
   { icon: Shield, label: "Devis gratuit", detail: "Sans engagement de votre part" },
   { icon: Zap, label: "Partout en France", detail: "100% remote, visio ou email" },
-  { icon: Star, label: "Code sur mesure", detail: "Zéro template, zéro WordPress" },
+  { icon: Star, label: "Code sur mesure", detail: "Zéro template, zéro no-code" },
 ]
 
 const ease = [0.16, 1, 0.3, 1] as const
@@ -404,11 +404,18 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
 
         <FadeUp delay={0.09}>
           <h1
-            className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter leading-[0.9] mb-4"
+            className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter leading-[0.9] mb-3"
             style={{ color: service.color }}
           >
             {service.nom}
           </h1>
+        </FadeUp>
+
+        {/* Tagline (rôle psychologique) */}
+        <FadeUp delay={0.12}>
+          <p className="text-lg sm:text-xl font-semibold text-white/85 mb-4">
+            {service.tagline}
+          </p>
         </FadeUp>
 
         {/* Délai badge */}
@@ -422,17 +429,17 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
 
       {/* ── PITCH IMPACTANT ── */}
       <FadeUp delay={0.18}>
-        <div className="max-w-2xl mx-auto space-y-5">
+        <div className="max-w-4xl mx-auto space-y-6">
           {/* Audiences (chips) */}
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-white/65 mb-2.5">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-white/65 mb-3">
               Vous êtes…
             </p>
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-2">
               {service.audiences.map((aud) => (
                 <span
                   key={aud}
-                  className="px-2.5 py-1 rounded-full border border-white/15 bg-white/4 text-xs font-semibold text-white"
+                  className="px-4 py-2 rounded-full border border-white/20 bg-white/6 text-sm font-semibold text-white shadow-sm"
                 >
                   {aud}
                 </span>
@@ -481,7 +488,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
               className="text-[10px] font-bold uppercase tracking-[0.3em] mb-3"
               style={{ color: service.color }}
             >
-              Cochez si ça vous parle
+              Vous vous y reconnaissez ?
             </p>
             <ul className="space-y-2">
               {service.pourquoi.map((item, i) => (

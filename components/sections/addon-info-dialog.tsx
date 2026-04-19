@@ -135,7 +135,7 @@ export function InfoDialog({
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
         <Dialog.Backdrop className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm data-starting-style:opacity-0 data-ending-style:opacity-0 transition-opacity duration-200" />
-        <Dialog.Popup className="fixed left-1/2 top-1/2 z-50 w-[calc(100vw-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/12 bg-background p-5 sm:p-6 shadow-2xl data-starting-style:opacity-0 data-ending-style:opacity-0 data-starting-style:scale-95 data-ending-style:scale-95 transition-all duration-200 max-h-[85vh] overflow-y-auto">
+        <Dialog.Popup className="fixed left-1/2 top-1/2 z-50 w-[calc(100vw-2rem)] max-w-md sm:max-w-lg lg:max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/12 bg-background p-5 sm:p-6 lg:p-7 shadow-2xl data-starting-style:opacity-0 data-ending-style:opacity-0 data-starting-style:scale-95 data-ending-style:scale-95 transition-all duration-200 max-h-[85vh] overflow-y-auto">
           <div className="flex items-start justify-between gap-3 mb-1">
             <Dialog.Title className="text-lg font-black text-accent leading-tight">
               {title}
