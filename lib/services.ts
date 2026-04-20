@@ -920,8 +920,8 @@ export const services: ServiceDetail[] = [
       consPoints: [
         "Wix, Squarespace, Webflow…",
         "Parfois lent à charger",
-        "Difficile à maintenir dans le temps",
-        "Complexe à utiliser au quotidien",
+        "Difficile à entretenir pour vous",
+        "Complexe à utiliser au quotidien quand on n'est pas expert",
       ],
       pros: {
         titre: "Codé à la main pour vous",
@@ -935,7 +935,7 @@ export const services: ServiceDetail[] = [
       },
     },
     pourquoi: [
-      "Vous voulez faire décoller votre activité avec un site qui la représente vraiment",
+      "Vous voulez faire décoller votre activité avec un site qui vous représente vraiment",
       "Vous avez besoin de plusieurs pages claires pour guider vos clients",
       "Vous voulez un site loin des designs ennuyeux et génériques",
       "Vous voulez être accompagné et rassuré tout au long du projet",
@@ -1134,7 +1134,7 @@ export const services: ServiceDetail[] = [
       "Projet ambitieux",
     ],
     promesse:
-      "Vous voulez un *site qui frappe fort*\n**et marque les esprits**\nqui vous suivra *tout au long de votre aventure* ?\n\nCette formule est faite pour vous.",
+      "Vous voulez un *site qui marque les esprits*\n**un design qui frappe fort**\nqui vous suivra *tout au long de votre aventure* ?\n\nCette formule est faite pour vous.",
     benefices: [
       { text: "Un design **unique** dont tout le monde se souviendra" },
       { text: "Des animations **haut de gamme** qui frappent fort" },
