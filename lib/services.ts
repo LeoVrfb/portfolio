@@ -67,6 +67,9 @@ export type ServiceAntiAlternative = {
   consPoints?: string[] // points de la carte gauche (rouge)
   pros?: {
     titre: string // carte de droite — ex: "Codé à la main pour vous"
+    // Storytelling court en haut de la carte (avant les points). Syntaxe :
+    // **mot** = gras menthe, *mot* = serif italique couleur formule, \n = saut de ligne.
+    intro?: string
     points: string[] // points de la carte droite (couleur formule)
   }
 }
@@ -661,8 +664,22 @@ export const services: ServiceDetail[] = [
     ],
     antiAlternative: {
       titre: "Pas de no-code",
-      description:
-        "Le no-code, c'est rapide à monter, mais **lent à charger**, **compliqué à utiliser** au quotidien et **bloquant** dès que vous voulez évoluer. Un site **codé à la main** + une **interface simple** pour gérer vos contenus : c'est rapide, à vous, et ça vous suit dans le temps.",
+      consPoints: [
+        "Wix, Squarespace, Webflow…",
+        "Templates vus mille fois",
+        "Lent à charger sur mobile",
+        "Abonnement mensuel à vie",
+      ],
+      pros: {
+        titre: "Codé à la main pour vous",
+        intro:
+          "Une vitrine **propre et soignée**, *qui vous appartient vraiment*. Aucun abonnement, aucun outil dont vous dépendez — un site qui *dure dans le temps*.",
+        points: [
+          "Aucun coût mensuel récurrent",
+          "Une vitrine soignée qui vous démarque",
+          "Un site qui vous suit dans le temps",
+        ],
+      },
     },
     pourquoi: [
       "Vous lancez votre activité ou votre projet personnel",
@@ -895,23 +912,25 @@ export const services: ServiceDetail[] = [
     benefices: [
       { text: "Un design **soigné et unique** qui vous démarque de la concurrence" },
       { text: "Trouvé en premier par vos clients, **partout dans votre zone**" },
-      { text: "Vous suivez **le trafic** de votre site et **ce qui marche** vraiment" },
-      { text: "Des textes **rédigés sur mesure** qui parlent à vos vrais clients" },
+      { text: "Suivez **en direct** le trafic de votre site et voyez **ce qui marche** vraiment" },
+      { text: "Des textes **rédigés sur mesure** qui parlent à votre clientèle" },
     ],
     antiAlternative: {
       titre: "Pas d'outils no-code",
       consPoints: [
         "Wix, Squarespace, Webflow…",
-        "Parfois lent",
-        "Difficile à maintenir",
+        "Parfois lent à charger",
+        "Difficile à maintenir dans le temps",
         "Complexe à utiliser au quotidien",
       ],
       pros: {
         titre: "Codé à la main pour vous",
+        intro:
+          "Un visiteur reste **7 secondes** en moyenne avant de décider de rester ou partir. Si la page traîne à charger, il est *déjà reparti*.\n\nLe code main vous donne des **temps de chargement courts**, une **fluidité naturelle** dans les interactions — et un site qui vous suit *dans le temps*.",
         points: [
-          "Rapide, performant et durable",
+          "Chargement rapide, navigation fluide",
           "Une interface simple pour gérer vos contenus",
-          "Un site qui vous appartient et vous suit dans le temps",
+          "Un site qui vous appartient vraiment",
         ],
       },
     },
@@ -1115,23 +1134,37 @@ export const services: ServiceDetail[] = [
       "Projet ambitieux",
     ],
     promesse:
-      "Vous voulez un *site qui sort du lot*\n**pensé pour faire la différence**\net durer dans le temps ?\n\nCette formule est faite pour vous.",
+      "Vous voulez un *site qui frappe fort*\n**et marque les esprits**\nqui vous suivra *tout au long de votre aventure* ?\n\nCette formule est faite pour vous.",
     benefices: [
-      { text: "Un design **unique**, conçu juste pour vous" },
-      { text: "Des animations **haut de gamme** qui font la différence" },
-      { text: "Vous gérez **tous vos contenus** sans dépendre d'un dev" },
-      { text: "**Vu en premier** sur Google et chargé en moins d'une seconde" },
+      { text: "Un design **unique** dont tout le monde se souviendra" },
+      { text: "Des animations **haut de gamme** qui frappent fort" },
+      { text: "Vous gérez **tous vos contenus** sans dépendre de personne" },
+      { text: "**Top n°1** sur Google et chargé en **moins d'une seconde**" },
     ],
     antiAlternative: {
       titre: "Pas une agence à 8 000€",
-      description:
-        "Le même résultat qu'une agence parisienne, **sans la surcouche commerciale** ni les délais à 3 mois. **Direct entre vous et le développeur**.",
+      consPoints: [
+        "Surcouche commerciale qui gonfle la facture",
+        "Délais à 3 mois, parfois plus",
+        "Vous parlez à un commercial, jamais au dev",
+        "Process lourd, devis interminables",
+      ],
+      pros: {
+        titre: "Direct avec celui qui code",
+        intro:
+          "Le même résultat qu'une agence parisienne, **sans la surcouche commerciale** ni les délais à 3 mois.\n\nUn site qui vous *distingue dans votre secteur* et **dure dans le temps**, livré en 3 semaines au lieu de 3 mois.",
+        points: [
+          "Qualité agence haut de gamme, sans le surcoût",
+          "Livré en 3 semaines, pas 3 mois",
+          "Échanges directs avec le développeur, sans intermédiaire",
+        ],
+      },
     },
     pourquoi: [
-      "Votre marque a déjà du business à porter et mérite un site signature",
-      "Vous voulez un design unique (3 directions proposées en maquette, vous choisissez)",
-      "Vous voulez gérer vos contenus en autonomie sans rappeler de développeur (CMS inclus)",
-      "Vous voulez des animations soignées et une performance technique irréprochable",
+      "Votre activité a déjà du business à porter et mérite un site signature",
+      "Vous voulez vous distinguer dans le haut du panier de votre secteur",
+      "Vous voulez gérer vos contenus en autonomie (CMS inclus)",
+      "Vous voulez une performance technique irréprochable, ressentie par vos visiteurs",
       "Vous voyez ce site comme un investissement sur 3 à 5 ans",
     ],
     inclus: [

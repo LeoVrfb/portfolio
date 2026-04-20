@@ -618,6 +618,11 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                     {service.antiAlternative.pros.titre}
                   </p>
                 </div>
+                {service.antiAlternative.pros.intro && (
+                  <p className="text-sm text-white/85 leading-relaxed mb-3">
+                    {renderPromesse(service.antiAlternative.pros.intro, service.color)}
+                  </p>
+                )}
                 <ul className="space-y-2">
                   {service.antiAlternative.pros.points.map((point, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm text-white/85 leading-relaxed">
