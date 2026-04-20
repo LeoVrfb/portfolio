@@ -1,10 +1,10 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, Fragment } from "react"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import { motion, useInView, AnimatePresence } from "motion/react"
-import { Check, ArrowLeft, ArrowRight, Clock, ChevronDown, Info, MessageCircle, Star, Shield, Zap, AlertCircle, Plus, Minus, XCircle } from "lucide-react"
+import { Check, ArrowLeft, ArrowRight, ArrowDown, Clock, ChevronDown, Info, MessageCircle, Star, Shield, Zap, AlertCircle, Plus, Minus, XCircle } from "lucide-react"
 import type { Addon, AddonSubOption, ServiceDetail, ServiceInclus } from "@/lib/services"
 import { AddonInfoDialog, InfoDialog } from "@/components/sections/addon-info-dialog"
 
@@ -21,6 +21,65 @@ function renderRichText(text: string, accentClassName = "text-accent font-bold")
     }
     return <span key={i}>{part}</span>
   })
+}
+
+// Parse *mot* (un seul *) → serif italique dans la couleur formule. Utilisé dans la tagline.
+function renderTagline(text: string, color: string): React.ReactNode {
+  const parts = text.split(/(\*[^*]+\*)/g)
+  return parts.map((part, i) => {
+    if (part.startsWith("*") && part.endsWith("*")) {
+      return (
+        <em
+          key={i}
+          className="font-serif-display italic font-normal"
+          style={{ color }}
+        >
+          {part.slice(1, -1)}
+        </em>
+      )
+    }
+    return <span key={i}>{part}</span>
+  })
+}
+
+// Parse mixte pour la promesse :
+// - **mot** → font-extrabold dans la couleur accent (mint)
+// - *mot*   → serif italique dans la couleur formule
+// - \n      → saut de ligne (<br />)
+function renderPromesse(text: string, color: string): React.ReactNode {
+  const renderSegment = (segment: string, baseKey: string) => {
+    const parts = segment.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g)
+    return parts.map((part, i) => {
+      const key = `${baseKey}-${i}`
+      if (part.startsWith("**") && part.endsWith("**")) {
+        return (
+          <strong key={key} className="font-extrabold text-accent">
+            {part.slice(2, -2)}
+          </strong>
+        )
+      }
+      if (part.startsWith("*") && part.endsWith("*")) {
+        return (
+          <em
+            key={key}
+            className="font-serif-display italic font-normal"
+            style={{ color, fontSize: "1.05em" }}
+          >
+            {part.slice(1, -1)}
+          </em>
+        )
+      }
+      return <span key={key}>{part}</span>
+    })
+  }
+
+  const lines = text.split("\n")
+  return lines.map((line, idx) => (
+    <Fragment key={idx}>
+      {renderSegment(line, `l${idx}`)}
+      {idx < lines.length - 1 && <br />}
+    </Fragment>
+  ))
 }
 
 const WHY_TRUST = [
@@ -386,43 +445,102 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
         </Link>
       </FadeUp>
 
+      {/* ── PAGE GRID — col gauche = tout le contenu, col droite = carte devis sticky depuis le haut ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_340px] gap-10 lg:gap-12 items-start">
+        <div className="min-w-0">
+
       {/* ── HEADER ── */}
-      <div className="mb-8 max-w-2xl">
+      <div className="mb-10">
         <FadeUp delay={0.04}>
-          <div className="flex items-center gap-3 mb-3">
-            <span className="text-[10px] font-bold uppercase tracking-[0.45em] text-accent">Formule</span>
+          <div className="flex items-center gap-3 mb-5">
+            <span className="text-[10px] font-bold uppercase tracking-[0.45em] text-white/60 border border-white/15 rounded-full px-3 py-1">
+              Formule
+            </span>
             {service.highlighted && (
               <span
-                className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-widest"
-                style={{ background: "var(--lavender)", color: "var(--background)" }}
+                className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em]"
+                style={{
+                  background: "color-mix(in oklab, var(--lavender) 18%, transparent)",
+                  color: "var(--lavender)",
+                  border: "1px solid color-mix(in oklab, var(--lavender) 35%, transparent)",
+                }}
               >
-                Le plus demandé
+                ★ La plus choisie
               </span>
             )}
           </div>
         </FadeUp>
 
+        {/* Titre formule — XXL */}
         <FadeUp delay={0.09}>
           <h1
-            className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter leading-[0.9] mb-3"
+            className="font-black tracking-[-0.04em] leading-[0.85] mb-5 text-[clamp(4.5rem,12vw,9rem)]"
             style={{ color: service.color }}
           >
             {service.nom}
           </h1>
         </FadeUp>
 
-        {/* Tagline (rôle psychologique) */}
+        {/* Tagline éditoriale — mix sans / serif italique sur le mot clé */}
         <FadeUp delay={0.12}>
-          <p className="text-lg sm:text-xl font-semibold text-white/85 mb-4">
-            {service.tagline}
+          <p className="text-2xl sm:text-3xl md:text-4xl font-light leading-[1.2] tracking-[-0.01em] text-white max-w-3xl mb-7">
+            {renderTagline(service.tagline, service.color)}
           </p>
         </FadeUp>
 
-        {/* Délai badge */}
-        <FadeUp delay={0.14}>
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/4 text-sm text-white/85">
-            <Clock className="w-3.5 h-3.5 text-accent" />
-            <span>Délai estimé : <strong className="text-white">{service.delai}</strong></span>
+        {/* Hook éditorial — barre verticale couleur formule + 3 lignes (la dernière en serif italique) */}
+        {service.hook && (
+          <FadeUp delay={0.14}>
+            <div
+              className="pl-5 mb-7 max-w-md"
+              style={{
+                borderLeft: `2px solid color-mix(in oklab, ${service.color} 40%, transparent)`,
+              }}
+            >
+              <p className="text-base sm:text-lg leading-relaxed text-white/65">
+                {service.hook.pasDe}
+                <br />
+                <span className="text-white/90">{service.hook.description}</span>
+                <br />
+                <em
+                  className="font-serif-display italic font-normal"
+                  style={{
+                    color: service.color,
+                    fontSize: "1.05em",
+                  }}
+                >
+                  {service.hook.metaphor}
+                </em>
+              </p>
+            </div>
+          </FadeUp>
+        )}
+
+        {/* Délai (pill) + CTA "Configurer cette formule" sur la même ligne */}
+        <FadeUp delay={0.16}>
+          <div className="flex flex-wrap items-center gap-3">
+            <div
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium"
+              style={{
+                background: `color-mix(in oklab, ${service.color} 10%, transparent)`,
+                border: `1px solid color-mix(in oklab, ${service.color} 25%, transparent)`,
+                color: service.color,
+              }}
+            >
+              <Clock className="w-3.5 h-3.5" />
+              <span>
+                Délai estimé : <strong>{service.delai}</strong>
+              </span>
+            </div>
+
+            <a
+              href="#configurateur"
+              className="group inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all hover:opacity-90 cursor-pointer"
+              style={{ background: service.color, color: "var(--background)" }}
+            >
+              Configurer cette formule
+              <ArrowDown className="w-3.5 h-3.5 transition-transform group-hover:translate-y-0.5" />
+            </a>
           </div>
         </FadeUp>
       </div>
@@ -447,12 +565,9 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
             </div>
           </div>
 
-          {/* Promesse */}
-          <p className="text-2xl sm:text-3xl font-black tracking-tight leading-[1.15] text-white">
-            {renderRichText(service.promesse, "text-accent font-black")}
-            <span style={{ color: service.color }}>
-              {" "}Cette formule est faite pour vous.
-            </span>
+          {/* Promesse — mix de styles : *mot* serif italique couleur formule, **mot** bold mint, \n pour saut de ligne */}
+          <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-[1.2] text-white">
+            {renderPromesse(service.promesse, service.color)}
           </p>
 
           {/* Bénéfices clés */}
@@ -467,8 +582,53 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
             </ul>
           </div>
 
-          {/* Anti-alternative (no-code, WordPress, agence cher) */}
-          {service.antiAlternative && (
+          {/* Anti-alternative — deux cartes côte à côte si `pros` présent (mode split), sinon une seule carte (legacy) */}
+          {service.antiAlternative && service.antiAlternative.pros && service.antiAlternative.consPoints ? (
+            <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
+              {/* Carte gauche — rouge, ce qu'on évite */}
+              <div className="rounded-xl border border-rose-400/25 bg-rose-400/5 p-4 sm:p-5 flex flex-col">
+                <div className="flex items-center gap-2 mb-3">
+                  <XCircle className="w-5 h-5 shrink-0 text-rose-400" />
+                  <p className="text-sm font-bold text-rose-300">
+                    {service.antiAlternative.titre}
+                  </p>
+                </div>
+                <ul className="space-y-2">
+                  {service.antiAlternative.consPoints.map((point, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-white/85 leading-relaxed">
+                      <span className="text-rose-400 mt-0.5 shrink-0">×</span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {/* Carte droite — couleur formule, ce qu'on propose */}
+              <div
+                className="rounded-xl p-4 sm:p-5 flex flex-col"
+                style={{
+                  borderWidth: "1px",
+                  borderStyle: "solid",
+                  borderColor: `color-mix(in oklab, ${service.color} 30%, transparent)`,
+                  backgroundColor: `color-mix(in oklab, ${service.color} 6%, transparent)`,
+                }}
+              >
+                <div className="flex items-center gap-2 mb-3">
+                  <Check className="w-5 h-5 shrink-0" style={{ color: service.color }} />
+                  <p className="text-sm font-bold" style={{ color: service.color }}>
+                    {service.antiAlternative.pros.titre}
+                  </p>
+                </div>
+                <ul className="space-y-2">
+                  {service.antiAlternative.pros.points.map((point, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-white/85 leading-relaxed">
+                      <Check className="w-3.5 h-3.5 shrink-0 mt-1" style={{ color: service.color }} />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ) : service.antiAlternative && service.antiAlternative.description ? (
             <div className="rounded-xl border border-rose-400/25 bg-rose-400/5 p-4 sm:p-5 flex items-start gap-3">
               <XCircle className="w-5 h-5 shrink-0 mt-0.5 text-rose-400" />
               <div className="flex-1 min-w-0">
@@ -480,7 +640,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                 </p>
               </div>
             </div>
-          )}
+          ) : null}
 
           {/* Cette formule est faite pour vous si... */}
           <div className="rounded-2xl border border-white/10 bg-white/2 p-5 sm:p-6">
@@ -488,7 +648,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
               className="text-[10px] font-bold uppercase tracking-[0.3em] mb-3"
               style={{ color: service.color }}
             >
-              Vous vous y reconnaissez ?
+              Vous vous reconnaissez ?
             </p>
             <ul className="space-y-2">
               {service.pourquoi.map((item, i) => (
@@ -502,22 +662,24 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
         </div>
       </FadeUp>
 
-      {/* Scroll hint + note estimation */}
+      {/* Titre de section configurateur — eyebrow + titre + sous-texte + chevron */}
       <FadeUp delay={0.35}>
-        <div className="flex flex-col items-center gap-1.5 pt-10 pb-3 text-white/85">
-          <span className="text-[10px] tracking-[0.3em] uppercase font-semibold">Estimez votre projet</span>
-          <ChevronDown size={14} className="animate-bounce" />
+        <div id="configurateur" className="flex flex-col items-center gap-2 pt-12 pb-3 text-center scroll-mt-24">
+          <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-white/55 mb-1">
+            Estimez votre projet
+          </span>
+          <h2 className="text-xl font-bold tracking-tight text-white">
+            Configurez la formule {service.nom}
+          </h2>
+          <p className="text-sm text-white/55 max-w-md">
+            Estimation gratuite, aucun paiement à cette étape. Vous recevez votre devis détaillé par email.
+          </p>
+          <ChevronDown size={20} strokeWidth={1.5} className="animate-bounce text-white/30 mt-4" />
         </div>
-        <p className="text-[12px] italic text-white/75 text-center max-w-md mx-auto pb-7">
-          Estimation gratuite, aucun paiement à cette étape. Vous recevez votre devis détaillé par email.
-        </p>
       </FadeUp>
 
-      {/* ── MAIN GRID ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_320px] gap-10 items-start">
-
-        {/* Left : inclus + options */}
-        <div className="min-w-0">
+      {/* ── SECTION CONFIGURATEUR — pleine largeur de la col gauche ── */}
+      <div>
           <div className="rounded-2xl border border-white/8 bg-white/2 overflow-hidden mb-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-white/6">
 
@@ -684,19 +846,25 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
             ))}
           </div>
         </div>
+        </div>
+        {/* fin col gauche extérieure */}
 
-        {/* Right — devis sticky */}
+        {/* Right — devis sticky depuis le haut de la page */}
         <div className="lg:sticky lg:top-28 self-start min-w-0">
-          <div className="rounded-2xl border border-white/10 bg-white/4 p-5 sm:p-6 space-y-5">
+          <div className="rounded-2xl border border-white/[0.07] bg-white/2.5 p-6 space-y-5">
             <div>
-              <p className="text-[10px] text-accent uppercase tracking-[0.3em] mb-1">Votre devis estimé</p>
-              <p className="text-xl font-black text-white">Formule {service.nom}</p>
+              <p className="text-[10px] font-bold text-white/50 uppercase tracking-[0.18em] mb-3">
+                Votre devis estimé
+              </p>
+              <p className="text-sm font-semibold" style={{ color: service.color }}>
+                Formule {service.nom}
+              </p>
             </div>
 
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-white/80">Base</span>
-                <span className="font-bold text-white">{service.prixBase} €</span>
+                <span className="text-white/55">Base</span>
+                <span className="font-medium text-white">{service.prixBase} €</span>
               </div>
               <AnimatePresence>
                 {selectedAddonObjects.map((addon) => {
@@ -711,9 +879,9 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                       transition={{ duration: 0.2, ease }}
                       className="overflow-hidden"
                     >
-                      <div className="flex items-center justify-between text-sm py-0.5 gap-2">
-                        <span className="text-white/75 truncate flex-1 text-xs">+ {addon.label}</span>
-                        <span className={`font-bold shrink-0 text-xs ${incomplete ? "text-red-400" : "text-accent"}`}>
+                      <div className="flex items-center justify-between text-xs py-0.5 gap-2">
+                        <span className="text-white/55 truncate flex-1">+ {addon.label}</span>
+                        <span className={`font-medium shrink-0 ${incomplete ? "text-red-400" : "text-white/80"}`}>
                           {addon.prix === null
                             ? "Devis"
                             : incomplete
@@ -729,21 +897,33 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
               </AnimatePresence>
             </div>
 
-            <div className="border-t border-white/8 pt-4">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-semibold text-white/90">Total estimé</span>
-                <span className="text-2xl font-black text-accent">
-                  {hasDevis ? `${total} €+` : `${total} €`}
+            <div className="h-px bg-white/[0.07]" />
+
+            {/* Bloc total surligné — gradient + bordure couleur formule */}
+            <div
+              className="rounded-xl p-4"
+              style={{
+                background: `linear-gradient(135deg, color-mix(in oklab, ${service.color} 10%, transparent), color-mix(in oklab, var(--accent) 5%, transparent))`,
+                border: `1px solid color-mix(in oklab, ${service.color} 22%, transparent)`,
+              }}
+            >
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="text-sm font-semibold text-white">Total estimé</span>
+                <span className="font-black tracking-[-0.03em] text-[1.75rem] leading-none text-white">
+                  {total}{" "}
+                  <span className="text-[1.1rem]" style={{ color: service.color }}>
+                    €{hasDevis ? "+" : ""}
+                  </span>
                 </span>
               </div>
-              <p className="text-[11px] text-white/70 mt-1">
+              <p className="text-[11px] text-white/55 mt-1.5">
                 Hors taxes · Paiement en 2× (acompte + livraison)
               </p>
             </div>
 
-            <div className="flex items-center gap-2 text-xs text-white/60">
-              <Clock className="w-3.5 h-3.5 text-accent shrink-0" />
-              Délai : <span className="text-white/90 font-medium">{service.delai}</span>
+            <div className="flex items-center gap-2 text-xs text-white/55">
+              <Clock className="w-3 h-3 shrink-0" />
+              Délai : <span className="text-white/85">{service.delai}</span>
             </div>
 
             {!canStart && submitAttempted && (
@@ -771,8 +951,10 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
               <ArrowRight className="w-4 h-4" />
             </button>
 
-            <p className="text-[11px] text-white/75 text-center">
-              Réponse sous 24h · Estimation gratuite, aucun paiement à cette étape
+            <p className="text-[11px] text-white/55 text-center leading-relaxed">
+              Réponse sous 24h · Estimation gratuite,
+              <br />
+              aucun paiement à cette étape
             </p>
           </div>
         </div>

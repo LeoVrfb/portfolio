@@ -60,8 +60,22 @@ export type ServiceBenefice = {
 }
 
 export type ServiceAntiAlternative = {
-  titre: string
-  description: string
+  titre: string // carte de gauche (rouge) — ex: "Pas d'outils no-code"
+  // Mode "single" (legacy) : un seul bloc avec une description en texte riche
+  description?: string
+  // Mode "split" : 2 cartes côte à côte. Si `consPoints` est présent → mode split.
+  consPoints?: string[] // points de la carte gauche (rouge)
+  pros?: {
+    titre: string // carte de droite — ex: "Codé à la main pour vous"
+    points: string[] // points de la carte droite (couleur formule)
+  }
+}
+
+// Hook éditorial sous la tagline : "Pas un X. / Un Y, Z, W — / comme une métaphore."
+export type ServiceHook = {
+  pasDe: string      // "Pas un template réchauffé."
+  description: string // "Un site pensé, maquetté et codé pour vous —"
+  metaphor: string    // "comme un plat fait maison par quelqu'un qui connaît votre goût."
 }
 
 export type ServiceInclus = {
@@ -77,9 +91,10 @@ export type ServiceDetail = {
   // Description SEO (meta tag uniquement)
   description: string
   // Bloc pitch impactant (header configurateur)
-  tagline: string // micro-positionnement psychologique sous le H1 (ex: "Pour démarrer simplement")
+  tagline: string // micro-positionnement psychologique sous le H1. Syntaxe *mot* = serif italique dans la couleur formule
+  hook?: ServiceHook // hook éditorial sous la tagline (barre verticale + métaphore en serif italique)
   audiences: string[] // ex: ["Artisan", "Commerçant", "Freelance"]
-  promesse: string // grosse phrase, syntaxe **mot** acceptée
+  promesse: string // grosse phrase. Syntaxe *mot* = serif italique dans la couleur formule
   benefices: ServiceBenefice[]
   antiAlternative?: ServiceAntiAlternative
   // Bloc "Cette formule est faite pour vous si"
@@ -622,7 +637,12 @@ export const services: ServiceDetail[] = [
     delai: "5 jours ouvrés",
     description:
       "Site vitrine professionnel sur une seule page avec plusieurs sections. Pour qui lance son activité ou son projet personnel et veut une présence en ligne sérieuse et durable.",
-    tagline: "Pour démarrer simplement.",
+    tagline: "Simple à lancer, *fort en look*.",
+    hook: {
+      pasDe: "Pas un site bâclé.",
+      description: "Une vitrine soignée, faite à la main par un pro,",
+      metaphor: "comme une devanture devant laquelle on s'arrête.",
+    },
     audiences: [
       "Artisan",
       "Commerçant",
@@ -631,7 +651,8 @@ export const services: ServiceDetail[] = [
       "Profession libérale",
       "Lancement d'activité",
     ],
-    promesse: "Une présence en ligne **sérieuse**, en **quelques jours**.",
+    promesse:
+      "Vous voulez une *vraie présence en ligne*\n**propre et durable**\nlivrée en *quelques jours* ?\n\nCette formule est faite pour vous.",
     benefices: [
       { text: "Une **présence crédible** dès la mise en ligne" },
       { text: "**Trouvable sur Google** dès le premier jour" },
@@ -641,7 +662,7 @@ export const services: ServiceDetail[] = [
     antiAlternative: {
       titre: "Pas de no-code",
       description:
-        "Le no-code, c'est rapide à monter. Un site **codé sur mesure**, c'est à vous, ça dure et ça s'améliore avec le temps.",
+        "Le no-code, c'est rapide à monter, mais **lent à charger**, **compliqué à utiliser** au quotidien et **bloquant** dès que vous voulez évoluer. Un site **codé à la main** + une **interface simple** pour gérer vos contenus : c'est rapide, à vous, et ça vous suit dans le temps.",
     },
     pourquoi: [
       "Vous lancez votre activité ou votre projet personnel",
@@ -855,7 +876,12 @@ export const services: ServiceDetail[] = [
     delai: "10 jours ouvrés",
     description:
       "Site vitrine multi-pages avec design personnalisé, contenu rédigé, SEO+ inclus et Google Analytics. Pour les activités établies qui veulent un site qui les représente vraiment.",
-    tagline: "Pour développer votre activité.",
+    tagline: "Le site qui *transforme* vos visiteurs en clients.",
+    hook: {
+      pasDe: "Pas un site sorti d'un moule.",
+      description: "Un site dessiné et codé rien que pour vous,",
+      metaphor: "comme un plat fait maison par quelqu'un qui connaît votre goût.",
+    },
     audiences: [
       "Commerçant local",
       "PME",
@@ -865,24 +891,35 @@ export const services: ServiceDetail[] = [
       "Activité établie",
     ],
     promesse:
-      "Un **vrai site complet** pour convaincre vos visiteurs et **générer des contacts**.",
+      "Vous cherchez un vrai site complet\n*pour convaincre vos visiteurs*\net **les transformer en clients** ?\n\nCette formule est faite pour vous.",
     benefices: [
-      { text: "**Plusieurs pages** trouvables sur Google dans votre zone" },
-      { text: "Un design **à votre image**, pas un template recyclé" },
-      { text: "Vous savez **qui visite votre site** et ce qui marche" },
-      { text: "Vous **modifiez vos textes** vous-même, sans me rappeler" },
+      { text: "Un design **soigné et unique** qui vous démarque de la concurrence" },
+      { text: "Trouvé en premier par vos clients, **partout dans votre zone**" },
+      { text: "Vous suivez **le trafic** de votre site et **ce qui marche** vraiment" },
+      { text: "Des textes **rédigés sur mesure** qui parlent à vos vrais clients" },
     ],
     antiAlternative: {
       titre: "Pas d'outils no-code",
-      description:
-        "Wix, Squarespace, Webflow… c'est rapide à monter mais **ça vieillit mal**. Un site **codé sur mesure**, c'est à vous, ça dure et ça s'améliore.",
+      consPoints: [
+        "Wix, Squarespace, Webflow…",
+        "Parfois lent",
+        "Difficile à maintenir",
+        "Complexe à utiliser au quotidien",
+      ],
+      pros: {
+        titre: "Codé à la main pour vous",
+        points: [
+          "Rapide, performant et durable",
+          "Une interface simple pour gérer vos contenus",
+          "Un site qui vous appartient et vous suit dans le temps",
+        ],
+      },
     },
     pourquoi: [
-      "Vous avez une activité établie et vous voulez un site qui la représente vraiment",
-      "Vous voulez plusieurs pages structurées (services, à propos, contact, etc.)",
-      "Vous voulez un design qui ne ressemble à aucun autre, loin des templates Wix",
-      "Vous voulez comprendre qui visite votre site grâce à Google Analytics",
-      "Vous voulez être visible dans les recherches Google de votre zone (SEO+ inclus)",
+      "Vous voulez faire décoller votre activité avec un site qui la représente vraiment",
+      "Vous avez besoin de plusieurs pages claires pour guider vos clients",
+      "Vous voulez un site loin des designs ennuyeux et génériques",
+      "Vous voulez être accompagné et rassuré tout au long du projet",
     ],
     inclus: [
       {
@@ -1064,7 +1101,12 @@ export const services: ServiceDetail[] = [
     delai: "3 semaines",
     description:
       "Site sur mesure niveau agence : design 100% custom, pack animations, CMS inclus, pack performance, SEO Pro, multilingue FR + EN. Pour les marques établies qui voient leur site comme un investissement sur 3 à 5 ans.",
-    tagline: "Pour une marque qui veut se démarquer.",
+    tagline: "Pour une marque qui ne ressemble *à personne*.",
+    hook: {
+      pasDe: "Pas une agence de plus.",
+      description: "Un site unique, conçu et codé de A à Z pour vous,",
+      metaphor: "comme une pièce sur mesure sortie d'un atelier d'orfèvre.",
+    },
     audiences: [
       "Marque établie",
       "Entreprise",
@@ -1073,7 +1115,7 @@ export const services: ServiceDetail[] = [
       "Projet ambitieux",
     ],
     promesse:
-      "Le **top niveau** : design unique, **performance maximale**, **autonomie totale**.",
+      "Vous voulez un *site qui sort du lot*\n**pensé pour faire la différence**\net durer dans le temps ?\n\nCette formule est faite pour vous.",
     benefices: [
       { text: "Un design **unique**, conçu juste pour vous" },
       { text: "Des animations **haut de gamme** qui font la différence" },

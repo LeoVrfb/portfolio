@@ -133,7 +133,7 @@ export default function ServicesPage() {
               {formule.highlighted && (
                 <div className="absolute -top-3 left-5">
                   <span className="text-[10px] font-bold px-3 py-1 bg-[var(--lavender)] text-black rounded-full tracking-wide">
-                    La formule la plus choisie
+                    ★ La plus choisie
                   </span>
                 </div>
               )}
