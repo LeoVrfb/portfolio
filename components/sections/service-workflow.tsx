@@ -2,13 +2,13 @@
 
 import { motion, useInView } from "motion/react"
 import { useRef } from "react"
-import { MessageSquare, Palette, Sparkles, Rocket } from "lucide-react"
+import { MessageSquare, Palette, Sparkles, Rocket, type LucideIcon } from "lucide-react"
 
 type Step = {
   num: string
   titre: string
   description: string
-  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>
+  icon: LucideIcon
 }
 
 const steps: Step[] = [
