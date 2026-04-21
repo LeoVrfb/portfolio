@@ -908,7 +908,7 @@ export const services: ServiceDetail[] = [
       "Activité établie",
     ],
     promesse:
-      "Vous cherchez un vrai site complet\n*pour convaincre vos visiteurs*\net **les transformer en clients** ?\n\nCette formule est faite pour vous.",
+      "Vous cherchez un vrai site complet *pour convaincre vos visiteurs*\net **les transformer en clients** ?\n\nCette formule est faite pour vous.",
     benefices: [
       { text: "Un design **soigné et unique** qui vous démarque de la concurrence" },
       { text: "Trouvé en premier par vos clients, **partout dans votre zone**" },

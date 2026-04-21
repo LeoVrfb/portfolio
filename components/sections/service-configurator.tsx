@@ -2,11 +2,16 @@
 
 import { useState, useRef, Fragment } from "react"
 import Link from "next/link"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import { motion, useInView, AnimatePresence } from "motion/react"
-import { Check, ArrowLeft, ArrowRight, ArrowDown, Clock, ChevronDown, Info, MessageCircle, Star, Shield, Zap, AlertCircle, Plus, Minus, XCircle } from "lucide-react"
+import { Check, ArrowLeft, ArrowRight, ArrowDown, Clock, Calendar, ChevronDown, Info, Mail, MessageCircle, Star, Shield, Zap, AlertCircle, Plus, Minus, XCircle } from "lucide-react"
 import type { Addon, AddonSubOption, ServiceDetail, ServiceInclus } from "@/lib/services"
 import { AddonInfoDialog, InfoDialog } from "@/components/sections/addon-info-dialog"
+import { QuoteEmailDialog } from "@/components/sections/quote-email-dialog"
+import { ServiceWorkflow } from "@/components/sections/service-workflow"
+import { ServiceTestimonials } from "@/components/sections/service-testimonials"
+import { ServiceCtaDiscovery, ServiceCtaFinal } from "@/components/sections/service-ctas"
+import { CalendlyEmbed } from "@/components/sections/calendly-embed"
 
 // Parse minimaliste **mot** → <strong className="text-accent">. Utilisé dans le pitch.
 function renderRichText(text: string, accentClassName = "text-accent font-bold"): React.ReactNode {
@@ -107,18 +112,6 @@ function parseSubChoicesFromUrl(raw: string | null): SubChoices {
   return result
 }
 
-function serializeSubChoices(choices: SubChoices, selectedAddonIds: string[]): string {
-  const entries: string[] = []
-  for (const addonId of selectedAddonIds) {
-    const subs = choices[addonId]
-    if (!subs) continue
-    for (const [subId, choiceId] of Object.entries(subs)) {
-      entries.push(`${addonId}.${subId}:${choiceId}`)
-    }
-  }
-  return entries.join(",")
-}
-
 function computeAddonPricing(addon: Addon, choices: Record<string, string> | undefined): { prix: number; isDevis: boolean } {
   if (addon.prix === null) return { prix: 0, isDevis: true }
   let total = addon.prix
@@ -142,6 +135,18 @@ function computeAddonPricing(addon: Addon, choices: Record<string, string> | und
 function isAddonIncomplete(addon: Addon, choices: Record<string, string> | undefined): boolean {
   if (!addon.subOptions) return false
   return addon.subOptions.some((sub) => sub.required && !choices?.[sub.id])
+}
+
+function getAddonChoicesSummary(addon: Addon, choices: Record<string, string> | undefined): string {
+  if (!addon.subOptions || !choices) return ""
+  const parts: string[] = []
+  for (const sub of addon.subOptions) {
+    const choiceId = choices[sub.id]
+    if (!choiceId) continue
+    const choice = sub.choices.find((c) => c.id === choiceId)
+    if (choice) parts.push(choice.label)
+  }
+  return parts.join(" · ")
 }
 
 function FadeUp({ children, delay = 0, className }: { children: React.ReactNode; delay?: number; className?: string }) {
@@ -328,7 +333,6 @@ function SubOptionPanel({
 }
 
 export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
-  const router = useRouter()
   const searchParams = useSearchParams()
 
   const initialAddonIds = searchParams.get("addonIds")?.split(",").filter(Boolean) ?? []
@@ -340,6 +344,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
   const [infoDialogAddonId, setInfoDialogAddonId] = useState<string | null>(null)
   const [infoDialogInclusTitre, setInfoDialogInclusTitre] = useState<string | null>(null)
   const [showAllAddons, setShowAllAddons] = useState(false)
+  const [quoteDialogOpen, setQuoteDialogOpen] = useState(false)
 
   const toggleAddon = (id: string) => {
     setSelectedAddons((prev) => {
@@ -421,19 +426,19 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
       }
       return
     }
-    const params = new URLSearchParams()
-    params.set("formule", service.nom)
-    params.set("slug", service.slug)
-    params.set("total", hasDevis ? "devis" : String(total))
-    const ids = Array.from(selectedAddons)
-    if (ids.length > 0) params.set("addonIds", ids.join(","))
-    const subOptionsStr = serializeSubChoices(subChoices, ids)
-    if (subOptionsStr) params.set("subOptions", subOptionsStr)
-    router.push(`/contact?${params.toString()}`)
+    setQuoteDialogOpen(true)
   }
 
+  // Liste lisible des addons (avec sous-choix) pour le mail de devis.
+  const addonsLabels = selectedAddonObjects.map((addon) => {
+    const summary = getAddonChoicesSummary(addon, subChoices[addon.id])
+    return summary ? `${addon.label} (${summary})` : addon.label
+  })
+
   return (
-    <div className="pt-28 pb-24 layout-container overflow-x-clip">
+    // Container local plus large que layout-container global : sur grand écran on récupère
+    // ~120-160px d'espace de chaque côté pour réduire l'air et donner plus de présence au contenu.
+    <div className="pt-28 pb-24 w-full mx-auto px-4 sm:px-6 max-w-7xl xl:max-w-368 2xl:max-w-416 [@media(min-width:1920px)]:max-w-464 overflow-x-clip">
       {/* Back */}
       <FadeUp>
         <Link
@@ -445,11 +450,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
         </Link>
       </FadeUp>
 
-      {/* ── PAGE GRID — col gauche = tout le contenu, col droite = carte devis sticky depuis le haut ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_340px] gap-10 lg:gap-12 items-start">
-        <div className="min-w-0">
-
-      {/* ── HEADER ── */}
+      {/* ── HEADER — aligné à gauche, layout d'origine ── */}
       <div className="mb-10">
         <FadeUp delay={0.04}>
           <div className="flex items-center gap-3 mb-5">
@@ -516,7 +517,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
           </FadeUp>
         )}
 
-        {/* Délai (pill) + CTA "Configurer cette formule" sur la même ligne */}
+        {/* Délai (pill) + CTA "Réserver un appel" sur la même ligne */}
         <FadeUp delay={0.16}>
           <div className="flex flex-wrap items-center gap-3">
             <div
@@ -534,20 +535,24 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
             </div>
 
             <a
-              href="#configurateur"
+              href="#calendly"
               className="group inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all hover:opacity-90 cursor-pointer"
               style={{ background: service.color, color: "var(--background)" }}
             >
-              Configurer cette formule
+              <Calendar className="w-3.5 h-3.5" />
+              Réserver un appel
               <ArrowDown className="w-3.5 h-3.5 transition-transform group-hover:translate-y-0.5" />
             </a>
           </div>
         </FadeUp>
       </div>
 
+      {/* ── WRAPPER CENTRÉ — toutes les sections sous le header partagent la même largeur ── */}
+      <div className="max-w-6xl mx-auto">
+
       {/* ── PITCH IMPACTANT ── */}
       <FadeUp delay={0.18}>
-        <div className="max-w-4xl mx-auto space-y-6">
+        <div className="space-y-6">
           {/* Audiences (chips) */}
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-white/65 mb-3">
@@ -667,6 +672,15 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
         </div>
       </FadeUp>
 
+      {/* ── COMMENT ÇA SE PASSE ── */}
+      <ServiceWorkflow color={service.color} delai={service.delai} />
+
+      {/* ── TÉMOIGNAGES ── */}
+      <ServiceTestimonials color={service.color} />
+
+      {/* ── CTA #1 — Transition vers appel découverte ── */}
+      <ServiceCtaDiscovery color={service.color} formuleNom={service.nom} />
+
       {/* Titre de section configurateur — eyebrow + titre + sous-texte + chevron */}
       <FadeUp delay={0.35}>
         <div id="configurateur" className="flex flex-col items-center gap-2 pt-12 pb-3 text-center scroll-mt-24">
@@ -683,9 +697,8 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
         </div>
       </FadeUp>
 
-      {/* ── SECTION CONFIGURATEUR — pleine largeur de la col gauche ── */}
-      <div>
-          <div className="rounded-2xl border border-white/8 bg-white/2 overflow-hidden mb-8">
+      {/* ── SECTION CONFIGURATEUR — pleine largeur ── */}
+      <div className="rounded-2xl border border-white/8 bg-white/2 overflow-hidden mb-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-white/6">
 
               {/* Ce qui est inclus */}
@@ -836,135 +849,144 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                 )}
               </div>
             </div>
-          </div>
+        </div>
 
-          {/* WHY_TRUST */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-7 border-t border-white/8">
-            {WHY_TRUST.map(({ icon: Icon, label, detail }) => (
-              <div key={label} className="text-center">
-                <div className="w-9 h-9 rounded-xl border border-white/10 bg-white/4 flex items-center justify-center mx-auto mb-2">
-                  <Icon className="w-4 h-4 text-accent" />
+        {/* ── DEVIS HORIZONTAL — récap à gauche, encart prix + CTA à droite, en pleine largeur ── */}
+        <FadeUp delay={0.1}>
+          <div className="rounded-2xl border border-white/[0.07] bg-white/2.5 p-5 sm:p-6 mb-8">
+            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_340px] gap-5 lg:gap-8 items-stretch">
+
+              {/* Récap — formule + lignes (Base + addons sélectionnés) */}
+              <div className="flex flex-col gap-3 min-w-0">
+                <div>
+                  <p className="text-[10px] font-bold text-white/50 uppercase tracking-[0.18em] mb-1">
+                    Votre devis estimé
+                  </p>
+                  <p className="text-sm font-semibold" style={{ color: service.color }}>
+                    Formule {service.nom}
+                  </p>
                 </div>
-                <p className="text-xs font-semibold text-white">{label}</p>
-                <p className="text-[10px] text-white/70 mt-0.5">{detail}</p>
+
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-white/55">Base</span>
+                    <span className="font-medium text-white">{service.prixBase} €</span>
+                  </div>
+                  <AnimatePresence>
+                    {selectedAddonObjects.map((addon) => {
+                      const { prix, isDevis } = computeAddonPricing(addon, subChoices[addon.id])
+                      const incomplete = incompleteAddonIds.has(addon.id)
+                      return (
+                        <motion.div
+                          key={addon.id}
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.2, ease }}
+                          className="overflow-hidden"
+                        >
+                          <div className="flex items-center justify-between text-xs py-0.5 gap-2">
+                            <span className="text-white/55 truncate flex-1">+ {addon.label}</span>
+                            <span className={`font-medium shrink-0 ${incomplete ? "text-red-400" : "text-white/80"}`}>
+                              {addon.prix === null
+                                ? "Devis"
+                                : incomplete
+                                  ? "—"
+                                  : isDevis
+                                    ? `${prix} €+`
+                                    : `+${prix} €`}
+                            </span>
+                          </div>
+                        </motion.div>
+                      )
+                    })}
+                  </AnimatePresence>
+                </div>
+
+                <div className="flex items-center gap-2 text-xs text-white/55 mt-auto pt-2">
+                  <Clock className="w-3 h-3 shrink-0" />
+                  Délai : <span className="text-white/85">{service.delai}</span>
+                </div>
               </div>
-            ))}
+
+              {/* Action — encart prix masqué + CTA + footnote */}
+              <div className="flex flex-col gap-3">
+                <div
+                  className="rounded-xl p-4"
+                  style={{
+                    background: `linear-gradient(135deg, color-mix(in oklab, ${service.color} 10%, transparent), color-mix(in oklab, var(--accent) 5%, transparent))`,
+                    border: `1px solid color-mix(in oklab, ${service.color} 22%, transparent)`,
+                  }}
+                >
+                  <div className="flex items-baseline justify-between gap-3">
+                    <span className="text-sm font-semibold text-white">À partir de</span>
+                    <span className="font-black tracking-[-0.03em] text-[1.75rem] leading-none text-white">
+                      {service.prixBase}{" "}
+                      <span className="text-[1.1rem]" style={{ color: service.color }}>
+                        €
+                      </span>
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-white/55 mt-1.5">
+                    Votre estimation détaillée s&apos;affiche après l&apos;envoi
+                  </p>
+                </div>
+
+                {!canStart && submitAttempted && (
+                  <div className="flex items-start gap-1.5 px-3 py-2 rounded-lg bg-red-400/10 border border-red-400/30 text-[11px] text-red-300">
+                    <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                    <span>
+                      {incompleteAddonIds.size === 1
+                        ? "Une option attend votre sélection ci-dessus."
+                        : `${incompleteAddonIds.size} options attendent votre sélection ci-dessus.`}
+                    </span>
+                  </div>
+                )}
+
+                <button
+                  onClick={handleStartProject}
+                  disabled={!canStart && submitAttempted}
+                  className={`w-full flex items-center justify-center gap-2 py-3.5 px-5 rounded-xl font-bold text-sm transition-all ${
+                    !canStart && submitAttempted
+                      ? "opacity-50 cursor-not-allowed"
+                      : "cursor-pointer hover:opacity-90"
+                  }`}
+                  style={{ background: "var(--accent)", color: "var(--background)" }}
+                >
+                  <Mail className="w-4 h-4" />
+                  Voir mon estimation
+                </button>
+
+                <p className="text-[11px] text-white/55 text-center leading-relaxed">
+                  Réponse sous 24h · Aucun engagement, aucun paiement à cette étape
+                </p>
+              </div>
+
+            </div>
           </div>
-        </div>
-        </div>
-        {/* fin col gauche extérieure */}
+        </FadeUp>
 
-        {/* Right — devis sticky depuis le haut de la page */}
-        <div className="lg:sticky lg:top-28 self-start min-w-0">
-          <div className="rounded-2xl border border-white/[0.07] bg-white/2.5 p-6 space-y-5">
-            <div>
-              <p className="text-[10px] font-bold text-white/50 uppercase tracking-[0.18em] mb-3">
-                Votre devis estimé
-              </p>
-              <p className="text-sm font-semibold" style={{ color: service.color }}>
-                Formule {service.nom}
-              </p>
-            </div>
-
-            <div className="space-y-1.5">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-white/55">Base</span>
-                <span className="font-medium text-white">{service.prixBase} €</span>
+        {/* ── WHY_TRUST — réassurances en pleine largeur ── */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-7 border-t border-white/8">
+          {WHY_TRUST.map(({ icon: Icon, label, detail }) => (
+            <div key={label} className="text-center">
+              <div className="w-9 h-9 rounded-xl border border-white/10 bg-white/4 flex items-center justify-center mx-auto mb-2">
+                <Icon className="w-4 h-4 text-accent" />
               </div>
-              <AnimatePresence>
-                {selectedAddonObjects.map((addon) => {
-                  const { prix, isDevis } = computeAddonPricing(addon, subChoices[addon.id])
-                  const incomplete = incompleteAddonIds.has(addon.id)
-                  return (
-                    <motion.div
-                      key={addon.id}
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.2, ease }}
-                      className="overflow-hidden"
-                    >
-                      <div className="flex items-center justify-between text-xs py-0.5 gap-2">
-                        <span className="text-white/55 truncate flex-1">+ {addon.label}</span>
-                        <span className={`font-medium shrink-0 ${incomplete ? "text-red-400" : "text-white/80"}`}>
-                          {addon.prix === null
-                            ? "Devis"
-                            : incomplete
-                              ? "—"
-                              : isDevis
-                                ? `${prix} €+`
-                                : `+${prix} €`}
-                        </span>
-                      </div>
-                    </motion.div>
-                  )
-                })}
-              </AnimatePresence>
+              <p className="text-xs font-semibold text-white">{label}</p>
+              <p className="text-[10px] text-white/70 mt-0.5">{detail}</p>
             </div>
-
-            <div className="h-px bg-white/[0.07]" />
-
-            {/* Bloc total surligné — gradient + bordure couleur formule */}
-            <div
-              className="rounded-xl p-4"
-              style={{
-                background: `linear-gradient(135deg, color-mix(in oklab, ${service.color} 10%, transparent), color-mix(in oklab, var(--accent) 5%, transparent))`,
-                border: `1px solid color-mix(in oklab, ${service.color} 22%, transparent)`,
-              }}
-            >
-              <div className="flex items-baseline justify-between gap-3">
-                <span className="text-sm font-semibold text-white">Total estimé</span>
-                <span className="font-black tracking-[-0.03em] text-[1.75rem] leading-none text-white">
-                  {total}{" "}
-                  <span className="text-[1.1rem]" style={{ color: service.color }}>
-                    €{hasDevis ? "+" : ""}
-                  </span>
-                </span>
-              </div>
-              <p className="text-[11px] text-white/55 mt-1.5">
-                Hors taxes · Paiement en 2× (acompte + livraison)
-              </p>
-            </div>
-
-            <div className="flex items-center gap-2 text-xs text-white/55">
-              <Clock className="w-3 h-3 shrink-0" />
-              Délai : <span className="text-white/85">{service.delai}</span>
-            </div>
-
-            {!canStart && submitAttempted && (
-              <div className="flex items-start gap-1.5 px-3 py-2 rounded-lg bg-red-400/10 border border-red-400/30 text-[11px] text-red-300">
-                <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
-                <span>
-                  {incompleteAddonIds.size === 1
-                    ? "Une option attend votre sélection ci-dessus."
-                    : `${incompleteAddonIds.size} options attendent votre sélection ci-dessus.`}
-                </span>
-              </div>
-            )}
-
-            <button
-              onClick={handleStartProject}
-              disabled={!canStart && submitAttempted}
-              className={`w-full flex items-center justify-center gap-2 py-3.5 px-5 rounded-xl font-bold text-sm transition-all ${
-                !canStart && submitAttempted
-                  ? "opacity-50 cursor-not-allowed"
-                  : "cursor-pointer hover:opacity-90"
-              }`}
-              style={{ background: "var(--accent)", color: "var(--background)" }}
-            >
-              Recevoir mon devis par email
-              <ArrowRight className="w-4 h-4" />
-            </button>
-
-            <p className="text-[11px] text-white/55 text-center leading-relaxed">
-              Réponse sous 24h · Estimation gratuite,
-              <br />
-              aucun paiement à cette étape
-            </p>
-          </div>
+          ))}
         </div>
+
+      {/* ── CTA #2 — Final, double choix ── */}
+      <ServiceCtaFinal color={service.color} />
+
+      {/* ── CALENDLY — Widget intégré ── */}
+      <CalendlyEmbed accentColor={service.color} />
 
       </div>
+      {/* ── /WRAPPER CENTRÉ ── */}
 
       <AddonInfoDialog
         addon={infoDialogAddon}
@@ -978,6 +1000,18 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
         title={infoDialogInclus?.titre ?? ""}
         priceLabel="Inclus dans la formule"
         content={infoDialogInclus?.detail}
+      />
+
+      <QuoteEmailDialog
+        open={quoteDialogOpen}
+        onOpenChange={setQuoteDialogOpen}
+        formuleNom={service.nom}
+        formuleSlug={service.slug}
+        formuleColor={service.color}
+        total={total}
+        hasDevis={hasDevis}
+        addonsLabels={addonsLabels}
+        calendlyAnchor="calendly"
       />
     </div>
   )
