@@ -1,7 +1,8 @@
 "use client"
 
 import { useEffect } from "react"
-import { Calendar, Phone, Video, Mail, ExternalLink } from "lucide-react"
+import Link from "next/link"
+import { Calendar, Phone, Video, ArrowRight } from "lucide-react"
 
 // Type minimal de l'API JS exposée par Calendly une fois le script chargé.
 type CalendlyAPI = {
@@ -30,8 +31,6 @@ const CALENDLY_URL = (() => {
   const sep = CALENDLY_URL_RAW.includes("?") ? "&" : "?"
   return `${CALENDLY_URL_RAW}${sep}hide_event_type_details=1&hide_gdpr_banner=1`
 })()
-
-const CONTACT_EMAIL = "leo.hengebaert75@gmail.com"
 
 type CalendlyEmbedProps = {
   /** Couleur de la formule (ex: service.color) — utilisée pour les highlights visuels. */
@@ -140,19 +139,18 @@ function CalendlyFallback({ accentColor }: { accentColor: string }) {
         La prise de rendez-vous en ligne arrive bientôt
       </h3>
       <p className="text-sm text-white/65 max-w-md mx-auto mb-7 leading-relaxed">
-        En attendant, écrivez-moi un mail. Je vous propose un créneau d&apos;appel
-        découverte dans la foulée.
+        En attendant, écrivez-moi via le formulaire de contact. Je vous propose
+        un créneau d&apos;appel découverte dans la foulée.
       </p>
 
-      <a
-        href={`mailto:${CONTACT_EMAIL}?subject=Appel découverte 15 min`}
+      <Link
+        href="/contact"
         className="inline-flex items-center gap-2 px-5 py-3 rounded-xl font-bold text-sm cursor-pointer hover:opacity-90 transition-opacity"
         style={{ background: accentColor, color: "var(--background)" }}
       >
-        <Mail className="w-4 h-4" />
-        {CONTACT_EMAIL}
-        <ExternalLink className="w-3.5 h-3.5 opacity-70" />
-      </a>
+        Aller à la page contact
+        <ArrowRight className="w-4 h-4" />
+      </Link>
     </div>
   )
 }
