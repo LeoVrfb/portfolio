@@ -926,11 +926,12 @@ export const services: ServiceDetail[] = [
       pros: {
         titre: "Codé à la main pour vous",
         intro:
-          "Un visiteur reste **7 secondes** en moyenne avant de décider de rester ou partir. Si la page traîne à charger, il est *déjà reparti*.\n\nLe code main vous donne des **temps de chargement courts**, une **fluidité naturelle** dans les interactions — et un site qui vous suit *dans le temps*.",
+          "Un visiteur reste **7 secondes** en moyenne avant de décider de rester ou partir. Si la page traîne à charger, il est *déjà reparti*.\n\nLes sites que je crée sont **ultra rapides**, **fluides** et *vraiment simples* à utiliser au quotidien.",
         points: [
-          "Chargement rapide, navigation fluide",
-          "Une interface simple pour gérer vos contenus",
-          "Un site qui vous appartient vraiment",
+          "Sans abonnement à vie",
+          "Chargement ultra rapide",
+          "Une interface impactante pour gérer vos contenus",
+          "Très simple à utiliser au quotidien",
         ],
       },
     },
