@@ -4,14 +4,15 @@ import { useState, useRef, Fragment } from "react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { motion, useInView, AnimatePresence } from "motion/react"
-import { Check, ArrowLeft, ArrowRight, ArrowDown, Clock, Calendar, ChevronDown, Info, Mail, MessageCircle, Star, Shield, Zap, AlertCircle, Plus, Minus, XCircle } from "lucide-react"
+import { Check, ArrowLeft, ArrowRight, ArrowDown, Clock, Calendar, ChevronDown, Info, Mail, AlertCircle, Plus, Minus, XCircle } from "lucide-react"
 import type { Addon, AddonSubOption, ServiceDetail, ServiceInclus } from "@/lib/services"
 import { AddonInfoDialog, InfoDialog } from "@/components/sections/addon-info-dialog"
 import { QuoteEmailDialog } from "@/components/sections/quote-email-dialog"
 import { ServiceWorkflow } from "@/components/sections/service-workflow"
 import { ServiceTestimonials } from "@/components/sections/service-testimonials"
-import { ServiceCtaDiscovery, ServiceCtaFinal } from "@/components/sections/service-ctas"
-import { CalendlyEmbed } from "@/components/sections/calendly-embed"
+import { ServiceCtaInline, ServiceCtaFinal } from "@/components/sections/service-ctas"
+import { BookingCalendar } from "@/components/sections/booking-calendar"
+import { BookingFloatingCta } from "@/components/sections/booking-floating-cta"
 
 // Parse minimaliste **mot** → <strong className="text-accent">. Utilisé dans le pitch.
 function renderRichText(text: string, accentClassName = "text-accent font-bold"): React.ReactNode {
@@ -86,13 +87,6 @@ function renderPromesse(text: string, color: string): React.ReactNode {
     </Fragment>
   ))
 }
-
-const WHY_TRUST = [
-  { icon: MessageCircle, label: "Réponse sous 24h", detail: "Je réponds à chaque demande" },
-  { icon: Shield, label: "Devis gratuit", detail: "Sans engagement de votre part" },
-  { icon: Zap, label: "Partout en France", detail: "100% remote, visio ou email" },
-  { icon: Star, label: "Code sur mesure", detail: "Zéro template, zéro no-code" },
-]
 
 const ease = [0.16, 1, 0.3, 1] as const
 
@@ -535,7 +529,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
             </div>
 
             <a
-              href="#calendly"
+              href="#booking"
               className="group inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all hover:opacity-90 cursor-pointer"
               style={{ background: service.color, color: "var(--background)" }}
             >
@@ -672,14 +666,14 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
         </div>
       </FadeUp>
 
-      {/* ── COMMENT ÇA SE PASSE ── */}
-      <ServiceWorkflow color={service.color} delai={service.delai} />
-
-      {/* ── TÉMOIGNAGES ── */}
+      {/* ── TÉMOIGNAGES — remontés pour rassurer avant le process ── */}
       <ServiceTestimonials color={service.color} />
 
-      {/* ── CTA #1 — Transition vers appel découverte ── */}
-      <ServiceCtaDiscovery color={service.color} formuleNom={service.nom} />
+      {/* ── MINI CTA — pour les early converters déjà chauds ── */}
+      <ServiceCtaInline color={service.color} />
+
+      {/* ── COMMENT ÇA SE PASSE ── */}
+      <ServiceWorkflow color={service.color} delai={service.delai} />
 
       {/* Titre de section configurateur — eyebrow + titre + sous-texte + chevron */}
       <FadeUp delay={0.35}>
@@ -966,24 +960,11 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
           </div>
         </FadeUp>
 
-        {/* ── WHY_TRUST — réassurances en pleine largeur ── */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-7 border-t border-white/8">
-          {WHY_TRUST.map(({ icon: Icon, label, detail }) => (
-            <div key={label} className="text-center">
-              <div className="w-9 h-9 rounded-xl border border-white/10 bg-white/4 flex items-center justify-center mx-auto mb-2">
-                <Icon className="w-4 h-4 text-accent" />
-              </div>
-              <p className="text-xs font-semibold text-white">{label}</p>
-              <p className="text-[10px] text-white/70 mt-0.5">{detail}</p>
-            </div>
-          ))}
-        </div>
-
-      {/* ── CTA #2 — Final, double choix ── */}
+      {/* ── CTA FINAL — seul gros bloc CTA après le configurateur ── */}
       <ServiceCtaFinal color={service.color} />
 
-      {/* ── CALENDLY — Widget intégré ── */}
-      <CalendlyEmbed accentColor={service.color} />
+      {/* ── BOOKING — Calendrier custom branché sur Google Calendar ── */}
+      <BookingCalendar accentColor={service.color} />
 
       </div>
       {/* ── /WRAPPER CENTRÉ ── */}
@@ -1011,8 +992,11 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
         total={total}
         hasDevis={hasDevis}
         addonsLabels={addonsLabels}
-        calendlyAnchor="calendly"
+        bookingAnchor="booking"
       />
+
+      {/* ── FAB "Réserver un appel" — visible en permanence pendant le scroll ── */}
+      <BookingFloatingCta color={service.color} />
     </div>
   )
 }

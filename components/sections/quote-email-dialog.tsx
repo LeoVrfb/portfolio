@@ -14,8 +14,8 @@ type QuoteEmailDialogProps = {
   total: number
   hasDevis: boolean
   addonsLabels: string[]
-  /** ID HTML de la section Calendly à scroller depuis le CTA secondaire. */
-  calendlyAnchor?: string
+  /** ID HTML de la section booking à scroller depuis le CTA secondaire. */
+  bookingAnchor?: string
 }
 
 type FormData = {
@@ -36,7 +36,7 @@ export function QuoteEmailDialog({
   total,
   hasDevis,
   addonsLabels,
-  calendlyAnchor = "calendly",
+  bookingAnchor = "booking",
 }: QuoteEmailDialogProps) {
   const [data, setData] = useState<FormData>(initialForm)
   const [isPending, setIsPending] = useState(false)
@@ -91,10 +91,10 @@ export function QuoteEmailDialog({
     }
   }
 
-  const handleScrollToCalendly = () => {
+  const handleScrollToBooking = () => {
     handleOpenChange(false)
     setTimeout(() => {
-      const el = document.getElementById(calendlyAnchor)
+      const el = document.getElementById(bookingAnchor)
       el?.scrollIntoView({ behavior: "smooth", block: "start" })
     }, 250)
   }
@@ -260,7 +260,7 @@ export function QuoteEmailDialog({
                 </p>
 
                 <button
-                  onClick={handleScrollToCalendly}
+                  onClick={handleScrollToBooking}
                   className="w-full flex items-center justify-center gap-2 py-3.5 px-5 rounded-xl font-bold text-sm transition-all hover:opacity-90 cursor-pointer"
                   style={{ background: formuleColor, color: "var(--background)" }}
                 >
