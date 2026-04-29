@@ -11,32 +11,103 @@ type Step = {
   icon: LucideIcon
 }
 
-const steps: Step[] = [
-  {
-    num: "01",
-    titre: "Le brief",
-    description: "On échange et je comprends votre univers, votre clientèle, vos objectifs.",
-    icon: MessageSquare,
-  },
-  {
-    num: "02",
-    titre: "La direction",
-    description: "Je vous propose 2 ou 3 ambiances visuelles par mail, vous choisissez celle qui vous parle.",
-    icon: Palette,
-  },
-  {
-    num: "03",
-    titre: "La première ébauche",
-    description: "Une page clé conçue pour valider le style. Vous validez, je continue avec votre confiance.",
-    icon: Sparkles,
-  },
-  {
-    num: "04",
-    titre: "Production & livraison",
-    description: "Finitions, optimisations, mise en ligne. Le site est à vous, prêt à accueillir vos clients.",
-    icon: Rocket,
-  },
-]
+// Process différencié par formule. La direction artistique évolue clairement
+// d'une formule à l'autre : Essentiel reste modeste (palette de couleurs +
+// confiance), Standard pousse l'effort (vraie identité + page démo codée),
+// Premium va beaucoup plus loin (recherche d'identité, composants sur mesure).
+// Pas de mention de Figma ou de maquettes : tout est codé directement.
+const STEPS_BY_FORMULE: Record<string, Step[]> = {
+  essentiel: [
+    {
+      num: "01",
+      titre: "Le brief",
+      description:
+        "On échange en visio. Je comprends votre univers, votre clientèle, vos objectifs.",
+      icon: MessageSquare,
+    },
+    {
+      num: "02",
+      titre: "La direction",
+      description:
+        "Je vous propose une palette de couleurs et un style adapté à votre activité. Pas de débat sans fin : on avance vite vers le résultat.",
+      icon: Palette,
+    },
+    {
+      num: "03",
+      titre: "La première ébauche",
+      description:
+        "Je vous montre une première page complète. Vous validez, je continue dans cette direction.",
+      icon: Sparkles,
+    },
+    {
+      num: "04",
+      titre: "Production & livraison",
+      description:
+        "Finitions, optimisations, mise en ligne. Votre site est prêt à accueillir vos premiers visiteurs.",
+      icon: Rocket,
+    },
+  ],
+  standard: [
+    {
+      num: "01",
+      titre: "Le brief",
+      description:
+        "On échange en visio. Je comprends votre univers, votre clientèle, vos objectifs.",
+      icon: MessageSquare,
+    },
+    {
+      num: "02",
+      titre: "La direction",
+      description:
+        "Je vous propose une vraie identité visuelle : palette, typographies, et une page de démo codée pour vous montrer concrètement le rendu.",
+      icon: Palette,
+    },
+    {
+      num: "03",
+      titre: "La première ébauche",
+      description:
+        "On affine ensemble cette page jusqu'à ce qu'elle vous ressemble vraiment. C'est la base qui guide tout le reste du site.",
+      icon: Sparkles,
+    },
+    {
+      num: "04",
+      titre: "Production & livraison",
+      description:
+        "Construction des autres pages, finitions, optimisations, mise en ligne. Votre site est prêt à convertir.",
+      icon: Rocket,
+    },
+  ],
+  premium: [
+    {
+      num: "01",
+      titre: "Le brief",
+      description:
+        "Échange approfondi sur votre univers, votre clientèle, votre positionnement et vos ambitions à 3-5 ans.",
+      icon: MessageSquare,
+    },
+    {
+      num: "02",
+      titre: "La direction",
+      description:
+        "Recherche d'identité poussée : 2 ou 3 univers visuels distincts, composants sur mesure, inspirations puisées dans le meilleur du web.",
+      icon: Palette,
+    },
+    {
+      num: "03",
+      titre: "La première ébauche",
+      description:
+        "Une page clé entièrement designée et codée pour incarner l'identité. Itérations jusqu'à ce qu'elle vous représente parfaitement.",
+      icon: Sparkles,
+    },
+    {
+      num: "04",
+      titre: "Production & livraison",
+      description:
+        "Construction complète, animations sur mesure, performance poussée, mise en ligne. Un site qui marque les esprits.",
+      icon: Rocket,
+    },
+  ],
+}
 
 const ease = [0.16, 1, 0.3, 1] as const
 
@@ -87,7 +158,16 @@ function StepCell({ step, index, color }: { step: Step; index: number; color: st
   )
 }
 
-export function ServiceWorkflow({ color, delai }: { color: string; delai: string }) {
+type ServiceWorkflowProps = {
+  color: string
+  delai: string
+  /** Slug de la formule pour récupérer le bon process. Fallback sur "standard" si inconnu. */
+  formuleSlug: string
+}
+
+export function ServiceWorkflow({ color, delai, formuleSlug }: ServiceWorkflowProps) {
+  const steps = STEPS_BY_FORMULE[formuleSlug] ?? STEPS_BY_FORMULE.standard
+
   return (
     <section className="py-16 sm:py-20">
       <div className="text-center mb-10 sm:mb-12">

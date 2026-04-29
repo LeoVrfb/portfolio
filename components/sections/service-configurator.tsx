@@ -673,7 +673,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
       <ServiceCtaInline color={service.color} />
 
       {/* ── COMMENT ÇA SE PASSE ── */}
-      <ServiceWorkflow color={service.color} delai={service.delai} />
+      <ServiceWorkflow color={service.color} delai={service.delai} formuleSlug={service.slug} />
 
       {/* Titre de section configurateur — eyebrow + titre + sous-texte + chevron */}
       <FadeUp delay={0.35}>
