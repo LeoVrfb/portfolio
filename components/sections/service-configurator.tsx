@@ -10,6 +10,7 @@ import { AddonInfoDialog, InfoDialog } from "@/components/sections/addon-info-di
 import { QuoteEmailDialog } from "@/components/sections/quote-email-dialog"
 import { ServiceWorkflow } from "@/components/sections/service-workflow"
 import { ServiceTestimonials } from "@/components/sections/service-testimonials"
+import { ServiceProjects } from "@/components/sections/service-projects"
 import { ServiceCtaInline, ServiceCtaFinal } from "@/components/sections/service-ctas"
 import { BookingCalendar } from "@/components/sections/booking-calendar"
 import { BookingFloatingCta } from "@/components/sections/booking-floating-cta"
@@ -674,6 +675,9 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
 
       {/* ── COMMENT ÇA SE PASSE ── */}
       <ServiceWorkflow color={service.color} delai={service.delai} formuleSlug={service.slug} />
+
+      {/* ── RÉALISATIONS — preuve concrète après le process, avant le configurateur ── */}
+      <ServiceProjects color={service.color} />
 
       {/* Titre de section configurateur — eyebrow + titre + sous-texte + chevron */}
       <FadeUp delay={0.35}>
