@@ -29,14 +29,14 @@ const STEPS_BY_FORMULE: Record<string, Step[]> = {
       num: "02",
       titre: "La direction",
       description:
-        "Je vous propose une palette de couleurs et un style adapté à votre activité. Pas de débat sans fin : on avance vite vers le résultat.",
+        "Je vous propose une palette de couleurs et un style adapté à votre activité. Une fois décidé, je prends les commandes.",
       icon: Palette,
     },
     {
       num: "03",
       titre: "La première ébauche",
       description:
-        "Je vous montre une première page complète. Vous validez, je continue dans cette direction.",
+        "Je vous montre une première page complète. À partir de là, vous me faites confiance jusqu'à la livraison.",
       icon: Sparkles,
     },
     {
