@@ -642,7 +642,7 @@ export const services: ServiceDetail[] = [
       "Site vitrine professionnel sur une seule page avec plusieurs sections. Pour qui lance son activité ou son projet personnel et veut une présence en ligne sérieuse et durable.",
     tagline: "Simple à lancer, *fort en look*.",
     hook: {
-      pasDe: "Pas un site bâclé.",
+      pasDe: "Pas une simple page web.",
       description: "Une vitrine soignée, faite à la main par un pro,",
       metaphor: "comme une devanture devant laquelle on s'arrête.",
     },
@@ -895,7 +895,7 @@ export const services: ServiceDetail[] = [
       "Site vitrine multi-pages avec design personnalisé, contenu rédigé, SEO+ inclus et Google Analytics. Pour les activités établies qui veulent un site qui les représente vraiment.",
     tagline: "Le site qui *transforme* vos visiteurs en clients.",
     hook: {
-      pasDe: "Pas un site sorti d'un moule.",
+      pasDe: "Pas un site vu mille fois.",
       description: "Un site dessiné et codé rien que pour vous,",
       metaphor: "comme un plat fait maison par quelqu'un qui connaît votre goût.",
     },
@@ -918,10 +918,10 @@ export const services: ServiceDetail[] = [
     antiAlternative: {
       titre: "Pas d'outils no-code",
       consPoints: [
-        "Wix, Squarespace, Webflow…",
-        "Parfois lent à charger",
-        "Difficile à entretenir pour vous",
-        "Complexe à utiliser au quotidien quand on n'est pas expert",
+        "Wix, Squarespace, Webflow, WordPress…",
+        "Très peu de personnalisation (limité au thème)",
+        "Sites souvent lents et lourds",
+        "Complexe à entretenir et à utiliser au quotidien",
       ],
       pros: {
         titre: "Codé à la main pour vous",
@@ -930,8 +930,8 @@ export const services: ServiceDetail[] = [
         points: [
           "Sans abonnement à vie",
           "Chargement ultra rapide",
-          "Une interface impactante pour gérer vos contenus",
-          "Très simple à utiliser au quotidien",
+          "Interface très simple pour gérer vos contenus",
+          "Modernité technique : code propre, dernières technos",
         ],
       },
     },
@@ -1147,7 +1147,7 @@ export const services: ServiceDetail[] = [
       consPoints: [
         "Surcouche commerciale qui gonfle la facture",
         "Délais à 3 mois, parfois plus",
-        "Vous parlez à un commercial, jamais au dev",
+        "Vous parlez à un commercial, jamais au développeur",
         "Process lourd, devis interminables",
       ],
       pros: {

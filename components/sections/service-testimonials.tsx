@@ -71,7 +71,7 @@ export function ServiceTestimonials({ color }: { color: string }) {
           Ils m&apos;ont fait confiance
         </span>
         <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white mb-3">
-          Quelques retours de <span style={{ color }}>vrais clients</span>
+          Quelques retours de <span style={{ color }}>mes clients</span>
         </h2>
         <p className="text-sm sm:text-base text-white/65 max-w-xl mx-auto leading-relaxed">
           Des indépendants et petites entreprises qui ont transformé leur présence en ligne avec moi.
