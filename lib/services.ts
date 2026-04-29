@@ -666,16 +666,15 @@ export const services: ServiceDetail[] = [
       titre: "Pas de no-code",
       consPoints: [
         "Wix, Squarespace, Webflow…",
-        "Templates vus mille fois",
-        "Lent à charger sur mobile",
+        "Modèles de base qui ne font pas pro",
         "Abonnement mensuel à vie",
       ],
       pros: {
         titre: "Codé à la main pour vous",
         intro:
-          "Une vitrine **propre et soignée**, *qui vous appartient vraiment*. Aucun abonnement, aucun outil dont vous dépendez — un site qui *dure dans le temps*.",
+          "Ce n'est pas parce qu'un projet est simple qu'on ne peut pas avoir une vitrine **propre et soignée**, *qui vous appartient vraiment*. Pas de surcoût, juste de la qualité — *de la qualité à petit prix*.",
         points: [
-          "Aucun coût mensuel récurrent",
+          "Aucun abonnement, aucun coût mensuel",
           "Une vitrine soignée qui vous démarque",
           "Un site qui vous suit dans le temps",
         ],
