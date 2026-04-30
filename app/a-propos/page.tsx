@@ -440,7 +440,7 @@ export default function AProposPage() {
                         className="inline-flex items-center gap-1.5 text-sm text-foreground/85"
                       >
                         {Icon ? (
-                          <Icon className="w-3.5 h-3.5 shrink-0" style={{ color: "var(--accent)" }} />
+                          <Icon className="w-3.5 h-3.5 shrink-0 text-accent" />
                         ) : (
                           <span
                             className="w-1 h-1 rounded-full shrink-0"
