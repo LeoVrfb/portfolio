@@ -1,12 +1,16 @@
 "use client"
 
-import { Dialog } from "@base-ui/react/dialog"
-import { X, Check } from "lucide-react"
+import { Check } from "lucide-react"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import type { Addon, DetailContent } from "@/lib/services"
 
-// ─── Helper : parsing **mot** → spans avec accent (vert) ────────────────────
-// Format minimaliste : "Texte avec **mots clés** dedans"
-// Les segments encadrés par ** ** sont rendus en couleur d'accent.
+// Parsing minimaliste **mot** → segments en couleur d'accent.
 function renderRichText(text: string, accentClassName = "text-accent font-semibold"): React.ReactNode {
   const parts = text.split(/(\*\*[^*]+\*\*)/g)
   return parts.map((part, i) => {
@@ -20,8 +24,6 @@ function renderRichText(text: string, accentClassName = "text-accent font-semibo
     return <span key={i}>{part}</span>
   })
 }
-
-// ─── Sous-composants ─────────────────────────────────────────────────────────
 
 function DetailSectionBlock({
   title,
@@ -110,10 +112,6 @@ function DetailContentRender({ content }: { content: DetailContent }) {
   )
 }
 
-// ─── Dialog générique ────────────────────────────────────────────────────────
-// Utilisé pour afficher les détails d'un addon OU d'un item "inclus".
-// Pour un addon : on passe `priceLabel`. Pour un inclus : on omet `priceLabel`.
-
 type InfoDialogProps = {
   open: boolean
   onOpenChange: (open: boolean) => void
@@ -132,48 +130,32 @@ export function InfoDialog({
   content,
 }: InfoDialogProps) {
   return (
-    <Dialog.Root open={open} onOpenChange={onOpenChange}>
-      <Dialog.Portal>
-        <Dialog.Backdrop className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm data-starting-style:opacity-0 data-ending-style:opacity-0 transition-opacity duration-200" />
-        <Dialog.Popup className="fixed left-1/2 top-1/2 z-50 w-[calc(100vw-2rem)] max-w-md sm:max-w-lg lg:max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/12 bg-background p-5 sm:p-6 lg:p-7 shadow-2xl data-starting-style:opacity-0 data-ending-style:opacity-0 data-starting-style:scale-95 data-ending-style:scale-95 transition-all duration-200 max-h-[85vh] overflow-y-auto">
-          <div className="flex items-start justify-between gap-3 mb-1">
-            <Dialog.Title className="text-lg font-black text-accent leading-tight">
-              {title}
-            </Dialog.Title>
-            <Dialog.Close
-              aria-label="Fermer"
-              className="shrink-0 -mt-1 -mr-1 p-1.5 rounded-lg text-white/50 hover:text-white hover:bg-white/8 transition-colors cursor-pointer"
-            >
-              <X className="w-4 h-4" />
-            </Dialog.Close>
-          </div>
-
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent
+        className="max-w-md sm:max-w-lg lg:max-w-2xl max-h-[85vh] overflow-y-auto p-5 sm:p-6 lg:p-7 bg-background border-white/12 ring-0"
+      >
+        <DialogHeader>
+          <DialogTitle className="text-lg font-black text-accent leading-tight pr-8">
+            {title}
+          </DialogTitle>
           {description && (
-            <Dialog.Description className="text-sm text-white/75 leading-relaxed mb-4">
+            <DialogDescription className="text-sm text-white/75 leading-relaxed">
               {description}
-            </Dialog.Description>
+            </DialogDescription>
           )}
+        </DialogHeader>
 
-          {priceLabel && (
-            <div className="inline-flex items-center px-2.5 py-1 rounded-full bg-accent/12 border border-accent/25 text-xs font-bold text-accent mb-4">
-              {priceLabel}
-            </div>
-          )}
-
-          {content && <DetailContentRender content={content} />}
-
-          <div className="mt-6 flex justify-end">
-            <Dialog.Close className="px-4 py-2 rounded-lg text-sm font-semibold text-white/80 bg-white/6 hover:bg-white/10 hover:text-white transition-colors cursor-pointer">
-              Fermer
-            </Dialog.Close>
+        {priceLabel && (
+          <div className="inline-flex items-center self-start px-2.5 py-1 rounded-full bg-accent/12 border border-accent/25 text-xs font-bold text-accent -mt-2">
+            {priceLabel}
           </div>
-        </Dialog.Popup>
-      </Dialog.Portal>
-    </Dialog.Root>
+        )}
+
+        {content && <DetailContentRender content={content} />}
+      </DialogContent>
+    </Dialog>
   )
 }
-
-// ─── Wrapper rétrocompatible pour les addons ─────────────────────────────────
 
 function formatAddonPrice(addon: Addon): string {
   if (addon.prix === null) return "Sur devis"
