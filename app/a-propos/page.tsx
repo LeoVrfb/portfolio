@@ -77,25 +77,22 @@ const SKILLS: { category: string; items: { name: string; Icon: React.ComponentTy
     ],
   },
   {
-    category: "Styling & UI",
+    category: "Styling, UI & Design system",
     items: [
       { name: "Tailwind CSS", Icon: SiTailwindcss },
       { name: "shadcn/ui (Radix)", Icon: SiRadixui },
+      { name: "Storybook", Icon: SiStorybook },
     ],
   },
   {
-    category: "Animation",
+    category: "Animations & Canvas",
     items: [
       { name: "Motion (Framer Motion)", Icon: SiFramer },
       { name: "GSAP", Icon: SiGreensock },
-      { name: "Lenis", Icon: null },
-    ],
-  },
-  {
-    category: "Canvas & Jeux",
-    items: [
       { name: "PixiJS", Icon: null },
       { name: "Canvas API", Icon: null },
+      { name: "Aceternity UI", Icon: null },
+      { name: "Magic UI", Icon: null },
     ],
   },
   {
@@ -112,25 +109,15 @@ const SKILLS: { category: string; items: { name: string; Icon: React.ComponentTy
     ],
   },
   {
-    category: "Data & API",
-    items: [
-      { name: "TanStack Query", Icon: null },
-      { name: "GraphQL", Icon: SiGraphql },
-    ],
-  },
-  {
-    category: "Database",
+    category: "Database & API",
     items: [
       { name: "Convex", Icon: null },
       { name: "Supabase", Icon: SiSupabase },
       { name: "MongoDB", Icon: SiMongodb },
-    ],
-  },
-  {
-    category: "CMS",
-    items: [
       { name: "Contentful", Icon: SiContentful },
       { name: "Prismic", Icon: SiPrismic },
+      { name: "TanStack Query", Icon: null },
+      { name: "GraphQL", Icon: SiGraphql },
     ],
   },
   {
@@ -144,7 +131,6 @@ const SKILLS: { category: string; items: { name: string; Icon: React.ComponentTy
     category: "Internationalisation",
     items: [
       { name: "next-intl", Icon: null },
-      { name: "i18next", Icon: null },
       { name: "react-i18next", Icon: null },
     ],
   },
@@ -163,12 +149,6 @@ const SKILLS: { category: string; items: { name: string; Icon: React.ComponentTy
     ],
   },
   {
-    category: "Design system",
-    items: [
-      { name: "Storybook", Icon: SiStorybook },
-    ],
-  },
-  {
     category: "Outils & Déploiement",
     items: [
       { name: "Git", Icon: SiGit },
@@ -179,7 +159,7 @@ const SKILLS: { category: string; items: { name: string; Icon: React.ComponentTy
   {
     category: "Méthodologie",
     items: [
-      { name: "Méthodologie agile / Scrum", Icon: null },
+      { name: "Agile / Scrum", Icon: null },
     ],
   },
 ]
@@ -421,39 +401,50 @@ export default function AProposPage() {
         </div>
       </section>
 
-      {/* Stack technique */}
+      {/* Stack technique — layout liste, dense, label à gauche / items à droite */}
       <section className="pb-24 layout-container">
-        <BlurFade delay={0.1} direction="up" inView>
-          <h2 className="text-2xl font-black text-white tracking-tight mb-8">Stack technique</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {SKILLS.map((group) => (
-              <div
-                key={group.category}
-                className="p-5 rounded-2xl border border-white/6 bg-white/2 hover:border-accent/20 transition-colors"
-              >
-                <p className="text-[10px] uppercase tracking-[0.35em] text-accent mb-4 font-semibold">
-                  {group.category}
-                </p>
-                <div className="space-y-2.5">
-                  {group.items.map(({ name, Icon }) => (
-                    <div key={name} className="flex items-center gap-2.5">
-                      {Icon ? (
-                        <span className="w-4 h-4 shrink-0 flex items-center justify-center" style={{ color: "var(--accent)" }}>
-                          <Icon className="w-4 h-4" />
-                        </span>
-                      ) : (
-                        <span className="w-4 h-4 shrink-0 flex items-center justify-center">
-                          <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--accent)", opacity: 0.5 }} />
-                        </span>
-                      )}
-                      <p className="text-sm text-foreground/85 font-medium">{name}</p>
-                    </div>
-                  ))}
+        <div className="max-w-4xl mx-auto">
+          <BlurFade delay={0.1} direction="up" inView>
+            <h2 className="text-2xl font-black text-white tracking-tight mb-2">Stack technique</h2>
+            <p className="text-sm text-foreground/55 mb-8">
+              Les outils que j&apos;utilise au quotidien, regroupés par usage.
+            </p>
+          </BlurFade>
+
+          <div className="rounded-2xl border border-white/8 bg-white/2 overflow-hidden">
+            {SKILLS.map((group, i) => (
+              <BlurFade key={group.category} delay={0.12 + i * 0.04} direction="up" inView>
+                <div
+                  className={`grid md:grid-cols-[200px_1fr] gap-x-8 gap-y-2 px-5 sm:px-6 py-4 sm:py-5 ${
+                    i !== SKILLS.length - 1 ? "border-b border-white/6" : ""
+                  }`}
+                >
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-accent font-semibold mt-1">
+                    {group.category}
+                  </p>
+                  <div className="flex flex-wrap gap-x-4 gap-y-2">
+                    {group.items.map(({ name, Icon }) => (
+                      <span
+                        key={name}
+                        className="inline-flex items-center gap-1.5 text-sm text-foreground/85"
+                      >
+                        {Icon ? (
+                          <Icon className="w-3.5 h-3.5 shrink-0" style={{ color: "var(--accent)" }} />
+                        ) : (
+                          <span
+                            className="w-1 h-1 rounded-full shrink-0"
+                            style={{ background: "var(--accent)", opacity: 0.5 }}
+                          />
+                        )}
+                        {name}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </BlurFade>
             ))}
           </div>
-        </BlurFade>
+        </div>
       </section>
 
       {/* Formation */}
