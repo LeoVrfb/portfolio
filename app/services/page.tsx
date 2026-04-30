@@ -114,10 +114,10 @@ const faq: { q: string; r: React.ReactNode }[] = [
     r: (
       <>
         <p>
-          Avec un outil no-code, vous démarrez vite — mais vous perdez vite le contrôle. Design contraint par des modèles génériques (qu&apos;on retrouve sur des milliers d&apos;autres sites), abonnement mensuel à vie, performance et référencement limités, et zéro maîtrise sur ce qui se passe sous le capot.
+          Avec un outil no-code, vous démarrez vite. Mais vous perdez vite le contrôle&nbsp;: design contraint par des modèles génériques (qu&apos;on retrouve sur des milliers d&apos;autres sites), abonnement mensuel à vie, performance et référencement limités, zéro maîtrise sur ce qui se passe sous le capot.
         </p>
         <p>
-          Ce que je propose, c&apos;est <strong className="text-white">un site codé de A à Z, qui vous appartient à 100&nbsp;%</strong>. Vous maîtrisez tous les aspects&nbsp;: design unique adapté à votre activité, référencement, performance, fluidité, rapidité — et le choix des techniques utilisées pour faire évoluer votre site dans le temps.
+          Ce que je propose, c&apos;est <strong className="text-accent">un site codé de A à Z, qui vous appartient à 100&nbsp;%</strong>. Vous maîtrisez tous les aspects&nbsp;: design unique adapté à votre activité, référencement, performance, fluidité, rapidité, et le choix des techniques utilisées pour faire évoluer votre site dans le temps.
         </p>
       </>
     ),
@@ -126,7 +126,7 @@ const faq: { q: string; r: React.ReactNode }[] = [
     q: "Combien de temps pour avoir mon site ?",
     r: (
       <p>
-        <strong className="text-white">5 jours ouvrés</strong> pour l&apos;Essentiel, <strong className="text-white">10 jours</strong> pour le Standard, <strong className="text-white">3 semaines</strong> pour le Premium. Le délai démarre dès réception de vos éléments (textes, photos, logo).
+        <strong className="text-accent">5 jours ouvrés</strong> pour l&apos;Essentiel, <strong className="text-accent">10 jours</strong> pour le Standard, <strong className="text-accent">3 semaines</strong> pour le Premium. Le délai démarre dès réception de vos éléments (textes, photos, logo).
       </p>
     ),
   },
@@ -135,10 +135,10 @@ const faq: { q: string; r: React.ReactNode }[] = [
     r: (
       <>
         <p>
-          Aujourd&apos;hui, dans la majorité des cas&nbsp;: <strong className="text-white">non, et c&apos;est volontaire</strong>. On valide une direction visuelle ensemble (palette, typo, ambiance, références que vous aimez et que vous n&apos;aimez pas), puis je passe directement au code.
+          Aujourd&apos;hui, dans la majorité des cas&nbsp;: <strong className="text-accent">non, et c&apos;est volontaire</strong>. On valide une direction visuelle ensemble (palette, typo, ambiance, références que vous aimez et que vous n&apos;aimez pas), puis je passe directement au code.
         </p>
         <p>
-          Vous voyez votre site progresser <strong className="text-white">en vrai, pas une maquette figée</strong>. Ça va plus vite, le résultat est forcément fidèle au final, et toutes les retouches passent par les heures incluses dans votre formule.
+          Vous voyez votre site progresser <strong className="text-accent">en vrai, pas une maquette figée</strong>. Ça va plus vite, le résultat est forcément fidèle au final, et toutes les retouches passent par les heures incluses dans votre formule.
         </p>
         <p className="text-white/55 text-xs italic">
           Sur les projets Premium les plus ambitieux, je peux proposer des mini-maquettes ou un travail en binôme avec une designer partenaire. C&apos;est discuté au cas par cas.
@@ -151,7 +151,7 @@ const faq: { q: string; r: React.ReactNode }[] = [
     r: (
       <>
         <p>
-          On commence par un <strong className="text-white">appel visio gratuit de 15&nbsp;min</strong> pour comprendre votre activité et votre univers. Si on travaille ensemble, je vous envoie un brief visuel à remplir (couleurs, références, ambiance), puis une <strong className="text-white">moodboard à valider par mail</strong>.
+          On commence par un <strong className="text-accent">appel visio gratuit de 15&nbsp;min</strong> pour comprendre votre activité et votre univers. Si on travaille ensemble, je vous envoie un brief visuel à remplir (couleurs, références, ambiance), puis une <strong className="text-accent">moodboard à valider par mail</strong>.
         </p>
         <p>
           Une fois la direction scellée, je code la première page et vous l&apos;envoie en preview. Vous validez ce premier jet, je code le reste dans la même direction. Les ajustements passent par les heures de retouches incluses dans votre formule.
@@ -164,10 +164,10 @@ const faq: { q: string; r: React.ReactNode }[] = [
     r: (
       <>
         <p>
-          Oui — une sélection est sur la page <Link href="/projets" className="text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent">projets</Link>, et 3 réalisations sont mises en avant directement sur chaque page formule.
+          Oui&nbsp;: une sélection est sur la page <Link href="/projets" className="text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent">projets</Link>, et 3 réalisations sont mises en avant directement sur chaque page formule.
         </p>
         <p>
-          Du e-commerce d&apos;artiste qui vend à l&apos;international à des applications déployées sur des centaines de tablettes en stations TotalEnergies — chaque projet a sa propre identité.
+          Du e-commerce d&apos;artiste qui vend à l&apos;international jusqu&apos;à des applications déployées sur des centaines de tablettes en stations TotalEnergies. Chaque projet a sa propre identité.
         </p>
       </>
     ),
@@ -176,7 +176,7 @@ const faq: { q: string; r: React.ReactNode }[] = [
     q: "Et si je veux une option qui n'est pas dans ma formule ?",
     r: (
       <p>
-        Chaque formule a un périmètre clair. Si vous voulez une option qui n&apos;y figure pas (par exemple un design 100&nbsp;% sur mesure en Essentiel), il faut passer à la formule supérieure. <strong className="text-white">Pas de mélange à la carte</strong> hors des options listées&nbsp;: ça garde les délais courts et les prix clairs.
+        Chaque formule a un périmètre clair. Si vous voulez une option qui n&apos;y figure pas (par exemple un design 100&nbsp;% sur mesure en Essentiel), il faut passer à la formule supérieure. <strong className="text-accent">Pas de mélange à la carte</strong> hors des options listées&nbsp;: ça garde les délais courts et les prix clairs.
       </p>
     ),
   },
@@ -185,10 +185,10 @@ const faq: { q: string; r: React.ReactNode }[] = [
     r: (
       <>
         <p>
-          <strong className="text-white">2h de retouches</strong> incluses en Essentiel, <strong className="text-white">5h</strong> en Standard, <strong className="text-white">10h</strong> en Premium. Ces heures couvrent les ajustements de contenu, les petites retouches visuelles, les variantes de couleur sur tel bloc, etc.
+          <strong className="text-accent">2h de retouches</strong> incluses en Essentiel, <strong className="text-accent">5h</strong> en Standard, <strong className="text-accent">10h</strong> en Premium. Ces heures couvrent les ajustements de contenu, les petites retouches visuelles, les variantes de couleur sur tel bloc, etc.
         </p>
         <p>
-          Au-delà&nbsp;: <strong className="text-white">60&nbsp;€/h</strong> avec devis avant intervention. Ou maintenance mensuelle à <strong className="text-white">50&nbsp;€/mois</strong> (1h de modifs incluse + suivi technique).
+          Au-delà&nbsp;: <strong className="text-accent">60&nbsp;€/h</strong> avec devis avant intervention. Ou maintenance mensuelle à <strong className="text-accent">50&nbsp;€/mois</strong> (1h de modifs incluse + suivi technique).
         </p>
       </>
     ),
@@ -356,11 +356,11 @@ export default function ServicesPage() {
               value={`item-${i}`}
               className="border-b-0 last:border-b-0"
             >
-              <AccordionTrigger className="px-5 py-4 text-left text-sm sm:text-base font-semibold text-white hover:text-accent hover:no-underline cursor-pointer">
+              <AccordionTrigger className="px-5 py-4 text-left text-sm sm:text-base font-semibold text-accent hover:text-accent/80 hover:no-underline cursor-pointer">
                 {q}
               </AccordionTrigger>
               <AccordionContent className="px-5 pb-5 pt-0">
-                <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+                <div className="space-y-3 text-sm text-white leading-relaxed">
                   {r}
                 </div>
               </AccordionContent>
