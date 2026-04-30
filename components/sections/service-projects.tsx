@@ -45,16 +45,16 @@ export function ServiceProjects({ color }: { color: string }) {
           Réalisations
         </span>
         <h2 className="text-2xl sm:text-3xl font-bold tracking-tight leading-[1.15] text-white">
-          Quelques projets que{" "}
-          <span
-            className="font-serif-display italic font-normal"
-            style={{ color }}
-          >
-            j&apos;ai construits
-          </span>
+          Une sélection des sites que j&apos;ai conçus
         </h2>
+        <p
+          className="mt-2 text-lg sm:text-xl font-serif-display italic leading-snug"
+          style={{ color }}
+        >
+          Et si le prochain c&apos;était le vôtre&nbsp;?
+        </p>
         <p className="mt-3 text-sm text-white/55 leading-relaxed">
-          Sites freelance et missions agence. Pensés, designés et codés à la main.
+          Du design fort, une vraie identité — jamais un template.
         </p>
       </motion.div>
 
@@ -122,7 +122,6 @@ function ProjectCardFan({
   const baseRotate = FAN_ROTATIONS[index]
   const baseOffsetY = FAN_OFFSETS_Y[index]
   const year = projet.date.slice(0, 4)
-  const tag = projet.tags[0]
 
   // Quand une autre card est hover : recule celle-ci légèrement, opacité plus faible.
   const dimmed = isAnyHovered && !isHovered
@@ -151,12 +150,14 @@ function ProjectCardFan({
     >
       <Link
         href={`/projets/${projet.slug}`}
-        className="group block w-[200px] md:w-[220px] lg:w-[240px] rounded-2xl overflow-hidden border border-white/10 bg-zinc-900 cursor-pointer"
+        className="group block w-[200px] md:w-[220px] lg:w-[240px] rounded-2xl border border-white/10 bg-zinc-900 cursor-pointer transform-gpu isolate"
         style={{
           boxShadow: isHovered
             ? `0 20px 40px -10px color-mix(in oklab, ${color} 25%, rgba(0,0,0,0.4)), 0 0 0 1px color-mix(in oklab, ${color} 30%, transparent)`
             : "0 8px 24px -8px rgba(0,0,0,0.4)",
           transition: "box-shadow 0.4s ease",
+          clipPath: "inset(0 round 1rem)",
+          WebkitMaskImage: "-webkit-radial-gradient(white, black)",
         }}
       >
         {/* Image — ratio portrait pour évoquer la "carte à jouer" */}
@@ -198,7 +199,7 @@ function ProjectCardFan({
             )}
           </div>
 
-          {/* Bottom overlay : nom client + année + tag */}
+          {/* Bottom overlay : logo + nom client + titre + année */}
           <div className="absolute bottom-0 left-0 right-0 p-3.5">
             <div className="flex items-center gap-2 mb-1">
               {projet.logo && (
@@ -216,25 +217,12 @@ function ProjectCardFan({
                 {projet.clientShort ?? projet.client}
               </h3>
             </div>
-            <p className="text-[11px] text-white/70 leading-snug line-clamp-2 mb-2">
+            <p className="text-[11px] text-white/70 leading-snug line-clamp-2 mb-1.5">
               {projet.titre}
             </p>
-            <div className="flex items-center justify-between gap-2">
-              <span className="text-[9px] font-mono tracking-wider text-white/45">
-                {year}
-              </span>
-              {tag && (
-                <span
-                  className="text-[9px] font-medium px-1.5 py-0.5 rounded-md"
-                  style={{
-                    color,
-                    background: `color-mix(in oklab, ${color} 12%, transparent)`,
-                  }}
-                >
-                  {tag}
-                </span>
-              )}
-            </div>
+            <span className="text-[9px] font-mono tracking-wider text-white/45">
+              {year}
+            </span>
           </div>
 
           {/* Petit arrow rond visible au hover */}
@@ -267,7 +255,6 @@ function ProjectCardMobile({
   index: number
 }) {
   const year = projet.date.slice(0, 4)
-  const tag = projet.tags[0]
 
   return (
     <motion.div
@@ -321,9 +308,6 @@ function ProjectCardMobile({
             >
               {CONTEXT_LABEL[projet.contexte]}
             </span>
-            {tag && (
-              <span className="text-[10px] text-white/50">{tag}</span>
-            )}
             <span className="text-[10px] font-mono text-white/35 ml-auto">
               {year}
             </span>
