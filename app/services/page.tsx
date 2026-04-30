@@ -6,6 +6,12 @@ import {
   BookingDiscoveryCard,
   BookingDiscoveryButton,
 } from "@/components/sections/booking-discovery-cta";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export const metadata: Metadata = {
   title: "Services & Tarifs — Léo Hengebaert",
@@ -102,38 +108,98 @@ const formules = [
   },
 ];
 
-const faq = [
+const faq: { q: string; r: React.ReactNode }[] = [
   {
-    q: "Pourquoi pas un outil no-code (Wix, Squarespace, Webflow) ?",
-    r: "Les outils no-code sont pratiques pour démarrer, mais ils plafonnent vite : design contraint par les templates, performance limitée, SEO bridé, et abonnement à vie. Je code des sites faits main, performants, et dont vous êtes propriétaire à 100% — sans coût mensuel récurrent.",
+    q: "Pourquoi pas un outil no-code comme Wix, Squarespace ou Webflow ?",
+    r: (
+      <>
+        <p>
+          Avec un outil no-code, vous démarrez vite — mais vous perdez vite le contrôle. Design contraint par des modèles génériques (qu&apos;on retrouve sur des milliers d&apos;autres sites), abonnement mensuel à vie, performance et référencement limités, et zéro maîtrise sur ce qui se passe sous le capot.
+        </p>
+        <p>
+          Ce que je propose, c&apos;est <strong className="text-white">un site codé de A à Z, qui vous appartient à 100&nbsp;%</strong>. Vous maîtrisez tous les aspects&nbsp;: design unique adapté à votre activité, référencement, performance, fluidité, rapidité — et le choix des techniques utilisées pour faire évoluer votre site dans le temps.
+        </p>
+      </>
+    ),
   },
   {
     q: "Combien de temps pour avoir mon site ?",
-    r: "5 jours ouvrés pour l'Essentiel, 10 jours pour le Standard, 3 semaines pour le Premium. Le délai démarre dès réception de vos éléments (textes, photos, logo).",
+    r: (
+      <p>
+        <strong className="text-white">5 jours ouvrés</strong> pour l&apos;Essentiel, <strong className="text-white">10 jours</strong> pour le Standard, <strong className="text-white">3 semaines</strong> pour le Premium. Le délai démarre dès réception de vos éléments (textes, photos, logo).
+      </p>
+    ),
   },
   {
-    q: "Vous faites des maquettes Figma avant de coder ?",
-    r: "Non, et c'est volontaire. Je vous propose une direction (palette, style, ambiance), puis je passe directement au code. Vous voyez votre site progresser en vrai — pas une maquette figée à valider en aveugle. Ça va plus vite, et le résultat est forcément fidèle au final.",
+    q: "Vous faites des maquettes avant de coder ?",
+    r: (
+      <>
+        <p>
+          Aujourd&apos;hui, dans la majorité des cas&nbsp;: <strong className="text-white">non, et c&apos;est volontaire</strong>. On valide une direction visuelle ensemble (palette, typo, ambiance, références que vous aimez et que vous n&apos;aimez pas), puis je passe directement au code.
+        </p>
+        <p>
+          Vous voyez votre site progresser <strong className="text-white">en vrai, pas une maquette figée</strong>. Ça va plus vite, le résultat est forcément fidèle au final, et toutes les retouches passent par les heures incluses dans votre formule.
+        </p>
+        <p className="text-white/55 text-xs italic">
+          Sur les projets Premium les plus ambitieux, je peux proposer des mini-maquettes ou un travail en binôme avec une designer partenaire. C&apos;est discuté au cas par cas.
+        </p>
+      </>
+    ),
   },
   {
     q: "Comment se passe la collaboration concrètement ?",
-    r: "On commence par un appel visio pour comprendre votre activité et votre univers. Je vous propose une direction visuelle, puis je code la première page. À partir de là vous me faites confiance jusqu'à la livraison — itérations via les heures de retouches incluses, mise en ligne, et c'est parti.",
+    r: (
+      <>
+        <p>
+          On commence par un <strong className="text-white">appel visio gratuit de 15&nbsp;min</strong> pour comprendre votre activité et votre univers. Si on travaille ensemble, je vous envoie un brief visuel à remplir (couleurs, références, ambiance), puis une <strong className="text-white">moodboard à valider par mail</strong>.
+        </p>
+        <p>
+          Une fois la direction scellée, je code la première page et vous l&apos;envoie en preview. Vous validez ce premier jet, je code le reste dans la même direction. Les ajustements passent par les heures de retouches incluses dans votre formule.
+        </p>
+      </>
+    ),
   },
   {
     q: "Puis-je voir des exemples de sites que vous avez faits ?",
-    r: "Oui, vous trouverez une sélection sur la page projets, et 3 réalisations sont mises en avant directement sur chaque page formule. Du e-commerce d'artiste à des applications déployées sur des centaines de tablettes en stations TotalEnergies — chaque projet a sa propre identité.",
+    r: (
+      <>
+        <p>
+          Oui — une sélection est sur la page <Link href="/projets" className="text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent">projets</Link>, et 3 réalisations sont mises en avant directement sur chaque page formule.
+        </p>
+        <p>
+          Du e-commerce d&apos;artiste qui vend à l&apos;international à des applications déployées sur des centaines de tablettes en stations TotalEnergies — chaque projet a sa propre identité.
+        </p>
+      </>
+    ),
   },
   {
     q: "Et si je veux une option qui n'est pas dans ma formule ?",
-    r: "Chaque formule a un périmètre clair. Si vous voulez une option qui n'y figure pas (par exemple un design 100% sur mesure ou un CMS en Essentiel), il faut passer à la formule supérieure. Pas de mélange à la carte hors des options listées : ça garde les délais courts et les prix clairs.",
+    r: (
+      <p>
+        Chaque formule a un périmètre clair. Si vous voulez une option qui n&apos;y figure pas (par exemple un design 100&nbsp;% sur mesure en Essentiel), il faut passer à la formule supérieure. <strong className="text-white">Pas de mélange à la carte</strong> hors des options listées&nbsp;: ça garde les délais courts et les prix clairs.
+      </p>
+    ),
   },
   {
     q: "Et si je veux modifier mon site après livraison ?",
-    r: "2h de retouches sont incluses en Essentiel, 5h en Standard, 10h en Premium. Au-delà : 60€/h avec devis avant intervention. Ou maintenance mensuelle à 50€/mois (1h de modifs incluse + suivi technique).",
+    r: (
+      <>
+        <p>
+          <strong className="text-white">2h de retouches</strong> incluses en Essentiel, <strong className="text-white">5h</strong> en Standard, <strong className="text-white">10h</strong> en Premium. Ces heures couvrent les ajustements de contenu, les petites retouches visuelles, les variantes de couleur sur tel bloc, etc.
+        </p>
+        <p>
+          Au-delà&nbsp;: <strong className="text-white">60&nbsp;€/h</strong> avec devis avant intervention. Ou maintenance mensuelle à <strong className="text-white">50&nbsp;€/mois</strong> (1h de modifs incluse + suivi technique).
+        </p>
+      </>
+    ),
   },
   {
     q: "Je n'ai pas de nom de domaine. Que faire ?",
-    r: "Je vous accompagne pour acheter votre domaine en votre nom. Cela vous appartient, vous gardez le contrôle. Le coût (~10 à 15€/an) reste à votre charge.",
+    r: (
+      <p>
+        Je vous accompagne pour acheter votre domaine en votre nom. Il vous appartient, vous gardez le contrôle. Le coût (~10 à 15&nbsp;€/an) reste à votre charge.
+      </p>
+    ),
   },
 ];
 
@@ -278,17 +344,29 @@ export default function ServicesPage() {
         <ChevronDown size={16} className="animate-bounce" />
       </div>
 
-      {/* FAQ */}
-      <div className="mb-14">
+      {/* FAQ — accordion shadcn, dense, texte blanc, mots-clés en gras */}
+      <div className="mb-14 max-w-3xl mx-auto">
         <h2 className="text-xl font-black text-white tracking-tight mb-5">Questions fréquentes</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {faq.map(({ q, r }) => (
-            <div key={q} className="p-5 rounded-2xl border border-white/10 bg-white/2.5">
-              <h3 className="font-semibold text-sm text-accent mb-2">{q}</h3>
-              <p className="text-xs text-white/85 leading-relaxed">{r}</p>
-            </div>
+        <Accordion
+          className="rounded-2xl border border-white/10 bg-white/2 overflow-hidden divide-y divide-white/8"
+        >
+          {faq.map(({ q, r }, i) => (
+            <AccordionItem
+              key={q}
+              value={`item-${i}`}
+              className="border-b-0 last:border-b-0"
+            >
+              <AccordionTrigger className="px-5 py-4 text-left text-sm sm:text-base font-semibold text-white hover:text-accent hover:no-underline cursor-pointer">
+                {q}
+              </AccordionTrigger>
+              <AccordionContent className="px-5 pb-5 pt-0">
+                <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+                  {r}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
           ))}
-        </div>
+        </Accordion>
       </div>
 
       {/* CTA final — bouton principal réserver appel (modale) + lien secondaire mail */}

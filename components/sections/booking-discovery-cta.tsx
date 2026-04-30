@@ -1,9 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import { ArrowRight, Calendar } from "lucide-react"
+import { ArrowRight, Calendar, X } from "lucide-react"
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -42,11 +43,27 @@ function BookingModal({
   const accentColor = "var(--accent)"
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md sm:max-w-2xl max-h-[90vh] overflow-y-auto p-0 bg-background border-white/12 ring-0">
+      <DialogContent
+        showCloseButton={false}
+        className="max-w-md sm:max-w-2xl max-h-[90vh] overflow-y-auto p-0 bg-background border-white/12 ring-0"
+      >
         <div
           className="sticky top-0 z-10 px-5 sm:px-7 pt-6 sm:pt-7 pb-4 border-b backdrop-blur-md bg-background/95"
           style={{ borderColor: `color-mix(in oklab, ${accentColor} 18%, transparent)` }}
         >
+          {/* Croix de fermeture custom — au-dessus du header sticky */}
+          <DialogClose
+            render={
+              <button
+                type="button"
+                aria-label="Fermer"
+                className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/8 hover:bg-white/15 text-white/70 hover:text-white transition-colors cursor-pointer"
+              />
+            }
+          >
+            <X className="w-4 h-4" />
+          </DialogClose>
+
           <DialogHeader>
             <span
               className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] mb-2"
@@ -55,7 +72,7 @@ function BookingModal({
               <CalendarIcon className="w-3.5 h-3.5" />
               Appel découverte · 15 min · offert
             </span>
-            <DialogTitle className="text-white text-xl sm:text-2xl font-black tracking-tight pr-8">
+            <DialogTitle className="text-white text-xl sm:text-2xl font-black tracking-tight pr-12">
               {title}
             </DialogTitle>
             <DialogDescription className="text-sm text-white/65 leading-relaxed">
