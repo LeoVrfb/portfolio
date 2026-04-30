@@ -309,14 +309,14 @@ export default function AProposPage() {
               </BlurFade>
               <BlurFade delay={0.35} direction="up" inView>
                 <p>
-                  En parallèle de mon poste, j&apos;accompagne aussi <span className="font-medium">PME, indépendants et particuliers</span> dans la création de leur site web. Une activité que j&apos;ai créée par passion pour le code et le design, et où je peux gérer chaque projet de A à Z, sans intermédiaire. Mon premier site freelance :{" "}
+                  En parallèle de mon poste, j&apos;accompagne aussi <span className="font-medium">PME, indépendants et particuliers</span> dans la création de leur site web. Une activité que j&apos;ai créée par passion pour le code et le design, et où je peux gérer chaque projet de A à Z, sans intermédiaire. J&apos;ai notamment créé{" "}
                   <Link
                     href="/projets/bald-artiste"
                     className="font-semibold underline decoration-accent/60 underline-offset-4 hover:decoration-accent transition-colors"
                   >
                     Bald
                   </Link>
-                  , un site e-commerce sur mesure pour un artiste peintre. D&apos;autres sont en route.
+                  , un site e-commerce sur mesure pour un artiste peintre qui vend à l&apos;international. Et d&apos;autres sont en route.
                 </p>
               </BlurFade>
               <BlurFade delay={0.4} direction="up" inView>
