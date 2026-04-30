@@ -33,7 +33,7 @@ const EXPERIENCE = [
     type: "CDI · Cabinet de conseil",
     description:
       "Passage côté cabinet de conseil pour explorer d'autres types de projets et intégrer le monde des consultants, data analysts et data engineers. Je couvre désormais tout le périmètre full-stack via Next.js, en collaboration avec les équipes du studio créatif.",
-    tags: ["Next.js", "TypeScript", "React", "Tailwind", "Server Actions"],
+    tags: ["React", "Next.js"],
     color: "border-accent/30 bg-accent/5",
     dot: "bg-accent",
   },
@@ -44,7 +44,7 @@ const EXPERIENCE = [
     type: "CDI · Studio créatif (agence)",
     description:
       "Studio créatif niché dans Artefact 3000 (l'agence de pub du groupe Artefact). Liberté de création totale, projets web exigeants pour de grandes marques : TotalEnergies (Argedis), Aéroports de Paris (Extime), Robertet, BNP Paribas. Applications tablettes, jeux concours à grande échelle, modules e-learning interactifs.",
-    tags: ["Next.js", "Contentful", "GraphQL", "Motion", "GSAP", "PixiJS", "MongoDB"],
+    tags: ["React", "Next.js"],
     color: "border-[var(--lavender)]/20 bg-[var(--lavender)]/5",
     dot: "bg-[var(--lavender)]",
   },
@@ -55,7 +55,7 @@ const EXPERIENCE = [
     type: "CDI · Startup télémédecine",
     description:
       "Mes débuts dans la tech. Acteur majeur de la télémédecine en France, en pleine croissance post-Covid. C'est là que j'ai découvert la méthodologie agile en startup, le travail avec des équipes produit (Product Owners, Product Managers), et l'exigence de livrer des features concrètes itérées en continu.",
-    tags: ["React", "TypeScript", "React-i18next"],
+    tags: ["React"],
     color: "border-[var(--mauve)]/20 bg-[var(--mauve)]/5",
     dot: "bg-[var(--mauve)]",
   },
