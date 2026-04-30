@@ -61,12 +61,22 @@ const INITIAL_FORM: FormData = {
   message: "",
 }
 
+type BookingSource = "essentiel" | "standard" | "premium" | "discovery"
+
 type BookingCalendarProps = {
   /** Couleur d'accent de la formule courante (ex: service.color). */
   accentColor?: string
+  /** Page d'origine de la demande — sert au tracking dans Google Calendar. */
+  source?: BookingSource
+  /** Mode compact : pas de header, pas de wrapper section (utilisé dans une modale). */
+  compact?: boolean
 }
 
-export function BookingCalendar({ accentColor = "var(--accent)" }: BookingCalendarProps) {
+export function BookingCalendar({
+  accentColor = "var(--accent)",
+  source,
+  compact = false,
+}: BookingCalendarProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
   const [slots, setSlots] = useState<Slot[]>([])
   const [isLoadingSlots, setIsLoadingSlots] = useState(false)
@@ -133,6 +143,7 @@ export function BookingCalendar({ accentColor = "var(--accent)" }: BookingCalend
         callType: formData.callType,
         phoneNumber: formData.callType === "phone" ? formData.phoneNumber : undefined,
         message: formData.message || undefined,
+        source,
       }),
     })
 
@@ -166,45 +177,18 @@ export function BookingCalendar({ accentColor = "var(--accent)" }: BookingCalend
     } satisfies BookingResult
   }
 
-  return (
-    <section id="booking" className="scroll-mt-24 py-16 sm:py-20">
-      <div className="text-center mb-8 sm:mb-10">
-        <span
-          className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.35em] mb-3"
-          style={{ color: accentColor }}
-        >
-          <CalendarIcon className="w-3.5 h-3.5" />
-          Appel découverte · 15 min · offert
-        </span>
-        <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white mb-3">
-          On en parle <span style={{ color: accentColor }}>de vive voix</span> ?
-        </h2>
-        <p className="text-sm sm:text-base text-white/65 max-w-xl mx-auto leading-relaxed">
-          15 minutes pour comprendre votre projet, répondre à vos questions et voir si on peut
-          travailler ensemble. Aucun engagement.
-        </p>
-        <div className="mt-5 inline-flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-white/55">
-          <span className="inline-flex items-center gap-1.5">
-            <Video className="w-3.5 h-3.5" />
-            Google Meet
-          </span>
-          <span className="text-white/25">·</span>
-          <span className="inline-flex items-center gap-1.5">
-            <Phone className="w-3.5 h-3.5" />
-            ou par téléphone
-          </span>
-          <span className="text-white/25">·</span>
-          <span>Lun–Ven · 12h–20h</span>
-        </div>
-      </div>
-
-      <div
-        className="max-w-2xl mx-auto rounded-2xl border bg-white/2 overflow-hidden"
-        style={{
-          borderColor: `color-mix(in oklab, ${accentColor} 18%, transparent)`,
-          background: `linear-gradient(135deg, color-mix(in oklab, ${accentColor} 5%, transparent), transparent)`,
-        }}
-      >
+  const calendarContent = (
+    <div
+      className={
+        compact
+          ? "w-full rounded-2xl border bg-white/2 overflow-hidden"
+          : "max-w-2xl mx-auto rounded-2xl border bg-white/2 overflow-hidden"
+      }
+      style={{
+        borderColor: `color-mix(in oklab, ${accentColor} 18%, transparent)`,
+        background: `linear-gradient(135deg, color-mix(in oklab, ${accentColor} 5%, transparent), transparent)`,
+      }}
+    >
         {/* Calendar — pleine largeur, cellules généreuses pour le clic mobile + desktop */}
         <div
           className="p-4 sm:p-6 border-b"
@@ -251,7 +235,10 @@ export function BookingCalendar({ accentColor = "var(--accent)" }: BookingCalend
           )}
         </div>
       </div>
+  )
 
+  const dialogs = (
+    <>
       {/* Dialog formulaire — ouvert quand un slot est cliqué */}
       <BookingFormDialog
         open={selectedSlot !== null}
@@ -279,6 +266,55 @@ export function BookingCalendar({ accentColor = "var(--accent)" }: BookingCalend
           setSlots([])
         }}
       />
+    </>
+  )
+
+  // Mode compact : pas de section, pas de header — juste le calendrier + dialogs.
+  // Utilisé dans une modale (BookingDialog).
+  if (compact) {
+    return (
+      <>
+        {calendarContent}
+        {dialogs}
+      </>
+    )
+  }
+
+  // Mode plein : section autonome avec header (utilisé sur les pages /services/[slug]).
+  return (
+    <section id="booking" className="scroll-mt-24 py-16 sm:py-20">
+      <div className="text-center mb-8 sm:mb-10">
+        <span
+          className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.35em] mb-3"
+          style={{ color: accentColor }}
+        >
+          <CalendarIcon className="w-3.5 h-3.5" />
+          Appel découverte · 15 min · offert
+        </span>
+        <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white mb-3">
+          On en parle <span style={{ color: accentColor }}>de vive voix</span> ?
+        </h2>
+        <p className="text-sm sm:text-base text-white/65 max-w-xl mx-auto leading-relaxed">
+          15 minutes pour comprendre votre projet, répondre à vos questions et voir si on peut
+          travailler ensemble. Aucun engagement.
+        </p>
+        <div className="mt-5 inline-flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-white/55">
+          <span className="inline-flex items-center gap-1.5">
+            <Video className="w-3.5 h-3.5" />
+            Google Meet
+          </span>
+          <span className="text-white/25">·</span>
+          <span className="inline-flex items-center gap-1.5">
+            <Phone className="w-3.5 h-3.5" />
+            ou par téléphone
+          </span>
+          <span className="text-white/25">·</span>
+          <span>Lun–Ven · 12h–20h</span>
+        </div>
+      </div>
+
+      {calendarContent}
+      {dialogs}
     </section>
   )
 }

@@ -112,6 +112,11 @@ export async function listBusyEvents(timeMinISO: string, timeMaxISO: string): Pr
     .filter((v): v is BusyEvent => v !== null)
 }
 
+// Source d'où le client a réservé. Sert à savoir d'où vient la demande
+// dans le titre de l'event Google Calendar (ex: "Réservation projet Standard").
+// "discovery" (ou undefined) = appel découverte générique (page /services ou FAB hors page service).
+export type BookingSource = "essentiel" | "standard" | "premium" | "discovery"
+
 export type CreateBookingParams = {
   // Heure de début/fin du slot (UTC ISO).
   startISO: string
@@ -125,6 +130,22 @@ export type CreateBookingParams = {
   phoneNumber?: string
   // Message optionnel saisi par le client.
   message?: string
+  // Page d'origine de la demande (formule visitée ou découverte générique).
+  source?: BookingSource
+}
+
+const SOURCE_LABEL: Record<BookingSource, string> = {
+  essentiel: "Essentiel",
+  standard: "Standard",
+  premium: "Premium",
+  discovery: "Découverte",
+}
+
+function buildSummary(clientName: string, source?: BookingSource): string {
+  if (!source || source === "discovery") {
+    return `Appel découverte — ${clientName}`
+  }
+  return `Réservation projet ${SOURCE_LABEL[source]} — ${clientName}`
 }
 
 export type CreatedBookingEvent = {
@@ -142,7 +163,10 @@ export async function createBookingEvent(params: CreateBookingParams): Promise<C
   const accessToken = await getAccessToken(env)
 
   const callTypeLabel = params.callType === "meet" ? "Google Meet" : "Téléphone"
-  const summary = `Appel découverte — ${params.clientName}`
+  const summary = buildSummary(params.clientName, params.source)
+  const sourceLine = params.source && params.source !== "discovery"
+    ? `Origine : page formule ${SOURCE_LABEL[params.source]}`
+    : `Origine : appel découverte (page /services ou FAB)`
 
   const descriptionLines: string[] = [
     `Appel découverte de 15 min réservé via leohengebaert.fr.`,
@@ -150,6 +174,7 @@ export async function createBookingEvent(params: CreateBookingParams): Promise<C
     `Client : ${params.clientName}`,
     `Email : ${params.clientEmail}`,
     `Mode : ${callTypeLabel}`,
+    sourceLine,
   ]
   if (params.callType === "phone" && params.phoneNumber) {
     descriptionLines.push(`Téléphone : ${params.phoneNumber}`)

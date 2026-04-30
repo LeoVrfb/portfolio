@@ -34,6 +34,7 @@ const BookingSchema = z
       .trim()
       .max(1000, "Message trop long")
       .optional(),
+    source: z.enum(["essentiel", "standard", "premium", "discovery"]).optional(),
   })
   .refine(
     (data) => {
@@ -58,7 +59,7 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const { startISO, endISO, name, email, callType, phoneNumber, message } = parsed.data
+    const { startISO, endISO, name, email, callType, phoneNumber, message, source } = parsed.data
 
     // Anti race condition : un visiteur a peut-être réservé le même slot entre-temps.
     const stillAvailable = await isSlotStillAvailable(startISO, endISO)
@@ -82,6 +83,7 @@ export async function POST(req: NextRequest) {
       callType,
       phoneNumber,
       message,
+      source,
     })
 
     // Email custom Resend par-dessus l'invit Google (branding propre).

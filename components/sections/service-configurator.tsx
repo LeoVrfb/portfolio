@@ -968,7 +968,10 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
       <ServiceCtaFinal color={service.color} />
 
       {/* ── BOOKING — Calendrier custom branché sur Google Calendar ── */}
-      <BookingCalendar accentColor={service.color} />
+      <BookingCalendar
+        accentColor={service.color}
+        source={service.slug as "essentiel" | "standard" | "premium"}
+      />
 
       </div>
       {/* ── /WRAPPER CENTRÉ ── */}
