@@ -227,7 +227,7 @@ export default function AProposPage() {
                 Créateur de sites web
               </h3>
               <p className="text-sm text-foreground/70 leading-relaxed">
-                L&apos;autre partie de mon activité, par passion pour le développement et le design. J&apos;aide artisans, restaurants et particuliers à construire leur présence en ligne. Un business à moi, où je gère tout de A à Z et où je peux mettre ma patte.
+                L&apos;autre partie de mon activité, par passion pour le développement et le design. J&apos;aide PME, indépendants et particuliers à construire leur présence en ligne. Un business à moi, où je gère tout de A à Z et où je peux mettre ma patte.
               </p>
             </div>
           </div>
@@ -261,7 +261,7 @@ export default function AProposPage() {
                 <p>
                   C&apos;est chez{" "}
                   <span className="text-accent font-semibold">Qare</span>{" "}
-                  que j&apos;ai fait mes débuts dans la tech. Acteur majeur de la télémédecine en France, en pleine croissance post-Covid. C&apos;est là que j&apos;ai découvert la méthodologie agile en startup, le travail aux côtés d&apos;équipes produit (Product Owners, Product Managers, designers), et l&apos;exigence de livrer des features concrètes itérées en continu sur un produit utilisé chaque jour par des milliers de patients.
+                  que j&apos;ai fait mes débuts dans la tech. Acteur majeur de la télémédecine en France et en pleine croissance post-Covid, c&apos;est là que j&apos;ai découvert la méthodologie agile en startup, le travail aux côtés d&apos;équipes produit (Product Owners, Product Managers, designers), et l&apos;exigence de livrer des features concrètes itérées en continu sur un produit utilisé chaque jour par des milliers de patients.
                 </p>
               </BlurFade>
               <BlurFade delay={0.2} direction="up" inView>
@@ -299,7 +299,7 @@ export default function AProposPage() {
                   >
                     BNP Paribas
                   </Link>
-                  {" "}(module e-learning IA générative déployé en interne), Robertet. Et au-delà de mes propres missions, j&apos;ai pu voir d&apos;autres projets ambitieux se construire autour de moi pour de très grandes marques, en apprenant énormément de cet écosystème exigeant.
+                  {" "}(module e-learning IA générative déployé en interne), Robertet (parfumerie). Et au-delà de mes propres missions, j&apos;ai pu voir d&apos;autres projets ambitieux se construire autour de moi pour de très grandes marques, en apprenant énormément de cet écosystème stimulant.
                 </p>
               </BlurFade>
               <BlurFade delay={0.3} direction="up" inView>
@@ -309,7 +309,7 @@ export default function AProposPage() {
               </BlurFade>
               <BlurFade delay={0.35} direction="up" inView>
                 <p>
-                  En parallèle de mon poste, j&apos;accompagne aussi <span className="font-medium">artisans, restaurants et particuliers</span> dans la création de leur site web. Une activité que j&apos;ai lancée par passion pour le code et le design, et où je peux gérer chaque projet de A à Z, sans intermédiaire. Mon premier site freelance :{" "}
+                  En parallèle de mon poste, j&apos;accompagne aussi <span className="font-medium">PME, indépendants et particuliers</span> dans la création de leur site web. Une activité que j&apos;ai créée par passion pour le code et le design, et où je peux gérer chaque projet de A à Z, sans intermédiaire. Mon premier site freelance :{" "}
                   <Link
                     href="/projets/bald-artiste"
                     className="font-semibold underline decoration-accent/60 underline-offset-4 hover:decoration-accent transition-colors"
