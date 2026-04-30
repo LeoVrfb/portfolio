@@ -216,10 +216,10 @@ export default function AProposPage() {
                 La base de mon activité depuis 2022. J&apos;ai travaillé en startup chez <span className="text-foreground/90 font-medium">Qare</span> (télémédecine), puis chez <span className="text-foreground/90 font-medium">Artefact</span>, l&apos;un des plus gros cabinets de conseil européens en data et IA, d&apos;abord côté agence puis côté conseil. Une expertise concrète des environnements pro exigeants.
               </p>
             </div>
-            <div className="p-6 rounded-2xl border border-white/8 bg-white/2">
+            <div className="p-6 rounded-2xl border border-(--lavender)/20 bg-(--lavender)/5">
               <div className="flex items-center gap-2 mb-4">
-                <span className="w-2 h-2 rounded-full bg-zinc-400" />
-                <span className="text-xs font-semibold text-zinc-500 uppercase tracking-[0.2em]">
+                <span className="w-2 h-2 rounded-full bg-(--lavender) animate-pulse" />
+                <span className="text-xs font-semibold text-(--lavender) uppercase tracking-[0.2em]">
                   En parallèle
                 </span>
               </div>
@@ -237,7 +237,7 @@ export default function AProposPage() {
       {/* Mon histoire */}
       <section className="pt-4 pb-20 layout-container">
         <BlurFade delay={0.1} direction="up" inView>
-          <div className="grid md:grid-cols-[1fr_2fr] gap-16 items-start">
+          <div className="grid md:grid-cols-[1fr_2fr] gap-10 md:gap-16 items-start">
             <div>
               <p className="text-xs uppercase tracking-[0.4em] text-zinc-600 font-semibold mb-3">
                 Mon histoire
@@ -247,9 +247,10 @@ export default function AProposPage() {
                 <br />
                 <span className="text-accent">au cabinet de conseil.</span>
               </h2>
+              {/* Lien visible uniquement en desktop (en mobile il est répété en fin de texte) */}
               <Link
                 href="/contact"
-                className="group inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-white transition-colors mt-4"
+                className="group hidden md:inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-white transition-colors mt-4"
               >
                 Travailler ensemble
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -271,7 +272,7 @@ export default function AProposPage() {
                   <br />
                   J&apos;ai d&apos;abord rejoint{" "}
                   <span className="text-accent font-semibold">Artefact 3000</span>, l&apos;agence de pub du groupe, dans son{" "}
-                  <span className="bg-white/10 px-1.5 py-0.5 rounded-md font-medium">studio créatif</span>
+                  <span className="text-(--lavender) font-medium">studio créatif</span>
                   {" "}— une liberté de création totale, où les idées fusent en permanence. Puis en 2025, je suis passé côté{" "}
                   <span className="text-(--lavender) font-medium">cabinet de conseil</span>, dans un environnement plus structuré (consultants, data analysts, data engineers), pour explorer d&apos;autres types de projets.
                 </p>
@@ -323,6 +324,16 @@ export default function AProposPage() {
                 <p>
                   Ce qui me motive au quotidien : trouver des solutions techniques propres, imaginer des interfaces uniques, aller chercher la qualité (le clean code, les bonnes pratiques, le détail design). Que ce soit pour une grande enseigne ou un client freelance, mon objectif est le même : livrer un produit qui dépasse les attentes, et que la confiance accordée soit toujours bien placée.
                 </p>
+              </BlurFade>
+              {/* Lien visible uniquement en mobile (en desktop il est dans la colonne de gauche) */}
+              <BlurFade delay={0.45} direction="up" inView>
+                <Link
+                  href="/contact"
+                  className="group md:hidden inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-white transition-colors pt-2"
+                >
+                  Travailler ensemble
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
               </BlurFade>
             </div>
           </div>
@@ -447,21 +458,24 @@ export default function AProposPage() {
         </div>
       </section>
 
-      {/* Formation */}
+      {/* Formation — bloc compact, centré, élégant */}
       <section className="pb-24 layout-container">
-        <BlurFade delay={0.1} direction="up" inView>
-          <div className="p-6 rounded-2xl border border-white/6 bg-white/2 flex items-start gap-4">
-            <div className="w-2 h-2 rounded-full bg-zinc-600 shrink-0 mt-2" />
-            <div>
-              <h2 className="text-lg font-bold text-white mb-1">Formation</h2>
-              <p className="text-sm text-foreground/75 leading-relaxed">
-                Formation en{" "}
-                <span className="text-foreground/90 font-medium">web design</span> au CEFII (Centre d&apos;Étude et de Formation en Informatique et Internet),{" "}
-                <span className="text-foreground/90 font-medium">Diplôme RNCP niveau 5</span>
+        <div className="max-w-3xl mx-auto">
+          <BlurFade delay={0.1} direction="up" inView>
+            <div className="text-center">
+              <p className="text-[10px] uppercase tracking-[0.4em] text-accent font-semibold mb-4">
+                Formation
+              </p>
+              <p className="text-base text-white leading-relaxed mb-2">
+                <span className="font-semibold">Web design</span> au CEFII
+              </p>
+              <p className="text-sm text-foreground/55 leading-relaxed">
+                Centre d&apos;Étude et de Formation en Informatique et Internet ·{" "}
+                <span className="text-foreground/75">Diplôme RNCP niveau 5</span>
               </p>
             </div>
-          </div>
-        </BlurFade>
+          </BlurFade>
+        </div>
       </section>
     </main>
   )
