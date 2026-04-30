@@ -149,6 +149,168 @@ export const projets: Projet[] = [
     date: "2025-04",
   },
   {
+    slug: "russian-with-julia",
+    titre: "Plateforme de cours de russe en ligne",
+    client: "Russian with Julia",
+    clientShort: "Russian with Julia",
+    contexte: "freelance",
+    description:
+      "Plateforme complète développée en freelance pour Yulia, prof de russe : site marketing, paywall vidéo, dashboard élève, dashboard admin, booking d'un appel d'introduction synchronisé Google Calendar, paiement Stripe.",
+    descriptionPublic:
+      "**Un site, deux mondes.**\nCôté visiteur : un site vitrine soigné — hero plein écran, témoignages, carte des élèves répartis dans plus de 25 pays, services, vidéos d'introduction. Côté apprenant connecté : un dashboard avec ses packs achetés et ses leçons vidéo en streaming sécurisé.\n\n**Un appel d'introduction réservable en 30 secondes.**\nLe visiteur choisit un créneau dans le calendrier, paie 15 $ via Stripe, et reçoit automatiquement une invitation Google Calendar avec un lien Google Meet. L'évènement est créé dans le vrai agenda de la prof, dans son fuseau horaire à elle.\n\n**Un admin qui appartient à la prof.**\nElle se connecte avec un magic link envoyé sur son email pro. Elle gère ses packs, uploade ses leçons vidéo, voit ses élèves et leurs achats, et connecte son Google Calendar. Le dev n'intervient plus une fois en place.",
+    intro: `Site complet développé en **freelance** pour __Yulia__, professeure de russe avec __plus de 500 élèves__ dans 25+ pays. Plateforme de bout en bout : **site vitrine**, **paywall vidéo** sur les leçons hébergées sur Cloudflare R2, **dashboard élève** post-achat, **dashboard admin** pour la prof (upload, gestion des élèves, calendrier), **booking d'un appel d'intro** en 30 secondes avec création automatique d'un évènement Google Calendar + lien Meet, **paiement Stripe** en mode live, **auth magic link** sans mot de passe, et tout le passage en prod (domaine, DNS, email pro).`,
+    img: "/assets/rwj/rwj-miniature.webp",
+    heroImg: "/assets/rwj/rwj-hero-accueil.webp",
+    url: "https://russianwithjulia.com",
+    wideMedia: true,
+    enCours: true,
+    sliderSets: [
+      {
+        title: "Le site vitrine",
+        description: "Un parcours visiteur soigné : hero plein écran avec un photoshooting réalisé sur mesure, témoignages réels d'élèves, carte du monde des apprenants, présentation des packs. Tout y est pensé pour traduire la chaleur d'une prof particulière sans tomber dans le côté froid d'une plateforme massive.",
+        images: [
+          "/assets/rwj/rwj-hero-accueil.webp",
+          "/assets/rwj/rwj-testimonials.webp",
+          "/assets/rwj/rwj-videos-and-world-map.webp",
+          "/assets/rwj/rwj-services-packs.webp",
+        ],
+      },
+      {
+        title: "Réserver un appel et débloquer ses cours",
+        description: "Le booking widget enchaîne calendrier, paiement Stripe et création automatique d'un évènement Google Calendar avec lien Meet — le tout en 30 secondes. Côté vidéos, chaque pack est verrouillé tant que le paiement n'est pas validé, puis débloqué en temps réel sans rechargement.",
+        images: [
+          "/assets/rwj/rwj-booking-trial.webp",
+          "/assets/rwj/rwj-video-courses.webp",
+          "/assets/rwj/rwj-student-dashboard.webp",
+        ],
+      },
+      {
+        title: "Le dashboard admin",
+        description: "L'espace de la prof. Elle crée ses packs, uploade ses leçons vidéo directement sur Cloudflare R2 via une URL pré-signée (sans transit serveur), publie quand elle est prête, voit ses élèves et leurs achats, connecte son Google Calendar pour l'appel d'intro. Le dev ne reprend plus la main.",
+        images: [
+          "/assets/rwj/rwj-admin-packs-list.webp",
+          "/assets/rwj/rwj-admin-add-lesson.webp",
+        ],
+      },
+    ],
+    tags: [
+      "Next.js",
+      "Convex",
+      "Stripe",
+      "Cloudflare R2",
+      "Google Calendar API",
+      "Resend",
+      "Convex Auth",
+      "shadcn/ui",
+      "Tailwind",
+      "TypeScript",
+    ],
+    technologies: [
+      {
+        nom: "Next.js (App Router)",
+        detail:
+          "Site et application réunis sous le même toit. Les Server Actions servent de points d'entrée RPC pour les actions sensibles (lien d'achat Stripe, génération d'URL signée R2, création d'évènement Google Calendar) sans exposer d'API publique. Les pages publiques restent statiques pour la performance et le SEO.",
+      },
+      {
+        nom: "Convex",
+        detail:
+          "Backend temps réel et base de données. Schéma typé partagé client/serveur, mutations transactionnelles pour les achats, queries réactives pour le dashboard élève (les nouveaux packs apparaissent sans refresh). Convex héberge aussi les actions qui appellent Google Calendar et stocke les tokens OAuth de la prof.",
+      },
+      {
+        nom: "Convex Auth (magic link via Resend)",
+        detail:
+          "Authentification sans mot de passe : la prof comme les élèves reçoivent un lien à usage unique sur leur email. Le provider Resend a été override pour logger systématiquement le magic link en console côté Convex — utile en dev quand le free tier de Resend bloque les destinataires non vérifiés.",
+      },
+      {
+        nom: "Cloudflare R2",
+        detail:
+          "Hébergement des leçons vidéo. Pas de S3 : R2 ne facture pas la bande passante sortante, ce qui est crucial pour des vidéos consultées depuis 25+ pays. L'admin uploade directement depuis son navigateur via une URL pré-signée — la vidéo ne transite jamais par le serveur Next.js.",
+      },
+      {
+        nom: "Stripe (Checkout + Webhooks)",
+        detail:
+          "Paiement de l'appel d'intro à 15 $ et des packs vidéo via Stripe Checkout. Le webhook `checkout.session.completed` déclenche en chaîne la création de la purchase côté Convex, puis l'évènement Google Calendar avec lien Meet pour le call d'intro.",
+      },
+      {
+        nom: "Google Calendar API (OAuth 2.0)",
+        detail:
+          "La prof connecte son Google Calendar via OAuth depuis son dashboard. Les tokens sont stockés chiffrés dans Convex. Quand un élève paye un appel d'intro, l'évènement est créé dans son agenda à elle, dans son fuseau horaire (Europe/Warsaw), avec un lien Google Meet auto-généré et l'élève en invité.",
+      },
+      {
+        nom: "Resend (domaine vérifié)",
+        detail:
+          "Tous les emails transactionnels (magic links, confirmations) partent depuis `noreply@russianwithjulia.com` via Resend, avec SPF + DKIM configurés sur la zone DNS OVH. Compte Resend au nom de la cliente — le dev n'a aucun email à envoyer en son nom.",
+      },
+      {
+        nom: "shadcn/ui + Tailwind",
+        detail:
+          "Design system composé sur shadcn pour les briques fonctionnelles (Calendar, Dialog, Toast, Tabs), Tailwind pour la mise en forme. Thème noir et or assumé, typographie sérieuse pour souligner l'aspect personnel de la prof.",
+      },
+    ],
+    pointsCles: [
+      {
+        label: "Enjeux",
+        items: [
+          "Donner à une prof indépendante un site qui matche la qualité de ses cours, sans dépendance à un dev en continu",
+          "Permettre aux élèves d'acheter et de consommer des cours vidéo sans friction, partout dans le monde",
+          "Automatiser tout l'opérationnel — paiement, calendrier, comptes — pour que la prof puisse se concentrer uniquement sur l'enseignement",
+        ],
+      },
+      {
+        label: "Défis",
+        items: [
+          "Hébergement vidéo économiquement viable sur 25+ pays — Cloudflare R2 (pas de frais de bande passante) plutôt que S3",
+          "Auth sans mot de passe robuste en prod, avec un domaine email vérifié pour la délivrabilité",
+          "Synchronisation bidirectionnelle Stripe → Convex → Google Calendar en moins de 5 secondes après un paiement",
+          "Souveraineté de la cliente : domaine, Stripe, Resend, Google Cloud — tout au nom de Yulia, transférable à tout moment",
+        ],
+      },
+      {
+        label: "Intérêt",
+        items: [
+          "Stack moderne (Next.js 15 + Convex + Stripe + R2 + Resend) intégrée de bout en bout sans glue code superflu",
+          "Documentation complète des décisions techniques sous forme d'ADR — réutilisable comme template pour les prochains projets clients",
+          "Carte du monde des élèves construite from scratch avec un système de drag & drop manuel persisté en local pour positionner les labels",
+        ],
+      },
+    ],
+    challenges: [
+      {
+        titre: "Paywall vidéo — accès débloqué en temps réel sans refresh",
+        solution:
+          "Tant qu'un élève n'a pas acheté un pack, ses leçons sont affichées floutées avec un cadenas. Au paiement, le webhook Stripe insère une purchase dans Convex — et grâce à la réactivité native de Convex, le dashboard de l'élève bascule sur l'état déverrouillé en moins d'une seconde, sans qu'il ait besoin de recharger la page. Le streaming des vidéos passe par une URL signée R2 régénérée à chaque lecture.",
+      },
+      {
+        titre: "Booking + paiement + Google Calendar enchaînés",
+        solution:
+          "L'élève choisit un créneau, paie via Stripe Checkout. Le webhook `checkout.session.completed` est reçu côté Next.js, qui appelle une action Convex. Cette action récupère le refresh token Google de la prof, échange contre un access token, crée l'évènement avec un lien Meet auto-généré, et invite l'élève. Tout ça en moins de 5 secondes. Si l'évènement échoue, la purchase est marquée pour retry manuel.",
+      },
+      {
+        titre: "Auth magic link en prod avec domaine vérifié",
+        solution:
+          "Convex Auth + Resend pour des magic links sans mot de passe. Le piège majeur en prod : il faut absolument que le compte Resend qui possède la clé API soit aussi celui qui a vérifié le domaine, sinon l'envoi est bloqué au free tier. Tout passe par le compte de la cliente — j'ai juste configuré les records SPF/DKIM dans sa zone DNS OVH lors d'une visio screen-share de 20 min.",
+      },
+      {
+        titre: "Synchronisation des deux Convex deployments + Vercel",
+        solution:
+          "Convex génère deux déploiements distincts (dev et prod), chacun avec ses propres variables d'env (SITE_URL, AUTH_RESEND_KEY, etc.). Au passage en prod, il faut absolument synchroniser les `NEXT_PUBLIC_CONVEX_URL` côté Vercel pour qu'ils pointent sur le bon déploiement, sinon le site live continue d'appeler le backend dev — bug le plus difficile à diagnostiquer du projet, intégralement documenté pour les futures mises en prod.",
+      },
+      {
+        titre: "Carte du monde des élèves — drag & drop manuel",
+        solution:
+          "Première tentative : un algorithme automatique pour placer les labels des pays sans chevauchement, avec des traits pointillés vers chaque marqueur. Trop fragile, rendu robotique. Pivot vers un système manuel : en mode dev, un overlay drag & drop permet de placer chaque label à la souris, les positions sont stockées en localStorage, et un bouton exporte le JSON à coller dans le code pour la prod. Résultat : un placement humain, ajustable en 2 min quand un nouvel élève est ajouté.",
+      },
+      {
+        titre: "Souveraineté complète de la cliente",
+        solution:
+          "Domaine OVH au nom de Yulia, comptes Stripe / Resend / Google Cloud à son nom, mots de passe maîtrisés par elle. Le dev n'a que des accès temporaires (zone DNS OVH partagée en visio, clés API transmises en MP). Si demain elle change de dev, tout est transférable sans avoir à migrer un seul service. Modèle documenté dans une ADR « propriété des comptes services externes » réutilisable sur tous les projets clients.",
+      },
+    ],
+    resultats:
+      "Site live sur russianwithjulia.com avec stack complète déployée. Les élèves peuvent réserver, payer et accéder à leurs vidéos. La prof gère son admin de bout en bout sans intervention dev. Le projet sert maintenant de modèle technique et de documentation de référence pour les prochains projets freelance — chaque décision est justifiée dans une ADR.",
+    date: "2026-04",
+  },
+  {
     slug: "argedis-totalenergies",
     titre: "Carte interactive des producteurs locaux",
     client: "TotalEnergies · Argedis",
