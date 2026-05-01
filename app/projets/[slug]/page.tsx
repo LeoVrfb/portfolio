@@ -4,8 +4,23 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { preload } from "react-dom";
-import { ArrowLeft, ArrowRight, ExternalLink, Briefcase, User } from "lucide-react";
-import { projets, getProjet } from "@/lib/projets";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ExternalLink,
+  Briefcase,
+  User,
+  CalendarCheck,
+  Lock,
+  Sparkles,
+  CreditCard,
+  Video,
+  Palette,
+  Globe,
+  ShieldCheck,
+  type LucideIcon,
+} from "lucide-react";
+import { projets, getProjet, type PillarIcon } from "@/lib/projets";
 import { ProjetGallery } from "@/components/sections/projet-gallery";
 import { ProjetImageSlider } from "@/components/sections/projet-image-slider";
 import { WideVideoPlayer } from "@/components/sections/wide-video-player";
@@ -18,6 +33,36 @@ const TAG_COLORS = [
   { color: "var(--mauve)",    bg: "hsl(328 24% 61% / 0.12)" },
   { color: "var(--accent)",   bg: "hsl(163 24% 54% / 0.12)" },
 ];
+
+// Mapping nom de pilier -> icône Lucide. Étendre quand un nouveau pilier en a besoin
+// (et ajouter le nom dans le type `PillarIcon` côté lib/projets.ts).
+const PILLAR_ICONS: Record<PillarIcon, LucideIcon> = {
+  "calendar-check": CalendarCheck,
+  "lock": Lock,
+  "sparkles": Sparkles,
+  "credit-card": CreditCard,
+  "video": Video,
+  "palette": Palette,
+  "globe": Globe,
+  "shield-check": ShieldCheck,
+};
+
+// Couleurs des cards : on cycle entre lavender, mauve et accent pour donner du rythme
+// sans tomber dans le bariolé (toutes les cards restent sur la même grammaire visuelle).
+const PILLAR_COLORS = [
+  { tint: "var(--accent)",   bg: "hsl(163 52% 76% / 0.08)",   border: "hsl(163 52% 76% / 0.22)" },
+  { tint: "var(--lavender)", bg: "hsl(199 88% 78% / 0.08)",   border: "hsl(199 88% 78% / 0.22)" },
+  { tint: "var(--gold)",     bg: "hsl(47 72% 73% / 0.08)",    border: "hsl(47 72% 73% / 0.22)" },
+] as const;
+
+const TECH_PALETTE = [
+  { tint: "var(--lavender)", bg: "hsl(199 88% 78% / 0.06)" },
+  { tint: "var(--gold)",     bg: "hsl(47 72% 73% / 0.06)" },
+  { tint: "var(--mauve)",    bg: "hsl(295 38% 68% / 0.06)" },
+  { tint: "var(--accent)",   bg: "hsl(163 52% 76% / 0.06)" },
+] as const;
+
+const AVATAR_COLORS = ["var(--accent)", "var(--lavender)", "var(--mauve)", "var(--gold)"] as const;
 
 export async function generateStaticParams() {
   return projets.map((p) => ({ slug: p.slug }));
@@ -34,14 +79,35 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 function renderHighlight(text: string): React.ReactNode {
-  const parts = text.split(/(\*\*[^*]+\*\*|__[^_]+__|~~[^~]+~~)/g);
+  // Tous les emphases du corps de texte restent BLANCHES — seuls les titres/eyebrows portent la couleur d'accent.
+  // Un retour ligne simple `\n` (sans paragraphe vide) est rendu comme <br /> pour autoriser des sauts de ligne dans une même phrase.
+  const parts = text.split(/(\*\*[^*]+\*\*|__[^_]+__|~~[^~]+~~|\*[^*\n]+\*|\[[^\]]+\]\([^)]+\)|\n)/g);
   return parts.map((part, i) => {
+    if (part === "\n") return <br key={i} />;
     if (/^\*\*[^*]+\*\*$/.test(part))
-      return <strong key={i} className="font-semibold" style={{ color: "var(--accent)" }}>{part.slice(2, -2)}</strong>;
+      return <strong key={i} className="font-semibold text-foreground">{part.slice(2, -2)}</strong>;
     if (/^__[^_]+__$/.test(part))
       return <strong key={i} className="font-semibold text-foreground">{part.slice(2, -2)}</strong>;
     if (/^~~[^~]+~~$/.test(part))
       return <strong key={i} className="font-semibold" style={{ color: "var(--lavender)" }}>{part.slice(2, -2)}</strong>;
+    if (/^\*[^*]+\*$/.test(part))
+      return <em key={i} className="font-serif-display italic font-normal text-foreground">{part.slice(1, -1)}</em>;
+    const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (linkMatch) {
+      const [, label, href] = linkMatch;
+      const external = /^https?:/.test(href);
+      return (
+        <a
+          key={i}
+          href={href}
+          {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+          className="font-semibold underline underline-offset-4 decoration-[1.5px] transition-colors cursor-pointer"
+          style={{ color: "var(--accent)", textDecorationColor: "color-mix(in oklab, var(--accent) 50%, transparent)" }}
+        >
+          {label}
+        </a>
+      );
+    }
     return part;
   });
 }
@@ -107,28 +173,83 @@ function ClientLogo({ projet, size = "lg" }: { projet: typeof import("@/lib/proj
   );
 }
 
+type Pillar = NonNullable<typeof import("@/lib/projets").projets[0]["pillarsCards"]>[number];
+
+function PillarsSection({ pillars }: { pillars: Pillar[] }) {
+  if (!pillars.length) return null;
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+      {pillars.map((p, i) => {
+        const Icon = PILLAR_ICONS[p.iconName];
+        const c = PILLAR_COLORS[i % PILLAR_COLORS.length];
+        return (
+          <div
+            key={i}
+            className="relative rounded-2xl overflow-hidden flex flex-col gap-5 p-7"
+            style={{ background: c.bg, border: `1px solid ${c.border}` }}
+          >
+            {/* barre couleur top */}
+            <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: c.tint }} />
+            {/* numéro décoratif coin haut droit */}
+            <span
+              className="absolute top-4 right-5 font-black leading-none select-none"
+              style={{ fontSize: "3.5rem", color: c.tint, opacity: 0.12 }}
+              aria-hidden
+            >
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <div
+              className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+              style={{ background: `color-mix(in oklab, ${c.tint} 18%, transparent)`, color: c.tint }}
+            >
+              <Icon size={24} strokeWidth={1.5} />
+            </div>
+            <p className="text-[9px] font-bold uppercase tracking-[0.35em]" style={{ color: c.tint }}>
+              {p.eyebrow}
+            </p>
+            <h3 className="text-xl font-bold text-foreground leading-tight">{p.titre}</h3>
+            <p className="text-sm text-foreground/75 leading-relaxed">{p.description}</p>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 function TechSection({ challenges }: { challenges: Challenge[] }) {
   if (!challenges.length) return null;
   return (
-    <div className="space-y-5">
-      <div className="flex items-center gap-3">
-        <div className="h-px flex-1 bg-white/10" />
-        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-foreground">Côté technique</p>
-        <div className="h-px flex-1 bg-white/10" />
+    <div className="space-y-6">
+      <div className="flex items-center gap-4">
+        <div className="w-7 h-[3px] rounded-full shrink-0" style={{ background: "var(--gold)" }} />
+        <p className="text-[10px] font-bold uppercase tracking-[0.3em]" style={{ color: "var(--gold)" }}>Côté technique</p>
       </div>
-      <div className="space-y-6">
-        {challenges.map((ch, i) => (
-          <div key={i} className="flex gap-5 items-start">
-            <span
-              className="text-2xl font-black leading-none shrink-0 mt-0.5 select-none"
-              style={{ color: "var(--accent)" }}
-            >?</span>
-            <div>
-              <p className="text-sm font-bold text-foreground mb-1.5">{ch.titre}</p>
-              <p className="text-sm text-foreground/82 leading-relaxed">{ch.solution}</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {challenges.map((ch, i) => {
+          const c = TECH_PALETTE[i % TECH_PALETTE.length];
+          return (
+            <div
+              key={i}
+              className="relative rounded-xl p-5 overflow-hidden"
+              style={{
+                background: c.bg,
+                borderLeft: `3px solid ${c.tint}`,
+                border: `1px solid color-mix(in oklab, ${c.tint} 20%, transparent)`,
+                borderLeftWidth: "3px",
+              }}
+            >
+              <span
+                className="absolute top-3 right-4 font-black leading-none select-none pointer-events-none"
+                style={{ fontSize: "3rem", color: c.tint, opacity: 0.12 }}
+                aria-hidden
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <p className="text-base font-black text-foreground mb-2 pr-12">{ch.titre}</p>
+              <p className="text-sm text-foreground/78 leading-relaxed">{renderHighlight(ch.solution)}</p>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
@@ -154,6 +275,11 @@ export default async function ProjetPage({ params }: Props) {
   const zigzagImages = projet.video && !projet.wideMedia
     ? (projet.images?.slice(1) ?? [])
     : (projet.images ?? []);
+
+  // Sliders wide : ratio 2:1 pour les sites web full-page (RWJ, Bald) — évite le crop des bords
+  // gauche/droite qui apparaît avec aspect-video (16:9). Pour les mockups 16:9 (vidéo BNP),
+  // on garde aspect-video.
+  const wideAspectRatio = projet.video ? "aspect-video" : "aspect-[2/1]";
 
   // Interleave challenges entre BLOC 2 et BLOC 3 pour les projets portrait avec assez d'images
   const interleaveZigzag =
@@ -229,7 +355,7 @@ export default async function ProjetPage({ params }: Props) {
 
           {/* Droite : meta card — tablette et desktop seulement */}
           <div className="space-y-3 lg:pt-2 hidden sm:block">
-            <div className="p-5 rounded-xl border border-border bg-card space-y-4">
+            <div className="p-5 rounded-xl border border-border space-y-4" style={{ background: "linear-gradient(135deg, hsl(163 52% 76% / 0.05) 0%, hsl(var(--card)) 60%)" }}>
               <div>
                 <p className="text-[10px] uppercase tracking-[0.25em] mb-2 font-semibold" style={{ color: "var(--accent)" }}>Client</p>
                 <div className="flex items-center gap-2.5 flex-wrap mb-1.5">
@@ -290,8 +416,8 @@ export default async function ProjetPage({ params }: Props) {
       </div>
 
       {/* ── CONTENU PRINCIPAL — même container ── */}
-      <div className="max-w-4xl mx-auto px-6 lg:px-10 space-y-10 sm:space-y-14">
-        <div className="h-px bg-white/10" />
+      <div className="max-w-4xl mx-auto px-6 lg:px-10 space-y-16 sm:space-y-24">
+        <div className="h-px" style={{ background: "linear-gradient(90deg, transparent, hsl(163 52% 76% / 0.3) 40%, hsl(199 88% 78% / 0.2) 60%, transparent)" }} />
 
         {/* BLOC 1 — Paysage (wideMedia) : vidéo/image pleine largeur, texte en dessous
                     Portrait : vidéo/image à gauche, texte à droite */}
@@ -306,11 +432,24 @@ export default async function ProjetPage({ params }: Props) {
               </div>
             )}
 
+            {/* Tagline éditoriale (avant le hero) — uniquement quand le projet la définit explicitement.
+                Donne le rythme de la page : eyebrow numéroté + grande punch line serif (style /services/standard). */}
+            {projet.tagline && (
+              <div className="max-w-3xl pb-2">
+                <p className="text-[10px] font-bold uppercase tracking-[0.3em] mb-3" style={{ color: "var(--accent)" }}>
+                  {projet.sliderSets && projet.sliderSets.length > 0 ? "01 — Vue d'ensemble" : "Vue d'ensemble"}
+                </p>
+                <p className="text-4xl sm:text-5xl lg:text-7xl font-serif-display font-normal leading-[1.08] tracking-tight text-foreground">
+                  {renderHighlight(projet.tagline)}
+                </p>
+              </div>
+            )}
+
             {projet.wideMedia ? (
               /* ── Paysage : empilé ── */
               <>
                 {projet.video ? (
-                  <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-border/60">
+                  <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-border/60 shadow-[0_32px_80px_-8px_rgba(0,0,0,0.6)]">
                     <WideVideoPlayer
                       src={projet.video}
                       loopStart={projet.videoLoopStart}
@@ -319,8 +458,17 @@ export default async function ProjetPage({ params }: Props) {
                     />
                   </div>
                 ) : mainImg ? (
-                  <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-border/60">
-                    <Image src={mainImg} alt={projet.titre} fill className="object-cover" priority sizes="100vw" />
+                  /* Image fixe : pas d'aspect-ratio forcé — on respecte le ratio natif de l'image (sinon le hero d'un site web non 16:9 se fait crop sur les côtés) */
+                  <div className="relative w-full rounded-xl overflow-hidden border border-border/60 shadow-[0_32px_80px_-8px_rgba(0,0,0,0.6)]">
+                    <Image
+                      src={mainImg}
+                      alt={projet.titre}
+                      width={2400}
+                      height={1200}
+                      className="w-full h-auto block"
+                      priority
+                      sizes="100vw"
+                    />
                   </div>
                 ) : null}
                 {projet.descriptionPublic && (
@@ -335,9 +483,9 @@ export default async function ProjetPage({ params }: Props) {
                 {(projet.video || projet.img) && (
                   <div className="mx-auto md:mx-0">
                     {projet.video ? (
-                      <video src={projet.video} autoPlay muted loop playsInline preload="auto" className="rounded-xl border border-border/60 max-h-[520px] w-auto" />
+                      <video src={projet.video} autoPlay muted loop playsInline preload="auto" className="rounded-xl border border-border/60 max-h-[520px] w-auto shadow-[0_32px_80px_-8px_rgba(0,0,0,0.6)]" />
                     ) : (
-                      <div className="relative rounded-xl overflow-hidden border border-border/60">
+                      <div className="relative rounded-xl overflow-hidden border border-border/60 shadow-[0_32px_80px_-8px_rgba(0,0,0,0.6)]">
                         <Image src={projet.img!} alt={projet.titre} width={400} height={800} className="w-auto max-h-[520px] object-contain" priority />
                       </div>
                     )}
@@ -353,8 +501,11 @@ export default async function ProjetPage({ params }: Props) {
           </div>
         )}
 
-        {/* Points clés — labels en en-tête + liste unique, centré */}
-        {projet.pointsCles && projet.pointsCles.length > 0 && (
+        {/* Piliers — 3 cards visuelles avec icônes Lucide. Quand `pillarsCards` est défini,
+            il remplace `pointsCles` (les deux sont la même chose conceptuellement). */}
+        {projet.pillarsCards && projet.pillarsCards.length > 0 ? (
+          <PillarsSection pillars={projet.pillarsCards} />
+        ) : projet.pointsCles && projet.pointsCles.length > 0 && (
           <div className="flex flex-col items-center">
             <p className="text-sm font-bold uppercase tracking-wider text-foreground mb-5">
               {projet.pointsCles.map((g) => g.label).join(" · ")}
@@ -389,6 +540,7 @@ export default async function ProjetPage({ params }: Props) {
               images={zigzagImages}
               alt={projet.titre}
               wide
+              aspectRatio={wideAspectRatio}
             />
           </div>
         ) : zigzagImages.length >= 3 ? (
@@ -477,22 +629,30 @@ export default async function ProjetPage({ params }: Props) {
         {/* ── SLIDERS + DÉFIS : interleaved si les deux existent, standard sinon ── */}
         {projet.sliderSets && projet.challenges && projet.challenges.length > 0 ? (() => {
           const splitAt = 2; // défis 1-2 avant slider 0, reste avant slider 1+
-          const sectionOffset = projet.video ? 1 : 0;
+          // Si une vidéo OU une tagline ouvre la page, le 1er sliderSet est numéroté 02 (et non 01).
+          const sectionOffset = (projet.video || projet.tagline) ? 1 : 0;
           const batch1 = projet.challenges.slice(0, splitAt);
           const batch2 = projet.challenges.slice(splitAt);
 
           const SliderSetBlock = ({ set, si }: { set: { title: string; description: string; images: string[] }; si: number }) => (
             <div className="space-y-5">
-              <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] mb-2" style={{ color: "var(--accent)" }}>
+              <div className="relative overflow-hidden pb-1">
+                <span
+                  className="absolute -top-5 left-0 font-black leading-none select-none pointer-events-none text-foreground opacity-[0.04]"
+                  style={{ fontSize: "7rem" }}
+                  aria-hidden="true"
+                >
+                  {String(si + 1 + sectionOffset).padStart(2, "0")}
+                </span>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] mb-2 relative z-10" style={{ color: "var(--accent)" }}>
                   {String(si + 1 + sectionOffset).padStart(2, "0")} —
                 </p>
-                <h3 className="text-xl font-bold text-foreground mb-3">{set.title}</h3>
-                <p className="text-base text-foreground/85 leading-relaxed max-w-2xl">{set.description}</p>
+                <h3 className="text-2xl font-bold text-foreground mb-3 relative z-10">{set.title}</h3>
+                <p className="text-base text-foreground/85 leading-relaxed max-w-2xl relative z-10">{renderHighlight(set.description)}</p>
               </div>
               {projet.customSlider === "bald-identity" && set.images.length === 0
                 ? <BaldIdentityShowcase />
-                : <ProjetImageSlider images={set.images} alt={`${projet.titre} — ${set.title}`} wide={!!projet.wideMedia} />
+                : <ProjetImageSlider images={set.images} alt={`${projet.titre} — ${set.title}`} wide={!!projet.wideMedia} aspectRatio={wideAspectRatio} />
               }
             </div>
           );
@@ -512,16 +672,23 @@ export default async function ProjetPage({ params }: Props) {
           <>
             {projet.sliderSets && projet.sliderSets.map((set, si) => (
               <div key={si} className="space-y-5">
-                <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.25em] mb-2" style={{ color: "var(--accent)" }}>
-                    {String(si + 1).padStart(2, "0")} —
+                <div className="relative overflow-hidden pb-1">
+                  <span
+                    className="absolute -top-5 left-0 font-black leading-none select-none pointer-events-none text-foreground opacity-[0.04]"
+                    style={{ fontSize: "7rem" }}
+                    aria-hidden="true"
+                  >
+                    {String(si + 1 + ((projet.video || projet.tagline) ? 1 : 0)).padStart(2, "0")}
+                  </span>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.25em] mb-2 relative z-10" style={{ color: "var(--accent)" }}>
+                    {String(si + 1 + ((projet.video || projet.tagline) ? 1 : 0)).padStart(2, "0")} —
                   </p>
-                  <h3 className="text-xl font-bold text-foreground mb-3">{set.title}</h3>
-                  <p className="text-base text-foreground/85 leading-relaxed max-w-2xl">{set.description}</p>
+                  <h3 className="text-2xl font-bold text-foreground mb-3 relative z-10">{set.title}</h3>
+                  <p className="text-base text-foreground/85 leading-relaxed max-w-2xl relative z-10">{renderHighlight(set.description)}</p>
                 </div>
                 {projet.customSlider === "bald-identity" && set.images.length === 0
                   ? <BaldIdentityShowcase />
-                  : <ProjetImageSlider images={set.images} alt={`${projet.titre} — ${set.title}`} wide={!!projet.wideMedia} />
+                  : <ProjetImageSlider images={set.images} alt={`${projet.titre} — ${set.title}`} wide={!!projet.wideMedia} aspectRatio={wideAspectRatio} />
                 }
               </div>
             ))}
@@ -533,37 +700,50 @@ export default async function ProjetPage({ params }: Props) {
         )}
 
         {/* ── SÉPARATEUR ── */}
-        <div className="h-px bg-white/10" />
+        <div className="h-px" style={{ background: "linear-gradient(90deg, transparent, hsl(163 52% 76% / 0.3) 40%, hsl(199 88% 78% / 0.2) 60%, transparent)" }} />
 
         {/* TECHNOLOGIES */}
         {projet.technologies && projet.technologies.length > 0 && (
           <div>
-            <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] mb-6" style={{ color: "var(--accent)" }}>
-              Stack du projet
-            </h2>
-            <div className="space-y-6">
-              {projet.technologies.map((tech, ti) => (
-                <div key={tech.nom} className="flex gap-4">
-                  <div
-                    className="w-px shrink-0 self-stretch opacity-40"
-                    style={{ background: TAG_COLORS[ti % TAG_COLORS.length].color }}
-                  />
-                  <div>
-                    <p className="text-sm font-semibold mb-0.5" style={{ color: TAG_COLORS[ti % TAG_COLORS.length].color }}>
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-7 h-[3px] rounded-full shrink-0" style={{ background: "var(--lavender)" }} />
+              <h2 className="text-[10px] font-bold uppercase tracking-[0.3em]" style={{ color: "var(--lavender)" }}>
+                Stack du projet
+              </h2>
+            </div>
+            <div className="space-y-3">
+              {projet.technologies.map((tech, ti) => {
+                const c = TAG_COLORS[ti % TAG_COLORS.length];
+                return (
+                  <div key={tech.nom} className="grid sm:grid-cols-[160px_1fr] gap-3 sm:gap-6 items-start py-3 border-b border-white/5 last:border-0">
+                    <span
+                      className="inline-flex self-start text-xs font-bold px-3 py-1.5 rounded-lg whitespace-nowrap"
+                      style={{
+                        color: c.color,
+                        background: c.bg,
+                        border: `1px solid color-mix(in oklab, ${c.color} 35%, transparent)`,
+                      }}
+                    >
                       {tech.nom}
-                    </p>
-                    <p className="text-sm text-foreground/82 leading-relaxed">{tech.detail}</p>
+                    </span>
+                    <p className="text-sm text-foreground/78 leading-relaxed">{tech.detail}</p>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}
 
         {/* RÉSULTATS (si pas encore affiché dans le zigzag) */}
         {projet.resultats && zigzagImages.length < 3 && (
-          <div className="pl-5 py-1 border-l-2" style={{ borderColor: "var(--accent)" }}>
-            <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] mb-2" style={{ color: "var(--accent)" }}>
+          <div
+            className="rounded-2xl border px-8 py-7"
+            style={{
+              background: "hsl(163 52% 76% / 0.04)",
+              borderColor: "color-mix(in oklab, var(--accent) 22%, transparent)",
+            }}
+          >
+            <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] mb-3" style={{ color: "var(--accent)" }}>
               Résultats
             </h2>
             <p className="text-sm text-foreground/88 leading-relaxed">{projet.resultats}</p>
@@ -573,27 +753,44 @@ export default async function ProjetPage({ params }: Props) {
         {/* CRÉDITS */}
         {projet.credits && projet.credits.length > 0 && (
           <div>
-            <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] mb-4" style={{ color: "var(--accent)" }}>
-              Équipe
-            </h2>
-            <div className="flex flex-wrap gap-x-8 gap-y-3">
-              {projet.credits.map((c, i) => (
-                <div key={i}>
-                  <span className="text-sm text-foreground/88 font-medium">{c.nom}</span>
-                  <span className="text-xs text-foreground/35 ml-2">{c.role}</span>
-                </div>
-              ))}
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-7 h-[3px] rounded-full shrink-0" style={{ background: "var(--mauve)" }} />
+              <h2 className="text-[10px] font-bold uppercase tracking-[0.3em]" style={{ color: "var(--mauve)" }}>Équipe</h2>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              {projet.credits.map((c, i) => {
+                const initials = c.nom.split(" ").map((w: string) => w[0]).join("").slice(0, 2).toUpperCase();
+                const col = AVATAR_COLORS[i % AVATAR_COLORS.length];
+                return (
+                  <div key={i} className="flex items-center gap-3 rounded-xl border border-white/8 px-4 py-3 bg-white/2">
+                    <div
+                      className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-black"
+                      style={{ background: `color-mix(in oklab, ${col} 18%, transparent)`, color: col }}
+                    >
+                      {initials}
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-foreground leading-none mb-0.5">{c.nom}</p>
+                      <p className="text-xs text-foreground/40">{c.role}</p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
 
         {/* ── SÉPARATEUR ── */}
-        <div className="h-px bg-white/10" />
+        <div className="h-px" style={{ background: "linear-gradient(90deg, transparent, hsl(163 52% 76% / 0.3) 40%, hsl(199 88% 78% / 0.2) 60%, transparent)" }} />
 
         {/* ── CTA SERVICES ── */}
-        <div className="rounded-2xl border border-white/8 bg-white/3 px-7 py-8 flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-8">
+        <div
+          className="relative rounded-2xl overflow-hidden px-7 py-8 flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-8"
+          style={{ background: "hsl(47 72% 73% / 0.05)", border: "1px solid hsl(47 72% 73% / 0.2)" }}
+        >
+          <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: "var(--gold)" }} />
           <div className="flex-1 min-w-0">
-            <p className="text-[10px] uppercase tracking-[0.3em] font-semibold mb-2" style={{ color: "var(--accent)" }}>
+            <p className="text-[10px] uppercase tracking-[0.3em] font-semibold mb-2" style={{ color: "var(--gold)" }}>
               Vous aimez ce type de site ?
             </p>
             <p className="text-base font-bold text-foreground leading-snug">
@@ -607,8 +804,8 @@ export default async function ProjetPage({ params }: Props) {
             href="/services"
             className="shrink-0 inline-flex items-center gap-2 px-5 py-3 rounded-xl font-semibold text-sm transition-all cursor-pointer"
             style={{
-              background: "var(--accent)",
-              color: "var(--background)",
+              background: "var(--gold)",
+              color: "hsl(158 24% 7%)",
             }}
           >
             Voir mes formules

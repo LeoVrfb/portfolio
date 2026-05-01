@@ -1,3 +1,18 @@
+/**
+ * Identifiant d'icône Lucide utilisé dans les pillarsCards.
+ * Étendre ce type quand on ajoute un nouveau pilier qui demande une icône non listée.
+ * Le mapping nom -> composant Lucide vit dans `app/projets/[slug]/page.tsx`.
+ */
+export type PillarIcon =
+  | "calendar-check"
+  | "lock"
+  | "sparkles"
+  | "credit-card"
+  | "video"
+  | "palette"
+  | "globe"
+  | "shield-check";
+
 export type Projet = {
   slug: string;
   titre: string;
@@ -10,19 +25,33 @@ export type Projet = {
   descriptionPublic?: string;
   descriptionTech?: string;
   intro: string;
+  /**
+   * Punch line éditoriale affichée en grand (serif) juste sous le hero, avant la descriptionPublic.
+   * Format markdown léger : *mot* pour mettre en italique serif accent, **mot** pour gras blanc.
+   * À garder court (une phrase, deux max) pour avoir l'effet "claque".
+   */
+  tagline?: string;
   img: string;
   heroImg?: string;
   images?: string[];
   sliderSets?: { title: string; description: string; images: string[] }[];
   video?: string;
   videoTitle?: string;
-  videoLoopStart?: number; // secondes — la vidéo démarre (et repart) à ce point
-  videoLoopEnd?: number;   // secondes — le loop repart avant ce point
+  videoLoopStart?: number; // secondes : la vidéo démarre (et repart) à ce point
+  videoLoopEnd?: number;   // secondes : le loop repart avant ce point
   wideMedia?: boolean;
   tags: string[];
   technologies?: { nom: string; detail: string }[];
   caracteristiques?: string[];
   pointsCles?: { label: string; items: string[] }[];
+  /**
+   * 3 piliers éditoriaux du projet, affichés en cards visuelles juste après la tagline.
+   * Quand `pillarsCards` est défini, il remplace l'affichage de `pointsCles` sur la page projet
+   * (les deux sont conceptuellement la même chose : la "raison d'être" du projet).
+   * Réservé aux projets où on veut vraiment placarder la valeur en grand : 3 cards alignées,
+   * chacune avec une icône Lucide, un eyebrow numéroté, un titre fort, 2-3 lignes max.
+   */
+  pillarsCards?: { eyebrow: string; iconName: PillarIcon; titre: string; description: string }[];
   imageCaptions?: string[];
   challenges?: { titre: string; solution: string }[];
   resultats?: string;
@@ -147,168 +176,6 @@ export const projets: Projet[] = [
       { nom: "Pauline Ravel", role: "UX Designer · Artefact 3000" },
     ],
     date: "2025-04",
-  },
-  {
-    slug: "russian-with-julia",
-    titre: "Plateforme de cours de russe en ligne",
-    client: "Russian with Julia",
-    clientShort: "Russian with Julia",
-    contexte: "freelance",
-    description:
-      "Plateforme complète développée en freelance pour Yulia, prof de russe : site marketing, paywall vidéo, dashboard élève, dashboard admin, booking d'un appel d'introduction synchronisé Google Calendar, paiement Stripe.",
-    descriptionPublic:
-      "**Un site, deux mondes.**\nCôté visiteur : un site vitrine soigné — hero plein écran, témoignages, carte des élèves répartis dans plus de 25 pays, services, vidéos d'introduction. Côté apprenant connecté : un dashboard avec ses packs achetés et ses leçons vidéo en streaming sécurisé.\n\n**Un appel d'introduction réservable en 30 secondes.**\nLe visiteur choisit un créneau dans le calendrier, paie 15 $ via Stripe, et reçoit automatiquement une invitation Google Calendar avec un lien Google Meet. L'évènement est créé dans le vrai agenda de la prof, dans son fuseau horaire à elle.\n\n**Un admin qui appartient à la prof.**\nElle se connecte avec un magic link envoyé sur son email pro. Elle gère ses packs, uploade ses leçons vidéo, voit ses élèves et leurs achats, et connecte son Google Calendar. Le dev n'intervient plus une fois en place.",
-    intro: `Site complet développé en **freelance** pour __Yulia__, professeure de russe avec __plus de 500 élèves__ dans 25+ pays. Plateforme de bout en bout : **site vitrine**, **paywall vidéo** sur les leçons hébergées sur Cloudflare R2, **dashboard élève** post-achat, **dashboard admin** pour la prof (upload, gestion des élèves, calendrier), **booking d'un appel d'intro** en 30 secondes avec création automatique d'un évènement Google Calendar + lien Meet, **paiement Stripe** en mode live, **auth magic link** sans mot de passe, et tout le passage en prod (domaine, DNS, email pro).`,
-    img: "/assets/rwj/rwj-miniature.webp",
-    heroImg: "/assets/rwj/rwj-hero-accueil.webp",
-    url: "https://russianwithjulia.com",
-    wideMedia: true,
-    enCours: true,
-    sliderSets: [
-      {
-        title: "Le site vitrine",
-        description: "Un parcours visiteur soigné : hero plein écran avec un photoshooting réalisé sur mesure, témoignages réels d'élèves, carte du monde des apprenants, présentation des packs. Tout y est pensé pour traduire la chaleur d'une prof particulière sans tomber dans le côté froid d'une plateforme massive.",
-        images: [
-          "/assets/rwj/rwj-hero-accueil.webp",
-          "/assets/rwj/rwj-testimonials.webp",
-          "/assets/rwj/rwj-videos-and-world-map.webp",
-          "/assets/rwj/rwj-services-packs.webp",
-        ],
-      },
-      {
-        title: "Réserver un appel et débloquer ses cours",
-        description: "Le booking widget enchaîne calendrier, paiement Stripe et création automatique d'un évènement Google Calendar avec lien Meet — le tout en 30 secondes. Côté vidéos, chaque pack est verrouillé tant que le paiement n'est pas validé, puis débloqué en temps réel sans rechargement.",
-        images: [
-          "/assets/rwj/rwj-booking-trial.webp",
-          "/assets/rwj/rwj-video-courses.webp",
-          "/assets/rwj/rwj-student-dashboard.webp",
-        ],
-      },
-      {
-        title: "Le dashboard admin",
-        description: "L'espace de la prof. Elle crée ses packs, uploade ses leçons vidéo directement sur Cloudflare R2 via une URL pré-signée (sans transit serveur), publie quand elle est prête, voit ses élèves et leurs achats, connecte son Google Calendar pour l'appel d'intro. Le dev ne reprend plus la main.",
-        images: [
-          "/assets/rwj/rwj-admin-packs-list.webp",
-          "/assets/rwj/rwj-admin-add-lesson.webp",
-        ],
-      },
-    ],
-    tags: [
-      "Next.js",
-      "Convex",
-      "Stripe",
-      "Cloudflare R2",
-      "Google Calendar API",
-      "Resend",
-      "Convex Auth",
-      "shadcn/ui",
-      "Tailwind",
-      "TypeScript",
-    ],
-    technologies: [
-      {
-        nom: "Next.js (App Router)",
-        detail:
-          "Site et application réunis sous le même toit. Les Server Actions servent de points d'entrée RPC pour les actions sensibles (lien d'achat Stripe, génération d'URL signée R2, création d'évènement Google Calendar) sans exposer d'API publique. Les pages publiques restent statiques pour la performance et le SEO.",
-      },
-      {
-        nom: "Convex",
-        detail:
-          "Backend temps réel et base de données. Schéma typé partagé client/serveur, mutations transactionnelles pour les achats, queries réactives pour le dashboard élève (les nouveaux packs apparaissent sans refresh). Convex héberge aussi les actions qui appellent Google Calendar et stocke les tokens OAuth de la prof.",
-      },
-      {
-        nom: "Convex Auth (magic link via Resend)",
-        detail:
-          "Authentification sans mot de passe : la prof comme les élèves reçoivent un lien à usage unique sur leur email. Le provider Resend a été override pour logger systématiquement le magic link en console côté Convex — utile en dev quand le free tier de Resend bloque les destinataires non vérifiés.",
-      },
-      {
-        nom: "Cloudflare R2",
-        detail:
-          "Hébergement des leçons vidéo. Pas de S3 : R2 ne facture pas la bande passante sortante, ce qui est crucial pour des vidéos consultées depuis 25+ pays. L'admin uploade directement depuis son navigateur via une URL pré-signée — la vidéo ne transite jamais par le serveur Next.js.",
-      },
-      {
-        nom: "Stripe (Checkout + Webhooks)",
-        detail:
-          "Paiement de l'appel d'intro à 15 $ et des packs vidéo via Stripe Checkout. Le webhook `checkout.session.completed` déclenche en chaîne la création de la purchase côté Convex, puis l'évènement Google Calendar avec lien Meet pour le call d'intro.",
-      },
-      {
-        nom: "Google Calendar API (OAuth 2.0)",
-        detail:
-          "La prof connecte son Google Calendar via OAuth depuis son dashboard. Les tokens sont stockés chiffrés dans Convex. Quand un élève paye un appel d'intro, l'évènement est créé dans son agenda à elle, dans son fuseau horaire (Europe/Warsaw), avec un lien Google Meet auto-généré et l'élève en invité.",
-      },
-      {
-        nom: "Resend (domaine vérifié)",
-        detail:
-          "Tous les emails transactionnels (magic links, confirmations) partent depuis `noreply@russianwithjulia.com` via Resend, avec SPF + DKIM configurés sur la zone DNS OVH. Compte Resend au nom de la cliente — le dev n'a aucun email à envoyer en son nom.",
-      },
-      {
-        nom: "shadcn/ui + Tailwind",
-        detail:
-          "Design system composé sur shadcn pour les briques fonctionnelles (Calendar, Dialog, Toast, Tabs), Tailwind pour la mise en forme. Thème noir et or assumé, typographie sérieuse pour souligner l'aspect personnel de la prof.",
-      },
-    ],
-    pointsCles: [
-      {
-        label: "Enjeux",
-        items: [
-          "Donner à une prof indépendante un site qui matche la qualité de ses cours, sans dépendance à un dev en continu",
-          "Permettre aux élèves d'acheter et de consommer des cours vidéo sans friction, partout dans le monde",
-          "Automatiser tout l'opérationnel — paiement, calendrier, comptes — pour que la prof puisse se concentrer uniquement sur l'enseignement",
-        ],
-      },
-      {
-        label: "Défis",
-        items: [
-          "Hébergement vidéo économiquement viable sur 25+ pays — Cloudflare R2 (pas de frais de bande passante) plutôt que S3",
-          "Auth sans mot de passe robuste en prod, avec un domaine email vérifié pour la délivrabilité",
-          "Synchronisation bidirectionnelle Stripe → Convex → Google Calendar en moins de 5 secondes après un paiement",
-          "Souveraineté de la cliente : domaine, Stripe, Resend, Google Cloud — tout au nom de Yulia, transférable à tout moment",
-        ],
-      },
-      {
-        label: "Intérêt",
-        items: [
-          "Stack moderne (Next.js 15 + Convex + Stripe + R2 + Resend) intégrée de bout en bout sans glue code superflu",
-          "Documentation complète des décisions techniques sous forme d'ADR — réutilisable comme template pour les prochains projets clients",
-          "Carte du monde des élèves construite from scratch avec un système de drag & drop manuel persisté en local pour positionner les labels",
-        ],
-      },
-    ],
-    challenges: [
-      {
-        titre: "Paywall vidéo — accès débloqué en temps réel sans refresh",
-        solution:
-          "Tant qu'un élève n'a pas acheté un pack, ses leçons sont affichées floutées avec un cadenas. Au paiement, le webhook Stripe insère une purchase dans Convex — et grâce à la réactivité native de Convex, le dashboard de l'élève bascule sur l'état déverrouillé en moins d'une seconde, sans qu'il ait besoin de recharger la page. Le streaming des vidéos passe par une URL signée R2 régénérée à chaque lecture.",
-      },
-      {
-        titre: "Booking + paiement + Google Calendar enchaînés",
-        solution:
-          "L'élève choisit un créneau, paie via Stripe Checkout. Le webhook `checkout.session.completed` est reçu côté Next.js, qui appelle une action Convex. Cette action récupère le refresh token Google de la prof, échange contre un access token, crée l'évènement avec un lien Meet auto-généré, et invite l'élève. Tout ça en moins de 5 secondes. Si l'évènement échoue, la purchase est marquée pour retry manuel.",
-      },
-      {
-        titre: "Auth magic link en prod avec domaine vérifié",
-        solution:
-          "Convex Auth + Resend pour des magic links sans mot de passe. Le piège majeur en prod : il faut absolument que le compte Resend qui possède la clé API soit aussi celui qui a vérifié le domaine, sinon l'envoi est bloqué au free tier. Tout passe par le compte de la cliente — j'ai juste configuré les records SPF/DKIM dans sa zone DNS OVH lors d'une visio screen-share de 20 min.",
-      },
-      {
-        titre: "Synchronisation des deux Convex deployments + Vercel",
-        solution:
-          "Convex génère deux déploiements distincts (dev et prod), chacun avec ses propres variables d'env (SITE_URL, AUTH_RESEND_KEY, etc.). Au passage en prod, il faut absolument synchroniser les `NEXT_PUBLIC_CONVEX_URL` côté Vercel pour qu'ils pointent sur le bon déploiement, sinon le site live continue d'appeler le backend dev — bug le plus difficile à diagnostiquer du projet, intégralement documenté pour les futures mises en prod.",
-      },
-      {
-        titre: "Carte du monde des élèves — drag & drop manuel",
-        solution:
-          "Première tentative : un algorithme automatique pour placer les labels des pays sans chevauchement, avec des traits pointillés vers chaque marqueur. Trop fragile, rendu robotique. Pivot vers un système manuel : en mode dev, un overlay drag & drop permet de placer chaque label à la souris, les positions sont stockées en localStorage, et un bouton exporte le JSON à coller dans le code pour la prod. Résultat : un placement humain, ajustable en 2 min quand un nouvel élève est ajouté.",
-      },
-      {
-        titre: "Souveraineté complète de la cliente",
-        solution:
-          "Domaine OVH au nom de Yulia, comptes Stripe / Resend / Google Cloud à son nom, mots de passe maîtrisés par elle. Le dev n'a que des accès temporaires (zone DNS OVH partagée en visio, clés API transmises en MP). Si demain elle change de dev, tout est transférable sans avoir à migrer un seul service. Modèle documenté dans une ADR « propriété des comptes services externes » réutilisable sur tous les projets clients.",
-      },
-    ],
-    resultats:
-      "Site live sur russianwithjulia.com avec stack complète déployée. Les élèves peuvent réserver, payer et accéder à leurs vidéos. La prof gère son admin de bout en bout sans intervention dev. Le projet sert maintenant de modèle technique et de documentation de référence pour les prochains projets freelance — chaque décision est justifiée dans une ADR.",
-    date: "2026-04",
   },
   {
     slug: "argedis-totalenergies",
@@ -650,10 +517,12 @@ export const projets: Projet[] = [
     logo: "/assets/bald/bald-logo-splash.webp",
     contexte: "freelance",
     description:
-      "Site e-commerce pour Bald, artiste peintre abstrait — galerie filtrable par collection, taille et prix, fiches œuvres avec slider, achat en ligne via Stripe, internationalisation FR/EN.",
+      "Site e-commerce pour Bald, artiste peintre abstrait : galerie filtrable par collection, taille et prix, fiches œuvres avec slider, achat en ligne via Stripe, internationalisation FR/EN.",
+    tagline:
+      "Une *identité visuelle* sur mesure, une *galerie filtrante*, et un paiement à l'*international*.",
     descriptionPublic:
-      "**Une identité visuelle sur mesure.**\nChaque élément graphique a été conçu pour Bald : le logo découpé en deux typographies (BA en encre, LD en feuille d'or), un badge circulaire animé, des coups de pinceau qui s'animent au défilement de la page. Ce genre d'effets visuels ne s'improvise pas avec un template.\n\n**Une galerie pensée pour naviguer facilement.**\nLes visiteurs filtrent les toiles par collection, par dimensions et par prix. L'accès à ce qu'ils cherchent est immédiat, sans rechargement de page.\n\n**Acheter une toile en quelques clics.**\nLe paiement est intégré directement dans le site. Quand une toile est vendue, elle disparaît instantanément. Bald peut ajouter ou retirer des œuvres depuis son espace d'administration, sans toucher au code.\n\n**Le site en français et en anglais.**\nChaque page, chaque fiche et chaque mention légale est disponible dans les deux langues. Un visiteur anglophone arrive automatiquement sur la bonne version.",
-    intro: `Site e-commerce développé en **freelance** pour **Bald**, artiste peintre abstrait. Identité visuelle noir et or construite __from scratch__ : intro animée, badge circulaire rotatif, coups de pinceau au scroll, typographie Bebas Neue. Galerie avec filtres multi-critères, tunnel ~~Stripe~~ complet, backend ~~Convex~~ pour la synchronisation du stock en temps réel, internationalisation FR/EN native. Le genre de site qu'on ne fait pas avec un template.`,
+      "Une identité visuelle entièrement sur mesure. Chaque élément graphique a été conçu pour Bald : le logo découpé en deux typographies (BA en encre, LD en feuille d'or), un badge circulaire animé, des coups de pinceau qui s'animent au défilement de la page. Ce genre d'effets visuels ne s'improvise pas avec un template.\n\nUne galerie pensée pour naviguer facilement. Les visiteurs filtrent les toiles par collection, par dimensions et par prix. L'accès à ce qu'ils cherchent est immédiat, sans rechargement de page.\n\nAcheter une toile en quelques clics. Le paiement Stripe est intégré directement dans le site. Bald peut ajouter ou retirer des œuvres depuis son espace d'administration, sans toucher au code.\n\nLe site en français et en anglais. Chaque page, chaque fiche et chaque mention légale est disponible dans les deux langues. Un visiteur anglophone arrive automatiquement sur la bonne version.\n\nLe site est en ligne sur [bald-art.com](https://bald-art.com), n'hésitez pas à aller le visiter pour vous en faire votre propre idée.",
+    intro: `Site e-commerce développé en freelance pour Bald, artiste peintre abstrait. Identité visuelle noir et or construite from scratch : intro animée, badge circulaire rotatif, coups de pinceau au scroll, typographie Bebas Neue. Galerie avec filtres multi-critères, tunnel Stripe complet et internationalisation FR/EN native. Le genre de site qu'on ne fait pas avec un template.`,
     img: "/assets/bald/bald-miniature.webp",
     heroImg: "/assets/bald/bald-hero-accueil.webp",
     url: "https://bald-art.com",
@@ -662,66 +531,174 @@ export const projets: Projet[] = [
     sliderSets: [
       {
         title: "L'identité visuelle",
-        description: "Chaque élément graphique — le logo, le badge circulaire rotatif, les coups de pinceau au scroll — a été conçu sur mesure et intégré. Noir et or, typographie Bebas Neue, animations GSAP : tout l'univers de BALD est construit from scratch.",
+        description: "Chaque élément graphique (le logo, le badge circulaire rotatif, les coups de pinceau au scroll) a été conçu sur mesure et intégré. Noir et or, typographie Bebas Neue, animations GSAP : tout l'univers de BALD est construit from scratch.",
         images: [],
       },
       {
         title: "La galerie filtrée",
-        description: "La galerie permet de filtrer les œuvres par collection, par dimensions et de les trier par prix croissant ou décroissant. Avec plusieurs dizaines de toiles, le filtrage est instantané côté client — sans rechargement, sans appel réseau.",
+        description: "La galerie permet de filtrer les œuvres par collection, par dimensions et de les trier par prix croissant ou décroissant. Avec plusieurs dizaines de toiles, le filtrage est instantané côté client (sans rechargement, sans appel réseau).",
         images: ["/assets/bald/bald-galerie-filtres.webp"],
       },
     ],
-    tags: ["Next.js", "Convex", "Stripe", "GSAP", "Lenis", "next-intl", "TypeScript"],
+    tags: ["Next.js", "Stripe", "GSAP", "Lenis", "Motion", "next-intl", "nuqs", "TypeScript"],
     technologies: [
-      {
-        nom: "Convex",
-        detail:
-          "La disponibilité des œuvres doit être mise à jour en temps réel après un achat — deux acheteurs simultanés ne peuvent pas commander la même toile. Convex gère les mutations transactionnelles et synchronise l'état entre tous les clients connectés instantanément.",
-      },
       {
         nom: "Stripe",
         detail:
-          "Tunnel d'achat complet avec gestion des sessions de paiement. Stripe Checkout simplifie l'intégration et garantit une expérience de paiement sécurisée sans avoir à gérer les données bancaires côté serveur.",
+          "Tunnel d'achat complet via Stripe Checkout pour la sécurité des paiements et la conformité PCI. Pas de données bancaires manipulées côté serveur : le client est redirigé vers Stripe, qui gère le formulaire de paiement, et un webhook signale la confirmation au site pour marquer la toile comme vendue.",
       },
       {
-        nom: "GSAP + Lenis",
+        nom: "GSAP + Lenis + Motion",
         detail:
-          "Le site valorise des œuvres d'art : le scroll devait être fluide et les animations soignées. Lenis assure un défilement doux, GSAP gère les animations au scroll et les transitions entre pages.",
+          "Le site valorise des œuvres d'art, le rendu visuel devait être fluide et soigné. Lenis pour un défilement doux et inertiel, GSAP pour les animations au scroll et les transitions entre pages, Motion (l'évolution de Framer Motion) pour les animations d'interface plus locales.",
       },
       {
         nom: "next-intl",
         detail:
-          "Le site est disponible en français et en anglais. Le routing i18n est géré par next-intl avec des fichiers de traduction séparés — chaque page, chaque label, chaque message d'erreur est externalisé.",
+          "Le site est disponible en français et en anglais. Le routing i18n est géré par next-intl avec des fichiers de traduction séparés (chaque page, chaque label, chaque message d'erreur est externalisé). Le choix de la langue est persisté côté URL pour le SEO.",
+      },
+      {
+        nom: "nuqs",
+        detail:
+          "Les filtres de la galerie (collection, dimensions, tri par prix) sont stockés dans l'URL via nuqs plutôt que dans un état React local. Conséquence directe : un visiteur peut partager le lien d'une recherche filtrée, ou rafraîchir la page sans perdre ses choix. Pas de prop drilling, pas de state global.",
       },
       {
         nom: "Next.js",
         detail:
-          "Les pages de galerie et de fiches œuvres sont générées statiquement pour des performances maximales et un bon référencement. Les mutations (achat, stock) passent par des Server Actions.",
+          "Les pages de galerie et de fiches œuvres sont générées statiquement pour des performances maximales et un bon référencement naturel. Les mutations (achat, gestion du stock côté admin) passent par des Server Actions, qui revalident les pages concernées après modification.",
       },
     ],
     challenges: [
       {
-        titre: "Mise à jour de stock en temps réel",
+        titre: "Galerie filtrable avec tri multi-critères et URL partageable",
         solution:
-          "Quand une toile est vendue, elle doit immédiatement apparaître comme indisponible sur tous les navigateurs connectés — sans refresh. Convex résout ce problème nativement : les mutations sont réactives, les clients abonnés reçoivent la mise à jour en quelques millisecondes.",
-      },
-      {
-        titre: "Galerie filtrable avec tri multi-critères",
-        solution:
-          "Les œuvres peuvent être filtrées par collection, par dimensions et triées par prix. Avec plusieurs dizaines de toiles, le filtrage devait rester instantané côté client. La logique de filtrage est encapsulée dans un useMemo pour éviter les recalculs à chaque render.",
+          "Les œuvres peuvent être filtrées par collection, par dimensions et triées par prix. Avec plusieurs dizaines de toiles, le filtrage devait rester instantané côté client. La logique est encapsulée dans un useMemo pour éviter les recalculs à chaque render, et l'état des filtres est synchronisé avec l'URL via nuqs : un visiteur peut copier-coller le lien d'une vue filtrée et la retrouver à l'identique chez quelqu'un d'autre.",
       },
       {
         titre: "Internationalisation FR/EN complète",
         solution:
-          "Tout le contenu du site — galerie, fiches œuvres, pages légales, formulaire de contact — est disponible en français et en anglais via next-intl. Le choix de la langue est persisté, et chaque page a son URL localisée pour le SEO.",
+          "Tout le contenu du site (galerie, fiches œuvres, pages légales, formulaire de contact) est disponible en français et en anglais via next-intl. Le choix de la langue est persisté dans l'URL, et chaque page a sa version localisée pour le SEO. Le visiteur peut basculer d'une langue à l'autre à tout moment depuis le sélecteur du header.",
       },
       {
-        titre: "Pages légales e-commerce",
+        titre: "Pages légales e-commerce, écrites pour l'art international",
         solution:
-          "Une boutique en ligne implique des obligations légales : CGV, politique de confidentialité, politique de retour. Ces pages ont été rédigées et intégrées, avec les spécificités du commerce d'art international (livraison internationale, règles douanières, délai de rétractation).",
+          "Une boutique en ligne implique des obligations légales : CGV, politique de confidentialité, politique de retour. Ces pages ont été rédigées et intégrées avec les spécificités du commerce d'art international (livraison internationale, règles douanières, délai de rétractation, mentions sur les œuvres uniques). Un travail de fond peu visible mais indispensable pour qu'un site de vente puisse passer en production sereinement.",
       },
     ],
     date: "2026-02",
+  },
+  {
+    slug: "russian-with-julia",
+    titre: "Le site d'une prof de russe internationale",
+    client: "Russian with Julia",
+    clientShort: "Russian with Julia",
+    contexte: "freelance",
+    description:
+      "Site freelance pour Julia, professeure de russe avec 500+ élèves dans 25 pays : vitrine soignée, réservation d'un appel en quelques clics, plateforme de cours vidéo payants en alternative à Podia ou Teachable.",
+    tagline:
+      "Une vitrine *ouverte à tous*, un espace privé pour ses élèves, et une réservation en *moins d'une minute*.",
+    descriptionPublic:
+      "Le site combine deux mondes en général séparés : une vitrine publique consultable sans la moindre friction, et un espace privé pour les élèves qui achètent les cours vidéo. Tout le marketing est ouvert : on parcourt les sections, on lit les avis, on regarde la carte du monde des élèves, et on peut réserver un premier appel sans avoir à créer de compte.\n\nLa connexion n'apparaît qu'au moment où elle a vraiment du sens, pour retrouver les cours déjà achetés. L'élève reçoit un lien de connexion par email, sans mot de passe, et accède à son tableau de bord. La prof, elle, dispose d'un espace administrateur où elle gère ses cours, ses élèves et son agenda en complète autonomie.\n\nLe site est en ligne sur [russianwithjulia.com](https://russianwithjulia.com), n'hésitez pas à aller le visiter pour vous en faire votre propre idée.",
+    intro: `Site freelance complet pour Julia, professeure particulière de russe avec ~~plus de 500 élèves~~ répartis dans ~~25 pays~~. La spécificité du projet : combiner dans un seul site une vitrine grand public, un système de réservation et de paiement en ligne, et une plateforme de cours vidéo en ligne payants achetables à l'unité. Le tout pensé pour qu'elle soit ensuite totalement autonome (elle ajoute ses cours, gère ses élèves, et reprend la main sur son site sans avoir besoin de moi).`,
+    img: "/assets/rwj/rwj-miniature.webp",
+    heroImg: "/assets/rwj/rwj-hero-accueil.webp",
+    url: "https://russianwithjulia.com",
+    wideMedia: true,
+    pillarsCards: [
+      {
+        eyebrow: "Enjeu n°1",
+        iconName: "calendar-check",
+        titre: "Paiement Stripe et Google Calendar enchaînés",
+        description:
+          "L'élève choisit un créneau, paie en ligne, reçoit l'invitation Google Calendar avec lien de visioconférence : toute la chaîne tient en quelques secondes, sans intervention manuelle de la prof.",
+      },
+      {
+        eyebrow: "Enjeu n°2",
+        iconName: "video",
+        titre: "Une plateforme de cours vidéo auto-hébergée",
+        description:
+          "Une vraie alternative à Podia ou Teachable, sans abonnement récurrent et mieux protégée que YouTube. Packs de leçons achetables à l'unité, vidéos servies par URL signée depuis Cloudflare R2, zéro frais d'egress.",
+      },
+      {
+        eyebrow: "Enjeu n°3",
+        iconName: "palette",
+        titre: "Une direction artistique qui retient",
+        description:
+          "Logo, palette, carte du monde des élèves, témoignages bilingues, micro-interactions soignées. Une home one-page efficace pour le marketing, un espace dédié pour les cours payants : un site qu'on a envie de parcourir, et qui génère naturellement du trafic.",
+      },
+    ],
+    sliderSets: [
+      {
+        title: "La carte des élèves dans le monde",
+        description: "La carte du monde est l'une des sections que j'ai le plus aimé construire. Chaque point correspond à un élève réel : la carte traduit visuellement la dimension internationale de Julia, qui enseigne à ~~plus de 500 personnes~~ réparties dans ~~25 pays~~. Les noms des villes les plus représentatives sont positionnés à la main, ce qui donne un rendu plus humain qu'un placement automatique. Pour la voir vivre, le mieux est encore d'aller faire un tour sur [russianwithjulia.com](https://russianwithjulia.com).",
+        images: [
+          "/assets/rwj/rwj-videos-and-world-map.webp",
+        ],
+      },
+      {
+        title: "La réservation d'un premier appel",
+        description: "Le widget de réservation occupe la moitié droite de l'écran : un calendrier, des créneaux disponibles, un bouton de paiement, et c'est tout. L'élève choisit son moment, paie en ligne, et reçoit dans la foulée une invitation Google Calendar avec un lien de visioconférence prêt à l'emploi. L'évènement apparaît directement dans l'agenda de la prof, dans son fuseau horaire à elle. Aucune saisie manuelle, aucun email à envoyer.",
+        images: [
+          "/assets/rwj/rwj-booking-trial.webp",
+        ],
+      },
+      {
+        title: "Témoignages bilingues, espace élève et admin",
+        description: "Le carrousel des avis défile en continu, mêlant alphabets cyrillique et latin (j'ai uniformisé les avis en anglais). Le composant vient à l'origine de [21st.dev](https://21st.dev), retravaillé pour coller à l'identité du site. Côté élève, un tableau de bord donne accès aux packs achetés et aux leçons en streaming. Côté admin, Julia crée ses formules, uploade ses vidéos directement vers le stockage, suit ses élèves et connecte son agenda Google.",
+        images: [
+          "/assets/rwj/rwj-testimonials.webp",
+          "/assets/rwj/rwj-student-dashboard.webp",
+          "/assets/rwj/rwj-video-courses.webp",
+          "/assets/rwj/rwj-admin-packs-list.webp",
+          "/assets/rwj/rwj-admin-add-lesson.webp",
+        ],
+      },
+    ],
+    tags: [
+      "Next.js",
+      "Convex",
+      "Stripe",
+      "Cloudflare R2",
+      "Google Calendar API",
+      "Resend",
+      "Convex Auth",
+      "shadcn/ui",
+      "Tailwind",
+      "TypeScript",
+    ],
+    challenges: [
+      {
+        titre: "Combiner site vitrine et application authentifiée dans un seul site",
+        solution:
+          "La plupart des sites font l'un ou l'autre : un one-page de présentation, ou bien une vraie application qui demande de se connecter dès l'arrivée. Ici les deux cohabitent. Tout le marketing reste public, instantanément consultable. La connexion n'apparaît qu'au moment où elle a vraiment du sens (acheter un pack ou retrouver ses cours déjà achetés). Pas de mur d'authentification au premier contact, mais une vraie session sécurisée pour la partie payante.",
+      },
+      {
+        titre: "Authentification sans mot de passe (magic link)",
+        solution:
+          "Les élèves comme la prof se connectent en recevant un lien à usage unique sur leur email : un clic, et la session est ouverte. Aucun mot de passe à créer, à mémoriser, à oublier ou à réinitialiser. Côté technique, c'est Convex Auth qui gère le flow, avec Resend pour l'envoi des emails depuis un domaine professionnel vérifié. Le passage en production a demandé de configurer des records DNS spécifiques (SPF, DKIM) sur la zone du domaine pour garantir que les emails arrivent bien dans la boîte de réception et pas en spam.",
+      },
+      {
+        titre: "Paiement et calendrier enchaînés en moins de cinq secondes",
+        solution:
+          "L'élève choisit un créneau et paie via Stripe. Dès que le paiement est confirmé côté serveur, un évènement Google Calendar est créé automatiquement dans l'agenda de la prof, avec un lien de visioconférence généré à la volée et l'élève invité. Toute la chaîne (paiement, écriture en base de données, création de l'évènement, envoi de l'invitation) tient en quelques secondes. La prof n'a strictement rien à faire entre la réservation et le rendez-vous lui-même.",
+      },
+      {
+        titre: "Hébergement vidéo privé sur Cloudflare R2",
+        solution:
+          "Cloudflare R2 a été choisi plutôt qu'AWS S3 pour une raison simple : R2 ne facture pas la bande passante sortante, là où S3 facture chaque gigaoctet servi. Sur de la diffusion vidéo, c'est ce poste-là qui explose en premier. Les 10 Go de stockage gratuits suffisent largement pour des cours de langue, et même en dépassant, le coût reste minime. Surtout, c'est une vraie alternative aux abonnements Podia ou Teachable à 20-40€/mois qui étaient l'option à éviter. L'admin uploade ses fichiers directement depuis son navigateur via une URL pré-signée : la vidéo ne transite jamais par le serveur Next.js, ce qui évite les frais de proxy et accélère les uploads.",
+      },
+      {
+        titre: "Carte du monde des élèves : placement manuel plutôt qu'algorithme",
+        solution:
+          "La carte est rendue par [dotted-map](https://www.npmjs.com/package/dotted-map), une petite bibliothèque qui transforme une carte du monde en grille de points stylisée. Première tentative pour placer les noms des villes : un algorithme automatique qui devait éviter les chevauchements de labels, avec des traits pointillés reliant chaque nom à son point. Trop fragile, et le rendu paraissait robotique. Bascule vers un système manuel : en mode développeur, un overlay permet de placer chaque label à la souris, les positions sont stockées en local, et un bouton exporte le JSON à coller dans le code pour la production. Résultat humain, ajustable en deux minutes quand un nouveau pays s'ajoute.",
+      },
+      {
+        titre: "Souveraineté complète de la cliente sur ses outils",
+        solution:
+          "Le domaine, le compte de paiement Stripe, le compte d'envoi d'emails Resend, l'accès Google Cloud : tout est ouvert au nom de la prof, pas du développeur. Mes accès se limitent à des credentials temporaires partagés en visio le temps de configurer les services. Si demain elle change de développeur, tout reste en place et lui appartient (aucune migration à faire). Cette logique est documentée dans le code source du projet sous forme d'ADR (Architecture Decision Record), réutilisable comme modèle sur les prochains projets freelance.",
+      },
+    ],
+    date: "2026-04",
   },
 ];
 

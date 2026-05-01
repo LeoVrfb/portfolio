@@ -9,9 +9,16 @@ interface ProjetImageSliderProps {
   images: string[]
   alt: string
   wide?: boolean
+  /**
+   * Tailwind aspect-ratio class pour le track en mode wide.
+   * Default: "aspect-video" (16:9) — bien pour les vidéos / mockups 16:9.
+   * Pour les screenshots de site web full-page (~2:1), utiliser "aspect-[2/1]"
+   * pour éviter le crop des bords gauche/droite.
+   */
+  aspectRatio?: string
 }
 
-export function ProjetImageSlider({ images, alt, wide = false }: ProjetImageSliderProps) {
+export function ProjetImageSlider({ images, alt, wide = false, aspectRatio = "aspect-video" }: ProjetImageSliderProps) {
   const count = images.length
   if (count === 0) return null
 
@@ -123,7 +130,7 @@ export function ProjetImageSlider({ images, alt, wide = false }: ProjetImageSlid
         <div
           className={cn(
             "overflow-hidden rounded-xl",
-            wide ? "aspect-video w-full" : "w-[260px]"
+            wide ? `${aspectRatio} w-full` : "w-[260px]"
           )}
           style={{ touchAction: "pan-y" }}
           onTouchStart={onTouchStart}
@@ -193,10 +200,10 @@ export function ProjetImageSlider({ images, alt, wide = false }: ProjetImageSlid
                 }
               }}
               className={cn(
-                "w-1.5 h-1.5 rounded-full transition-all cursor-pointer",
+                "h-1.5 rounded-full transition-all duration-300 cursor-pointer",
                 i === dotIdx
-                  ? "bg-foreground/70 scale-125"
-                  : "bg-foreground/20 hover:bg-foreground/40"
+                  ? "bg-foreground/70 w-4"
+                  : "w-1.5 bg-foreground/20 hover:bg-foreground/40"
               )}
               aria-label={`Image ${i + 1}`}
             />

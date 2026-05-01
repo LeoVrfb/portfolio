@@ -19,7 +19,7 @@ export const testimonials: Testimonial[] = [
     note: 5,
   },
   {
-    nom: "Yulia",
+    nom: "Julia",
     role: "Professeure de russe",
     projet: "Cours de russe",
     avis: "Je cherchais un site simple pour présenter mes cours en ligne. Léo a compris exactement ce dont j'avais besoin et m'a livré en moins d'une semaine. Je recommande vivement.",

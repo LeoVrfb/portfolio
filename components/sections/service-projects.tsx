@@ -7,9 +7,9 @@ import { motion } from "motion/react"
 import { ArrowUpRight, ExternalLink } from "lucide-react"
 import { projets } from "@/lib/projets"
 
-// Sélection statique : Bald (freelance e-commerce, le plus aligné),
-// Argedis (échelle multi-régions), Sweetime (gamification + paiement).
-const FEATURED_SLUGS = ["bald-artiste", "argedis-totalenergies", "sweetime-adp-extime"] as const
+// Sélection statique : Bald (freelance e-commerce), Russian with Julia (freelance auth + vidéo + booking),
+// Argedis (échelle multi-régions). TotalEnergies reste tant qu'on n'a pas un 3ᵉ projet freelance à mettre.
+const FEATURED_SLUGS = ["bald-artiste", "russian-with-julia", "argedis-totalenergies"] as const
 
 const CONTEXT_LABEL: Record<"freelance" | "agence" | "perso", string> = {
   freelance: "Freelance",
@@ -168,7 +168,10 @@ function ProjectCardFan({
               alt={projet.titre}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-105"
-              sizes="240px"
+              // Card desktop ~240px, ×2 DPR retina, +marge pour les zooms hover (scale-105) :
+              // on demande à Next/Image une source plus large pour éviter l'effet flou.
+              sizes="(max-width: 1024px) 280px, 320px"
+              quality={92}
             />
           )}
 
@@ -279,7 +282,8 @@ function ProjectCardMobile({
               alt={projet.titre}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-110"
-              sizes="80px"
+              sizes="160px"
+              quality={92}
             />
           )}
           <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent" />
