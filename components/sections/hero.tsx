@@ -5,6 +5,7 @@ import Link from "next/link"
 import { ArrowRight, Instagram, Linkedin, Github } from "lucide-react"
 import { motion } from "motion/react"
 import { Boxes } from "@/components/animations/background-boxes"
+import { ParticleText } from "@/components/animations/particle-text"
 import { onIntroReady } from "@/lib/intro-signal"
 
 const PALETTE = [
@@ -13,42 +14,76 @@ const PALETTE = [
   "#b4859e", "#c9a1b8", "#96697e",
 ]
 
-// Neon flicker — le texte "s'allume" comme un néon avec des clignotements
-// opacity: [0, 0, .9, .5, 1, .8, 1, .9, 1] — chaque valeur est un frame du flicker
-const FLICKER_TIMES = [0, 0.25, 0.35, 0.45, 0.55, 0.65, 0.72, 0.85, 1]
+// Sequence:
+// 1. "Léo" se tape lettre par lettre
+// 2. Petit gap, puis "Hengebaert" se tape lettre par lettre
+// 3. Le curseur balaie "Léo" de gauche a droite
+// 4. Sans pause, le curseur balaie "Hengebaert"
+// Repulsion au survol active des le mount.
+const TYPEWRITER_DELAY = 110
+const TYPING_GAP = 280
+const AUTO_WAVE_DURATION = 1400
+const AUTO_WAVE_OVERLAP = 700 // les deux balayages se chevauchent largement pour un enchainement fluide
+const TYPING_LEO_START = 300
+const TYPING_LEO_END = TYPING_LEO_START + 3 * TYPEWRITER_DELAY
+const TYPING_HENGEBAERT_START = TYPING_LEO_END + TYPING_GAP
+const TYPING_HENGEBAERT_END = TYPING_HENGEBAERT_START + 10 * TYPEWRITER_DELAY
+const AUTO_WAVE_LEO_START = TYPING_HENGEBAERT_END + 200
+const AUTO_WAVE_HENGEBAERT_START =
+  AUTO_WAVE_LEO_START + AUTO_WAVE_DURATION - AUTO_WAVE_OVERLAP
 
-function NeonText({
+function ParticleName({
   text,
-  delay = 0,
+  typingStartDelay,
+  autoWaveDelay,
   dimmed = false,
 }: {
   text: string
-  delay?: number
+  typingStartDelay: number
+  autoWaveDelay: number
   dimmed?: boolean
 }) {
-  const glowColor = dimmed ? "rgba(150,210,190,0.15)" : "rgba(150,210,190,0.5)"
-  const glowIntense = dimmed ? "rgba(150,210,190,0.08)" : "rgba(150,210,190,0.25)"
+  const [size, setSize] = useState({ height: 150, fontSize: 130 })
+
+  useEffect(() => {
+    const compute = () => {
+      const w = window.innerWidth
+      if (w < 480) {
+        setSize({ height: 72, fontSize: 60 })
+      } else if (w < 768) {
+        setSize({ height: 96, fontSize: 80 })
+      } else if (w < 1280) {
+        setSize({ height: 124, fontSize: 108 })
+      } else {
+        setSize({ height: 156, fontSize: 138 })
+      }
+    }
+    compute()
+    window.addEventListener("resize", compute)
+    return () => window.removeEventListener("resize", compute)
+  }, [])
 
   return (
-    <motion.span
-      aria-label={text}
-      style={{
-        textShadow: dimmed
-          ? `0 0 12px ${glowColor}`
-          : `0 0 6px #fff4, 0 0 18px ${glowColor}, 0 0 40px ${glowIntense}`,
-        display: "inline-block",
-      }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: [0, 0, 0.9, 0.5, 1, 0.8, 1, 0.92, 1] }}
-      transition={{
-        delay,
-        duration: 1.4,
-        times: FLICKER_TIMES,
-        ease: "linear",
-      }}
-    >
-      {text}
-    </motion.span>
+    <ParticleText
+      text={text}
+      typewriter
+      autoWave
+      startDelay={typingStartDelay}
+      autoWaveDelay={autoWaveDelay}
+      autoWaveDuration={AUTO_WAVE_DURATION}
+      typewriterDelay={TYPEWRITER_DELAY}
+      height={size.height}
+      fontSize={size.fontSize}
+      fontFamily="'Space Grotesk', system-ui, sans-serif"
+      fontWeight={700}
+      color={dimmed ? "#a2e2d0" : "#f9fbfb"}
+      sampleStep={2}
+      particleSize={1}
+      repelRadius={110}
+      repelForce={9}
+      padding={60}
+      className={dimmed ? "opacity-90" : undefined}
+    />
   )
 }
 
@@ -106,12 +141,21 @@ export function HeroSection() {
               </div>
             </motion.div>
 
-            {/* Name — neon flicker */}
-            <h1 className="text-[clamp(3.5rem,10vw,8rem)] font-bold leading-[0.92] tracking-tighter text-foreground mb-2">
-              <NeonText text="Léo" delay={0.3} />
+            {/* Name — particules en typewriter, balayage curseur sequentiel (Léo puis Hengebaert), repulsion au survol */}
+            <h1 aria-label="Léo" className="leading-none mb-1">
+              <ParticleName
+                text="Léo"
+                typingStartDelay={TYPING_LEO_START}
+                autoWaveDelay={AUTO_WAVE_LEO_START}
+              />
             </h1>
-            <h1 className="text-[clamp(3.5rem,10vw,8rem)] font-bold leading-[0.92] tracking-tighter text-accent mb-8" style={{ opacity: 0.6 }}>
-              <NeonText text="Hengebaert" delay={0.9} dimmed />
+            <h1 aria-label="Hengebaert" className="leading-none mb-8">
+              <ParticleName
+                text="Hengebaert"
+                typingStartDelay={TYPING_HENGEBAERT_START}
+                autoWaveDelay={AUTO_WAVE_HENGEBAERT_START}
+                dimmed
+              />
             </h1>
 
             {/* Tagline */}
