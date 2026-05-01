@@ -133,9 +133,10 @@ export default function ArgedisTotalEnergiesPage() {
   // Sélection des images pour le quinconce
   // images[1..3] = variantes régionales (carte principale)
   // images[4] = fiche producteur FR, images[5] = fiche producteur EN
-  const cardImage = projet.images[1] ?? projet.img!;
-  const producerImage = projet.images[4] ?? projet.images[3] ?? projet.img!;
-  const producerImageEn = projet.images[5] ?? projet.images[4] ?? projet.img!;
+  const images = projet.images ?? [];
+  const cardImage = images[1] ?? projet.img!;
+  const producerImage = images[4] ?? images[3] ?? projet.img!;
+  const producerImageEn = images[5] ?? images[4] ?? projet.img!;
 
   return (
     <div className="pt-28 pb-28">

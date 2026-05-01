@@ -120,7 +120,6 @@ function MockForm({ tint }: { tint: string }) {
           background: `linear-gradient(135deg, ${tint} 0%, transparent 100%)`,
           backgroundColor: "hsl(0 0% 100% / 0.02)",
           border: `1px solid ${tint}`,
-          borderOpacity: 0.2,
         }}
       >
         <div className="h-2.5 w-1/2 rounded" style={{ background: "hsl(0 0% 100% / 0.18)" }} />
