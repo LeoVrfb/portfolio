@@ -22,15 +22,17 @@ const PALETTE = [
 // Repulsion au survol active des le mount.
 const TYPEWRITER_DELAY = 110
 const TYPING_GAP = 280
-const AUTO_WAVE_DURATION = 1400
-const AUTO_WAVE_OVERLAP = 700 // les deux balayages se chevauchent largement pour un enchainement fluide
+// La duree du balayage est calculee par breakpoint dans ParticleName : sur
+// desktop le canvas est beaucoup plus large, il faut plus de temps pour que
+// la traversee reste lisible. Sur mobile 1400ms suffit largement.
+// Ecart entre le debut du balayage de Léo et celui de Hengebaert.
+const AUTO_WAVE_STAGGER = 700
 const TYPING_LEO_START = 300
 const TYPING_LEO_END = TYPING_LEO_START + 3 * TYPEWRITER_DELAY
 const TYPING_HENGEBAERT_START = TYPING_LEO_END + TYPING_GAP
 const TYPING_HENGEBAERT_END = TYPING_HENGEBAERT_START + 10 * TYPEWRITER_DELAY
 const AUTO_WAVE_LEO_START = TYPING_HENGEBAERT_END + 200
-const AUTO_WAVE_HENGEBAERT_START =
-  AUTO_WAVE_LEO_START + AUTO_WAVE_DURATION - AUTO_WAVE_OVERLAP
+const AUTO_WAVE_HENGEBAERT_START = AUTO_WAVE_LEO_START + AUTO_WAVE_STAGGER
 
 function ParticleName({
   text,
@@ -43,19 +45,23 @@ function ParticleName({
   autoWaveDelay: number
   dimmed?: boolean
 }) {
-  const [size, setSize] = useState({ height: 150, fontSize: 130 })
+  const [config, setConfig] = useState({
+    height: 156,
+    fontSize: 138,
+    autoWaveDuration: 2200,
+  })
 
   useEffect(() => {
     const compute = () => {
       const w = window.innerWidth
       if (w < 480) {
-        setSize({ height: 72, fontSize: 60 })
+        setConfig({ height: 72, fontSize: 60, autoWaveDuration: 1400 })
       } else if (w < 768) {
-        setSize({ height: 96, fontSize: 80 })
+        setConfig({ height: 96, fontSize: 80, autoWaveDuration: 1600 })
       } else if (w < 1280) {
-        setSize({ height: 124, fontSize: 108 })
+        setConfig({ height: 124, fontSize: 108, autoWaveDuration: 2400 })
       } else {
-        setSize({ height: 156, fontSize: 138 })
+        setConfig({ height: 156, fontSize: 138, autoWaveDuration: 3000 })
       }
     }
     compute()
@@ -70,10 +76,10 @@ function ParticleName({
       autoWave
       startDelay={typingStartDelay}
       autoWaveDelay={autoWaveDelay}
-      autoWaveDuration={AUTO_WAVE_DURATION}
+      autoWaveDuration={config.autoWaveDuration}
       typewriterDelay={TYPEWRITER_DELAY}
-      height={size.height}
-      fontSize={size.fontSize}
+      height={config.height}
+      fontSize={config.fontSize}
       fontFamily="'Space Grotesk', system-ui, sans-serif"
       fontWeight={700}
       color={dimmed ? "#a2e2d0" : "#f9fbfb"}
