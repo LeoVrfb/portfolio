@@ -492,68 +492,73 @@ const ADDON_MULTILINGUE_LONG: Addon = {
 const ADDON_SEO_PLUS: Addon = {
   id: "seo-plus",
   label: "SEO+",
-  description: "Le cran intermédiaire entre SEO de base et SEO Pro",
+  description: "Le cran enrichi : Google et les IA comprennent votre activité",
   prix: 80,
   detail: {
     intro:
-      "Passe votre site au **niveau intermédiaire** en SEO. C'est exactement ce qui est déjà inclus dans la formule Standard.",
+      "Passe votre site au **niveau enrichi** en SEO. C'est exactement ce qui est déjà inclus dans la formule Standard. Tout est ajouté pendant qu'on code, **sans intervention externe**.",
     sections: [
       {
         title: "Ce qui est ajouté",
         bullets: [
-          { text: "**Schema.org Local Business** (apparaître dans le pack local Google Maps)" },
-          { text: "**OpenGraph + Twitter Cards** (aperçu propre lors d'un partage réseau)" },
-          { text: "Descriptions **meta optimisées** par section" },
-          { text: "Structure **h1/h2/h3 logique** (Google comprend votre contenu)" },
-          { text: "**Alt texts** soignés sur toutes les images" },
+          { text: "**Schema.org** adapté à votre métier (Organization ou LocalBusiness)" },
+          { text: "**OpenGraph + Twitter Cards** avec image personnalisée (aperçu propre quand on partage votre site)" },
+          { text: "Title et meta description **optimisés keyword** (1 keyword par page)" },
+          { text: "Hiérarchie **h1/h2/h3 pensée pour le SEO** (h2 sous forme de questions = pattern AI-friendly)" },
+          { text: "Alt texts **descriptifs et keyword-friendly**" },
+          { text: "**Section FAQ AI-friendly** (5+ questions) — clé pour ressortir dans ChatGPT et Perplexity" },
+          { text: "**Internal linking propre** entre les sections" },
         ],
       },
     ],
-    note: "Si vous voulez le top niveau (SEO Pro), prenez plutôt la formule Standard ou Premium directement.",
+    note: "Si vous voulez le top niveau (SEO Pro avec inscription Google + Bing, audit complet, suivi), prenez plutôt la formule Standard ou Premium directement.",
   },
 }
 
 const ADDON_SEO_PRO: Addon = {
   id: "seo-pro",
   label: "SEO Pro",
-  description: "Le top niveau SEO en complément du SEO+ déjà inclus",
+  description: "Le palier actif : on engage Google et Bing, on audite, on transmet",
   prix: 150,
   detail: {
     intro:
-      "Le **top niveau SEO**, en complément du SEO+ déjà inclus en Standard. C'est ce qui est inclus de base dans la formule Premium.",
+      "Le **top niveau SEO**, en complément du SEO+ déjà inclus en Standard. C'est ce qui est inclus de base dans la formule Premium. **On engage activement** les outils de Google et Bing, on audite votre contenu, et on vous transmet une feuille de route.",
     sections: [
       {
         title: "Schema.org étendu",
         bullets: [
-          { text: "Product, Article, BreadcrumbList, FAQ selon les pages" },
+          { text: "Product, Article, BreadcrumbList, FAQ, Review selon les pages" },
           { text: "**Aide Google** à comprendre la nature de chaque page" },
         ],
       },
       {
         title: "Métadonnées avancées",
         bullets: [
-          { text: "**OpenGraph optimisé page par page**" },
-          { text: "Balises meta dynamiques (titres et descriptions par page)" },
-          { text: "**Sitemap dynamique** (mise à jour auto)" },
-          { text: "Robots.txt fin (autorisations précises)" },
+          { text: "**OpenGraph optimisé page par page** (chaque page a sa propre image OG)" },
+          { text: "Balises meta dynamiques (titres et descriptions par page, pas un template générique)" },
+          { text: "Robots.txt fin avec règles par bot" },
         ],
       },
       {
-        title: "Indexation Google",
+        title: "Indexation Google + Bing",
         bullets: [
-          { text: "Inscription **Google Search Console**" },
-          { text: "Soumission de la sitemap" },
-          { text: "Plan de **redirections 301** si remplace un ancien site" },
+          { text: "**Setup complet Google Search Console** (au-delà du setup de base de l'Essentielle : full audit + monitoring)" },
+          { text: "Soumission active de la sitemap + demande d'indexation manuelle de la home" },
+          { text: "**Setup complet Bing Webmaster Tools** — critique pour ChatGPT Search qui passe par Bing" },
+          { text: "Plan de **redirections 301** si remplace un ancien site (combiner avec l'option Refonte)" },
         ],
       },
       {
-        title: "Audit contenu",
+        title: "Audit & livrables",
         bullets: [
-          { text: "Densité de **mots-clés**" },
-          { text: "Analyse de la structure et des **liens internes**" },
+          { text: "**Audit complet du contenu** (densité keywords, structure, opportunités)" },
+          { text: "**Internal linking optimisé** (cluster autour des money pages, jus redirigé)" },
+          { text: "**Screenshot Lighthouse** final livré comme preuve" },
+          { text: "**Document de suivi 1 page** : ce qu'on a fait, ce qu'il faut surveiller dans les 1-3 mois, où regarder dans GSC" },
         ],
       },
     ],
+    note: "SEO Pro = one-shot setup + audit + transmission. Le suivi mensuel des positions, la production continue de contenu, le link building : c'est de la maintenance récurrente, à terme proposée en option dédiée.",
   },
 }
 
@@ -742,18 +747,22 @@ export const services: ServiceDetail[] = [
         titre: "SEO de base",
         detail: {
           intro:
-            "Les fondamentaux pour que votre site soit **trouvable sur Google**.",
+            "Le **minimum vital carré** pour que votre site soit techniquement parfait pour Google, Bing et les IA (ChatGPT, Perplexity, Claude).",
           sections: [
             {
               title: "Inclus",
               bullets: [
-                { text: "**Sitemap** + robots.txt" },
-                { text: "Balises **title** et **meta** sur la page" },
-                { text: "**Alt text** sur toutes les images" },
+                { text: "**Sitemap.xml** + robots.txt" },
+                { text: "Robots.txt qui **autorise explicitement les bots IA** (GPTBot, ClaudeBot, PerplexityBot, Google-Extended)" },
+                { text: "Fichier **llms.txt** à la racine (généré auto à partir du sitemap)" },
+                { text: "Balises **title** et **meta description** sur la page" },
+                { text: "**Alt text descriptifs** sur toutes les images" },
+                { text: "Site **lisible sans JavaScript** (garantie technique)" },
+                { text: "Site **compatible Google + Bing** (livré et indexable)" },
               ],
             },
           ],
-          note: "Pour aller plus loin (Schema.org, OpenGraph) : option SEO+.",
+          note: "Pour aller plus loin (Schema.org, OpenGraph optimisé, FAQ AI-friendly) : option SEO+. Pour le top niveau (inscription GSC + Bing, audit complet, plan de suivi) : option SEO Pro.",
         },
       },
       {
@@ -951,7 +960,7 @@ export const services: ServiceDetail[] = [
               bullets: [
                 { text: "Design responsive mobile/tablette/desktop" },
                 { text: "Formulaire de contact (Resend)" },
-                { text: "SEO de base (sitemap, robots, meta)" },
+                { text: "SEO de base (sitemap, robots avec bots IA, llms.txt, meta, alt)" },
                 { text: "Galerie 10 images optimisées" },
                 { text: "Hébergement Vercel + DNS + HTTPS" },
               ],
@@ -1014,20 +1023,22 @@ export const services: ServiceDetail[] = [
       {
         titre: "SEO+",
         detail: {
-          intro: "Le **cran intermédiaire** entre SEO de base et SEO Pro.",
+          intro: "Le **cran enrichi** : on ajoute pendant qu'on code tout ce qui aide Google et les IA à comprendre votre activité.",
           sections: [
             {
               title: "Inclus",
               bullets: [
-                { text: "**Schema.org Local Business** (pack local Google Maps)" },
-                { text: "**OpenGraph + Twitter Cards** (aperçu de partage propre)" },
-                { text: "Descriptions meta optimisées" },
-                { text: "Structure **h1/h2/h3** logique" },
-                { text: "Alt texts soignés sur toutes les images" },
+                { text: "**Schema.org** adapté à votre métier (Organization ou LocalBusiness)" },
+                { text: "**OpenGraph + Twitter Cards** avec image personnalisée" },
+                { text: "Title + meta **optimisés keyword** (1 keyword par page)" },
+                { text: "Hiérarchie **h1/h2/h3 pensée pour le SEO** (h2 sous forme de questions = AI-friendly)" },
+                { text: "Alt texts descriptifs et keyword-friendly" },
+                { text: "**Section FAQ AI-friendly** (5+ questions) — clé pour ChatGPT/Perplexity" },
+                { text: "**Internal linking propre** entre les sections" },
               ],
             },
           ],
-          note: "Pour aller plus loin : option SEO Pro (+150€).",
+          note: "Pour le palier actif (inscription GSC + Bing, audit, doc de suivi) : option SEO Pro (+150€).",
         },
       },
       {
@@ -1229,27 +1240,37 @@ export const services: ServiceDetail[] = [
       {
         titre: "SEO Pro",
         detail: {
-          intro: "Le **top niveau SEO**, en complément du SEO+ déjà inclus en Standard.",
+          intro: "Le **palier actif** en complément du SEO+ déjà inclus en Standard. On engage Google et Bing, on audite, on transmet une feuille de route.",
           sections: [
             {
               title: "Schema.org étendu",
               bullets: [
-                { text: "Product, Article, BreadcrumbList, FAQ selon les pages" },
+                { text: "Product, Article, BreadcrumbList, FAQ, Review selon les pages" },
               ],
             },
             {
               title: "Métadonnées avancées",
               bullets: [
-                { text: "OpenGraph optimisé page par page" },
-                { text: "Sitemap dynamique + robots.txt fin" },
+                { text: "OpenGraph optimisé **page par page** (image OG dédiée)" },
+                { text: "Balises meta **dynamiques** (titres + descriptions par page)" },
+                { text: "Robots.txt fin avec règles par bot" },
               ],
             },
             {
-              title: "Indexation",
+              title: "Indexation Google + Bing",
               bullets: [
-                { text: "Inscription **Google Search Console**" },
-                { text: "Audit complet du contenu" },
-                { text: "Plan de **redirections 301**" },
+                { text: "**Setup complet Google Search Console** + soumission active" },
+                { text: "**Setup complet Bing Webmaster Tools** (clé pour ChatGPT Search)" },
+                { text: "Plan de **redirections 301** si refonte" },
+              ],
+            },
+            {
+              title: "Audit & livrables",
+              bullets: [
+                { text: "**Audit complet** du contenu (densité keywords, structure)" },
+                { text: "**Internal linking optimisé** (cluster autour des money pages)" },
+                { text: "**Screenshot Lighthouse** final livré" },
+                { text: "**Document de suivi 1 page** : ce qui est fait, ce qu'il faut surveiller" },
               ],
             },
           ],
