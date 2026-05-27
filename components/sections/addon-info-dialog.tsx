@@ -1,5 +1,6 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import { Check } from "lucide-react"
 import {
   Dialog,
@@ -157,10 +158,10 @@ export function InfoDialog({
   )
 }
 
-function formatAddonPrice(addon: Addon): string {
-  if (addon.prix === null) return "Sur devis"
-  if (addon.subOptions && addon.subOptions.length > 0) return `À partir de ${addon.prix} €`
-  return `+${addon.prix} €`
+function formatAddonPrice(addon: Addon, t: ReturnType<typeof useTranslations<"addonInfo">>): string {
+  if (addon.prix === null) return t("onQuote")
+  if (addon.subOptions && addon.subOptions.length > 0) return t("startingAt", { prix: addon.prix })
+  return t("addPrice", { prix: addon.prix })
 }
 
 type AddonInfoDialogProps = {
@@ -170,6 +171,7 @@ type AddonInfoDialogProps = {
 }
 
 export function AddonInfoDialog({ addon, open, onOpenChange }: AddonInfoDialogProps) {
+  const t = useTranslations("addonInfo")
   if (!addon) return null
   return (
     <InfoDialog
@@ -177,7 +179,7 @@ export function AddonInfoDialog({ addon, open, onOpenChange }: AddonInfoDialogPr
       onOpenChange={onOpenChange}
       title={addon.label}
       description={addon.description}
-      priceLabel={formatAddonPrice(addon)}
+      priceLabel={formatAddonPrice(addon, t)}
       content={addon.detail}
     />
   )

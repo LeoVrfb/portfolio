@@ -1,7 +1,7 @@
 "use client"
 
-import { useCallback, useEffect, useState } from "react"
-import { fr } from "date-fns/locale"
+import { useCallback, useEffect, useMemo, useState } from "react"
+import { fr, enUS, type Locale as DateFnsLocale } from "date-fns/locale"
 import {
   Calendar as CalendarIcon,
   Phone,
@@ -12,6 +12,7 @@ import {
   AlertCircle,
 } from "lucide-react"
 import { toast } from "sonner"
+import { useLocale, useTranslations } from "next-intl"
 
 import { Calendar } from "@/components/ui/calendar"
 import {
@@ -26,6 +27,7 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Textarea } from "@/components/ui/textarea"
 import { BOOKING_CONFIG } from "@/lib/booking-config"
+import type { Locale as AppLocale } from "@/i18n/routing"
 
 // Slot tel que renvoyé par /api/availability.
 type Slot = {
@@ -72,11 +74,28 @@ type BookingCalendarProps = {
   compact?: boolean
 }
 
+// Map locale next-intl → locale date-fns pour le DayPicker.
+const DATE_FNS_LOCALE: Record<AppLocale, DateFnsLocale> = {
+  fr,
+  en: enUS,
+}
+
+// Map locale next-intl → BCP-47 tag pour Intl.DateTimeFormat.
+const INTL_TAG: Record<AppLocale, string> = {
+  fr: "fr-FR",
+  en: "en-US",
+}
+
 export function BookingCalendar({
   accentColor = "var(--accent)",
   source,
   compact = false,
 }: BookingCalendarProps) {
+  const locale = useLocale() as AppLocale
+  const t = useTranslations("booking.calendar")
+  const intlTag = INTL_TAG[locale]
+  const dateFnsLocale = DATE_FNS_LOCALE[locale]
+
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
   const [slots, setSlots] = useState<Slot[]>([])
   const [isLoadingSlots, setIsLoadingSlots] = useState(false)
@@ -85,26 +104,36 @@ export function BookingCalendar({
   const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null)
   const [bookingResult, setBookingResult] = useState<BookingResult | null>(null)
 
-  const fetchSlots = useCallback(async (dateStr: string, signal?: AbortSignal) => {
-    setIsLoadingSlots(true)
-    setSlotsError(null)
-    try {
-      const res = await fetch(`/api/availability?date=${dateStr}`, { signal })
-      const data = (await res.json()) as { success: boolean; slots: Slot[]; message?: string }
-      if (!data.success) {
+  const fetchSlots = useCallback(
+    async (dateStr: string, signal?: AbortSignal) => {
+      setIsLoadingSlots(true)
+      setSlotsError(null)
+      try {
+        const res = await fetch(
+          `/api/availability?date=${dateStr}&locale=${locale}`,
+          { signal }
+        )
+        const data = (await res.json()) as {
+          success: boolean
+          slots: Slot[]
+          message?: string
+        }
+        if (!data.success) {
+          setSlots([])
+          setSlotsError(data.message ?? t("loadError"))
+          return
+        }
+        setSlots(data.slots)
+      } catch (err) {
+        if ((err as Error).name === "AbortError") return
         setSlots([])
-        setSlotsError(data.message ?? "Impossible de récupérer les disponibilités.")
-        return
+        setSlotsError(t("loadError"))
+      } finally {
+        setIsLoadingSlots(false)
       }
-      setSlots(data.slots)
-    } catch (err) {
-      if ((err as Error).name === "AbortError") return
-      setSlots([])
-      setSlotsError("Impossible de récupérer les disponibilités.")
-    } finally {
-      setIsLoadingSlots(false)
-    }
-  }, [])
+    },
+    [locale, t]
+  )
 
   // Recharge les slots à chaque changement de date (avec abort pour éviter les race).
   useEffect(() => {
@@ -128,7 +157,8 @@ export function BookingCalendar({
     }
   }
 
-  // Soumet la réservation au backend.
+  // Soumet la réservation au backend. La locale est passée pour que l'email
+  // de confirmation soit envoyé dans la bonne langue.
   const handleSubmitBooking = async (formData: FormData) => {
     if (!selectedSlot) return null
 
@@ -144,6 +174,7 @@ export function BookingCalendar({
         phoneNumber: formData.callType === "phone" ? formData.phoneNumber : undefined,
         message: formData.message || undefined,
         source,
+        locale,
       }),
     })
 
@@ -156,12 +187,12 @@ export function BookingCalendar({
     if (!data.success || !data.event) {
       // Cas spécial 409 : slot pris entre temps → on refresh la liste.
       if (res.status === 409 && selectedDate) {
-        toast.error(data.message ?? "Ce créneau vient d'être pris.")
+        toast.error(data.message ?? t("form.slotTakenError"))
         setSelectedSlot(null)
         fetchSlots(toYMD(selectedDate))
         return null
       }
-      toast.error(data.message ?? "Impossible de créer la réservation.")
+      toast.error(data.message ?? t("form.bookingError"))
       return null
     }
 
@@ -189,52 +220,54 @@ export function BookingCalendar({
         background: `linear-gradient(135deg, color-mix(in oklab, ${accentColor} 5%, transparent), transparent)`,
       }}
     >
-        {/* Calendar — pleine largeur, cellules généreuses pour le clic mobile + desktop */}
-        <div
-          className="p-4 sm:p-6 border-b"
-          style={{ borderColor: `color-mix(in oklab, ${accentColor} 14%, transparent)` }}
-        >
-          <Calendar
-            mode="single"
-            selected={selectedDate}
-            onSelect={setSelectedDate}
-            locale={fr}
-            weekStartsOn={1}
-            showOutsideDays={false}
-            disabled={[{ before: today }, { after: maxDate }, { dayOfWeek: disabledDays }]}
-            className="bg-transparent p-0 w-full [--cell-size:--spacing(11)] sm:[--cell-size:--spacing(12)]"
-            classNames={{ root: "w-full" }}
-          />
-        </div>
-
-        {/* Slots — grille responsive en dessous */}
-        <div className="p-4 sm:p-6 min-h-[180px] flex flex-col">
-          {!selectedDate ? (
-            <EmptyState
-              icon={<CalendarIcon className="w-5 h-5" style={{ color: accentColor }} />}
-              title="Choisissez une date"
-              description="Sélectionnez un jour dans le calendrier pour voir les créneaux disponibles."
-            />
-          ) : isLoadingSlots ? (
-            <LoadingState accentColor={accentColor} />
-          ) : slotsError ? (
-            <ErrorState message={slotsError} accentColor={accentColor} />
-          ) : slots.length === 0 ? (
-            <EmptyState
-              icon={<AlertCircle className="w-5 h-5" style={{ color: accentColor }} />}
-              title="Aucun créneau disponible"
-              description="Tout est pris ce jour-là. Choisissez une autre date dans le calendrier."
-            />
-          ) : (
-            <SlotsList
-              slots={slots}
-              selectedDate={selectedDate}
-              accentColor={accentColor}
-              onSelect={setSelectedSlot}
-            />
-          )}
-        </div>
+      {/* Calendar — pleine largeur, cellules généreuses pour le clic mobile + desktop */}
+      <div
+        className="p-4 sm:p-6 border-b"
+        style={{ borderColor: `color-mix(in oklab, ${accentColor} 14%, transparent)` }}
+      >
+        <Calendar
+          mode="single"
+          selected={selectedDate}
+          onSelect={setSelectedDate}
+          locale={dateFnsLocale}
+          weekStartsOn={1}
+          showOutsideDays={false}
+          disabled={[{ before: today }, { after: maxDate }, { dayOfWeek: disabledDays }]}
+          className="bg-transparent p-0 w-full [--cell-size:--spacing(11)] sm:[--cell-size:--spacing(12)]"
+          classNames={{ root: "w-full" }}
+        />
       </div>
+
+      {/* Slots — grille responsive en dessous */}
+      <div className="p-4 sm:p-6 min-h-[180px] flex flex-col">
+        {!selectedDate ? (
+          <EmptyState
+            icon={<CalendarIcon className="w-5 h-5" style={{ color: accentColor }} />}
+            title={t("chooseDate.title")}
+            description={t("chooseDate.description")}
+          />
+        ) : isLoadingSlots ? (
+          <LoadingState accentColor={accentColor} message={t("loading")} />
+        ) : slotsError ? (
+          <ErrorState message={slotsError} accentColor={accentColor} />
+        ) : slots.length === 0 ? (
+          <EmptyState
+            icon={<AlertCircle className="w-5 h-5" style={{ color: accentColor }} />}
+            title={t("noSlots.title")}
+            description={t("noSlots.description")}
+          />
+        ) : (
+          <SlotsList
+            slots={slots}
+            selectedDate={selectedDate}
+            accentColor={accentColor}
+            onSelect={setSelectedSlot}
+            intlTag={intlTag}
+            countLabel={t("slotsCount", { count: slots.length })}
+          />
+        )}
+      </div>
+    </div>
   )
 
   const dialogs = (
@@ -245,6 +278,7 @@ export function BookingCalendar({
         onClose={() => setSelectedSlot(null)}
         slot={selectedSlot}
         accentColor={accentColor}
+        intlTag={intlTag}
         onSubmit={async (formData) => {
           const result = await handleSubmitBooking(formData)
           if (result) {
@@ -259,6 +293,7 @@ export function BookingCalendar({
       <BookingConfirmationDialog
         result={bookingResult}
         accentColor={accentColor}
+        intlTag={intlTag}
         onClose={() => {
           setBookingResult(null)
           // Reset complet : la date et les slots sont rechargés à la prochaine sélection.
@@ -281,6 +316,7 @@ export function BookingCalendar({
   }
 
   // Mode plein : section autonome avec header (utilisé sur les pages /services/[slug]).
+  const tModal = t // alias plus lisible dans le markup
   return (
     <section id="booking" className="scroll-mt-24 py-16 sm:py-20">
       <div className="text-center mb-8 sm:mb-10">
@@ -289,14 +325,15 @@ export function BookingCalendar({
           style={{ color: accentColor }}
         >
           <CalendarIcon className="w-3.5 h-3.5" />
-          Appel découverte · 15 min · offert
+          {tModal("sectionBadge")}
         </span>
         <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white mb-3">
-          On en parle <span style={{ color: accentColor }}>de vive voix</span> ?
+          {tModal.rich("sectionTitle", {
+            accent: (chunks) => <span style={{ color: accentColor }}>{chunks}</span>,
+          })}
         </h2>
         <p className="text-sm sm:text-base text-white/65 max-w-xl mx-auto leading-relaxed">
-          15 minutes pour comprendre votre projet, répondre à vos questions et voir si on peut
-          travailler ensemble. Aucun engagement.
+          {tModal("sectionDescription")}
         </p>
         <div className="mt-5 inline-flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-white/55">
           <span className="inline-flex items-center gap-1.5">
@@ -306,10 +343,10 @@ export function BookingCalendar({
           <span className="text-white/25">·</span>
           <span className="inline-flex items-center gap-1.5">
             <Phone className="w-3.5 h-3.5" />
-            ou par téléphone
+            {locale === "fr" ? "ou par téléphone" : "or by phone"}
           </span>
           <span className="text-white/25">·</span>
-          <span>Lun–Ven · 12h–20h</span>
+          <span>{locale === "fr" ? "Lun–Ven · 12h–20h" : "Mon–Fri · 12pm–8pm"}</span>
         </div>
       </div>
 
@@ -341,11 +378,17 @@ function EmptyState({
   )
 }
 
-function LoadingState({ accentColor }: { accentColor: string }) {
+function LoadingState({
+  accentColor,
+  message,
+}: {
+  accentColor: string
+  message: string
+}) {
   return (
     <div className="flex-1 flex flex-col items-center justify-center">
       <Loader2 className="w-5 h-5 animate-spin" style={{ color: accentColor }} />
-      <p className="text-xs text-white/50 mt-3">Chargement des créneaux…</p>
+      <p className="text-xs text-white/50 mt-3">{message}</p>
     </div>
   )
 }
@@ -364,16 +407,21 @@ function SlotsList({
   selectedDate,
   accentColor,
   onSelect,
+  intlTag,
+  countLabel,
 }: {
   slots: Slot[]
   selectedDate: Date
   accentColor: string
   onSelect: (slot: Slot) => void
+  intlTag: string
+  countLabel: string
 }) {
+  const dateLabel = useMemo(() => formatDateLong(selectedDate, intlTag), [selectedDate, intlTag])
   return (
     <>
       <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/45 mb-4">
-        {formatDateLong(selectedDate)} · {slots.length} créneaux
+        {dateLabel} · {countLabel}
       </p>
       <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 gap-2">
         {slots.map((slot) => (
@@ -410,14 +458,17 @@ function BookingFormDialog({
   onClose,
   slot,
   accentColor,
+  intlTag,
   onSubmit,
 }: {
   open: boolean
   onClose: () => void
   slot: Slot | null
   accentColor: string
+  intlTag: string
   onSubmit: (data: FormData) => Promise<void>
 }) {
+  const t = useTranslations("booking.calendar.form")
   const [data, setData] = useState<FormData>(INITIAL_FORM)
   const [isPending, setIsPending] = useState(false)
 
@@ -460,13 +511,13 @@ function BookingFormDialog({
               className="text-[10px] font-bold uppercase tracking-[0.3em] mb-2"
               style={{ color: accentColor }}
             >
-              Confirmer le créneau
+              {t("stepBadge")}
             </p>
             <DialogTitle className="text-white text-xl font-black tracking-tight">
-              {slot ? formatSlotHeading(slot) : ""}
+              {slot ? formatSlotHeading(slot, intlTag) : ""}
             </DialogTitle>
             <DialogDescription className="text-white/55 text-sm mt-1">
-              Appel découverte de 15 min, sans engagement.
+              {t("subtitle")}
             </DialogDescription>
           </DialogHeader>
         </div>
@@ -474,7 +525,7 @@ function BookingFormDialog({
         <form onSubmit={handleSubmit} className="px-6 py-5 space-y-4">
           <div className="space-y-1.5">
             <Label htmlFor="booking-name" className="text-white/85 text-xs font-semibold">
-              Votre nom
+              {t("nameLabel")}
             </Label>
             <Input
               id="booking-name"
@@ -483,14 +534,14 @@ function BookingFormDialog({
               maxLength={80}
               value={data.name}
               onChange={(e) => setData((d) => ({ ...d, name: e.target.value }))}
-              placeholder="Léo Martin"
+              placeholder={t("namePlaceholder")}
               className="bg-white/4 border-white/10 text-white placeholder:text-white/30 focus-visible:border-white/30"
             />
           </div>
 
           <div className="space-y-1.5">
             <Label htmlFor="booking-email" className="text-white/85 text-xs font-semibold">
-              Email
+              {t("emailLabel")}
             </Label>
             <Input
               id="booking-email"
@@ -498,16 +549,14 @@ function BookingFormDialog({
               required
               value={data.email}
               onChange={(e) => setData((d) => ({ ...d, email: e.target.value }))}
-              placeholder="vous@exemple.com"
+              placeholder={t("emailPlaceholder")}
               className="bg-white/4 border-white/10 text-white placeholder:text-white/30 focus-visible:border-white/30"
             />
-            <p className="text-[11px] text-white/40 mt-1">
-              L&apos;invitation Google Calendar sera envoyée à cette adresse.
-            </p>
+            <p className="text-[11px] text-white/40 mt-1">{t("emailHint")}</p>
           </div>
 
           <div className="space-y-2">
-            <Label className="text-white/85 text-xs font-semibold">Comment préférez-vous échanger ?</Label>
+            <Label className="text-white/85 text-xs font-semibold">{t("callTypeLabel")}</Label>
             <RadioGroup
               value={data.callType}
               onValueChange={(value) =>
@@ -520,16 +569,16 @@ function BookingFormDialog({
                 checked={data.callType === "meet"}
                 accentColor={accentColor}
                 icon={<Video className="w-4 h-4" />}
-                label="Google Meet"
-                hint="Lien généré automatiquement"
+                label={t("meetLabel")}
+                hint={t("meetHint")}
               />
               <CallTypeOption
                 value="phone"
                 checked={data.callType === "phone"}
                 accentColor={accentColor}
                 icon={<Phone className="w-4 h-4" />}
-                label="Téléphone"
-                hint="Je vous appelle"
+                label={t("phoneLabel")}
+                hint={t("phoneHint")}
               />
             </RadioGroup>
           </div>
@@ -537,7 +586,7 @@ function BookingFormDialog({
           {data.callType === "phone" && (
             <div className="space-y-1.5">
               <Label htmlFor="booking-phone" className="text-white/85 text-xs font-semibold">
-                Votre numéro
+                {t("phoneNumberLabel")}
               </Label>
               <Input
                 id="booking-phone"
@@ -545,7 +594,7 @@ function BookingFormDialog({
                 required
                 value={data.phoneNumber}
                 onChange={(e) => setData((d) => ({ ...d, phoneNumber: e.target.value }))}
-                placeholder="06 12 34 56 78"
+                placeholder={t("phoneNumberPlaceholder")}
                 className="bg-white/4 border-white/10 text-white placeholder:text-white/30 focus-visible:border-white/30"
               />
             </div>
@@ -553,7 +602,7 @@ function BookingFormDialog({
 
           <div className="space-y-1.5">
             <Label htmlFor="booking-message" className="text-white/85 text-xs font-semibold">
-              Message <span className="text-white/40 font-normal">(optionnel)</span>
+              {t("messageLabel")} <span className="text-white/40 font-normal">{t("messageOptional")}</span>
             </Label>
             <Textarea
               id="booking-message"
@@ -561,7 +610,7 @@ function BookingFormDialog({
               rows={3}
               value={data.message}
               onChange={(e) => setData((d) => ({ ...d, message: e.target.value }))}
-              placeholder="Quelques mots sur votre projet pour gagner du temps…"
+              placeholder={t("messagePlaceholder")}
               className="bg-white/4 border-white/10 text-white placeholder:text-white/30 focus-visible:border-white/30 resize-none"
             />
           </div>
@@ -575,12 +624,12 @@ function BookingFormDialog({
             {isPending ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                Réservation en cours…
+                {t("submitting")}
               </>
             ) : (
               <>
                 <Check className="w-4 h-4" />
-                Confirmer le rendez-vous
+                {t("submit")}
               </>
             )}
           </button>
@@ -633,12 +682,15 @@ function CallTypeOption({
 function BookingConfirmationDialog({
   result,
   accentColor,
+  intlTag,
   onClose,
 }: {
   result: BookingResult | null
   accentColor: string
+  intlTag: string
   onClose: () => void
 }) {
+  const t = useTranslations("booking.calendar.confirmation")
   const handleOpenChange = (next: boolean) => {
     if (!next) onClose()
   }
@@ -663,11 +715,14 @@ function BookingConfirmationDialog({
           </div>
           <DialogHeader className="items-center">
             <DialogTitle className="text-white text-xl font-black tracking-tight">
-              Rendez-vous confirmé
+              {t("title")}
             </DialogTitle>
             <DialogDescription className="text-white/55 text-sm mt-1.5">
-              Je vous attends le <strong className="text-white/85">{formatDateLongFromISO(result.startISO)}</strong> à{" "}
-              <strong className="text-white/85">{formatTimeFromISO(result.startISO)}</strong>.
+              {t.rich("description", {
+                bold: (chunks) => <strong className="text-white/85">{chunks}</strong>,
+                date: () => formatDateLongFromISO(result.startISO, intlTag),
+                time: () => formatTimeFromISO(result.startISO, intlTag),
+              })}
             </DialogDescription>
           </DialogHeader>
         </div>
@@ -678,21 +733,23 @@ function BookingConfirmationDialog({
               {result.callType === "meet" ? (
                 <>
                   <Video className="w-4 h-4" style={{ color: accentColor }} />
-                  <span>Google Meet — lien dans l&apos;invitation</span>
+                  <span>{t("meetInvite")}</span>
                 </>
               ) : (
                 <>
                   <Phone className="w-4 h-4" style={{ color: accentColor }} />
-                  <span>Je vous appelle au {result.phoneNumber}</span>
+                  <span>{t("phoneCallback", { phone: result.phoneNumber ?? "" })}</span>
                 </>
               )}
             </div>
             <div className="flex items-start gap-2 text-white/55 text-xs leading-relaxed">
               <CalendarIcon className="w-3.5 h-3.5 mt-0.5 shrink-0" />
               <span>
-                Vous allez recevoir l&apos;invitation Google Calendar à{" "}
-                <span className="text-white/75">{result.clientEmail}</span> ainsi qu&apos;un email
-                de confirmation de ma part.
+                {t.rich("emailNotice", {
+                  email: () => (
+                    <span className="text-white/75">{result.clientEmail}</span>
+                  ),
+                })}
               </span>
             </div>
           </div>
@@ -704,7 +761,7 @@ function BookingConfirmationDialog({
             className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-sm font-bold transition-all hover:opacity-90 cursor-pointer"
             style={{ background: accentColor, color: "var(--background)" }}
           >
-            Ajouter à mon calendrier
+            {t("addToCalendar")}
             <ArrowRight className="w-4 h-4" />
           </a>
 
@@ -713,7 +770,7 @@ function BookingConfirmationDialog({
             onClick={onClose}
             className="w-full text-xs text-white/50 hover:text-white/80 transition-colors cursor-pointer py-1"
           >
-            Fermer
+            {t("close")}
           </button>
         </div>
       </DialogContent>
@@ -721,7 +778,7 @@ function BookingConfirmationDialog({
   )
 }
 
-// ─── Helpers de formatage (côté client, fuseau Europe/Paris implicite) ────
+// ─── Helpers de formatage (côté client, locale variable) ──────────────────
 
 function toYMD(d: Date): string {
   const y = d.getFullYear()
@@ -730,16 +787,16 @@ function toYMD(d: Date): string {
   return `${y}-${m}-${day}`
 }
 
-function formatDateLong(d: Date): string {
-  return new Intl.DateTimeFormat("fr-FR", {
+function formatDateLong(d: Date, intlTag: string): string {
+  return new Intl.DateTimeFormat(intlTag, {
     weekday: "long",
     day: "numeric",
     month: "long",
   }).format(d)
 }
 
-function formatDateLongFromISO(iso: string): string {
-  return new Intl.DateTimeFormat("fr-FR", {
+function formatDateLongFromISO(iso: string, intlTag: string): string {
+  return new Intl.DateTimeFormat(intlTag, {
     timeZone: BOOKING_CONFIG.timezone,
     weekday: "long",
     day: "numeric",
@@ -747,8 +804,8 @@ function formatDateLongFromISO(iso: string): string {
   }).format(new Date(iso))
 }
 
-function formatTimeFromISO(iso: string): string {
-  return new Intl.DateTimeFormat("fr-FR", {
+function formatTimeFromISO(iso: string, intlTag: string): string {
+  return new Intl.DateTimeFormat(intlTag, {
     timeZone: BOOKING_CONFIG.timezone,
     hour: "2-digit",
     minute: "2-digit",
@@ -756,10 +813,10 @@ function formatTimeFromISO(iso: string): string {
   }).format(new Date(iso))
 }
 
-function formatSlotHeading(slot: Slot): string {
-  const date = formatDateLongFromISO(slot.startISO)
-  const start = formatTimeFromISO(slot.startISO)
-  const end = formatTimeFromISO(slot.endISO)
+function formatSlotHeading(slot: Slot, intlTag: string): string {
+  const date = formatDateLongFromISO(slot.startISO, intlTag)
+  const start = formatTimeFromISO(slot.startISO, intlTag)
+  const end = formatTimeFromISO(slot.endISO, intlTag)
   return `${capitalize(date)} · ${start}–${end}`
 }
 

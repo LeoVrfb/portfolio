@@ -4,6 +4,7 @@ import { z } from "zod"
 import { isSlotStillAvailable } from "@/lib/availability"
 import { createBookingEvent } from "@/lib/google-calendar"
 import { renderBookingConfirmationEmail } from "@/lib/emails/booking-confirmation-email"
+import { routing, type Locale } from "@/i18n/routing"
 
 // Endpoint POST /api/booking
 // Crée un event Google Calendar (avec Meet auto si besoin), envoie un email
@@ -35,6 +36,9 @@ const BookingSchema = z
       .max(1000, "Message trop long")
       .optional(),
     source: z.enum(["essentiel", "standard", "premium", "discovery"]).optional(),
+    // Locale du visiteur — détermine la langue de l'email de confirmation et
+    // le format des dates. Optionnelle (fallback FR si absente).
+    locale: z.enum(routing.locales as unknown as [Locale, ...Locale[]]).optional(),
   })
   .refine(
     (data) => {
@@ -59,7 +63,9 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const { startISO, endISO, name, email, callType, phoneNumber, message, source } = parsed.data
+    const { startISO, endISO, name, email, callType, phoneNumber, message, source, locale } =
+      parsed.data
+    const effectiveLocale: Locale = locale ?? "fr"
 
     // Anti race condition : un visiteur a peut-être réservé le même slot entre-temps.
     const stillAvailable = await isSlotStillAvailable(startISO, endISO)
@@ -68,7 +74,9 @@ export async function POST(req: NextRequest) {
         {
           success: false,
           message:
-            "Ce créneau vient d'être pris ou n'est plus disponible. Choisissez-en un autre.",
+            effectiveLocale === "en"
+              ? "This slot was just booked or is no longer available. Please pick another one."
+              : "Ce créneau vient d'être pris ou n'est plus disponible. Choisissez-en un autre.",
         },
         { status: 409 }
       )
@@ -97,11 +105,13 @@ export async function POST(req: NextRequest) {
       message,
       meetLink: event.meetLink,
       eventLink: event.htmlLink,
+      locale: effectiveLocale,
     })
 
     return NextResponse.json({
       success: true,
-      message: "Rendez-vous confirmé.",
+      message:
+        effectiveLocale === "en" ? "Meeting confirmed." : "Rendez-vous confirmé.",
       event: {
         id: event.id,
         htmlLink: event.htmlLink,
@@ -127,6 +137,7 @@ type SendConfirmationParams = {
   message?: string
   meetLink?: string
   eventLink: string
+  locale: Locale
 }
 
 // Email Resend en plus de l'invit Google (en mode dev sans clé : log only).
@@ -134,8 +145,8 @@ async function sendConfirmationEmail(params: SendConfirmationParams): Promise<vo
   const apiKey = process.env.RESEND_API_KEY
   const from = process.env.CONTACT_FROM_EMAIL
 
-  const dateLabel = formatDateLabel(params.startISO)
-  const timeLabel = formatTimeRange(params.startISO, params.endISO)
+  const dateLabel = formatDateLabel(params.startISO, params.locale)
+  const timeLabel = formatTimeRange(params.startISO, params.endISO, params.locale)
 
   if (!apiKey || !from) {
     console.warn(
@@ -155,6 +166,7 @@ async function sendConfirmationEmail(params: SendConfirmationParams): Promise<vo
     phoneNumber: params.phoneNumber,
     message: params.message,
     eventLink: params.eventLink,
+    locale: params.locale,
   })
 
   const resend = new Resend(apiKey)
@@ -176,9 +188,14 @@ async function sendConfirmationEmail(params: SendConfirmationParams): Promise<vo
 
 const TZ = "Europe/Paris"
 
-// "vendredi 15 mai 2026" — formaté en français dans le fuseau Paris.
-function formatDateLabel(iso: string): string {
-  return new Intl.DateTimeFormat("fr-FR", {
+const INTL_TAG: Record<Locale, string> = {
+  fr: "fr-FR",
+  en: "en-US",
+}
+
+// FR : "vendredi 15 mai 2026" / EN : "Friday, May 15, 2026" — formaté dans le fuseau Paris.
+function formatDateLabel(iso: string, locale: Locale): string {
+  return new Intl.DateTimeFormat(INTL_TAG[locale], {
     timeZone: TZ,
     weekday: "long",
     day: "numeric",
@@ -187,13 +204,15 @@ function formatDateLabel(iso: string): string {
   }).format(new Date(iso))
 }
 
-// "14:30 — 14:45 (Europe/Paris)"
-function formatTimeRange(startISO: string, endISO: string): string {
-  const fmt = new Intl.DateTimeFormat("fr-FR", {
+// FR : "14:30 — 14:45 (heure de Paris)" / EN : "2:30 PM — 2:45 PM (Paris time)"
+function formatTimeRange(startISO: string, endISO: string, locale: Locale): string {
+  const fmt = new Intl.DateTimeFormat(INTL_TAG[locale], {
     timeZone: TZ,
     hour: "2-digit",
     minute: "2-digit",
-    hour12: false,
+    // Anglais : AM/PM. Français : 24h.
+    hour12: locale === "en",
   })
-  return `${fmt.format(new Date(startISO))} — ${fmt.format(new Date(endISO))} (heure de Paris)`
+  const tzLabel = locale === "en" ? "Paris time" : "heure de Paris"
+  return `${fmt.format(new Date(startISO))} — ${fmt.format(new Date(endISO))} (${tzLabel})`
 }

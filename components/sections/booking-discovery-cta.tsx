@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 import { ArrowRight, Calendar, X } from "lucide-react"
 import {
   Dialog,
@@ -18,10 +19,8 @@ type BookingSource = "essentiel" | "standard" | "premium" | "discovery"
 type CommonProps = {
   /** Source de la demande (sert au tracking dans Google Calendar). */
   source?: BookingSource
-  /** Titre du dialog modal. */
-  dialogTitle?: string
-  /** Sous-titre du dialog modal. */
-  dialogDescription?: string
+  /** Variante du texte du dialog (titre + description). Par défaut "generic". */
+  dialogVariant?: "generic" | "advice"
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -40,6 +39,7 @@ function BookingModal({
   title: string
   description: string
 }) {
+  const t = useTranslations("booking.modal")
   const accentColor = "var(--accent)"
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -56,7 +56,7 @@ function BookingModal({
             render={
               <button
                 type="button"
-                aria-label="Fermer"
+                aria-label={t("close")}
                 className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/8 hover:bg-white/15 text-white/70 hover:text-white transition-colors cursor-pointer"
               />
             }
@@ -70,7 +70,7 @@ function BookingModal({
               style={{ color: accentColor }}
             >
               <CalendarIcon className="w-3.5 h-3.5" />
-              Appel découverte · 15 min · offert
+              {t("badge")}
             </span>
             <DialogTitle className="text-white text-xl sm:text-2xl font-black tracking-tight pr-12">
               {title}
@@ -82,15 +82,15 @@ function BookingModal({
           <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11px] text-white/55">
             <span className="inline-flex items-center gap-1.5">
               <Video className="w-3 h-3" />
-              Google Meet
+              {t("googleMeet")}
             </span>
             <span className="text-white/25">·</span>
             <span className="inline-flex items-center gap-1.5">
               <Phone className="w-3 h-3" />
-              ou par téléphone
+              {t("orPhone")}
             </span>
             <span className="text-white/25">·</span>
-            <span>Lun–Ven · 12h–20h</span>
+            <span>{t("availability")}</span>
           </div>
         </div>
 
@@ -107,10 +107,15 @@ function BookingModal({
 // ─────────────────────────────────────────────────────────────────────────────
 export function BookingDiscoveryCard({
   source = "discovery",
-  dialogTitle = "Réservons un appel",
-  dialogDescription = "15 minutes pour faire connaissance et comprendre votre projet. Sans engagement, sans pression.",
+  dialogVariant = "generic",
 }: CommonProps) {
   const [open, setOpen] = useState(false)
+  const t = useTranslations("booking.card")
+  const tDialog = useTranslations("booking.dialog")
+  const dialogTitle = tDialog("title")
+  const dialogDescription =
+    dialogVariant === "advice" ? tDialog("descriptionAdvice") : tDialog("descriptionGeneric")
+
   return (
     <>
       <button
@@ -123,22 +128,22 @@ export function BookingDiscoveryCard({
             <Calendar size={16} className="text-accent" />
           </div>
           <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-accent">
-            Vous voulez d&apos;abord discuter&nbsp;?
+            {t("eyebrow")}
           </p>
         </div>
         <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight leading-snug mb-2">
-          Réservez un appel gratuit de 15 minutes
+          {t("title")}
         </h3>
         <p className="text-sm text-white/70 leading-relaxed mb-5 flex-1">
-          On fait connaissance, je comprends votre projet, et je vous dis exactement ce qui correspond à votre situation. Sans engagement.
+          {t("description")}
         </p>
         <div className="flex items-center justify-between gap-3">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent text-black text-xs font-bold transition-all group-hover:gap-2.5">
-            Réserver un appel
+            {t("cta")}
             <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" />
           </span>
           <span className="text-[10px] text-white/45 italic">
-            Selon mes prochaines disponibilités
+            {t("availabilityNote")}
           </span>
         </div>
       </button>
@@ -158,11 +163,15 @@ export function BookingDiscoveryCard({
 // ─────────────────────────────────────────────────────────────────────────────
 export function BookingDiscoveryButton({
   source = "discovery",
-  dialogTitle = "Réservons un appel",
-  dialogDescription = "15 minutes pour vous orienter vers la formule qui colle à votre projet.",
-  label = "Réserver un appel 15 min",
-}: CommonProps & { label?: string }) {
+  dialogVariant = "advice",
+}: CommonProps) {
   const [open, setOpen] = useState(false)
+  const tButton = useTranslations("booking.button")
+  const tDialog = useTranslations("booking.dialog")
+  const dialogTitle = tDialog("title")
+  const dialogDescription =
+    dialogVariant === "advice" ? tDialog("descriptionAdvice") : tDialog("descriptionGeneric")
+
   return (
     <>
       <button
@@ -171,7 +180,7 @@ export function BookingDiscoveryButton({
         className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent text-black text-sm font-bold rounded-full hover:bg-accent/90 transition-colors cursor-pointer"
       >
         <Calendar size={15} />
-        {label}
+        {tButton("label")}
         <ArrowRight size={15} />
       </button>
       <BookingModal

@@ -1,9 +1,10 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import Link from "next/link"
 import { ArrowRight, Instagram, Linkedin, Github } from "lucide-react"
 import { motion } from "motion/react"
+import { useTranslations } from "next-intl"
+import { Link } from "@/i18n/navigation"
 import { Boxes } from "@/components/animations/background-boxes"
 import { ParticleText } from "@/components/animations/particle-text"
 import { onIntroReady } from "@/lib/intro-signal"
@@ -94,7 +95,7 @@ function ParticleName({
 }
 
 
-function GlassButton({ children, href, variant = "green" }: { children: React.ReactNode; href: string; variant?: "green" | "mauve" | "blue" }) {
+function GlassButton({ children, href, variant = "green" }: { children: React.ReactNode; href: "/projets" | "/services" | "/contact" | "/a-propos"; variant?: "green" | "mauve" | "blue" }) {
   const wrap = variant === "mauve" ? "glass-btn-wrap-mauve" : variant === "blue" ? "glass-btn-wrap-blue" : "glass-btn-wrap-dark"
   const btn = variant === "mauve" ? "glass-btn-mauve" : variant === "blue" ? "glass-btn-blue" : "glass-btn-dark"
   const txt = variant === "mauve" ? "glass-btn-text-mauve" : variant === "blue" ? "glass-btn-text-blue" : "glass-btn-text-dark"
@@ -114,6 +115,7 @@ function GlassButton({ children, href, variant = "green" }: { children: React.Re
 
 export function HeroSection() {
   const [ready, setReady] = useState(false)
+  const t = useTranslations("home.hero")
 
   useEffect(() => {
     return onIntroReady(() => setReady(true))
@@ -142,7 +144,7 @@ export function HeroSection() {
               <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-accent/30 bg-accent/10">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
                 <span className="text-xs font-medium text-accent tracking-wide">
-                  Dev front-end @ Artefact · Paris
+                  {t("badge")}
                 </span>
               </div>
             </motion.div>
@@ -173,7 +175,7 @@ export function HeroSection() {
             >
               <div className="w-12 h-px bg-accent" />
               <p className="text-sm text-accent tracking-widest uppercase font-medium">
-                Développeur front-end & créateur de sites web
+                {t("tagline")}
               </p>
             </motion.div>
 
@@ -184,11 +186,11 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.88, ease: "easeOut" }}
             >
-              Je construis des interfaces qui durent — pour les grandes entreprises chez{" "}
-              <span className="font-medium text-foreground">Artefact</span>{" "}
-              <span style={{ color: "var(--lavender)" }}>(Data & IA)</span>, et des sites
-              sur mesure qui convertissent pour les{" "}
-              <span style={{ color: "var(--mauve)" }}>entreprises et les particuliers</span>.
+              {t.rich("description", {
+                artefact: (chunks) => <span className="font-medium text-foreground">{chunks}</span>,
+                data: (chunks) => <span style={{ color: "var(--lavender)" }}>{chunks}</span>,
+                clients: (chunks) => <span style={{ color: "var(--mauve)" }}>{chunks}</span>,
+              })}
             </motion.p>
 
             {/* CTAs */}
@@ -198,13 +200,13 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.0, ease: "easeOut" }}
             >
-              <GlassButton href="/projets">Mes projets</GlassButton>
-              <GlassButton href="/services" variant="blue">Mes services</GlassButton>
+              <GlassButton href="/projets">{t("projectsCta")}</GlassButton>
+              <GlassButton href="/services" variant="blue">{t("servicesCta")}</GlassButton>
               <Link
                 href="/contact"
                 className="group inline-flex items-center gap-2 text-foreground/75 text-sm font-medium hover:text-accent transition-colors cursor-pointer"
               >
-                Me contacter
+                {t("contactCta")}
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </motion.div>

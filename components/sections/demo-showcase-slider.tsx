@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 
 export type SlideMockType = "browser" | "card-grid" | "form" | "stat" | "story"
@@ -238,6 +239,7 @@ export function DemoShowcaseSlider({
   accent,
   aspectRatio = "aspect-[4/3]",
 }: DemoShowcaseSliderProps) {
+  const t = useTranslations("booking.imageSlider")
   const count = slides.length
   const [idx, setIdx] = useState(0)
   const touchStartX = useRef<number | null>(null)
@@ -262,7 +264,7 @@ export function DemoShowcaseSlider({
               backdropFilter: "blur(8px)",
               color: accent,
             }}
-            aria-label="Slide précédent"
+            aria-label={t("slidePrev")}
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
@@ -276,7 +278,7 @@ export function DemoShowcaseSlider({
               backdropFilter: "blur(8px)",
               color: accent,
             }}
-            aria-label="Slide suivant"
+            aria-label={t("slideNext")}
           >
             <ChevronRight className="w-4 h-4" />
           </button>

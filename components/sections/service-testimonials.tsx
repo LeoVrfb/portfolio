@@ -1,5 +1,6 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import { motion, useInView } from "motion/react"
 import { useRef } from "react"
 import { Star } from "lucide-react"
@@ -11,10 +12,12 @@ function TestimonialCard({
   testimonial,
   index,
   color,
+  starsLabel,
 }: {
   testimonial: Testimonial
   index: number
   color: string
+  starsLabel: string
 }) {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: "-60px" })
@@ -47,7 +50,7 @@ function TestimonialCard({
         </div>
       </header>
 
-      <div className="flex items-center gap-0.5" aria-label={`${testimonial.note} étoiles sur 5`}>
+      <div className="flex items-center gap-0.5" aria-label={starsLabel}>
         {Array.from({ length: testimonial.note }).map((_, i) => (
           <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
         ))}
@@ -61,6 +64,8 @@ function TestimonialCard({
 }
 
 export function ServiceTestimonials({ color }: { color: string }) {
+  const t = useTranslations("serviceTestimonials")
+
   return (
     <section className="py-16 sm:py-20">
       <div className="text-center mb-10 sm:mb-12">
@@ -68,19 +73,26 @@ export function ServiceTestimonials({ color }: { color: string }) {
           className="text-[10px] font-bold uppercase tracking-[0.35em] mb-3 block"
           style={{ color }}
         >
-          Ils m&apos;ont fait confiance
+          {t("eyebrow")}
         </span>
         <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white mb-3">
-          Quelques retours de <span style={{ color }}>mes clients</span>
+          {t("title")}{" "}
+          <span style={{ color }}>{t("titleAccent")}</span>
         </h2>
         <p className="text-sm sm:text-base text-white/65 max-w-xl mx-auto leading-relaxed">
-          Des indépendants et petites entreprises qui ont transformé leur présence en ligne avec moi.
+          {t("subtitle")}
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-        {testimonials.map((t, i) => (
-          <TestimonialCard key={t.nom + t.projet} testimonial={t} index={i} color={color} />
+        {testimonials.map((testimonial, i) => (
+          <TestimonialCard
+            key={testimonial.nom + testimonial.projet}
+            testimonial={testimonial}
+            index={i}
+            color={color}
+            starsLabel={t("starsLabel", { count: testimonial.note })}
+          />
         ))}
       </div>
     </section>

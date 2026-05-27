@@ -1,11 +1,12 @@
 "use client"
 
 import { useState, useRef, Fragment } from "react"
-import Link from "next/link"
 import { useSearchParams } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { motion, useInView, AnimatePresence } from "motion/react"
 import { Check, ArrowLeft, ArrowRight, ArrowDown, Clock, Calendar, ChevronDown, Info, Mail, AlertCircle, Plus, Minus, XCircle } from "lucide-react"
 import type { Addon, AddonSubOption, ServiceDetail, ServiceInclus } from "@/lib/services"
+import { Link } from "@/i18n/navigation"
 import { AddonInfoDialog, InfoDialog } from "@/components/sections/addon-info-dialog"
 import { QuoteEmailDialog } from "@/components/sections/quote-email-dialog"
 import { ServiceWorkflow } from "@/components/sections/service-workflow"
@@ -184,10 +185,14 @@ function IncludedItem({
   item,
   color,
   onOpenInfo,
+  moreInfoLabel,
+  detailOfLabel,
 }: {
   item: ServiceInclus
   color?: string
   onOpenInfo: () => void
+  moreInfoLabel: string
+  detailOfLabel: string
 }) {
   const accentColor = color ?? "var(--accent)"
   return (
@@ -205,8 +210,8 @@ function IncludedItem({
             type="button"
             onClick={onOpenInfo}
             className="p-0.5 -mt-0.5 rounded text-white/70 hover:text-accent transition-colors cursor-pointer shrink-0"
-            aria-label={`Voir le détail de ${item.titre}`}
-            title="En savoir plus"
+            aria-label={detailOfLabel}
+            title={moreInfoLabel}
           >
             <Info className="w-3.5 h-3.5" />
           </button>
@@ -222,12 +227,18 @@ function SubOptionPanel({
   selectedChoiceId,
   onSelect,
   showError,
+  selectOptionLabel,
+  includedLabel,
+  quoteLowerLabel,
 }: {
   addonId: string
   sub: AddonSubOption
   selectedChoiceId: string | undefined
   onSelect: (choiceId: string) => void
   showError: boolean
+  selectOptionLabel: string
+  includedLabel: string
+  quoteLowerLabel: string
 }) {
   return (
     <div className="mt-2">
@@ -261,7 +272,7 @@ function SubOptionPanel({
                     {choice.label}
                   </span>
                   <span className={`text-[10px] font-bold shrink-0 ${selected ? "text-accent" : "text-white/55"}`}>
-                    {isDevis ? "Devis" : choice.prixDelta === 0 ? "Inclus" : `+${choice.prixDelta} €`}
+                    {isDevis ? quoteLowerLabel.charAt(0).toUpperCase() + quoteLowerLabel.slice(1) : choice.prixDelta === 0 ? includedLabel : `+${choice.prixDelta} €`}
                   </span>
                 </div>
                 {choice.detail && (
@@ -283,9 +294,9 @@ function SubOptionPanel({
             const isDevis = choice.prixDelta === null
             const isIncluded = choice.prixDelta === 0
             const priceLabel = isDevis
-              ? "devis"
+              ? quoteLowerLabel
               : isIncluded
-                ? "inclus"
+                ? includedLabel.toLowerCase()
                 : `+${choice.prixDelta}€`
             return (
               <button
@@ -320,7 +331,7 @@ function SubOptionPanel({
       {showError && sub.required && !selectedChoiceId && (
         <p className="mt-1.5 flex items-center gap-1 text-[10px] font-semibold text-red-400" id={`error-${addonId}-${sub.id}`}>
           <AlertCircle className="w-3 h-3" />
-          Sélectionnez {sub.label.toLowerCase()}
+          {selectOptionLabel}
         </p>
       )}
     </div>
@@ -328,6 +339,7 @@ function SubOptionPanel({
 }
 
 export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
+  const t = useTranslations("serviceConfigurator")
   const searchParams = useSearchParams()
 
   const initialAddonIds = searchParams.get("addonIds")?.split(",").filter(Boolean) ?? []
@@ -346,7 +358,6 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
       const next = new Set(prev)
       if (next.has(id)) {
         next.delete(id)
-        // Reset les choix de cet addon quand on le déselectionne
         setSubChoices((prevChoices) => {
           if (!prevChoices[id]) return prevChoices
           const { [id]: _removed, ...rest } = prevChoices
@@ -383,11 +394,8 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
     .map((id) => service.addons.find((a) => a.id === id))
     .filter((a): a is Addon => Boolean(a))
 
-  // Aligne la hauteur visible des options sur la card "Ce qui est inclus"
-  // Toujours afficher au moins les addons sélectionnés (sinon ils disparaissent)
   const initialVisibleCount = Math.max(service.inclus.length, selectedAddonObjects.length)
   const hiddenCount = Math.max(0, service.addons.length - initialVisibleCount)
-  // Si seulement 1 addon est caché, on l'affiche direct (pas la peine d'un toggle)
   const shouldTruncate = hiddenCount > 1
   const visibleAddons = showAllAddons || !shouldTruncate
     ? service.addons
@@ -399,7 +407,6 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
       .map((a) => a.id)
   )
 
-  // Calcul total
   let total = service.prixBase
   let hasDevis = false
   for (const addon of selectedAddonObjects) {
@@ -413,7 +420,6 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
   const handleStartProject = () => {
     if (!canStart) {
       setSubmitAttempted(true)
-      // Scroll vers le 1er addon incomplet
       const firstIncompleteId = selectedAddonObjects.find((a) => incompleteAddonIds.has(a.id))?.id
       if (firstIncompleteId) {
         const el = document.getElementById(`addon-${firstIncompleteId}`)
@@ -424,15 +430,12 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
     setQuoteDialogOpen(true)
   }
 
-  // Liste lisible des addons (avec sous-choix) pour le mail de devis.
   const addonsLabels = selectedAddonObjects.map((addon) => {
     const summary = getAddonChoicesSummary(addon, subChoices[addon.id])
     return summary ? `${addon.label} (${summary})` : addon.label
   })
 
   return (
-    // Container local plus large que layout-container global : sur grand écran on récupère
-    // ~120-160px d'espace de chaque côté pour réduire l'air et donner plus de présence au contenu.
     <div className="pt-28 pb-24 w-full mx-auto px-4 sm:px-6 max-w-7xl xl:max-w-368 2xl:max-w-416 [@media(min-width:1920px)]:max-w-464 overflow-x-clip">
       {/* Back */}
       <FadeUp>
@@ -441,16 +444,16 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
           className="inline-flex items-center gap-2 text-sm text-accent hover:text-accent/70 transition-colors mb-10 group cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
-          Retour aux formules
+          {t("backToPlans")}
         </Link>
       </FadeUp>
 
-      {/* ── HEADER — aligné à gauche, layout d'origine ── */}
+      {/* ── HEADER ── */}
       <div className="mb-10">
         <FadeUp delay={0.04}>
           <div className="flex items-center gap-3 mb-5">
             <span className="text-[10px] font-bold uppercase tracking-[0.45em] text-white/60 border border-white/15 rounded-full px-3 py-1">
-              Formule
+              {t("planBadge")}
             </span>
             {service.highlighted && (
               <span
@@ -461,7 +464,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                   border: "1px solid color-mix(in oklab, var(--lavender) 35%, transparent)",
                 }}
               >
-                ★ La plus choisie
+                {t("mostChosen")}
               </span>
             )}
           </div>
@@ -477,14 +480,14 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
           </h1>
         </FadeUp>
 
-        {/* Tagline éditoriale — mix sans / serif italique sur le mot clé */}
+        {/* Tagline */}
         <FadeUp delay={0.12}>
           <p className="text-2xl sm:text-3xl md:text-4xl font-light leading-[1.2] tracking-[-0.01em] text-white max-w-3xl mb-7">
             {renderTagline(service.tagline, service.color)}
           </p>
         </FadeUp>
 
-        {/* Hook éditorial — barre verticale couleur formule + 3 lignes (la dernière en serif italique) */}
+        {/* Hook éditorial */}
         {service.hook && (
           <FadeUp delay={0.14}>
             <div
@@ -512,7 +515,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
           </FadeUp>
         )}
 
-        {/* Délai (pill) + CTA "Réserver un appel" sur la même ligne */}
+        {/* Délai + CTA booking */}
         <FadeUp delay={0.16}>
           <div className="flex flex-wrap items-center gap-3">
             <div
@@ -525,7 +528,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
             >
               <Clock className="w-3.5 h-3.5" />
               <span>
-                Délai estimé : <strong>{service.delai}</strong>
+                {t("estimatedDelay")}<strong>{service.delai}</strong>
               </span>
             </div>
 
@@ -535,23 +538,23 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
               style={{ background: service.color, color: "var(--background)" }}
             >
               <Calendar className="w-3.5 h-3.5" />
-              Réserver un appel
+              {t("bookCall")}
               <ArrowDown className="w-3.5 h-3.5 transition-transform group-hover:translate-y-0.5" />
             </a>
           </div>
         </FadeUp>
       </div>
 
-      {/* ── WRAPPER CENTRÉ — toutes les sections sous le header partagent la même largeur ── */}
+      {/* ── WRAPPER CENTRÉ ── */}
       <div className="max-w-6xl mx-auto">
 
       {/* ── PITCH IMPACTANT ── */}
       <FadeUp delay={0.18}>
         <div className="space-y-6">
-          {/* Audiences (chips) */}
+          {/* Audiences */}
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-white/65 mb-3">
-              Vous êtes…
+              {t("youAre")}
             </p>
             <div className="flex flex-wrap gap-2">
               {service.audiences.map((aud) => (
@@ -565,7 +568,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
             </div>
           </div>
 
-          {/* Promesse — mix de styles : *mot* serif italique couleur formule, **mot** bold mint, \n pour saut de ligne */}
+          {/* Promesse */}
           <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-[1.2] text-white">
             {renderPromesse(service.promesse, service.color)}
           </p>
@@ -582,10 +585,9 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
             </ul>
           </div>
 
-          {/* Anti-alternative — deux cartes côte à côte si `pros` présent (mode split), sinon une seule carte (legacy) */}
+          {/* Anti-alternative */}
           {service.antiAlternative && service.antiAlternative.pros && service.antiAlternative.consPoints ? (
             <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
-              {/* Carte gauche — rouge, ce qu'on évite */}
               <div className="rounded-xl border border-rose-400/25 bg-rose-400/5 p-4 sm:p-5 flex flex-col">
                 <div className="flex items-center gap-2 mb-3">
                   <XCircle className="w-5 h-5 shrink-0 text-rose-400" />
@@ -594,7 +596,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                   </p>
                 </div>
                 <ul className="space-y-2">
-                  {service.antiAlternative.consPoints.map((point, i) => (
+                  {service.antiAlternative.consPoints.map((point: string, i: number) => (
                     <li key={i} className="flex items-start gap-2 text-sm text-white/85 leading-relaxed">
                       <span className="text-rose-400 mt-0.5 shrink-0">×</span>
                       <span>{point}</span>
@@ -602,7 +604,6 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                   ))}
                 </ul>
               </div>
-              {/* Carte droite — couleur formule, ce qu'on propose */}
               <div
                 className="rounded-xl p-4 sm:p-5 flex flex-col"
                 style={{
@@ -624,7 +625,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                   </p>
                 )}
                 <ul className="space-y-2">
-                  {service.antiAlternative.pros.points.map((point, i) => (
+                  {service.antiAlternative.pros.points.map((point: string, i: number) => (
                     <li key={i} className="flex items-start gap-2 text-sm text-white/85 leading-relaxed">
                       <Check className="w-3.5 h-3.5 shrink-0 mt-1" style={{ color: service.color }} />
                       <span>{point}</span>
@@ -647,13 +648,13 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
             </div>
           ) : null}
 
-          {/* Cette formule est faite pour vous si... */}
+          {/* Pourquoi */}
           <div className="rounded-2xl border border-white/10 bg-white/2 p-5 sm:p-6">
             <p
               className="text-[10px] font-bold uppercase tracking-[0.3em] mb-3"
               style={{ color: service.color }}
             >
-              Vous vous reconnaissez ?
+              {t("doYouRecognize")}
             </p>
             <ul className="space-y-2">
               {service.pourquoi.map((item, i) => (
@@ -667,42 +668,42 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
         </div>
       </FadeUp>
 
-      {/* ── TÉMOIGNAGES — remontés pour rassurer avant le process ── */}
+      {/* ── TÉMOIGNAGES ── */}
       <ServiceTestimonials color={service.color} />
 
-      {/* ── MINI CTA — pour les early converters déjà chauds ── */}
+      {/* ── MINI CTA ── */}
       <ServiceCtaInline color={service.color} />
 
       {/* ── COMMENT ÇA SE PASSE ── */}
       <ServiceWorkflow color={service.color} delai={service.delai} formuleSlug={service.slug} />
 
-      {/* ── RÉALISATIONS — preuve concrète après le process, avant le configurateur ── */}
-      <ServiceProjects color={service.color} />
+      {/* ── RÉALISATIONS ── */}
+      <ServiceProjects color={service.color} formuleSlug={service.slug} />
 
-      {/* Titre de section configurateur — eyebrow + titre + sous-texte + chevron */}
+      {/* Titre de section configurateur */}
       <FadeUp delay={0.35}>
         <div id="configurateur" className="flex flex-col items-center gap-2 pt-12 pb-3 text-center scroll-mt-24">
           <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-white/55 mb-1">
-            Estimez votre projet
+            {t("estimateProject")}
           </span>
           <h2 className="text-xl font-bold tracking-tight text-white">
-            Configurez la formule {service.nom}
+            {t("configurePlan", { nom: service.nom })}
           </h2>
           <p className="text-sm text-white/55 max-w-md">
-            Estimation gratuite, aucun paiement à cette étape. Vous recevez votre devis détaillé par email.
+            {t("freeEstimation")}
           </p>
           <ChevronDown size={20} strokeWidth={1.5} className="animate-bounce text-white/30 mt-4" />
         </div>
       </FadeUp>
 
-      {/* ── SECTION CONFIGURATEUR — pleine largeur ── */}
+      {/* ── SECTION CONFIGURATEUR ── */}
       <div className="rounded-2xl border border-white/8 bg-white/2 overflow-hidden mb-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-white/6">
 
               {/* Ce qui est inclus */}
               <div className="p-4 sm:p-5">
                 <h2 className="text-[10px] font-bold uppercase tracking-[0.2em] sm:tracking-[0.35em] text-white mb-4">
-                  Ce qui est inclus
+                  {t("includedSection")}
                 </h2>
                 <StaggerList>
                   <ul className="space-y-0">
@@ -712,6 +713,8 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                           item={item}
                           color={service.color}
                           onOpenInfo={() => setInfoDialogInclusTitre(item.titre)}
+                          moreInfoLabel={t("moreInfo")}
+                          detailOfLabel={t("detailOf", { titre: item.titre })}
                         />
                       </StaggerItem>
                     ))}
@@ -722,10 +725,10 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
               {/* Options supplémentaires */}
               <div className="p-4 sm:p-5">
                 <h2 className="text-[10px] font-bold uppercase tracking-[0.2em] sm:tracking-[0.35em] text-white mb-1">
-                  Options supplémentaires
+                  {t("extraOptions")}
                 </h2>
                 <p className="text-[11px] text-white/65 mb-4">
-                  Cochez pour personnaliser votre devis.
+                  {t("checkToCustomize")}
                 </p>
                 <StaggerList>
                   <div className="space-y-1">
@@ -738,7 +741,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                         subChoices[addon.id]
                       )
                       const priceLabel = addon.prix === null
-                        ? "Devis"
+                        ? t("quoteLabel")
                         : addonIsDevis
                           ? `${addonPrix} €+`
                           : `+${addonPrix} €`
@@ -779,8 +782,8 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                                     type="button"
                                     onClick={(e) => openInfoDialog(addon.id, e)}
                                     className="p-0.5 rounded text-white/70 hover:text-accent transition-colors cursor-pointer"
-                                    title="En savoir plus"
-                                    aria-label={`Plus d'infos sur ${addon.label}`}
+                                    title={t("moreInfo")}
+                                    aria-label={t("moreInfoOn", { label: addon.label })}
                                   >
                                     <Info className="w-3.5 h-3.5" />
                                   </button>
@@ -812,6 +815,9 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                                         selectedChoiceId={subChoices[addon.id]?.[sub.id]}
                                         onSelect={(choiceId) => setSubChoice(addon.id, sub.id, choiceId)}
                                         showError={submitAttempted && selected}
+                                        selectOptionLabel={t("selectOption", { label: sub.label.toLowerCase() })}
+                                        includedLabel={t("includedLabel")}
+                                        quoteLowerLabel={t("quoteLower")}
                                       />
                                     ))}
                                   </div>
@@ -835,12 +841,12 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                     {showAllAddons ? (
                       <>
                         <Minus className="w-3.5 h-3.5" />
-                        Voir moins
+                        {t("showLess")}
                       </>
                     ) : (
                       <>
                         <Plus className="w-3.5 h-3.5" />
-                        Voir plus ({hiddenCount} option{hiddenCount > 1 ? "s" : ""})
+                        {t("showMore", { count: hiddenCount })}
                       </>
                     )}
                   </button>
@@ -849,25 +855,25 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
             </div>
         </div>
 
-        {/* ── DEVIS HORIZONTAL — récap à gauche, encart prix + CTA à droite, en pleine largeur ── */}
+        {/* ── DEVIS HORIZONTAL ── */}
         <FadeUp delay={0.1}>
           <div className="rounded-2xl border border-white/[0.07] bg-white/2.5 p-5 sm:p-6 mb-8">
             <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_340px] gap-5 lg:gap-8 items-stretch">
 
-              {/* Récap — formule + lignes (Base + addons sélectionnés) */}
+              {/* Récap */}
               <div className="flex flex-col gap-3 min-w-0">
                 <div>
                   <p className="text-[10px] font-bold text-white/50 uppercase tracking-[0.18em] mb-1">
-                    Votre devis estimé
+                    {t("yourEstimatedQuote")}
                   </p>
                   <p className="text-sm font-semibold" style={{ color: service.color }}>
-                    Formule {service.nom}
+                    {t("planLabel", { nom: service.nom })}
                   </p>
                 </div>
 
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-white/55">Base</span>
+                    <span className="text-white/55">{t("base")}</span>
                     <span className="font-medium text-white">{service.prixBase} €</span>
                   </div>
                   <AnimatePresence>
@@ -887,7 +893,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                             <span className="text-white/55 truncate flex-1">+ {addon.label}</span>
                             <span className={`font-medium shrink-0 ${incomplete ? "text-red-400" : "text-white/80"}`}>
                               {addon.prix === null
-                                ? "Devis"
+                                ? t("quoteLabel")
                                 : incomplete
                                   ? "—"
                                   : isDevis
@@ -903,11 +909,11 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
 
                 <div className="flex items-center gap-2 text-xs text-white/55 mt-auto pt-2">
                   <Clock className="w-3 h-3 shrink-0" />
-                  Délai : <span className="text-white/85">{service.delai}</span>
+                  {t("delay")}<span className="text-white/85">{service.delai}</span>
                 </div>
               </div>
 
-              {/* Action — encart prix masqué + CTA + footnote */}
+              {/* Action */}
               <div className="flex flex-col gap-3">
                 <div
                   className="rounded-xl p-4"
@@ -917,7 +923,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                   }}
                 >
                   <div className="flex items-baseline justify-between gap-3">
-                    <span className="text-sm font-semibold text-white">À partir de</span>
+                    <span className="text-sm font-semibold text-white">{t("startingAt")}</span>
                     <span className="font-black tracking-[-0.03em] text-[1.75rem] leading-none text-white">
                       {service.prixBase}{" "}
                       <span className="text-[1.1rem]" style={{ color: service.color }}>
@@ -926,7 +932,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                     </span>
                   </div>
                   <p className="text-[11px] text-white/55 mt-1.5">
-                    Votre estimation détaillée s&apos;affiche après l&apos;envoi
+                    {t("detailedEstimationAfter")}
                   </p>
                 </div>
 
@@ -935,8 +941,8 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                     <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
                     <span>
                       {incompleteAddonIds.size === 1
-                        ? "Une option attend votre sélection ci-dessus."
-                        : `${incompleteAddonIds.size} options attendent votre sélection ci-dessus.`}
+                        ? t("oneOptionWaiting")
+                        : t("optionsWaiting", { count: incompleteAddonIds.size })}
                     </span>
                   </div>
                 )}
@@ -952,11 +958,11 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
                   style={{ background: "var(--accent)", color: "var(--background)" }}
                 >
                   <Mail className="w-4 h-4" />
-                  Voir mon estimation
+                  {t("seeMyEstimation")}
                 </button>
 
                 <p className="text-[11px] text-white/55 text-center leading-relaxed">
-                  Réponse sous 24h · Aucun engagement, aucun paiement à cette étape
+                  {t("responseTime")}
                 </p>
               </div>
 
@@ -964,10 +970,10 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
           </div>
         </FadeUp>
 
-      {/* ── CTA FINAL — seul gros bloc CTA après le configurateur ── */}
+      {/* ── CTA FINAL ── */}
       <ServiceCtaFinal color={service.color} />
 
-      {/* ── BOOKING — Calendrier custom branché sur Google Calendar ── */}
+      {/* ── BOOKING ── */}
       <BookingCalendar
         accentColor={service.color}
         source={service.slug as "essentiel" | "standard" | "premium"}
@@ -986,7 +992,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
         open={infoDialogInclusTitre !== null}
         onOpenChange={(open) => !open && setInfoDialogInclusTitre(null)}
         title={infoDialogInclus?.titre ?? ""}
-        priceLabel="Inclus dans la formule"
+        priceLabel={t("includedInPlan")}
         content={infoDialogInclus?.detail}
       />
 
@@ -1002,7 +1008,7 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
         bookingAnchor="booking"
       />
 
-      {/* ── FAB "Réserver un appel" — visible en permanence pendant le scroll ── */}
+      {/* ── FAB "Réserver un appel" ── */}
       <BookingFloatingCta color={service.color} />
     </div>
   )

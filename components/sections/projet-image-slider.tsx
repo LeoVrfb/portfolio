@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 
 interface ProjetImageSliderProps {
@@ -19,6 +20,7 @@ interface ProjetImageSliderProps {
 }
 
 export function ProjetImageSlider({ images, alt, wide = false, aspectRatio = "aspect-video" }: ProjetImageSliderProps) {
+  const t = useTranslations("booking.imageSlider")
   const count = images.length
   if (count === 0) return null
 
@@ -120,7 +122,7 @@ export function ProjetImageSlider({ images, alt, wide = false, aspectRatio = "as
           <button
             onClick={goPrev}
             className={cn(arrowClass, "-left-6 lg:-left-11")}
-            aria-label="Image précédente"
+            aria-label={t("prev")}
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
@@ -152,7 +154,7 @@ export function ProjetImageSlider({ images, alt, wide = false, aspectRatio = "as
                 <div key={i} className="shrink-0 w-full h-full relative">
                   <Image
                     src={src}
-                    alt={`${alt} — vue ${i}`}
+                    alt={`${alt} — ${t("view", { n: i })}`}
                     fill
                     className="object-cover select-none"
                     quality={90}
@@ -163,7 +165,7 @@ export function ProjetImageSlider({ images, alt, wide = false, aspectRatio = "as
                 <Image
                   key={i}
                   src={src}
-                  alt={`${alt} — vue ${i}`}
+                  alt={`${alt} — ${t("view", { n: i })}`}
                   width={540}
                   height={960}
                   className="shrink-0 w-full h-auto select-none"
@@ -180,7 +182,7 @@ export function ProjetImageSlider({ images, alt, wide = false, aspectRatio = "as
           <button
             onClick={goNext}
             className={cn(arrowClass, "-right-6 lg:-right-11")}
-            aria-label="Image suivante"
+            aria-label={t("next")}
           >
             <ChevronRight className="w-4 h-4" />
           </button>
@@ -205,7 +207,7 @@ export function ProjetImageSlider({ images, alt, wide = false, aspectRatio = "as
                   ? "bg-foreground/70 w-4"
                   : "w-1.5 bg-foreground/20 hover:bg-foreground/40"
               )}
-              aria-label={`Image ${i + 1}`}
+              aria-label={t("dot", { n: i + 1 })}
             />
           ))}
         </div>

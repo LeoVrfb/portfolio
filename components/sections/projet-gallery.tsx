@@ -2,10 +2,12 @@
 
 import { useState, useRef, useLayoutEffect, useCallback } from "react"
 import Image from "next/image"
+import { useTranslations } from "next-intl"
 
 const GAP = 12
 
 export function ProjetGallery({ images }: { images: string[] }) {
+  const t = useTranslations("booking.imageSlider")
   const containerRef = useRef<HTMLDivElement>(null)
   const [width, setWidth] = useState(320)
   const [pos, setPos] = useState(0)
@@ -137,7 +139,7 @@ export function ProjetGallery({ images }: { images: string[] }) {
             >
               <Image
                 src={src}
-                alt={`Vue ${i + 1}`}
+                alt={t("dot", { n: i + 1 })}
                 fill
                 className="object-cover pointer-events-none"
                 sizes="380px"

@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Dialog } from "@base-ui/react/dialog"
 import { X, Check, Send, Calendar, Sparkles } from "lucide-react"
 import { toast } from "sonner"
+import { useTranslations } from "next-intl"
 
 type QuoteEmailDialogProps = {
   open: boolean
@@ -38,16 +39,15 @@ export function QuoteEmailDialog({
   addonsLabels,
   bookingAnchor = "booking",
 }: QuoteEmailDialogProps) {
+  const t = useTranslations("serviceQuoteDialog")
   const [data, setData] = useState<FormData>(initialForm)
   const [isPending, setIsPending] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
   const isValid = data.nom.trim() && data.email.trim()
 
-  // Reset au close (sans useEffect, via callback onOpenChange)
   const handleOpenChange = (next: boolean) => {
     if (!next) {
-      // Délai pour laisser l'animation de fermeture tourner avant le reset
       setTimeout(() => {
         setData(initialForm)
         setSubmitted(false)
@@ -73,7 +73,7 @@ export function QuoteEmailDialog({
           email: data.email,
           telephone: data.telephone || undefined,
           formule: formuleNom,
-          message: data.message || `Demande d'estimation pour la formule ${formuleNom}.`,
+          message: data.message || t("defaultMessage", { nom: formuleNom }),
           addons: addonsLabels,
           totalEstime,
         }),
@@ -82,10 +82,10 @@ export function QuoteEmailDialog({
       if (result.success) {
         setSubmitted(true)
       } else {
-        toast.error(result.message ?? "Une erreur est survenue.")
+        toast.error(result.message ?? t("serverError"))
       }
     } catch {
-      toast.error("Erreur réseau. Réessayez dans quelques instants.")
+      toast.error(t("networkError"))
     } finally {
       setIsPending(false)
     }
@@ -112,10 +112,10 @@ export function QuoteEmailDialog({
               className="text-lg sm:text-xl font-black leading-tight"
               style={{ color: submitted ? formuleColor : "var(--accent)" }}
             >
-              {submitted ? "C'est parti !" : "Voir mon estimation"}
+              {submitted ? t("titleSuccess") : t("titleForm")}
             </Dialog.Title>
             <Dialog.Close
-              aria-label="Fermer"
+              aria-label={t("close")}
               className="shrink-0 -mt-1 -mr-1 p-1.5 rounded-lg text-white/50 hover:text-white hover:bg-white/8 transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
@@ -126,18 +126,17 @@ export function QuoteEmailDialog({
           {!submitted && (
             <>
               <Dialog.Description className="text-sm text-white/75 leading-relaxed mb-5">
-                Laissez-moi vos coordonnées et je vous envoie votre estimation détaillée par email,
-                ainsi que les prochaines étapes pour démarrer.
+                {t("descriptionForm")}
               </Dialog.Description>
 
               <form onSubmit={handleSubmit} className="space-y-3.5">
                 <div>
                   <label className="text-[11px] font-semibold text-white/60 uppercase tracking-[0.18em] mb-1.5 block">
-                    Nom et prénom *
+                    {t("nameLabel")}
                   </label>
                   <input
                     type="text"
-                    placeholder="Votre nom"
+                    placeholder={t("namePlaceholder")}
                     value={data.nom}
                     onChange={(e) => setData((d) => ({ ...d, nom: e.target.value }))}
                     required
@@ -147,11 +146,11 @@ export function QuoteEmailDialog({
 
                 <div>
                   <label className="text-[11px] font-semibold text-white/60 uppercase tracking-[0.18em] mb-1.5 block">
-                    Email *
+                    {t("emailLabel")}
                   </label>
                   <input
                     type="email"
-                    placeholder="votre@email.com"
+                    placeholder={t("emailPlaceholder")}
                     value={data.email}
                     onChange={(e) => setData((d) => ({ ...d, email: e.target.value }))}
                     required
@@ -161,11 +160,14 @@ export function QuoteEmailDialog({
 
                 <div>
                   <label className="text-[11px] font-semibold text-white/60 uppercase tracking-[0.18em] mb-1.5 block">
-                    Téléphone <span className="text-white/35 normal-case tracking-normal">(facultatif)</span>
+                    {t("phoneLabel")}{" "}
+                    <span className="text-white/35 normal-case tracking-normal">
+                      {t("phoneOptional")}
+                    </span>
                   </label>
                   <input
                     type="tel"
-                    placeholder="06 XX XX XX XX"
+                    placeholder={t("phonePlaceholder")}
                     value={data.telephone}
                     onChange={(e) => setData((d) => ({ ...d, telephone: e.target.value }))}
                     className={inputClass}
@@ -174,10 +176,13 @@ export function QuoteEmailDialog({
 
                 <div>
                   <label className="text-[11px] font-semibold text-white/60 uppercase tracking-[0.18em] mb-1.5 block">
-                    Un mot sur votre projet <span className="text-white/35 normal-case tracking-normal">(facultatif)</span>
+                    {t("projectLabel")}{" "}
+                    <span className="text-white/35 normal-case tracking-normal">
+                      {t("projectOptional")}
+                    </span>
                   </label>
                   <textarea
-                    placeholder="Une précision, un délai, une question..."
+                    placeholder={t("projectPlaceholder")}
                     value={data.message}
                     onChange={(e) => setData((d) => ({ ...d, message: e.target.value }))}
                     rows={3}
@@ -192,17 +197,17 @@ export function QuoteEmailDialog({
                   style={{ background: "var(--accent)", color: "var(--background)" }}
                 >
                   {isPending ? (
-                    "Envoi en cours..."
+                    t("submitPending")
                   ) : (
                     <>
                       <Send className="w-4 h-4" />
-                      Recevoir mon estimation
+                      {t("submitLabel")}
                     </>
                   )}
                 </button>
 
                 <p className="text-[11px] text-white/45 text-center leading-relaxed pt-1">
-                  Réponse sous 24h · Aucun engagement, aucun paiement
+                  {t("responseTime")}
                 </p>
               </form>
             </>
@@ -219,8 +224,7 @@ export function QuoteEmailDialog({
                   <Check className="w-4 h-4" style={{ color: formuleColor }} />
                 </div>
                 <div className="text-sm text-white/85 leading-relaxed">
-                  Votre estimation détaillée vient de partir sur{" "}
-                  <span className="text-white font-semibold">{data.email}</span>. Pensez à vérifier vos spams.
+                  {t("emailSent", { email: data.email })}
                 </div>
               </div>
 
@@ -235,11 +239,11 @@ export function QuoteEmailDialog({
                 <div className="flex items-center gap-2 mb-2">
                   <Sparkles className="w-3.5 h-3.5" style={{ color: formuleColor }} />
                   <span className="text-[10px] font-bold uppercase tracking-[0.25em]" style={{ color: formuleColor }}>
-                    Votre estimation
+                    {t("yourEstimation")}
                   </span>
                 </div>
                 <div className="flex items-baseline justify-between gap-3">
-                  <span className="text-sm text-white/70">Total pour la formule {formuleNom}</span>
+                  <span className="text-sm text-white/70">{t("totalForPlan", { nom: formuleNom })}</span>
                   <span className="font-black tracking-[-0.03em] text-3xl leading-none text-white">
                     {total}{" "}
                     <span className="text-xl" style={{ color: formuleColor }}>
@@ -248,15 +252,18 @@ export function QuoteEmailDialog({
                   </span>
                 </div>
                 <p className="text-[11px] text-white/55 mt-2.5">
-                  Hors taxes · Paiement en 2× (acompte + livraison)
+                  {t("taxes")}
                 </p>
               </div>
 
-              {/* CTA Calendly */}
+              {/* CTA booking */}
               <div className="space-y-3">
                 <p className="text-sm text-white/80 leading-relaxed text-center">
-                  Envie d'en discuter <span className="text-white font-semibold">tout de suite</span> ?<br />
-                  Bookez un appel découverte de 15 min, c'est offert.
+                  {t.rich("discussNow", {
+                    bold: (chunks) => <span className="text-white font-semibold">{chunks}</span>,
+                  })}
+                  <br />
+                  {t("bookCallOffer")}
                 </p>
 
                 <button
@@ -265,11 +272,11 @@ export function QuoteEmailDialog({
                   style={{ background: formuleColor, color: "var(--background)" }}
                 >
                   <Calendar className="w-4 h-4" />
-                  Réserver mon appel découverte
+                  {t("bookMyCall")}
                 </button>
 
                 <Dialog.Close className="w-full text-center py-2.5 text-xs font-semibold text-white/55 hover:text-white transition-colors cursor-pointer">
-                  Plus tard, fermer la fenêtre
+                  {t("closeLater")}
                 </Dialog.Close>
               </div>
 

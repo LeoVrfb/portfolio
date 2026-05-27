@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "motion/react"
+import { useTranslations } from "next-intl"
 import { HeroNeonAnim } from "@/components/sections/hero-neon-anim"
 import { signalIntroReady } from "@/lib/intro-signal"
 
@@ -81,6 +82,7 @@ const ELECTRIC_CSS = `
 
 export function IntroOverlay() {
   const [visible, setVisible] = useState(true)
+  const t = useTranslations("intro")
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -137,7 +139,7 @@ export function IntroOverlay() {
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5, duration: 0.5 }}
           >
-            Cliquer pour passer
+            {t("skipHint")}
           </motion.p>
         </motion.div>
       )}

@@ -1,10 +1,13 @@
 "use client"
 
-import Link from "next/link"
 import { ArrowRight } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { Link } from "@/i18n/navigation"
 import { BlurFade } from "@/components/animations/blur-fade"
 
 export function ServicesSection() {
+  const t = useTranslations("home.services")
+
   return (
     <section className="pt-16 pb-28 bg-background">
       <div className="layout-container">
@@ -14,20 +17,20 @@ export function ServicesSection() {
           <BlurFade delay={0.1} direction="up" inView className="h-full">
             <div className="lg:pr-16 pb-12 lg:pb-0 h-full flex flex-col">
               <p className="text-xs uppercase tracking-[0.45em] text-accent font-semibold mb-4">
-                Sites web sur mesure
+                {t("web.eyebrow")}
               </p>
               <h2 className="text-3xl md:text-4xl font-black text-white tracking-tighter leading-tight mb-5">
-                Vous avez<br />un projet web ?
+                {t("web.titleLine1")}<br />{t("web.titleLine2")}
               </h2>
               <p className="text-base text-foreground/55 leading-relaxed max-w-md flex-1">
-                Artisan, coach, artiste, restaurant, entrepreneur — peu importe votre activité. Je crée des sites sur mesure, performants et faciles à trouver sur Google. Pas de template, pas de WordPress. Du code propre, livré rapidement.
+                {t("web.description")}
               </p>
               <div className="mt-8">
                 <Link
                   href="/services"
                   className="group inline-flex items-center gap-2 px-6 py-3.5 rounded-full border border-accent/40 bg-accent/8 text-sm font-bold text-accent hover:bg-accent/15 hover:border-accent/60 transition-all cursor-pointer"
                 >
-                  Voir les formules & tarifs
+                  {t("web.cta")}
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
@@ -42,13 +45,13 @@ export function ServicesSection() {
           <BlurFade delay={0.2} direction="up" inView className="h-full">
             <div className="lg:pl-16 h-full flex flex-col">
               <p className="text-xs uppercase tracking-[0.45em] font-semibold mb-4" style={{ color: "var(--lavender)" }}>
-                Collaboration
+                {t("collab.eyebrow")}
               </p>
               <h2 className="text-3xl md:text-4xl font-black text-white tracking-tighter leading-tight mb-5">
-                Mon profil<br />vous intéresse ?
+                {t("collab.titleLine1")}<br />{t("collab.titleLine2")}
               </h2>
               <p className="text-base text-foreground/55 leading-relaxed max-w-md flex-1">
-                Je suis ouvert aux opportunités — en CDI dans une équipe tech ambitieuse, ou en mission freelance pour renforcer vos projets React & Next.js. Basé en Île-de-France, disponible en remote.
+                {t("collab.description")}
               </p>
               <div className="mt-8">
                 <Link
@@ -60,7 +63,7 @@ export function ServicesSection() {
                     color: "var(--lavender)",
                   }}
                 >
-                  Me contacter
+                  {t("collab.cta")}
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>

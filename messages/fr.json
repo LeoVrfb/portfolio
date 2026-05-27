@@ -1,0 +1,4101 @@
+{
+  "common": {
+    "loading": "Chargement…",
+    "error": "Une erreur est survenue",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "viewMore": "Voir plus",
+    "close": "Fermer"
+  },
+  "nav": {
+    "home": "Accueil",
+    "projects": "Projets",
+    "services": "Services",
+    "about": "À propos",
+    "contact": "Contact",
+    "menuOpen": "Ouvrir le menu",
+    "menuClose": "Fermer le menu"
+  },
+  "localeSwitcher": {
+    "label": "Langue",
+    "fr": "FR",
+    "en": "EN",
+    "switchToFr": "Passer en français",
+    "switchToEn": "Switch to English"
+  },
+  "footer": {
+    "tagline": "Développeur front-end · Paris",
+    "copyright": "© {year} Léo Hengebaert",
+    "stack": "Next.js · Vercel",
+    "socials": {
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram",
+      "github": "GitHub"
+    }
+  },
+  "metadata": {
+    "default": {
+      "title": "Léo Hengebaert — Développeur Front-End",
+      "titleTemplate": "%s — Léo Hengebaert",
+      "description": "Développeur front-end chez Artefact, spécialisé React & Next.js. Je crée aussi des sites web sur mesure pour entreprises et particuliers."
+    }
+  },
+  "intro": {
+    "skipHint": "Cliquer pour passer",
+    "card": {
+      "name": "Léo Hengebaert",
+      "role": "Développeur front-end"
+    }
+  },
+  "services": {
+    "meta": {
+      "title": "Services & Tarifs",
+      "description": "3 formules claires pour la création de votre site web : Essentiel à 590€, Standard à 990€, Premium à 1 890€. Next.js professionnel pour artisans, PME et artistes."
+    },
+    "eyebrow": "Tarifs",
+    "title": "3 formules claires.",
+    "titleAccent": "0 mauvaise surprise.",
+    "description": "Site entièrement codé, jamais généré par un outil no-code comme Wix ou WordPress. Pas d'abonnement à vie, pas de modèle interchangeable.",
+    "formules": {
+      "popularBadge": "★ La plus choisie",
+      "configureCta": "Configurer cette formule",
+      "essentiel": {
+        "nom": "Essentiel",
+        "prix": "590 €",
+        "accroche": "Un site simple et propre, fait par un pro, en quelques jours.",
+        "delai": "5 jours ouvrés",
+        "inclus": [
+          "Une page, plusieurs sections",
+          "Design moderne, simple et responsive",
+          "Formulaire de contact",
+          "SEO de base",
+          "Galerie 10 images optimisées",
+          "Mise en ligne et configuration du domaine",
+          "2h de retouches incluses"
+        ],
+        "nonInclus": [
+          "Pages séparées",
+          "Design 100% personnalisé",
+          "Rédaction des textes",
+          "Google Analytics",
+          "Formation à la gestion du site"
+        ]
+      },
+      "standard": {
+        "nom": "Standard",
+        "prix": "990 €",
+        "accroche": "Un vrai site complet, à votre image, pensé pour convaincre vos visiteurs.",
+        "delai": "10 jours ouvrés",
+        "inclus": [
+          "Les fondamentaux de l'Essentiel",
+          "5 à 7 pages séparées",
+          "Design personnalisé",
+          "Rédaction des textes",
+          "SEO+",
+          "Google Analytics",
+          "Formulaire de devis personnalisé",
+          "Formation 30 min en visio",
+          "5h de retouches incluses"
+        ],
+        "nonInclus": [
+          "Design 100% sur mesure",
+          "Pack animations",
+          "Pack performance",
+          "CMS Headless Sanity",
+          "Multilingue FR + EN",
+          "SEO Pro"
+        ]
+      },
+      "premium": {
+        "nom": "Premium",
+        "prix": "1 890 €",
+        "accroche": "Un site sur mesure, design 100% unique, autonomie totale sur vos contenus.",
+        "delai": "3 semaines",
+        "inclus": [
+          "Les fondamentaux du Standard",
+          "Jusqu'à 10 pages",
+          "Design 100% sur mesure",
+          "Pack animations inclus",
+          "SEO Pro",
+          "Pack performance inclus",
+          "CMS Headless Sanity inclus",
+          "Multilingue FR + EN inclus",
+          "10h de retouches + 1 mois de support post-livraison"
+        ],
+        "nonInclus": []
+      }
+    },
+    "configureCard": {
+      "eyebrow": "Vous savez ce qu'il vous faut ?",
+      "title": "Configurez votre projet, recevez votre devis",
+      "description": "Choisissez votre formule, cochez vos options, vous recevez une estimation détaillée par email. Aucun paiement à cette étape.",
+      "cta": "Configurer la formule Standard"
+    },
+    "faqHint": "Questions fréquentes",
+    "faq": {
+      "title": "Questions fréquentes",
+      "q1": {
+        "question": "Pourquoi pas un outil no-code comme Wix, Squarespace ou Webflow ?",
+        "p1": "Avec un outil no-code, vous démarrez vite. Mais vous perdez vite le contrôle : design contraint par des modèles génériques (qu'on retrouve sur des milliers d'autres sites), abonnement mensuel à vie, performance et référencement limités, zéro maîtrise sur ce qui se passe sous le capot.",
+        "p2": "Ce que je propose, c'est <accent>un site codé de A à Z, qui vous appartient à 100 %</accent>. Vous maîtrisez tous les aspects : design unique adapté à votre activité, référencement, performance, fluidité, rapidité, et le choix des techniques utilisées pour faire évoluer votre site dans le temps."
+      },
+      "q2": {
+        "question": "Combien de temps pour avoir mon site ?",
+        "p1": "<accent>5 jours ouvrés</accent> pour l'Essentiel, <accent>10 jours</accent> pour le Standard, <accent>3 semaines</accent> pour le Premium. Le délai démarre dès réception de vos éléments (textes, photos, logo)."
+      },
+      "q3": {
+        "question": "Vous faites des maquettes avant de coder ?",
+        "p1": "Aujourd'hui, dans la majorité des cas : <accent>non, et c'est volontaire</accent>. On valide une direction visuelle ensemble (palette, typo, ambiance, références que vous aimez et que vous n'aimez pas), puis je passe directement au code.",
+        "p2": "Vous voyez votre site progresser <accent>en vrai, pas une maquette figée</accent>. Ça va plus vite, le résultat est forcément fidèle au final, et toutes les retouches passent par les heures incluses dans votre formule.",
+        "p3": "Sur les projets Premium les plus ambitieux, je peux proposer des mini-maquettes ou un travail en binôme avec une designer partenaire. C'est discuté au cas par cas."
+      },
+      "q4": {
+        "question": "Comment se passe la collaboration concrètement ?",
+        "p1": "On commence par un <accent>appel visio gratuit de 15 min</accent> pour comprendre votre activité et votre univers. Si on travaille ensemble, je vous envoie un brief visuel à remplir (couleurs, références, ambiance), puis une <accent>moodboard à valider par mail</accent>.",
+        "p2": "Une fois la direction scellée, je code la première page et vous l'envoie en preview. Vous validez ce premier jet, je code le reste dans la même direction. Les ajustements passent par les heures de retouches incluses dans votre formule."
+      },
+      "q5": {
+        "question": "Puis-je voir des exemples de sites que vous avez faits ?",
+        "p1": "Oui : une sélection est sur la page <projets>projets</projets>, et 3 réalisations sont mises en avant directement sur chaque page formule.",
+        "p2": "Du e-commerce d'artiste qui vend à l'international jusqu'à des applications déployées sur des centaines de tablettes en stations TotalEnergies. Chaque projet a sa propre identité."
+      },
+      "q6": {
+        "question": "Et si je veux une option qui n'est pas dans ma formule ?",
+        "p1": "Chaque formule a un périmètre clair. Si vous voulez une option qui n'y figure pas (par exemple un design 100 % sur mesure en Essentiel), il faut passer à la formule supérieure. <accent>Pas de mélange à la carte</accent> hors des options listées : ça garde les délais courts et les prix clairs."
+      },
+      "q7": {
+        "question": "Et si je veux modifier mon site après livraison ?",
+        "p1": "<accent>2h de retouches</accent> incluses en Essentiel, <accent>5h</accent> en Standard, <accent>10h</accent> en Premium. Ces heures couvrent les ajustements de contenu, les petites retouches visuelles, les variantes de couleur sur tel bloc, etc.",
+        "p2": "Au-delà : <accent>60 €/h</accent> avec devis avant intervention. Ou maintenance mensuelle à <accent>50 €/mois</accent> (1h de modifs incluse + suivi technique)."
+      },
+      "q8": {
+        "question": "Je n'ai pas de nom de domaine. Que faire ?",
+        "p1": "Je vous accompagne pour acheter votre domaine en votre nom. Il vous appartient, vous gardez le contrôle. Le coût (~10 à 15 €/an) reste à votre charge."
+      }
+    },
+    "finalCta": {
+      "question": "Pas sûr de quelle formule choisir ?",
+      "subText": "15 min sans engagement, en visio ou par téléphone",
+      "emailFallback": "Ou m'écrire un mail"
+    }
+  },
+  "booking": {
+    "modal": {
+      "badge": "Appel découverte · 15 min · offert",
+      "googleMeet": "Google Meet",
+      "orPhone": "ou par téléphone",
+      "availability": "Lun–Ven · 12h–20h",
+      "close": "Fermer"
+    },
+    "floatingCta": {
+      "ariaLabel": "Réserver un appel découverte",
+      "long": "Réserver un appel",
+      "short": "Réserver"
+    },
+    "imageSlider": {
+      "prev": "Image précédente",
+      "next": "Image suivante",
+      "dot": "Image {n}",
+      "view": "vue {n}",
+      "slidePrev": "Slide précédent",
+      "slideNext": "Slide suivant"
+    },
+    "calendar": {
+      "sectionBadge": "Appel découverte · 15 min · offert",
+      "sectionTitle": "On en parle <accent>de vive voix</accent> ?",
+      "sectionDescription": "15 minutes pour comprendre votre projet, répondre à vos questions et voir si on peut travailler ensemble. Aucun engagement.",
+      "chooseDate": {
+        "title": "Choisissez une date",
+        "description": "Sélectionnez un jour dans le calendrier pour voir les créneaux disponibles."
+      },
+      "noSlots": {
+        "title": "Aucun créneau disponible",
+        "description": "Tout est pris ce jour-là. Choisissez une autre date dans le calendrier."
+      },
+      "loading": "Chargement des créneaux…",
+      "loadError": "Impossible de récupérer les disponibilités.",
+      "slotsCount": "{count, plural, =0 {Aucun créneau} one {# créneau} other {# créneaux}}",
+      "form": {
+        "stepBadge": "Confirmer le créneau",
+        "subtitle": "Appel découverte de 15 min, sans engagement.",
+        "nameLabel": "Votre nom",
+        "namePlaceholder": "Léo Martin",
+        "emailLabel": "Email",
+        "emailPlaceholder": "vous@exemple.com",
+        "emailHint": "L'invitation Google Calendar sera envoyée à cette adresse.",
+        "callTypeLabel": "Comment préférez-vous échanger ?",
+        "meetLabel": "Google Meet",
+        "meetHint": "Lien généré automatiquement",
+        "phoneLabel": "Téléphone",
+        "phoneHint": "Je vous appelle",
+        "phoneNumberLabel": "Votre numéro",
+        "phoneNumberPlaceholder": "06 12 34 56 78",
+        "messageLabel": "Message",
+        "messageOptional": "(optionnel)",
+        "messagePlaceholder": "Quelques mots sur votre projet pour gagner du temps…",
+        "submitting": "Réservation en cours…",
+        "submit": "Confirmer le rendez-vous",
+        "slotTakenError": "Ce créneau vient d'être pris.",
+        "bookingError": "Impossible de créer la réservation."
+      },
+      "confirmation": {
+        "title": "Rendez-vous confirmé",
+        "description": "Je vous attends le <bold>{date}</bold> à <bold>{time}</bold>.",
+        "meetInvite": "Google Meet — lien dans l'invitation",
+        "phoneCallback": "Je vous appelle au {phone}",
+        "emailNotice": "Vous allez recevoir l'invitation Google Calendar à <email>{email}</email> ainsi qu'un email de confirmation de ma part.",
+        "addToCalendar": "Ajouter à mon calendrier",
+        "close": "Fermer"
+      }
+    },
+    "card": {
+      "eyebrow": "Vous voulez d'abord discuter ?",
+      "title": "Réservez un appel gratuit de 15 minutes",
+      "description": "On fait connaissance, je comprends votre projet, et je vous dis exactement ce qui correspond à votre situation. Sans engagement.",
+      "cta": "Réserver un appel",
+      "availabilityNote": "Selon mes prochaines disponibilités"
+    },
+    "button": {
+      "label": "Réserver un appel 15 min"
+    },
+    "dialog": {
+      "title": "Réservons un appel",
+      "descriptionGeneric": "15 minutes pour faire connaissance et comprendre votre projet. Sans engagement, sans pression.",
+      "descriptionAdvice": "15 minutes pour vous orienter vers la formule qui colle à votre projet."
+    }
+  },
+  "projets": {
+    "meta": {
+      "title": "Projets",
+      "description": "Découvrez mes réalisations web : applications, sites vitrines et landing pages pour des clients comme BNP Paribas, TotalEnergies, Aéroports de Paris et des PME locales."
+    },
+    "eyebrow": "Réalisations",
+    "title": "Projets",
+    "titleAccent": "sélectionnés",
+    "description": "Une sélection de projets qui m'ont particulièrement marqué — réalisés en entreprise, en freelance ou pour moi-même. Applications, plateformes et sites web.",
+    "grid": {
+      "searchPlaceholder": "Rechercher un projet…",
+      "typeFilter": "Type",
+      "yearFilter": "Année",
+      "context": {
+        "agence": "Agence",
+        "freelance": "Freelance",
+        "perso": "Perso"
+      },
+      "inProgress": "En cours",
+      "showAll": "Tout afficher",
+      "reset": "Réinitialiser",
+      "noResults": "Aucun projet pour ces filtres.",
+      "resultsCount": "{count, plural, =0 {Aucun projet} one {# projet} other {# projets}}"
+    }
+  },
+  "aPropos": {
+    "meta": {
+      "title": "À propos",
+      "description": "Développeur front-end spécialisé React & Next.js, basé en Île-de-France. Découvrez mon parcours."
+    },
+    "eyebrow": "À propos",
+    "title": "Développeur front-end",
+    "titleAccent": "& créateur de sites.",
+    "stats": {
+      "experience": "ans d'expérience",
+      "projects": "projets livrés",
+      "companies": "entreprises (CDI)",
+      "clients": "clients"
+    },
+    "cards": {
+      "job": {
+        "eyebrow": "Mon métier",
+        "title": "Développeur Front-End",
+        "description": "La base de mon activité depuis 2022. J'ai travaillé en startup chez <qare>Qare</qare> (télémédecine), puis chez <artefact>Artefact</artefact>, l'un des plus gros cabinets de conseil européens en data et IA, d'abord côté agence puis côté conseil. Une expertise concrète des environnements pro exigeants."
+      },
+      "parallel": {
+        "eyebrow": "En parallèle",
+        "title": "Créateur de sites web",
+        "description": "L'autre partie de mon activité, par passion pour le développement et le design. J'aide PME, indépendants et particuliers à construire leur présence en ligne. Un business à moi, où je gère tout de A à Z et où je peux mettre ma patte."
+      }
+    },
+    "story": {
+      "eyebrow": "Mon histoire",
+      "title": "De la startup",
+      "titleAccent": "au cabinet de conseil.",
+      "workTogether": "Travailler ensemble",
+      "p1": "C'est chez <accent>Qare</accent> que j'ai fait mes débuts dans la tech. Acteur majeur de la télémédecine en France et en pleine croissance post-Covid, c'est là que j'ai découvert la méthodologie agile en startup, le travail aux côtés d'équipes produit (Product Owners, Product Managers, designers), et l'exigence de livrer des features concrètes itérées en continu sur un produit utilisé chaque jour par des milliers de patients.",
+      "p2": "J'ai ensuite rejoint <accent>Artefact</accent>. L'un des plus gros cabinets de conseil européens spécialisé en data et IA. Aujourd'hui valorisé à plus d'un milliard, c'est une véritable licorne française qui travaille avec les plus grandes enseignes mondiales. J'ai eu la chance d'intégrer ce monde.<br></br>J'ai d'abord rejoint <accent>Artefact 3000</accent>, l'agence de pub du groupe, dans son <lavender>studio créatif</lavender> — une liberté de création totale, où les idées fusent en permanence. Puis en 2025, je suis passé côté <lavender>cabinet de conseil</lavender>, dans un environnement plus structuré (consultants, data analysts, data engineers), pour explorer d'autres types de projets.",
+      "p3": "Grâce à Artefact, j'ai eu la chance de travailler avec des marques de premier plan : <argedis>TotalEnergies</argedis> (application déployée sur des centaines de tablettes en stations), <sweetime>Aéroports de Paris</sweetime> (jeu concours digital touchant des centaines de milliers de voyageurs), <bnp>BNP Paribas</bnp> (module e-learning IA générative déployé en interne), Robertet (parfumerie). Et au-delà de mes propres missions, j'ai pu voir d'autres projets ambitieux se construire autour de moi pour de très grandes marques, en apprenant énormément de cet écosystème stimulant.",
+      "p4": "Mon ADN : le <bold>front-end</bold>. Même si aujourd'hui je tends de plus en plus vers le full-stack. Ce qui m'anime avant tout, c'est l'interface : le rendu visuel, l'expérience utilisateur, la qualité perçue.",
+      "p5": "En parallèle de mon poste, j'accompagne aussi <bold>PME, indépendants et particuliers</bold> dans la création de leur site web. Une activité que j'ai créée par passion pour le code et le design, et où je peux gérer chaque projet de A à Z, sans intermédiaire. J'ai notamment créé <bald>Bald</bald>, un site e-commerce sur mesure pour un artiste peintre qui vend à l'international. Et d'autres sont en route.",
+      "p6": "Ce qui me motive au quotidien : trouver des solutions techniques propres, imaginer des interfaces uniques, aller chercher la qualité (le clean code, les bonnes pratiques, le détail design). Que ce soit pour une grande enseigne ou un client freelance, mon objectif est le même : livrer un produit qui dépasse les attentes, et que la confiance accordée soit toujours bien placée."
+    },
+    "experience": {
+      "eyebrow": "Parcours",
+      "title": "Expérience professionnelle",
+      "artefact": {
+        "role": "Développeur Full-Stack",
+        "period": "2025 – Aujourd'hui",
+        "type": "CDI · Cabinet de conseil",
+        "description": "Passage côté cabinet de conseil pour explorer d'autres types de projets et intégrer le monde des consultants, data analysts et data engineers. Je couvre désormais tout le périmètre full-stack via Next.js, en collaboration avec les équipes du studio créatif."
+      },
+      "artefact3000": {
+        "role": "Développeur Front-End",
+        "period": "2024 – 2025",
+        "type": "CDI · Studio créatif (agence)",
+        "description": "Studio créatif niché dans Artefact 3000 (l'agence de pub du groupe Artefact). Liberté de création totale, projets web exigeants pour de grandes marques : TotalEnergies (Argedis), Aéroports de Paris (Extime), Robertet, BNP Paribas. Applications tablettes, jeux concours à grande échelle, modules e-learning interactifs."
+      },
+      "qare": {
+        "role": "Développeur Front-End",
+        "period": "2022 – 2023",
+        "type": "CDI · Startup télémédecine",
+        "description": "Mes débuts dans la tech. Acteur majeur de la télémédecine en France, en pleine croissance post-Covid. C'est là que j'ai découvert la méthodologie agile en startup, le travail avec des équipes produit (Product Owners, Product Managers), et l'exigence de livrer des features concrètes itérées en continu."
+      }
+    },
+    "skills": {
+      "title": "Stack technique",
+      "description": "Les outils que j'utilise au quotidien, regroupés par usage.",
+      "categories": {
+        "framework": "Framework",
+        "languages": "Langages",
+        "styling": "Styling, UI & Design system",
+        "animations": "Animations & Canvas",
+        "forms": "Formulaires",
+        "state": "State management",
+        "database": "Database & API",
+        "auth": "Authentification",
+        "i18n": "Internationalisation",
+        "payment": "Paiement",
+        "tests": "Tests",
+        "tooling": "Outils & Déploiement",
+        "methodology": "Méthodologie"
+      }
+    },
+    "education": {
+      "eyebrow": "Formation",
+      "degree": "<bold>Web design</bold> au CEFII",
+      "school": "Centre d'Étude et de Formation en Informatique et Internet · <strong>Diplôme RNCP niveau 5</strong>"
+    }
+  },
+  "contact": {
+    "meta": {
+      "title": "Contact",
+      "description": "Discutons de votre projet web ou d'une collaboration. Je réponds sous 24h."
+    },
+    "eyebrow": "Prenons contact",
+    "title": "Parlons de votre",
+    "titleAccent": "projet",
+    "description": "Une idée, un site à refaire, une mission React/Next.js ? Décrivez-moi votre besoin, je reviens vers vous sous 24h.",
+    "backToConfigurator": "Revenir au configurateur",
+    "form": {
+      "selectedPlan": "Formule sélectionnée",
+      "estimatedQuote": "Estimation",
+      "selectedOptions": "{count, plural, =0 {Aucune option} one {# option sélectionnée} other {# options sélectionnées}}",
+      "includedInPlan": "{count, plural, =0 {Inclus dans la formule} one {# élément inclus} other {# éléments inclus}}",
+      "priceQuote": "sur devis",
+      "adjustSelectionBold": "Besoin d'ajuster votre sélection ?",
+      "adjustSelectionNote": "Revenez au configurateur pour modifier vos options avant l'envoi.",
+      "nameLabel": "Nom",
+      "namePlaceholder": "Votre nom complet",
+      "emailLabel": "Email",
+      "emailPlaceholder": "vous@exemple.com",
+      "phoneLabel": "Téléphone",
+      "phoneOptional": "(facultatif)",
+      "phonePlaceholder": "06 12 34 56 78",
+      "planLabel": "Formule envisagée",
+      "planPlaceholder": "Je ne sais pas encore",
+      "planUnknown": "Autre / sur mesure",
+      "messageLabelProject": "Votre projet",
+      "messageLabelRequest": "Votre message",
+      "messagePlaceholderProject": "Parlez-moi de votre activité, vos objectifs, vos contraintes…",
+      "messagePlaceholderRequest": "Dites-moi en plus sur votre besoin ou votre projet…",
+      "incompleteAddonMessage": "Une option sélectionnée est incomplète. <link>Revenez au configurateur</link> pour la finaliser.",
+      "submit": "Envoyer le message",
+      "submitPending": "Envoi en cours…",
+      "responseTime": "Réponse sous 24h, du lundi au vendredi.",
+      "toastSuccess": "Message envoyé ! Je reviens vers vous très vite.",
+      "toastError": "L'envoi a échoué. Réessayez ou écrivez-moi directement.",
+      "toastNetworkError": "Problème de connexion. Vérifiez votre réseau et réessayez."
+    }
+  },
+  "home": {
+    "hero": {
+      "badge": "Dev front-end @ Artefact · Paris",
+      "tagline": "Développeur front-end & créateur de sites web",
+      "description": "Je construis des interfaces qui durent — pour les grandes entreprises chez <artefact>Artefact</artefact> <data>(Data & IA)</data>, et des sites sur mesure qui convertissent pour <clients>les entreprises et les particuliers</clients>.",
+      "projectsCta": "Mes projets",
+      "servicesCta": "Mes services",
+      "contactCta": "Me contacter"
+    },
+    "aboutIntro": {
+      "role1Title": "Développeur",
+      "role1Bold": "Front-End",
+      "role1Description": "Je conçois des interfaces web exigeantes — applications, plateformes, outils data. Pour des marques comme TotalEnergies, Aéroports de Paris et BNP Paribas.",
+      "role1Cta": "Mon parcours",
+      "role2Title": "Créateur de",
+      "role2Bold": "Sites Web",
+      "role2Description": "En parallèle, j'aide les entreprises et les particuliers à donner vie à leurs projets. Sites sur mesure, sans template, livrés avec exigence.",
+      "role2Cta": "Mes réalisations"
+    },
+    "projects": {
+      "eyebrow": "Réalisations",
+      "title": "Projets",
+      "titleAccent": "sélectionnés",
+      "viewAll": "Voir tout",
+      "viewAllProjects": "Voir tous les projets"
+    },
+    "services": {
+      "web": {
+        "eyebrow": "Sites web sur mesure",
+        "titleLine1": "Vous avez",
+        "titleLine2": "un projet web ?",
+        "description": "Artisan, coach, artiste, restaurant, entrepreneur — peu importe votre activité. Je crée des sites sur mesure, performants et faciles à trouver sur Google. Pas de template, pas de WordPress. Du code propre, livré rapidement.",
+        "cta": "Voir les formules & tarifs"
+      },
+      "collab": {
+        "eyebrow": "Collaboration",
+        "titleLine1": "Mon profil",
+        "titleLine2": "vous intéresse ?",
+        "description": "Je suis ouvert aux opportunités — en CDI dans une équipe tech ambitieuse, ou en mission freelance pour renforcer vos projets React & Next.js. Basé en Île-de-France, disponible en remote.",
+        "cta": "Me contacter"
+      }
+    }
+  },
+  "servicesData": {
+    "essentiel": {
+      "nom": "Essentiel",
+      "delai": "5 jours ouvrés",
+      "description": "Site vitrine professionnel sur une seule page avec plusieurs sections. Pour qui lance son activité ou son projet personnel et veut une présence en ligne sérieuse et durable.",
+      "tagline": "Simple à lancer, *fort en look*.",
+      "hook": {
+        "pasDe": "Pas une simple page web.",
+        "description": "Une vitrine soignée, faite à la main par un pro,",
+        "metaphor": "comme une devanture devant laquelle on s'arrête."
+      },
+      "audiences": [
+        "Artisan",
+        "Commerçant",
+        "Freelance",
+        "Indépendant",
+        "Profession libérale",
+        "Lancement d'activité"
+      ],
+      "promesse": "Vous voulez une *vraie présence en ligne*\n**propre et durable**\nlivrée en *quelques jours* ?\n\nCette formule est faite pour vous.",
+      "benefices": [
+        {
+          "text": "Une **présence crédible** dès la mise en ligne"
+        },
+        {
+          "text": "**Trouvable sur Google** dès le premier jour"
+        },
+        {
+          "text": "**Aucun abonnement** mensuel à payer"
+        },
+        {
+          "text": "**2h de retouches** offertes pour ajuster les détails"
+        }
+      ],
+      "antiAlternative": {
+        "titre": "Pas de no-code",
+        "consPoints": [
+          "Wix, Squarespace, Webflow…",
+          "Modèles de base qui ne font pas pro",
+          "Abonnement mensuel à vie"
+        ],
+        "pros": {
+          "titre": "Codé à la main pour vous",
+          "intro": "Ce n'est pas parce qu'un projet est simple qu'on ne peut pas avoir une vitrine **propre et soignée**, *qui vous appartient vraiment*. Pas de surcoût, juste de la qualité — *de la qualité à petit prix*.",
+          "points": [
+            "Aucun abonnement, aucun coût mensuel",
+            "Une vitrine soignée qui vous démarque",
+            "Un site qui vous suit dans le temps"
+          ]
+        }
+      },
+      "pourquoi": [
+        "Vous lancez votre activité ou votre projet personnel",
+        "Vous voulez juste être présent en ligne, sans complication",
+        "Une seule page bien faite vous suffit",
+        "Vous voulez aller vite"
+      ],
+      "inclus": [
+        {
+          "titre": "Une page, plusieurs sections",
+          "detail": {
+            "intro": "Tout votre site sur une seule page longue scrollable, structurée en sections claires.",
+            "sections": [
+              {
+                "title": "Sections incluses",
+                "bullets": [
+                  {
+                    "text": "**Accueil** (présentation, accroche)"
+                  },
+                  {
+                    "text": "**Services** (ce que vous proposez)"
+                  },
+                  {
+                    "text": "**À propos** (votre histoire, votre équipe)"
+                  },
+                  {
+                    "text": "**Contact** (formulaire + coordonnées)"
+                  }
+                ]
+              }
+            ],
+            "note": "Chaque section est conçue comme une page : claire, hiérarchisée, optimisée SEO."
+          }
+        },
+        {
+          "titre": "Design moderne, simple et responsive",
+          "detail": {
+            "intro": "Un design **propre** qui reflète votre activité, parfait sur mobile, tablette et desktop.",
+            "sections": [
+              {
+                "title": "Comment ça se passe",
+                "bullets": [
+                  {
+                    "text": "**3 directions visuelles** proposées en short-list"
+                  },
+                  {
+                    "text": "Vous **choisissez** celle qui vous parle le plus"
+                  },
+                  {
+                    "text": "Adaptation à votre charte (couleurs, typographies)"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "titre": "Formulaire de contact",
+          "detail": {
+            "intro": "Vos visiteurs vous contactent **directement depuis le site**.",
+            "sections": [
+              {
+                "title": "Inclus",
+                "bullets": [
+                  {
+                    "text": "Envoi par email via **Resend**"
+                  },
+                  {
+                    "text": "**Sans frais mensuels**"
+                  },
+                  {
+                    "text": "Anti-spam intégré"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "titre": "SEO de base",
+          "detail": {
+            "intro": "Le **minimum vital carré** pour que votre site soit techniquement parfait pour Google, Bing et les IA (ChatGPT, Perplexity, Claude).",
+            "sections": [
+              {
+                "title": "Inclus",
+                "bullets": [
+                  {
+                    "text": "**Sitemap.xml** + robots.txt"
+                  },
+                  {
+                    "text": "Robots.txt qui **autorise explicitement les bots IA** (GPTBot, ClaudeBot, PerplexityBot, Google-Extended)"
+                  },
+                  {
+                    "text": "Fichier **llms.txt** à la racine (généré auto à partir du sitemap)"
+                  },
+                  {
+                    "text": "Balises **title** et **meta description** sur la page"
+                  },
+                  {
+                    "text": "**Alt text descriptifs** sur toutes les images"
+                  },
+                  {
+                    "text": "Site **lisible sans JavaScript** (garantie technique)"
+                  },
+                  {
+                    "text": "Site **compatible Google + Bing** (livré et indexable)"
+                  }
+                ]
+              }
+            ],
+            "note": "Pour aller plus loin (Schema.org, OpenGraph optimisé, FAQ AI-friendly) : option SEO+. Pour le top niveau (inscription GSC + Bing, audit complet, plan de suivi) : option SEO Pro."
+          }
+        },
+        {
+          "titre": "Galerie 10 images",
+          "detail": {
+            "intro": "10 images intégrées au site, **optimisées pour un chargement rapide**.",
+            "sections": [
+              {
+                "title": "Inclus",
+                "bullets": [
+                  {
+                    "text": "Compression **WebP** (format moderne)"
+                  },
+                  {
+                    "text": "**Lazy loading** (charge à mesure du scroll)"
+                  },
+                  {
+                    "text": "Recadrage au bon format"
+                  }
+                ]
+              }
+            ],
+            "note": "Au-delà de 10 images : option Photos supplémentaires."
+          }
+        },
+        {
+          "titre": "Hébergement + nom de domaine",
+          "detail": {
+            "intro": "Votre site **mis en ligne** et accessible depuis votre nom de domaine.",
+            "sections": [
+              {
+                "title": "Inclus",
+                "bullets": [
+                  {
+                    "text": "**Hébergement Vercel** (rapide, sécurisé, sans frais)"
+                  },
+                  {
+                    "text": "Configuration du **DNS** sur votre nom de domaine"
+                  },
+                  {
+                    "text": "Certificat **HTTPS** automatique"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "titre": "2h de retouches incluses",
+          "detail": {
+            "intro": "**Après la livraison**, vous avez 2h pour ajuster le site sans surcoût.",
+            "sections": [
+              {
+                "title": "Cas typiques",
+                "bullets": [
+                  {
+                    "text": "Modification de textes"
+                  },
+                  {
+                    "text": "Changement d'une photo"
+                  },
+                  {
+                    "text": "Ajustement de couleur ou de mise en page"
+                  }
+                ]
+              }
+            ],
+            "note": "Au-delà : 60€/h, devis envoyé avant chaque intervention."
+          }
+        }
+      ],
+      "addons": {
+        "ecommerce": {
+          "label": "E-commerce",
+          "description": "Boutique en ligne avec Stripe : carte, Apple Pay, Google Pay",
+          "detail": {
+            "intro": "Boutique en ligne complète avec Stripe. Deux variantes selon votre besoin : **sans panier** (achat unitaire direct) ou **avec panier** (vraie boutique multi-produits).",
+            "sections": [
+              {
+                "title": "Sans panier",
+                "badge": "190€",
+                "variant": "default",
+                "intro": "Achat unitaire via Stripe Checkout direct.",
+                "bullets": [
+                  {
+                    "text": "Idéal pour **pièces uniques**, prestations, œuvres, produits luxe"
+                  },
+                  {
+                    "text": "Le client clique → checkout Stripe direct → paiement"
+                  }
+                ]
+              },
+              {
+                "title": "Avec panier",
+                "badge": "+90€",
+                "variant": "accent",
+                "intro": "Vraie boutique multi-produits.",
+                "bullets": [
+                  {
+                    "text": "**Panier**, filtres, pagination"
+                  },
+                  {
+                    "text": "Idéal pour catalogues créateur, e-commerce alimentaire, multi-produits"
+                  }
+                ]
+              },
+              {
+                "title": "Inclus dans tous les cas",
+                "bullets": [
+                  {
+                    "text": "Configuration **compte Stripe** (accompagnement visio 30 min)"
+                  },
+                  {
+                    "text": "Page produit avec slider d'images"
+                  },
+                  {
+                    "text": "Checkout Stripe : **carte, Apple Pay, Google Pay, Link**"
+                  },
+                  {
+                    "text": "Page de confirmation + emails (client + vendeur)"
+                  },
+                  {
+                    "text": "Pages légales obligatoires : **CGV, retour, RGPD**"
+                  },
+                  {
+                    "text": "Tests en mode test puis passage en live"
+                  },
+                  {
+                    "text": "Indexation Google Search Console"
+                  }
+                ]
+              }
+            ],
+            "note": "Volume : 10 produits inclus, paliers 20 (+30€), 30 (+60€), 50 (+120€). Au-delà de 50 produits : sur devis (vraie maintenance catalogue)."
+          },
+          "subOptions": {
+            "type": {
+              "label": "Type de boutique",
+              "choices": {
+                "sans-panier": {
+                  "label": "Sans panier",
+                  "detail": "Stripe Checkout direct (pièces uniques, prestations)"
+                },
+                "avec-panier": {
+                  "label": "Avec panier",
+                  "detail": "Boutique multi-produits, filtres, pagination"
+                }
+              }
+            },
+            "volume": {
+              "label": "Combien de produits ?",
+              "helper": "10 inclus · au-delà de 50 sur devis",
+              "choices": {
+                "10": {
+                  "label": "10",
+                  "detail": "Inclus"
+                },
+                "20": {
+                  "label": "20"
+                },
+                "30": {
+                  "label": "30"
+                },
+                "50": {
+                  "label": "50"
+                },
+                "50plus": {
+                  "label": "50+",
+                  "detail": "Sur devis"
+                }
+              }
+            }
+          }
+        },
+        "redaction": {
+          "label": "Rédaction des textes",
+          "description": "Tous les textes du site rédigés à partir d'un brief",
+          "detail": {
+            "intro": "Rédaction de **tous les textes** de votre site à partir d'un brief en visio (1h).",
+            "sections": [
+              {
+                "title": "Inclus",
+                "bullets": [
+                  {
+                    "text": "Brief client en visio (1h)"
+                  },
+                  {
+                    "text": "Rédaction **pensée pour convaincre** vos visiteurs"
+                  },
+                  {
+                    "text": "Textes **optimisés SEO** (compris par Google)"
+                  }
+                ]
+              }
+            ],
+            "note": "Inclus en Standard et Premium."
+          }
+        },
+        "seo-plus": {
+          "label": "SEO+",
+          "description": "Le cran enrichi : Google et les IA comprennent votre activité",
+          "detail": {
+            "intro": "Passe votre site au **niveau enrichi** en SEO. **SEO+ contient tout le SEO de base** (déjà inclus dans toutes les formules) **+ les ajouts ci-dessous**. C'est exactement ce qui est déjà inclus dans la formule Standard. Tout est ajouté pendant qu'on code, **sans intervention externe**.",
+            "sections": [
+              {
+                "title": "Inclus de base (rappel — déjà dans toutes les formules)",
+                "variant": "default",
+                "bullets": [
+                  {
+                    "text": "Sitemap.xml + robots.txt avec **autorisation des bots IA** (GPTBot, ClaudeBot, PerplexityBot)"
+                  },
+                  {
+                    "text": "Fichier **llms.txt** à la racine"
+                  },
+                  {
+                    "text": "Title, meta description, alt text descriptifs"
+                  },
+                  {
+                    "text": "Site **lisible sans JavaScript**, compatible Google + Bing"
+                  },
+                  {
+                    "text": "Setup initial Google Search Console"
+                  }
+                ]
+              },
+              {
+                "title": "Ce que SEO+ ajoute en plus",
+                "variant": "accent",
+                "bullets": [
+                  {
+                    "text": "**Schema.org** adapté à votre métier (Organization ou LocalBusiness)"
+                  },
+                  {
+                    "text": "**OpenGraph + Twitter Cards** avec image personnalisée (aperçu propre quand on partage votre site)"
+                  },
+                  {
+                    "text": "Title et meta description **optimisés keyword** (1 keyword par page)"
+                  },
+                  {
+                    "text": "Hiérarchie **h1/h2/h3 pensée pour le SEO** (h2 sous forme de questions = pattern AI-friendly)"
+                  },
+                  {
+                    "text": "Alt texts **descriptifs et keyword-friendly**"
+                  },
+                  {
+                    "text": "**Section FAQ AI-friendly** (5+ questions) — clé pour ressortir dans ChatGPT et Perplexity"
+                  },
+                  {
+                    "text": "**Internal linking propre** entre les sections"
+                  }
+                ]
+              }
+            ],
+            "note": "Si vous voulez le top niveau (SEO Pro avec inscription Google + Bing, audit complet, suivi), prenez plutôt la formule Standard ou Premium directement."
+          }
+        },
+        "pack-performance": {
+          "label": "Pack performance",
+          "description": "Optimisation des temps de chargement et des Core Web Vitals",
+          "detail": {
+            "intro": "Optimisation poussée des **performances réelles** côté visiteur : un site qui charge vite, scrolle de manière fluide, reste réactif sur mobile.",
+            "sections": [
+              {
+                "title": "Images & médias",
+                "bullets": [
+                  {
+                    "text": "Toutes les images en **WebP** avec lazy loading"
+                  },
+                  {
+                    "text": "**SVG en composants React** (svgr) : pas de requêtes HTTP"
+                  }
+                ]
+              },
+              {
+                "title": "JavaScript & rendu",
+                "bullets": [
+                  {
+                    "text": "**Audit du bundle JS** + code splitting agressif"
+                  },
+                  {
+                    "text": "Animations **CSS prioritaires** sur GSAP/JS quand possible"
+                  },
+                  {
+                    "text": "Optimisation des **fonts** (subset, preload, font-display swap)"
+                  }
+                ]
+              },
+              {
+                "title": "Core Web Vitals",
+                "bullets": [
+                  {
+                    "text": "**LCP, INP, CLS** surveillés et corrigés"
+                  },
+                  {
+                    "text": "Compression **gzip + brotli** via Vercel"
+                  }
+                ]
+              }
+            ],
+            "note": "Pour booster le score Lighthouse SEO ou Accessibilité, regardez plutôt l'option SEO+ ou SEO Pro."
+          }
+        },
+        "analytics": {
+          "label": "Google Analytics 4",
+          "description": "Compte client + dashboard configuré",
+          "detail": {
+            "intro": "Sachez **qui visite votre site**, d'où viennent les visiteurs, quelles pages les intéressent.",
+            "sections": [
+              {
+                "title": "Inclus",
+                "bullets": [
+                  {
+                    "text": "Création du compte **à votre nom**"
+                  },
+                  {
+                    "text": "Configuration du **tracking**"
+                  },
+                  {
+                    "text": "**Dashboard** prêt à consulter"
+                  }
+                ]
+              }
+            ],
+            "note": "Inclus en Standard et Premium."
+          }
+        },
+        "gmb": {
+          "label": "Google Business Profile",
+          "description": "Création ou optimisation de votre fiche Google Maps",
+          "detail": {
+            "intro": "Création ou optimisation complète de votre fiche Google Business Profile. **Indispensable** pour tous les commerces et services locaux : c'est ce qui fait apparaître votre fiche en haut des résultats Google Maps.",
+            "sections": [
+              {
+                "title": "Création de la fiche",
+                "badge": "+80€",
+                "variant": "default",
+                "bullets": [
+                  {
+                    "text": "Photos optimisées et bien cadrées"
+                  },
+                  {
+                    "text": "Horaires, téléphone, adresse vérifiés"
+                  },
+                  {
+                    "text": "Description **rédigée pour convertir**"
+                  },
+                  {
+                    "text": "Catégories choisies pour le **maximum de visibilité**"
+                  }
+                ]
+              },
+              {
+                "title": "Suivi 3 mois (optionnel)",
+                "badge": "+150€",
+                "variant": "accent",
+                "intro": "Je gère votre fiche pendant 3 mois après la création :",
+                "bullets": [
+                  {
+                    "text": "**Mise à jour mensuelle** des photos"
+                  },
+                  {
+                    "text": "**Réponses aux avis** clients"
+                  },
+                  {
+                    "text": "**Posts Google** pour rester actif (offres, news, événements)"
+                  },
+                  {
+                    "text": "Une fiche bien gérée peut **doubler** la visibilité locale"
+                  }
+                ]
+              }
+            ]
+          },
+          "subOptions": {
+            "suivi": {
+              "label": "Suivi 3 mois",
+              "helper": "Optionnel : je gère votre fiche pendant 3 mois après la création",
+              "choices": {
+                "sans-suivi": {
+                  "label": "Sans suivi",
+                  "detail": "Création seule, vous gérez la fiche ensuite"
+                },
+                "avec-suivi": {
+                  "label": "Avec suivi 3 mois",
+                  "detail": "Photos, avis, posts mensuels pendant 3 mois"
+                }
+              }
+            }
+          }
+        },
+        "reservation": {
+          "label": "Intégration de réservation",
+          "description": "TheFork, Zenchef, Planity, Calendly selon votre outil",
+          "detail": {
+            "intro": "Vos visiteurs réservent **directement** depuis votre site, sans jamais le quitter.",
+            "sections": [
+              {
+                "title": "Outils compatibles",
+                "bullets": [
+                  {
+                    "text": "**Restaurants** : TheFork, Zenchef, GuestOnline"
+                  },
+                  {
+                    "text": "**Beauté & bien-être** : Planity, Treatwell"
+                  },
+                  {
+                    "text": "**Coachs & consultants** : Calendly, Cal.com"
+                  },
+                  {
+                    "text": "Autres outils : intégration sur demande"
+                  }
+                ]
+              }
+            ],
+            "note": "Vous gardez l'outil que vous utilisez déjà : pas de double saisie, pas de migration."
+          }
+        },
+        "cms-sanity": {
+          "label": "CMS Headless Sanity",
+          "description": "Modifiez vos textes, photos, produits en autonomie",
+          "detail": {
+            "intro": "Un CMS pour modifier vos contenus **sans toucher au code**. Une « entrée » = un produit, un article, un membre d'équipe, une photo, un témoignage.",
+            "sections": [
+              {
+                "title": "Grille de prix selon le volume",
+                "bullets": [
+                  {
+                    "text": "**Jusqu'à 20 entrées** (vitrine basique)",
+                    "badge": "150€"
+                  },
+                  {
+                    "text": "**21 à 50 entrées** (vitrine + blog ou petit catalogue)",
+                    "badge": "200€"
+                  },
+                  {
+                    "text": "**51 à 100 entrées** (e-commerce 30-50 produits)",
+                    "badge": "300€"
+                  },
+                  {
+                    "text": "100+ entrées (gros catalogue)",
+                    "badge": "Devis"
+                  }
+                ]
+              },
+              {
+                "title": "Inclus systématiquement",
+                "bullets": [
+                  {
+                    "text": "Schéma Sanity adapté à votre site"
+                  },
+                  {
+                    "text": "Connexion Next.js ↔ Sanity (**revalidation auto**)"
+                  },
+                  {
+                    "text": "Compte Sanity à votre nom"
+                  },
+                  {
+                    "text": "**Formation 30 min** en visio en direct"
+                  },
+                  {
+                    "text": "Documentation simple écrite pour vous"
+                  }
+                ]
+              }
+            ],
+            "note": "Sanity reste gratuit jusqu'à 10 000 documents : aucun coût récurrent côté client."
+          },
+          "subOptions": {
+            "volume": {
+              "label": "Volume d'entrées modifiables",
+              "helper": "Un produit, un article, un témoignage = une entrée",
+              "choices": {
+                "20": {
+                  "label": "≤ 20",
+                  "detail": "Inclus"
+                },
+                "50": {
+                  "label": "21–50"
+                },
+                "100": {
+                  "label": "51–100"
+                },
+                "100plus": {
+                  "label": "100+",
+                  "detail": "Sur devis"
+                }
+              }
+            }
+          }
+        },
+        "multilingue": {
+          "label": "Multilingue FR + EN",
+          "description": "Site disponible en français et anglais avec bouton de changement de langue",
+          "detail": {
+            "intro": "Votre site disponible en **français et en anglais**.",
+            "sections": [
+              {
+                "title": "Inclus",
+                "bullets": [
+                  {
+                    "text": "**Tous les textes** du site traduits"
+                  },
+                  {
+                    "text": "**Formulaires** traduits"
+                  },
+                  {
+                    "text": "**Balises SEO** traduites (titles, descriptions)"
+                  },
+                  {
+                    "text": "Bouton de changement de langue dans le header"
+                  }
+                ]
+              }
+            ],
+            "note": "Pour des contenus longs (blog volumineux, descriptions produits détaillées) : voir l'option dédiée. Autres langues (ES, IT, DE…) : même tarif par langue ajoutée."
+          }
+        },
+        "refonte": {
+          "label": "Refonte d'un site existant",
+          "description": "Reprise des textes, images et redirections SEO de votre ancien site",
+          "detail": {
+            "intro": "À cocher **uniquement si** la formule sert à refaire un site qui existe déjà.",
+            "sections": [
+              {
+                "title": "Ce qui est inclus",
+                "bullets": [
+                  {
+                    "text": "Récupération du **contenu** (textes, images, balises SEO)"
+                  },
+                  {
+                    "text": "Intégration propre dans le nouveau site"
+                  },
+                  {
+                    "text": "Mise en place des **redirections 301**"
+                  },
+                  {
+                    "text": "**Préserve** votre référencement Google et évite les 404"
+                  }
+                ]
+              }
+            ],
+            "note": "À ne pas confondre avec une migration pure (changement d'hébergeur sans refaire le site) : pour ce besoin, devis sur mesure."
+          }
+        },
+        "photos-supp": {
+          "label": "Photos ou images supplémentaires",
+          "description": "Visuels d'ambiance, illustrations, photos d'équipe (hors photos produits)",
+          "detail": {
+            "intro": "Pour ajouter des photos ou images au site (visuels d'ambiance, illustrations, photos d'équipe, décor).",
+            "sections": [
+              {
+                "title": "Ce qui est inclus à chaque palier",
+                "bullets": [
+                  {
+                    "text": "**Sélection éditoriale** des meilleures images"
+                  },
+                  {
+                    "text": "**Recadrage** au bon format"
+                  },
+                  {
+                    "text": "**Compression WebP** (chargement rapide)"
+                  },
+                  {
+                    "text": "Intégration au bon endroit du site"
+                  }
+                ]
+              },
+              {
+                "title": "Ce qui n'est PAS inclus",
+                "bullets": [
+                  {
+                    "text": "**Shooting photo** : passez par un photographe"
+                  },
+                  {
+                    "text": "**Génération IA** : sur devis (50-150€ selon volume)"
+                  },
+                  {
+                    "text": "**Photos produits** d'une boutique : déjà couvertes par l'option e-commerce (compter ~2 photos par produit)"
+                  }
+                ]
+              }
+            ],
+            "note": "10 photos incluses dans le prix de base, paliers progressifs ensuite."
+          },
+          "subOptions": {
+            "volume": {
+              "label": "Combien de photos ou images ?",
+              "helper": "10 incluses dans le prix de base · au-delà de 100 sur devis",
+              "choices": {
+                "10": {
+                  "label": "10",
+                  "detail": "Inclus"
+                },
+                "20": {
+                  "label": "20"
+                },
+                "30": {
+                  "label": "30"
+                },
+                "50": {
+                  "label": "50"
+                },
+                "100": {
+                  "label": "100"
+                },
+                "100plus": {
+                  "label": "100+",
+                  "detail": "Sur devis"
+                }
+              }
+            }
+          }
+        },
+        "formation": {
+          "label": "Formation 30 min",
+          "description": "Visio en direct pour gérer son site en autonomie",
+          "detail": {
+            "intro": "Une visio **en direct** pour apprendre à gérer votre site, **sans prérequis technique**.",
+            "sections": [
+              {
+                "title": "Au programme",
+                "bullets": [
+                  {
+                    "text": "Mise à jour de **contenus simples** via Vercel"
+                  },
+                  {
+                    "text": "Si vous avez un **CMS** : prise en main complète"
+                  },
+                  {
+                    "text": "**Réponses à vos questions**"
+                  }
+                ]
+              }
+            ],
+            "note": "Inclus en Standard et automatiquement avec tout CMS."
+          }
+        }
+      }
+    },
+    "standard": {
+      "nom": "Standard",
+      "delai": "10 jours ouvrés",
+      "description": "Site vitrine multi-pages avec design personnalisé, contenu rédigé, SEO+ inclus et Google Analytics. Pour les activités établies qui veulent un site qui les représente vraiment.",
+      "tagline": "Le site qui *transforme* vos visiteurs en clients.",
+      "hook": {
+        "pasDe": "Pas un site vu mille fois.",
+        "description": "Un site dessiné et codé rien que pour vous,",
+        "metaphor": "comme un plat fait maison par quelqu'un qui connaît votre goût."
+      },
+      "audiences": [
+        "Commerçant local",
+        "PME",
+        "Profession libérale",
+        "Restaurant",
+        "Cabinet",
+        "Activité établie"
+      ],
+      "promesse": "Vous cherchez un vrai site complet *pour convaincre vos visiteurs*\net **les transformer en clients** ?\n\nCette formule est faite pour vous.",
+      "benefices": [
+        {
+          "text": "Un design **soigné et unique** qui vous démarque de la concurrence"
+        },
+        {
+          "text": "Trouvé en premier par vos clients, **partout dans votre zone**"
+        },
+        {
+          "text": "Suivez **en direct** le trafic de votre site et voyez **ce qui marche** vraiment"
+        },
+        {
+          "text": "Des textes **rédigés sur mesure** qui parlent à votre clientèle"
+        }
+      ],
+      "antiAlternative": {
+        "titre": "Pas d'outils no-code",
+        "consPoints": [
+          "Wix, Squarespace, Webflow, WordPress…",
+          "Très peu de personnalisation (limité au thème)",
+          "Sites souvent lents et lourds",
+          "Complexe à entretenir et à utiliser au quotidien"
+        ],
+        "pros": {
+          "titre": "Codé à la main pour vous",
+          "intro": "Un visiteur reste **7 secondes** en moyenne avant de décider de rester ou partir. Si la page traîne à charger, il est *déjà reparti*.\n\nLes sites que je crée sont **ultra rapides**, **fluides** et *vraiment simples* à utiliser au quotidien.",
+          "points": [
+            "Sans abonnement à vie",
+            "Chargement ultra rapide",
+            "Interface très simple pour gérer vos contenus",
+            "Modernité technique : code propre, dernières technos"
+          ]
+        }
+      },
+      "pourquoi": [
+        "Vous voulez faire décoller votre activité avec un site qui vous représente vraiment",
+        "Vous avez besoin de plusieurs pages claires pour guider vos clients",
+        "Vous voulez un site loin des designs ennuyeux et génériques",
+        "Vous voulez être accompagné et rassuré tout au long du projet"
+      ],
+      "inclus": [
+        {
+          "titre": "Les fondamentaux de l'Essentiel",
+          "detail": {
+            "intro": "Tout ce qui est inclus dans la formule Essentiel, en base.",
+            "sections": [
+              {
+                "title": "Reportés ici",
+                "bullets": [
+                  {
+                    "text": "Design responsive mobile/tablette/desktop"
+                  },
+                  {
+                    "text": "Formulaire de contact (Resend)"
+                  },
+                  {
+                    "text": "SEO de base (sitemap, robots avec bots IA, llms.txt, meta, alt)"
+                  },
+                  {
+                    "text": "Galerie 10 images optimisées"
+                  },
+                  {
+                    "text": "Hébergement Vercel + DNS + HTTPS"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "titre": "5 à 7 pages séparées",
+          "detail": {
+            "intro": "Un site multi-pages structuré pour **mieux ranker sur Google** et **mieux guider vos visiteurs**.",
+            "sections": [
+              {
+                "title": "Pages typiques",
+                "bullets": [
+                  {
+                    "text": "Accueil"
+                  },
+                  {
+                    "text": "À propos"
+                  },
+                  {
+                    "text": "Services"
+                  },
+                  {
+                    "text": "Contact"
+                  },
+                  {
+                    "text": "**1 à 3 pages métier** spécifiques (FAQ, équipe, réalisations…)"
+                  }
+                ]
+              }
+            ],
+            "note": "Au-delà de 7 pages : option Page supplémentaire (+60€/page)."
+          }
+        },
+        {
+          "titre": "Design personnalisé",
+          "detail": {
+            "intro": "Votre charte, votre univers, **rien à voir avec un template Wix**.",
+            "sections": [
+              {
+                "title": "Comment ça se passe",
+                "bullets": [
+                  {
+                    "text": "**Visio brief** pour définir l'ambiance"
+                  },
+                  {
+                    "text": "Choix de la **palette de couleurs**"
+                  },
+                  {
+                    "text": "Choix des **typographies**"
+                  },
+                  {
+                    "text": "Adaptation à votre logo et votre univers"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "titre": "Rédaction des textes",
+          "detail": {
+            "intro": "Tous les textes **rédigés pour vous**, à partir d'un brief en visio (1h).",
+            "sections": [
+              {
+                "title": "Bénéfices",
+                "bullets": [
+                  {
+                    "text": "Textes **pensés pour convaincre**"
+                  },
+                  {
+                    "text": "**Optimisés SEO** (compris par Google)"
+                  },
+                  {
+                    "text": "Vous n'avez **rien à écrire**"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "titre": "SEO+",
+          "detail": {
+            "intro": "Le **cran enrichi** : on ajoute pendant qu'on code tout ce qui aide Google et les IA à comprendre votre activité. **SEO+ contient tout le SEO de base** (déjà inclus en Standard) **+ les ajouts ci-dessous**.",
+            "sections": [
+              {
+                "title": "Rappel — déjà inclus via le SEO de base",
+                "variant": "default",
+                "bullets": [
+                  {
+                    "text": "Sitemap, robots.txt avec autorisation des bots IA, llms.txt"
+                  },
+                  {
+                    "text": "Title, meta, alt text descriptifs"
+                  },
+                  {
+                    "text": "Site lisible sans JS, compatible Google + Bing"
+                  },
+                  {
+                    "text": "Setup initial Google Search Console"
+                  }
+                ]
+              },
+              {
+                "title": "Ce que SEO+ ajoute en plus",
+                "variant": "accent",
+                "bullets": [
+                  {
+                    "text": "**Schema.org** adapté à votre métier (Organization ou LocalBusiness)"
+                  },
+                  {
+                    "text": "**OpenGraph + Twitter Cards** avec image personnalisée"
+                  },
+                  {
+                    "text": "Title + meta **optimisés keyword** (1 keyword par page)"
+                  },
+                  {
+                    "text": "Hiérarchie **h1/h2/h3 pensée pour le SEO** (h2 sous forme de questions = AI-friendly)"
+                  },
+                  {
+                    "text": "Alt texts descriptifs et keyword-friendly"
+                  },
+                  {
+                    "text": "**Section FAQ AI-friendly** (5+ questions) — clé pour ChatGPT/Perplexity"
+                  },
+                  {
+                    "text": "**Internal linking propre** entre les sections"
+                  }
+                ]
+              }
+            ],
+            "note": "Pour le palier actif (inscription GSC + Bing, audit, doc de suivi) : option SEO Pro (+150€)."
+          }
+        },
+        {
+          "titre": "Google Analytics 4",
+          "detail": {
+            "intro": "Sachez **qui visite votre site** et **comment**.",
+            "sections": [
+              {
+                "title": "Inclus",
+                "bullets": [
+                  {
+                    "text": "Compte créé **à votre nom**"
+                  },
+                  {
+                    "text": "Configuration du tracking"
+                  },
+                  {
+                    "text": "**Dashboard** prêt à consulter"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "titre": "Formulaire de devis personnalisé",
+          "detail": {
+            "intro": "Un formulaire **adapté à votre activité** (pas un formulaire générique).",
+            "sections": [
+              {
+                "title": "Exemples",
+                "bullets": [
+                  {
+                    "text": "**Restaurant** : nombre de personnes, date, créneaux"
+                  },
+                  {
+                    "text": "**Artisan** : type de prestation, surface, délai"
+                  },
+                  {
+                    "text": "**Coach** : objectif, fréquence, format souhaité"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "titre": "Formation 30 min en visio",
+          "detail": {
+            "intro": "Une visio **en direct** pour prendre votre site en main.",
+            "sections": [
+              {
+                "title": "Au programme",
+                "bullets": [
+                  {
+                    "text": "Mise à jour des **infos simples**"
+                  },
+                  {
+                    "text": "Modification de **contenus**"
+                  },
+                  {
+                    "text": "**Réponses à vos questions**"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "titre": "5h de retouches incluses",
+          "detail": {
+            "intro": "**5h après la livraison** pour ajuster le site sans surcoût.",
+            "sections": [
+              {
+                "title": "Cas typiques",
+                "bullets": [
+                  {
+                    "text": "Modifications de textes"
+                  },
+                  {
+                    "text": "Changements de photos"
+                  },
+                  {
+                    "text": "Ajustements de mise en page"
+                  }
+                ]
+              }
+            ],
+            "note": "Au-delà : 60€/h, devis envoyé avant chaque intervention."
+          }
+        }
+      ],
+      "addons": {
+        "ecommerce": {
+          "label": "E-commerce",
+          "description": "Boutique en ligne avec Stripe : carte, Apple Pay, Google Pay",
+          "detail": {
+            "intro": "Boutique en ligne complète avec Stripe. Deux variantes selon votre besoin : **sans panier** (achat unitaire direct) ou **avec panier** (vraie boutique multi-produits).",
+            "sections": [
+              {
+                "title": "Sans panier",
+                "badge": "190€",
+                "variant": "default",
+                "intro": "Achat unitaire via Stripe Checkout direct.",
+                "bullets": [
+                  {
+                    "text": "Idéal pour **pièces uniques**, prestations, œuvres, produits luxe"
+                  },
+                  {
+                    "text": "Le client clique → checkout Stripe direct → paiement"
+                  }
+                ]
+              },
+              {
+                "title": "Avec panier",
+                "badge": "+90€",
+                "variant": "accent",
+                "intro": "Vraie boutique multi-produits.",
+                "bullets": [
+                  {
+                    "text": "**Panier**, filtres, pagination"
+                  },
+                  {
+                    "text": "Idéal pour catalogues créateur, e-commerce alimentaire, multi-produits"
+                  }
+                ]
+              },
+              {
+                "title": "Inclus dans tous les cas",
+                "bullets": [
+                  {
+                    "text": "Configuration **compte Stripe** (accompagnement visio 30 min)"
+                  },
+                  {
+                    "text": "Page produit avec slider d'images"
+                  },
+                  {
+                    "text": "Checkout Stripe : **carte, Apple Pay, Google Pay, Link**"
+                  },
+                  {
+                    "text": "Page de confirmation + emails (client + vendeur)"
+                  },
+                  {
+                    "text": "Pages légales obligatoires : **CGV, retour, RGPD**"
+                  },
+                  {
+                    "text": "Tests en mode test puis passage en live"
+                  },
+                  {
+                    "text": "Indexation Google Search Console"
+                  }
+                ]
+              }
+            ],
+            "note": "Volume : 10 produits inclus, paliers 20 (+30€), 30 (+60€), 50 (+120€). Au-delà de 50 produits : sur devis (vraie maintenance catalogue)."
+          },
+          "subOptions": {
+            "type": {
+              "label": "Type de boutique",
+              "choices": {
+                "sans-panier": {
+                  "label": "Sans panier",
+                  "detail": "Stripe Checkout direct (pièces uniques, prestations)"
+                },
+                "avec-panier": {
+                  "label": "Avec panier",
+                  "detail": "Boutique multi-produits, filtres, pagination"
+                }
+              }
+            },
+            "volume": {
+              "label": "Combien de produits ?",
+              "helper": "10 inclus · au-delà de 50 sur devis",
+              "choices": {
+                "10": {
+                  "label": "10",
+                  "detail": "Inclus"
+                },
+                "20": {
+                  "label": "20"
+                },
+                "30": {
+                  "label": "30"
+                },
+                "50": {
+                  "label": "50"
+                },
+                "50plus": {
+                  "label": "50+",
+                  "detail": "Sur devis"
+                }
+              }
+            }
+          }
+        },
+        "seo-pro": {
+          "label": "SEO Pro",
+          "description": "Le palier actif : on engage Google et Bing, on audite, on transmet",
+          "detail": {
+            "intro": "Le **top niveau SEO**. **SEO Pro contient tout le SEO de base + tout le SEO+ + les ajouts ci-dessous**. C'est ce qui est inclus de base dans la formule Premium. **On engage activement** les outils de Google et Bing, on audite votre contenu, et on vous transmet une feuille de route.",
+            "sections": [
+              {
+                "title": "Inclus de base (rappel — déjà dans toutes les formules)",
+                "variant": "default",
+                "bullets": [
+                  {
+                    "text": "Sitemap, robots.txt avec autorisation des bots IA, llms.txt"
+                  },
+                  {
+                    "text": "Site lisible sans JavaScript, compatible Google + Bing"
+                  },
+                  {
+                    "text": "Setup initial Google Search Console"
+                  }
+                ]
+              },
+              {
+                "title": "Inclus SEO+ (rappel — déjà dans Standard et Premium)",
+                "variant": "default",
+                "bullets": [
+                  {
+                    "text": "Schema.org métier (Organization ou LocalBusiness)"
+                  },
+                  {
+                    "text": "OpenGraph personnalisé site + Twitter Cards"
+                  },
+                  {
+                    "text": "Title, meta, h1/h2/h3 optimisés keyword principal"
+                  },
+                  {
+                    "text": "Section FAQ AI-friendly + internal linking propre"
+                  }
+                ]
+              },
+              {
+                "title": "Ce que SEO Pro ajoute en plus — Schema.org étendu",
+                "variant": "accent",
+                "bullets": [
+                  {
+                    "text": "Product, Article, BreadcrumbList, FAQ, Review selon les pages"
+                  },
+                  {
+                    "text": "**Aide Google** à comprendre la nature de chaque page"
+                  }
+                ]
+              },
+              {
+                "title": "Ce que SEO Pro ajoute en plus — Métadonnées avancées",
+                "variant": "accent",
+                "bullets": [
+                  {
+                    "text": "**OpenGraph optimisé page par page** (chaque page a sa propre image OG)"
+                  },
+                  {
+                    "text": "Balises meta dynamiques (titres et descriptions par page, pas un template générique)"
+                  },
+                  {
+                    "text": "Robots.txt fin avec règles par bot"
+                  }
+                ]
+              },
+              {
+                "title": "Ce que SEO Pro ajoute en plus — Indexation Google + Bing",
+                "variant": "accent",
+                "bullets": [
+                  {
+                    "text": "**Setup complet Google Search Console** (au-delà du setup de base de l'Essentielle : full audit + monitoring)"
+                  },
+                  {
+                    "text": "Soumission active de la sitemap + demande d'indexation manuelle de la home"
+                  },
+                  {
+                    "text": "**Setup complet Bing Webmaster Tools** — critique pour ChatGPT Search qui passe par Bing"
+                  },
+                  {
+                    "text": "Plan de **redirections 301** si remplace un ancien site (combiner avec l'option Refonte)"
+                  }
+                ]
+              },
+              {
+                "title": "Ce que SEO Pro ajoute en plus — Audit & livrables",
+                "variant": "accent",
+                "bullets": [
+                  {
+                    "text": "**Audit complet du contenu** (densité keywords, structure, opportunités)"
+                  },
+                  {
+                    "text": "**Internal linking optimisé** (cluster autour des money pages, jus redirigé)"
+                  },
+                  {
+                    "text": "**Screenshot Lighthouse** final livré comme preuve"
+                  },
+                  {
+                    "text": "**Document de suivi 1 page** : ce qu'on a fait, ce qu'il faut surveiller dans les 1-3 mois, où regarder dans GSC"
+                  }
+                ]
+              }
+            ],
+            "note": "SEO Pro = one-shot setup + audit + transmission. Le suivi mensuel des positions, la production continue de contenu, le link building : c'est de la maintenance récurrente, à terme proposée en option dédiée."
+          }
+        },
+        "pack-performance": {
+          "label": "Pack performance",
+          "description": "Optimisation des temps de chargement et des Core Web Vitals",
+          "detail": {
+            "intro": "Optimisation poussée des **performances réelles** côté visiteur : un site qui charge vite, scrolle de manière fluide, reste réactif sur mobile.",
+            "sections": [
+              {
+                "title": "Images & médias",
+                "bullets": [
+                  {
+                    "text": "Toutes les images en **WebP** avec lazy loading"
+                  },
+                  {
+                    "text": "**SVG en composants React** (svgr) : pas de requêtes HTTP"
+                  }
+                ]
+              },
+              {
+                "title": "JavaScript & rendu",
+                "bullets": [
+                  {
+                    "text": "**Audit du bundle JS** + code splitting agressif"
+                  },
+                  {
+                    "text": "Animations **CSS prioritaires** sur GSAP/JS quand possible"
+                  },
+                  {
+                    "text": "Optimisation des **fonts** (subset, preload, font-display swap)"
+                  }
+                ]
+              },
+              {
+                "title": "Core Web Vitals",
+                "bullets": [
+                  {
+                    "text": "**LCP, INP, CLS** surveillés et corrigés"
+                  },
+                  {
+                    "text": "Compression **gzip + brotli** via Vercel"
+                  }
+                ]
+              }
+            ],
+            "note": "Pour booster le score Lighthouse SEO ou Accessibilité, regardez plutôt l'option SEO+ ou SEO Pro."
+          }
+        },
+        "gmb": {
+          "label": "Google Business Profile",
+          "description": "Création ou optimisation de votre fiche Google Maps",
+          "detail": {
+            "intro": "Création ou optimisation complète de votre fiche Google Business Profile. **Indispensable** pour tous les commerces et services locaux : c'est ce qui fait apparaître votre fiche en haut des résultats Google Maps.",
+            "sections": [
+              {
+                "title": "Création de la fiche",
+                "badge": "+80€",
+                "variant": "default",
+                "bullets": [
+                  {
+                    "text": "Photos optimisées et bien cadrées"
+                  },
+                  {
+                    "text": "Horaires, téléphone, adresse vérifiés"
+                  },
+                  {
+                    "text": "Description **rédigée pour convertir**"
+                  },
+                  {
+                    "text": "Catégories choisies pour le **maximum de visibilité**"
+                  }
+                ]
+              },
+              {
+                "title": "Suivi 3 mois (optionnel)",
+                "badge": "+150€",
+                "variant": "accent",
+                "intro": "Je gère votre fiche pendant 3 mois après la création :",
+                "bullets": [
+                  {
+                    "text": "**Mise à jour mensuelle** des photos"
+                  },
+                  {
+                    "text": "**Réponses aux avis** clients"
+                  },
+                  {
+                    "text": "**Posts Google** pour rester actif (offres, news, événements)"
+                  },
+                  {
+                    "text": "Une fiche bien gérée peut **doubler** la visibilité locale"
+                  }
+                ]
+              }
+            ]
+          },
+          "subOptions": {
+            "suivi": {
+              "label": "Suivi 3 mois",
+              "helper": "Optionnel : je gère votre fiche pendant 3 mois après la création",
+              "choices": {
+                "sans-suivi": {
+                  "label": "Sans suivi",
+                  "detail": "Création seule, vous gérez la fiche ensuite"
+                },
+                "avec-suivi": {
+                  "label": "Avec suivi 3 mois",
+                  "detail": "Photos, avis, posts mensuels pendant 3 mois"
+                }
+              }
+            }
+          }
+        },
+        "reservation": {
+          "label": "Intégration de réservation",
+          "description": "TheFork, Zenchef, Planity, Calendly selon votre outil",
+          "detail": {
+            "intro": "Vos visiteurs réservent **directement** depuis votre site, sans jamais le quitter.",
+            "sections": [
+              {
+                "title": "Outils compatibles",
+                "bullets": [
+                  {
+                    "text": "**Restaurants** : TheFork, Zenchef, GuestOnline"
+                  },
+                  {
+                    "text": "**Beauté & bien-être** : Planity, Treatwell"
+                  },
+                  {
+                    "text": "**Coachs & consultants** : Calendly, Cal.com"
+                  },
+                  {
+                    "text": "Autres outils : intégration sur demande"
+                  }
+                ]
+              }
+            ],
+            "note": "Vous gardez l'outil que vous utilisez déjà : pas de double saisie, pas de migration."
+          }
+        },
+        "cms-sanity": {
+          "label": "CMS Headless Sanity",
+          "description": "Modifiez vos textes, photos, produits en autonomie",
+          "detail": {
+            "intro": "Un CMS pour modifier vos contenus **sans toucher au code**. Une « entrée » = un produit, un article, un membre d'équipe, une photo, un témoignage.",
+            "sections": [
+              {
+                "title": "Grille de prix selon le volume",
+                "bullets": [
+                  {
+                    "text": "**Jusqu'à 20 entrées** (vitrine basique)",
+                    "badge": "150€"
+                  },
+                  {
+                    "text": "**21 à 50 entrées** (vitrine + blog ou petit catalogue)",
+                    "badge": "200€"
+                  },
+                  {
+                    "text": "**51 à 100 entrées** (e-commerce 30-50 produits)",
+                    "badge": "300€"
+                  },
+                  {
+                    "text": "100+ entrées (gros catalogue)",
+                    "badge": "Devis"
+                  }
+                ]
+              },
+              {
+                "title": "Inclus systématiquement",
+                "bullets": [
+                  {
+                    "text": "Schéma Sanity adapté à votre site"
+                  },
+                  {
+                    "text": "Connexion Next.js ↔ Sanity (**revalidation auto**)"
+                  },
+                  {
+                    "text": "Compte Sanity à votre nom"
+                  },
+                  {
+                    "text": "**Formation 30 min** en visio en direct"
+                  },
+                  {
+                    "text": "Documentation simple écrite pour vous"
+                  }
+                ]
+              }
+            ],
+            "note": "Sanity reste gratuit jusqu'à 10 000 documents : aucun coût récurrent côté client."
+          },
+          "subOptions": {
+            "volume": {
+              "label": "Volume d'entrées modifiables",
+              "helper": "Un produit, un article, un témoignage = une entrée",
+              "choices": {
+                "20": {
+                  "label": "≤ 20",
+                  "detail": "Inclus"
+                },
+                "50": {
+                  "label": "21–50"
+                },
+                "100": {
+                  "label": "51–100"
+                },
+                "100plus": {
+                  "label": "100+",
+                  "detail": "Sur devis"
+                }
+              }
+            }
+          }
+        },
+        "multilingue": {
+          "label": "Multilingue FR + EN",
+          "description": "Site disponible en français et anglais avec bouton de changement de langue",
+          "detail": {
+            "intro": "Votre site disponible en **français et en anglais**.",
+            "sections": [
+              {
+                "title": "Inclus",
+                "bullets": [
+                  {
+                    "text": "**Tous les textes** du site traduits"
+                  },
+                  {
+                    "text": "**Formulaires** traduits"
+                  },
+                  {
+                    "text": "**Balises SEO** traduites (titles, descriptions)"
+                  },
+                  {
+                    "text": "Bouton de changement de langue dans le header"
+                  }
+                ]
+              }
+            ],
+            "note": "Pour des contenus longs (blog volumineux, descriptions produits détaillées) : voir l'option dédiée. Autres langues (ES, IT, DE…) : même tarif par langue ajoutée."
+          }
+        },
+        "refonte": {
+          "label": "Refonte d'un site existant",
+          "description": "Reprise des textes, images et redirections SEO de votre ancien site",
+          "detail": {
+            "intro": "À cocher **uniquement si** la formule sert à refaire un site qui existe déjà.",
+            "sections": [
+              {
+                "title": "Ce qui est inclus",
+                "bullets": [
+                  {
+                    "text": "Récupération du **contenu** (textes, images, balises SEO)"
+                  },
+                  {
+                    "text": "Intégration propre dans le nouveau site"
+                  },
+                  {
+                    "text": "Mise en place des **redirections 301**"
+                  },
+                  {
+                    "text": "**Préserve** votre référencement Google et évite les 404"
+                  }
+                ]
+              }
+            ],
+            "note": "À ne pas confondre avec une migration pure (changement d'hébergeur sans refaire le site) : pour ce besoin, devis sur mesure."
+          }
+        },
+        "pack-animations": {
+          "label": "Pack animations",
+          "description": "Transitions, micro-interactions, effets au scroll",
+          "detail": {
+            "intro": "Animations **sur mesure** qui donnent du caractère à votre site. Le genre d'effets qu'on **ne fait pas** avec un template no-code.",
+            "sections": [
+              {
+                "title": "Inclus",
+                "bullets": [
+                  {
+                    "text": "**Transitions** entre pages"
+                  },
+                  {
+                    "text": "**Apparitions au scroll** soignées"
+                  },
+                  {
+                    "text": "**Micro-interactions** sur boutons et cartes"
+                  },
+                  {
+                    "text": "Effets 3D légers si pertinents"
+                  }
+                ]
+              }
+            ],
+            "note": "Non disponible en Essentiel : pour pousser à monter en formule. Inclus en Premium : pas besoin de cocher."
+          }
+        },
+        "page-supp": {
+          "label": "Page supplémentaire",
+          "description": "Chaque page additionnelle au-delà de la formule",
+          "detail": {
+            "intro": "Page additionnelle au-delà de ce qui est inclus dans la formule.",
+            "sections": [
+              {
+                "title": "Inclus pour chaque page",
+                "bullets": [
+                  {
+                    "text": "Conçue dans la **même charte graphique**"
+                  },
+                  {
+                    "text": "**Optimisée SEO** (meta, structure, alt)"
+                  },
+                  {
+                    "text": "Responsive mobile, tablette et desktop"
+                  }
+                ]
+              }
+            ],
+            "note": "Page galerie/portfolio avec >20 items : sur devis (peut atteindre 200-300€)."
+          }
+        },
+        "photos-supp": {
+          "label": "Photos ou images supplémentaires",
+          "description": "Visuels d'ambiance, illustrations, photos d'équipe (hors photos produits)",
+          "detail": {
+            "intro": "Pour ajouter des photos ou images au site (visuels d'ambiance, illustrations, photos d'équipe, décor).",
+            "sections": [
+              {
+                "title": "Ce qui est inclus à chaque palier",
+                "bullets": [
+                  {
+                    "text": "**Sélection éditoriale** des meilleures images"
+                  },
+                  {
+                    "text": "**Recadrage** au bon format"
+                  },
+                  {
+                    "text": "**Compression WebP** (chargement rapide)"
+                  },
+                  {
+                    "text": "Intégration au bon endroit du site"
+                  }
+                ]
+              },
+              {
+                "title": "Ce qui n'est PAS inclus",
+                "bullets": [
+                  {
+                    "text": "**Shooting photo** : passez par un photographe"
+                  },
+                  {
+                    "text": "**Génération IA** : sur devis (50-150€ selon volume)"
+                  },
+                  {
+                    "text": "**Photos produits** d'une boutique : déjà couvertes par l'option e-commerce (compter ~2 photos par produit)"
+                  }
+                ]
+              }
+            ],
+            "note": "10 photos incluses dans le prix de base, paliers progressifs ensuite."
+          },
+          "subOptions": {
+            "volume": {
+              "label": "Combien de photos ou images ?",
+              "helper": "10 incluses dans le prix de base · au-delà de 100 sur devis",
+              "choices": {
+                "10": {
+                  "label": "10",
+                  "detail": "Inclus"
+                },
+                "20": {
+                  "label": "20"
+                },
+                "30": {
+                  "label": "30"
+                },
+                "50": {
+                  "label": "50"
+                },
+                "100": {
+                  "label": "100"
+                },
+                "100plus": {
+                  "label": "100+",
+                  "detail": "Sur devis"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "premium": {
+      "nom": "Premium",
+      "delai": "3 semaines",
+      "description": "Site sur mesure niveau agence : design 100% custom, pack animations, CMS inclus, pack performance, SEO Pro, multilingue FR + EN. Pour les marques établies qui voient leur site comme un investissement sur 3 à 5 ans.",
+      "tagline": "Pour une marque qui ne ressemble *à personne*.",
+      "hook": {
+        "pasDe": "Pas une agence de plus.",
+        "description": "Un site unique, conçu et codé de A à Z pour vous,",
+        "metaphor": "comme une pièce sur mesure sortie d'un atelier d'orfèvre."
+      },
+      "audiences": [
+        "Marque établie",
+        "Entreprise",
+        "Restaurant haut de gamme",
+        "Cabinet",
+        "Projet ambitieux"
+      ],
+      "promesse": "Vous voulez un *site qui marque les esprits*\n**un design qui frappe fort**\nqui vous suivra *tout au long de votre aventure* ?\n\nCette formule est faite pour vous.",
+      "benefices": [
+        {
+          "text": "Un design **unique** dont tout le monde se souviendra"
+        },
+        {
+          "text": "Des animations **haut de gamme** qui frappent fort"
+        },
+        {
+          "text": "Vous gérez **tous vos contenus** sans dépendre de personne"
+        },
+        {
+          "text": "**Top n°1** sur Google et chargé en **moins d'une seconde**"
+        }
+      ],
+      "antiAlternative": {
+        "titre": "Pas une agence à 8 000€",
+        "consPoints": [
+          "Surcouche commerciale qui gonfle la facture",
+          "Délais à 3 mois, parfois plus",
+          "Vous parlez à un commercial, jamais au développeur",
+          "Process lourd, devis interminables"
+        ],
+        "pros": {
+          "titre": "Direct avec celui qui code",
+          "intro": "Le même résultat qu'une agence parisienne, **sans la surcouche commerciale** ni les délais à 3 mois.\n\nUn site qui vous *distingue dans votre secteur* et **dure dans le temps**, livré en 3 semaines au lieu de 3 mois.",
+          "points": [
+            "Qualité agence haut de gamme, sans le surcoût",
+            "Livré en 3 semaines, pas 3 mois",
+            "Échanges directs avec le développeur, sans intermédiaire"
+          ]
+        }
+      },
+      "pourquoi": [
+        "Votre activité a déjà du business à porter et mérite un site signature",
+        "Vous voulez vous distinguer dans le haut du panier de votre secteur",
+        "Vous voulez gérer vos contenus en autonomie (CMS inclus)",
+        "Vous voulez une performance technique irréprochable, ressentie par vos visiteurs",
+        "Vous voyez ce site comme un investissement sur 3 à 5 ans"
+      ],
+      "inclus": [
+        {
+          "titre": "Tout ce qui est dans Standard",
+          "detail": {
+            "intro": "Tout ce qui est inclus dans la formule Standard, en base.",
+            "sections": [
+              {
+                "title": "Reportés ici",
+                "bullets": [
+                  {
+                    "text": "Pages séparées (5-7)"
+                  },
+                  {
+                    "text": "Design personnalisé"
+                  },
+                  {
+                    "text": "Rédaction des textes"
+                  },
+                  {
+                    "text": "SEO+ + Google Analytics"
+                  },
+                  {
+                    "text": "Formulaire de devis personnalisé"
+                  },
+                  {
+                    "text": "Formation 30 min"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "titre": "Jusqu'à 10 pages",
+          "detail": {
+            "intro": "Une **vraie architecture** multi-pages pour les sites ambitieux.",
+            "note": "Au-delà de 10 pages : +60€ par page supplémentaire."
+          }
+        },
+        {
+          "titre": "Design 100% sur mesure",
+          "detail": {
+            "intro": "**Aucun gabarit**, aucun template. Conception totalement libre.",
+            "sections": [
+              {
+                "title": "Comment ça se passe",
+                "bullets": [
+                  {
+                    "text": "**3 directions visuelles** proposées en maquette"
+                  },
+                  {
+                    "text": "Vous en retenez **une**"
+                  },
+                  {
+                    "text": "**Itération** jusqu'à validation"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "titre": "Pack animations inclus",
+          "detail": {
+            "intro": "Animations **sur mesure** qui donnent du caractère.",
+            "sections": [
+              {
+                "title": "Inclus",
+                "bullets": [
+                  {
+                    "text": "**Transitions** entre pages"
+                  },
+                  {
+                    "text": "**Micro-interactions** sur boutons et cartes"
+                  },
+                  {
+                    "text": "**Effets au scroll** soignés"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "titre": "SEO Pro",
+          "detail": {
+            "intro": "Le **palier actif**. **SEO Pro contient tout le SEO de base + tout le SEO+ + les ajouts ci-dessous**. On engage Google et Bing, on audite, on transmet une feuille de route.",
+            "sections": [
+              {
+                "title": "Rappel — déjà inclus via le SEO de base et SEO+",
+                "variant": "default",
+                "bullets": [
+                  {
+                    "text": "Sitemap, robots.txt avec autorisation des bots IA, llms.txt"
+                  },
+                  {
+                    "text": "Schema.org métier (Organization ou LocalBusiness)"
+                  },
+                  {
+                    "text": "OpenGraph site + Twitter Cards"
+                  },
+                  {
+                    "text": "Title, meta, h1/h2/h3 optimisés keyword principal"
+                  },
+                  {
+                    "text": "FAQ AI-friendly + internal linking propre"
+                  },
+                  {
+                    "text": "Setup initial Google Search Console"
+                  }
+                ]
+              },
+              {
+                "title": "Ce que SEO Pro ajoute en plus — Schema.org étendu",
+                "variant": "accent",
+                "bullets": [
+                  {
+                    "text": "Product, Article, BreadcrumbList, FAQ, Review selon les pages"
+                  }
+                ]
+              },
+              {
+                "title": "Ce que SEO Pro ajoute en plus — Métadonnées avancées",
+                "variant": "accent",
+                "bullets": [
+                  {
+                    "text": "OpenGraph optimisé **page par page** (image OG dédiée)"
+                  },
+                  {
+                    "text": "Balises meta **dynamiques** (titres + descriptions par page)"
+                  },
+                  {
+                    "text": "Robots.txt fin avec règles par bot"
+                  }
+                ]
+              },
+              {
+                "title": "Ce que SEO Pro ajoute en plus — Indexation Google + Bing",
+                "variant": "accent",
+                "bullets": [
+                  {
+                    "text": "**Setup complet Google Search Console** + soumission active"
+                  },
+                  {
+                    "text": "**Setup complet Bing Webmaster Tools** (clé pour ChatGPT Search)"
+                  },
+                  {
+                    "text": "Plan de **redirections 301** si refonte"
+                  }
+                ]
+              },
+              {
+                "title": "Ce que SEO Pro ajoute en plus — Audit & livrables",
+                "variant": "accent",
+                "bullets": [
+                  {
+                    "text": "**Audit complet** du contenu (densité keywords, structure)"
+                  },
+                  {
+                    "text": "**Internal linking optimisé** (cluster autour des money pages)"
+                  },
+                  {
+                    "text": "**Screenshot Lighthouse** final livré"
+                  },
+                  {
+                    "text": "**Document de suivi 1 page** : ce qui est fait, ce qu'il faut surveiller"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "titre": "Pack performance inclus",
+          "detail": {
+            "intro": "Optimisation des **performances réelles** côté visiteur.",
+            "sections": [
+              {
+                "title": "Inclus",
+                "bullets": [
+                  {
+                    "text": "Optimisation des **Core Web Vitals**"
+                  },
+                  {
+                    "text": "Images **WebP** + lazy loading"
+                  },
+                  {
+                    "text": "Animations **CSS prioritaires**"
+                  },
+                  {
+                    "text": "Audit du **bundle JS**"
+                  },
+                  {
+                    "text": "Optimisation des **fonts**"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "titre": "CMS Headless Sanity inclus",
+          "detail": {
+            "intro": "Modifiez vos contenus **en autonomie**, sans rappeler de développeur.",
+            "sections": [
+              {
+                "title": "Inclus",
+                "bullets": [
+                  {
+                    "text": "Jusqu'à **50 entrées** modifiables"
+                  },
+                  {
+                    "text": "Schéma Sanity adapté à votre site"
+                  },
+                  {
+                    "text": "Connexion Next.js ↔ Sanity (revalidation auto)"
+                  },
+                  {
+                    "text": "**Formation incluse**"
+                  }
+                ]
+              }
+            ],
+            "note": "Au-delà de 50 entrées : +50€ par tranche de 50."
+          }
+        },
+        {
+          "titre": "Multilingue FR + EN inclus",
+          "detail": {
+            "intro": "Votre site disponible en **français et en anglais**.",
+            "sections": [
+              {
+                "title": "Inclus",
+                "bullets": [
+                  {
+                    "text": "Tous les **textes** traduits"
+                  },
+                  {
+                    "text": "**Formulaires** traduits"
+                  },
+                  {
+                    "text": "**Balises SEO** traduites"
+                  },
+                  {
+                    "text": "Bouton de changement de langue dans le header"
+                  }
+                ]
+              }
+            ],
+            "note": "Articles longs ou autres langues : sur devis."
+          }
+        },
+        {
+          "titre": "10h de retouches incluses",
+          "detail": {
+            "intro": "**10h après la livraison** pour ajuster le site sans surcoût.",
+            "note": "Au-delà : 60€/h, devis envoyé avant chaque intervention."
+          }
+        },
+        {
+          "titre": "1 mois de support post-livraison",
+          "detail": {
+            "intro": "**1 mois après la livraison**, je reste disponible pour les corrections et ajustements.",
+            "sections": [
+              {
+                "title": "Inclus",
+                "bullets": [
+                  {
+                    "text": "**Corrections** de bugs si présents"
+                  },
+                  {
+                    "text": "**Ajustements** mineurs"
+                  },
+                  {
+                    "text": "Conseils sur l'utilisation"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "addons": {
+        "ecommerce": {
+          "label": "E-commerce",
+          "description": "Boutique en ligne avec Stripe : carte, Apple Pay, Google Pay",
+          "detail": {
+            "intro": "Boutique en ligne complète avec Stripe. Deux variantes selon votre besoin : **sans panier** (achat unitaire direct) ou **avec panier** (vraie boutique multi-produits).",
+            "sections": [
+              {
+                "title": "Sans panier",
+                "badge": "190€",
+                "variant": "default",
+                "intro": "Achat unitaire via Stripe Checkout direct.",
+                "bullets": [
+                  {
+                    "text": "Idéal pour **pièces uniques**, prestations, œuvres, produits luxe"
+                  },
+                  {
+                    "text": "Le client clique → checkout Stripe direct → paiement"
+                  }
+                ]
+              },
+              {
+                "title": "Avec panier",
+                "badge": "+90€",
+                "variant": "accent",
+                "intro": "Vraie boutique multi-produits.",
+                "bullets": [
+                  {
+                    "text": "**Panier**, filtres, pagination"
+                  },
+                  {
+                    "text": "Idéal pour catalogues créateur, e-commerce alimentaire, multi-produits"
+                  }
+                ]
+              },
+              {
+                "title": "Inclus dans tous les cas",
+                "bullets": [
+                  {
+                    "text": "Configuration **compte Stripe** (accompagnement visio 30 min)"
+                  },
+                  {
+                    "text": "Page produit avec slider d'images"
+                  },
+                  {
+                    "text": "Checkout Stripe : **carte, Apple Pay, Google Pay, Link**"
+                  },
+                  {
+                    "text": "Page de confirmation + emails (client + vendeur)"
+                  },
+                  {
+                    "text": "Pages légales obligatoires : **CGV, retour, RGPD**"
+                  },
+                  {
+                    "text": "Tests en mode test puis passage en live"
+                  },
+                  {
+                    "text": "Indexation Google Search Console"
+                  }
+                ]
+              }
+            ],
+            "note": "Volume : 10 produits inclus, paliers 20 (+30€), 30 (+60€), 50 (+120€). Au-delà de 50 produits : sur devis (vraie maintenance catalogue)."
+          },
+          "subOptions": {
+            "type": {
+              "label": "Type de boutique",
+              "choices": {
+                "sans-panier": {
+                  "label": "Sans panier",
+                  "detail": "Stripe Checkout direct (pièces uniques, prestations)"
+                },
+                "avec-panier": {
+                  "label": "Avec panier",
+                  "detail": "Boutique multi-produits, filtres, pagination"
+                }
+              }
+            },
+            "volume": {
+              "label": "Combien de produits ?",
+              "helper": "10 inclus · au-delà de 50 sur devis",
+              "choices": {
+                "10": {
+                  "label": "10",
+                  "detail": "Inclus"
+                },
+                "20": {
+                  "label": "20"
+                },
+                "30": {
+                  "label": "30"
+                },
+                "50": {
+                  "label": "50"
+                },
+                "50plus": {
+                  "label": "50+",
+                  "detail": "Sur devis"
+                }
+              }
+            }
+          }
+        },
+        "gmb": {
+          "label": "Google Business Profile",
+          "description": "Création ou optimisation de votre fiche Google Maps",
+          "detail": {
+            "intro": "Création ou optimisation complète de votre fiche Google Business Profile. **Indispensable** pour tous les commerces et services locaux : c'est ce qui fait apparaître votre fiche en haut des résultats Google Maps.",
+            "sections": [
+              {
+                "title": "Création de la fiche",
+                "badge": "+80€",
+                "variant": "default",
+                "bullets": [
+                  {
+                    "text": "Photos optimisées et bien cadrées"
+                  },
+                  {
+                    "text": "Horaires, téléphone, adresse vérifiés"
+                  },
+                  {
+                    "text": "Description **rédigée pour convertir**"
+                  },
+                  {
+                    "text": "Catégories choisies pour le **maximum de visibilité**"
+                  }
+                ]
+              },
+              {
+                "title": "Suivi 3 mois (optionnel)",
+                "badge": "+150€",
+                "variant": "accent",
+                "intro": "Je gère votre fiche pendant 3 mois après la création :",
+                "bullets": [
+                  {
+                    "text": "**Mise à jour mensuelle** des photos"
+                  },
+                  {
+                    "text": "**Réponses aux avis** clients"
+                  },
+                  {
+                    "text": "**Posts Google** pour rester actif (offres, news, événements)"
+                  },
+                  {
+                    "text": "Une fiche bien gérée peut **doubler** la visibilité locale"
+                  }
+                ]
+              }
+            ]
+          },
+          "subOptions": {
+            "suivi": {
+              "label": "Suivi 3 mois",
+              "helper": "Optionnel : je gère votre fiche pendant 3 mois après la création",
+              "choices": {
+                "sans-suivi": {
+                  "label": "Sans suivi",
+                  "detail": "Création seule, vous gérez la fiche ensuite"
+                },
+                "avec-suivi": {
+                  "label": "Avec suivi 3 mois",
+                  "detail": "Photos, avis, posts mensuels pendant 3 mois"
+                }
+              }
+            }
+          }
+        },
+        "reservation": {
+          "label": "Intégration de réservation",
+          "description": "TheFork, Zenchef, Planity, Calendly selon votre outil",
+          "detail": {
+            "intro": "Vos visiteurs réservent **directement** depuis votre site, sans jamais le quitter.",
+            "sections": [
+              {
+                "title": "Outils compatibles",
+                "bullets": [
+                  {
+                    "text": "**Restaurants** : TheFork, Zenchef, GuestOnline"
+                  },
+                  {
+                    "text": "**Beauté & bien-être** : Planity, Treatwell"
+                  },
+                  {
+                    "text": "**Coachs & consultants** : Calendly, Cal.com"
+                  },
+                  {
+                    "text": "Autres outils : intégration sur demande"
+                  }
+                ]
+              }
+            ],
+            "note": "Vous gardez l'outil que vous utilisez déjà : pas de double saisie, pas de migration."
+          }
+        },
+        "multilingue-long": {
+          "label": "Multilingue : articles ou textes longs",
+          "description": "Pour blog volumineux ou descriptions produits détaillées",
+          "detail": {
+            "intro": "Pour les sites avec **beaucoup de contenu textuel** : blog volumineux, descriptions produits longues, FAQs détaillées.",
+            "sections": [
+              {
+                "title": "Tarification",
+                "bullets": [
+                  {
+                    "text": "Devis selon le **volume réel** de mots à traduire"
+                  },
+                  {
+                    "text": "Compter environ **30€ par tranche de 1000 mots** traduits puis relus"
+                  }
+                ]
+              },
+              {
+                "title": "Cas spéciaux",
+                "bullets": [
+                  {
+                    "text": "**Langues asiatiques** (japonais, chinois) : sur devis"
+                  },
+                  {
+                    "text": "**Langues RTL** (arabe, hébreu) : sur devis (changement de layout)"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "refonte": {
+          "label": "Refonte d'un site existant",
+          "description": "Reprise des textes, images et redirections SEO de votre ancien site",
+          "detail": {
+            "intro": "À cocher **uniquement si** la formule sert à refaire un site qui existe déjà.",
+            "sections": [
+              {
+                "title": "Ce qui est inclus",
+                "bullets": [
+                  {
+                    "text": "Récupération du **contenu** (textes, images, balises SEO)"
+                  },
+                  {
+                    "text": "Intégration propre dans le nouveau site"
+                  },
+                  {
+                    "text": "Mise en place des **redirections 301**"
+                  },
+                  {
+                    "text": "**Préserve** votre référencement Google et évite les 404"
+                  }
+                ]
+              }
+            ],
+            "note": "À ne pas confondre avec une migration pure (changement d'hébergeur sans refaire le site) : pour ce besoin, devis sur mesure."
+          }
+        },
+        "page-supp": {
+          "label": "Page supplémentaire",
+          "description": "Chaque page additionnelle au-delà de la formule",
+          "detail": {
+            "intro": "Page additionnelle au-delà de ce qui est inclus dans la formule.",
+            "sections": [
+              {
+                "title": "Inclus pour chaque page",
+                "bullets": [
+                  {
+                    "text": "Conçue dans la **même charte graphique**"
+                  },
+                  {
+                    "text": "**Optimisée SEO** (meta, structure, alt)"
+                  },
+                  {
+                    "text": "Responsive mobile, tablette et desktop"
+                  }
+                ]
+              }
+            ],
+            "note": "Page galerie/portfolio avec >20 items : sur devis (peut atteindre 200-300€)."
+          }
+        }
+      }
+    }
+  },
+  "serviceConfigurator": {
+    "backToPlans": "Retour aux formules",
+    "planBadge": "Formule",
+    "mostChosen": "★ La plus choisie",
+    "estimatedDelay": "Délai estimé : ",
+    "bookCall": "Réserver un appel",
+    "youAre": "Vous êtes…",
+    "doYouRecognize": "Vous vous reconnaissez ?",
+    "estimateProject": "Estimez votre projet",
+    "configurePlan": "Configurez la formule {nom}",
+    "freeEstimation": "Estimation gratuite, aucun paiement à cette étape. Vous recevez votre devis détaillé par email.",
+    "detailOf": "Voir le détail de {titre}",
+    "moreInfo": "En savoir plus",
+    "moreInfoOn": "Plus d'infos sur {label}",
+    "includedSection": "Ce qui est inclus",
+    "extraOptions": "Options supplémentaires",
+    "checkToCustomize": "Cochez pour personnaliser votre devis.",
+    "showLess": "Voir moins",
+    "showMore": "Voir plus ({count, plural, one {# option} other {# options}})",
+    "quoteLabel": "Devis",
+    "includedLabel": "Inclus",
+    "includedLower": "inclus",
+    "quoteLower": "devis",
+    "selectOption": "Sélectionnez {label}",
+    "yourEstimatedQuote": "Votre devis estimé",
+    "planLabel": "Formule {nom}",
+    "base": "Base",
+    "delay": "Délai : ",
+    "startingAt": "À partir de",
+    "detailedEstimationAfter": "Votre estimation détaillée s'affiche après l'envoi",
+    "oneOptionWaiting": "Une option attend votre sélection ci-dessus.",
+    "optionsWaiting": "{count} options attendent votre sélection ci-dessus.",
+    "seeMyEstimation": "Voir mon estimation",
+    "responseTime": "Réponse sous 24h · Aucun engagement, aucun paiement à cette étape",
+    "includedInPlan": "Inclus dans la formule"
+  },
+  "serviceQuoteDialog": {
+    "titleForm": "Voir mon estimation",
+    "titleSuccess": "C'est parti !",
+    "close": "Fermer",
+    "descriptionForm": "Laissez-moi vos coordonnées et je vous envoie votre estimation détaillée par email, ainsi que les prochaines étapes pour démarrer.",
+    "nameLabel": "Nom et prénom *",
+    "namePlaceholder": "Votre nom",
+    "emailLabel": "Email *",
+    "emailPlaceholder": "votre@email.com",
+    "phoneLabel": "Téléphone",
+    "phoneOptional": "(facultatif)",
+    "phonePlaceholder": "06 XX XX XX XX",
+    "projectLabel": "Un mot sur votre projet",
+    "projectOptional": "(facultatif)",
+    "projectPlaceholder": "Une précision, un délai, une question...",
+    "submitPending": "Envoi en cours...",
+    "submitLabel": "Recevoir mon estimation",
+    "responseTime": "Réponse sous 24h · Aucun engagement, aucun paiement",
+    "emailSent": "Votre estimation détaillée vient de partir sur {email}. Pensez à vérifier vos spams.",
+    "yourEstimation": "Votre estimation",
+    "totalForPlan": "Total pour la formule {nom}",
+    "taxes": "Hors taxes · Paiement en 2× (acompte + livraison)",
+    "discussNow": "Envie d'en discuter <bold>tout de suite</bold> ?",
+    "bookCallOffer": "Bookez un appel découverte de 15 min, c'est offert.",
+    "bookMyCall": "Réserver mon appel découverte",
+    "closeLater": "Plus tard, fermer la fenêtre",
+    "defaultMessage": "Demande d'estimation pour la formule {nom}.",
+    "networkError": "Erreur réseau. Réessayez dans quelques instants.",
+    "serverError": "Une erreur est survenue."
+  },
+  "serviceWorkflow": {
+    "eyebrow": "Comment ça se passe",
+    "title": "Un process en 4 étapes, livré en {delai}",
+    "subtitle": "Vous savez à tout moment où on en est. Pas de surprise, pas de tunnel sans nouvelles.",
+    "steps": {
+      "essentiel": [
+        {
+          "num": "01",
+          "titre": "Le brief",
+          "description": "On échange en visio. Je comprends votre univers, votre clientèle, vos objectifs."
+        },
+        {
+          "num": "02",
+          "titre": "La direction",
+          "description": "Je vous propose une palette de couleurs et un style adapté à votre activité. Une fois décidé, je prends les commandes."
+        },
+        {
+          "num": "03",
+          "titre": "La première ébauche",
+          "description": "Je vous montre une première page complète. À partir de là, vous me faites confiance jusqu'à la livraison."
+        },
+        {
+          "num": "04",
+          "titre": "Production & livraison",
+          "description": "Finitions, optimisations, mise en ligne. Votre site est prêt à accueillir vos premiers visiteurs."
+        }
+      ],
+      "standard": [
+        {
+          "num": "01",
+          "titre": "Le brief",
+          "description": "On échange en visio. Je comprends votre univers, votre clientèle, vos objectifs."
+        },
+        {
+          "num": "02",
+          "titre": "La direction",
+          "description": "Je vous propose une vraie identité visuelle : palette, typographies, et une page de démo codée pour vous montrer concrètement le rendu."
+        },
+        {
+          "num": "03",
+          "titre": "La première ébauche",
+          "description": "On affine ensemble cette page jusqu'à ce qu'elle vous ressemble vraiment. C'est la base qui guide tout le reste du site."
+        },
+        {
+          "num": "04",
+          "titre": "Production & livraison",
+          "description": "Construction des autres pages, finitions, optimisations, mise en ligne. Votre site est prêt à convertir."
+        }
+      ],
+      "premium": [
+        {
+          "num": "01",
+          "titre": "Le brief",
+          "description": "Échange approfondi sur votre univers, votre clientèle, votre positionnement et vos ambitions à 3-5 ans."
+        },
+        {
+          "num": "02",
+          "titre": "La direction",
+          "description": "Recherche d'identité poussée : 2 ou 3 univers visuels distincts, composants sur mesure, inspirations puisées dans le meilleur du web."
+        },
+        {
+          "num": "03",
+          "titre": "La première ébauche",
+          "description": "Une page clé entièrement designée et codée pour incarner l'identité. Itérations jusqu'à ce qu'elle vous représente parfaitement."
+        },
+        {
+          "num": "04",
+          "titre": "Production & livraison",
+          "description": "Construction complète, animations sur mesure, performance poussée, mise en ligne. Un site qui marque les esprits."
+        }
+      ]
+    }
+  },
+  "serviceCtas": {
+    "bookMyCall": "Réserver mon appel découverte",
+    "readyToAct": "Prêt à passer à l'action ?",
+    "readyToActAccent": "passer à l'action",
+    "finalDescription": "Que vous préfériez en parler maintenant ou recevoir d'abord votre estimation par mail, on avance ensemble à votre rythme.",
+    "bookCall": "Réserver un appel",
+    "receiveEstimation": "Recevoir mon estimation"
+  },
+  "serviceTestimonials": {
+    "eyebrow": "Ils m'ont fait confiance",
+    "title": "Quelques retours de",
+    "titleAccent": "mes clients",
+    "subtitle": "Des indépendants et petites entreprises qui ont transformé leur présence en ligne avec moi.",
+    "starsLabel": "{count} étoiles sur 5"
+  },
+  "serviceProjects": {
+    "eyebrow": "Réalisations",
+    "title": "Une sélection des sites que j'ai conçus",
+    "subtitle": "Et si le prochain c'était le vôtre ?",
+    "description": "Du design fort, une vraie identité — jamais un template.",
+    "viewAll": "Voir tous les projets",
+    "viewProject": "Voir le projet {nom}",
+    "liveSite": "Site en ligne",
+    "contextLabels": {
+      "freelance": "Freelance",
+      "agence": "Agence",
+      "perso": "Perso"
+    }
+  },
+  "addonInfo": {
+    "onQuote": "Sur devis",
+    "startingAt": "À partir de {prix} €",
+    "addPrice": "+{prix} €"
+  },
+  "projetContent": {
+    "backToAll": "Tous les projets",
+    "retour": "Retour",
+    "meta": {
+      "client": "Client",
+      "context": "Contexte",
+      "year": "Année",
+      "stack": "Stack"
+    },
+    "context": {
+      "agence": "Mission studio · Artefact 3000",
+      "agenceSimple": "Projet d'agence",
+      "agenceInterne": "Projet d'agence · interne",
+      "freelance": "Projet freelance",
+      "perso": "Projet personnel"
+    },
+    "badge": {
+      "agenceArtefact3000": "Projet agence · Artefact 3000",
+      "agenceArtefact": "Projet agence · Artefact",
+      "freelance": "Projet freelance"
+    },
+    "section": {
+      "overview": "Vue d'ensemble",
+      "technical": "Côté technique",
+      "stack": "Stack du projet",
+      "team": "Équipe",
+      "section": "Section",
+      "today": "Aujourd'hui",
+      "afterOperation": "Après l'opération",
+      "results": "Résultats"
+    },
+    "viewLive": "Voir le site en ligne",
+    "nextProject": "Projet suivant",
+    "prevProject": "Projet précédent",
+    "viewServices": "Voir mes formules",
+    "readingNext": "Lecture suivante",
+    "allProjects": "Tous les projets",
+    "contributed": "Ont contribué",
+    "loveCta": {
+      "eyebrow": "Vous aimez ce type de site ?",
+      "title": "Je crée des sites sur mesure pour artistes, indépendants et petites entreprises.",
+      "description": "Identité visuelle, e-commerce, interface d'administration — chaque projet est pensé et codé de A à Z."
+    }
+  },
+  "projetsData": {
+    "bnp-paribas-elearning": {
+      "titre": "Module e-learning IA générative",
+      "description": "Module e-learning gamifié déployé en interne chez BNP Paribas — 6 chapitres, 5 types de mini-jeux, 6 vidéos générées par IA, un personnage guide, conforme SCORM 1.2.",
+      "descriptionPublic": "L'**écran d'introduction** : __AI-nstein__ — personnage IA inspiré d'Einstein — guide l'utilisateur via une __interface de chat__, envoyant des messages et posant des questions auxquels on répond en cliquant. En parallèle, le __module de cours principal__ affiche le contenu interactif du chapitre en cours. En bas, une __barre de progression__ suit l'avancement sur l'ensemble des six chapitres. Les jeux interactifs arrivent dans les chapitres suivants.",
+      "intro": "Un des projets qui m'a le plus stimulé. Développé chez Artefact 3000 pour **BNP Paribas**, ce module e-learning gamifié forme des milliers de collaborateurs aux fondamentaux de l'IA générative. **6 chapitres, 5 types de mini-jeux, 6 vidéos générées par IA**, un personnage guide. Et surtout, un pari que peu d'agences tentent : **remplacer Articulate Storyline par une app React complète**, packagée en SCORM 1.2 pour s'intégrer dans n'importe quel LMS d'entreprise.",
+      "videoTitle": "L'écran d'introduction",
+      "sliderSets": [
+        {
+          "title": "Les mini-jeux interactifs",
+          "description": "Cinq types de mini-jeux distincts, développés from scratch avec PixiJS. DataShield : intercepter des données sensibles en chute libre. Un catégoriseur de prompts en glisser-déposer. Une chasse aux hallucinations. Et pour le chapitre 5, le convoi de presse : un objet physique invisible représente la malle sur le tapis roulant, synchronisé image par image avec la vidéo, pour déclencher l'entrée dans les pressoirs au bon moment."
+        },
+        {
+          "title": "Apprentissage, récaps & résultats",
+          "description": "Chaque chapitre suit le même rythme : une vidéo d'introduction générée par IA, des explications, un jeu interactif, puis un écran de récap ou de résultats qui distingue clairement le juste du faux. En bout de parcours, un passeport de compétences valide l'ensemble des chapitres."
+        }
+      ],
+      "technologies": [
+        {
+          "nom": "React + Vite (SPA statique)",
+          "detail": "Le LMS de BNP n'accepte que des applications statiques packagées en SCORM — pas de serveur, pas d'API externe. React + Vite permet de produire un build autonome que n'importe quel LMS peut lire, là où Next.js nécessite un serveur Node.js."
+        },
+        {
+          "nom": "SCORM 1.2 (imsmanifest + pipwerks)",
+          "detail": "Standard e-learning des années 2000, utilisé par les LMS d'entreprise. Un package SCORM, c'est une archive ZIP avec un manifest XML qui décrit le module, et une API JavaScript que le LMS expose à la page. `pipwerks-scorm-api-wrapper` abstrait les appels LMS (`LMSSetValue`, `LMSCommit`, etc.) pour remonter score, progression et complétion depuis React vers le LMS de BNP."
+        },
+        {
+          "nom": "PixiJS",
+          "detail": "Les mini-jeux (jeu de briques, bouclier de données, détection d'hallucinations) nécessitaient un rendu canvas hautes performances. PixiJS offre un moteur WebGL avec fallback Canvas 2D, parfaitement adapté aux animations complexes d'objets en mouvement."
+        },
+        {
+          "nom": "react-beautiful-dnd",
+          "detail": "Utilisé pour les jeux de glisser-déposer : classement de sources, association de concepts. La bibliothèque gère les accessoires d'accessibilité (ARIA, navigation clavier) nativement, ce qui a facilité l'implémentation du mode accessibilité complet."
+        },
+        {
+          "nom": "GSAP + Framer Motion",
+          "detail": "GSAP pilote les transitions orchestrées (entrées de chapitres, timelines synchronisées texte/image/son). Framer Motion gère les animations des composants React (apparition de bulles de chat, transitions de cartes de quiz)."
+        },
+        {
+          "nom": "Storybook",
+          "detail": "L'UI comptait des dizaines de composants spécifiques : bulles de chat, cartes de quiz, barres de progression circulaire, écrans de résultats. Storybook a permis de les valider visuellement et fonctionnellement en isolation, avant de les câbler dans la machine à états."
+        }
+      ],
+      "challenges": [
+        {
+          "titre": "Remplacer Articulate Storyline par React au sein de l'agence",
+          "solution": "Les modules SCORM d'Artefact étaient produits avec Articulate Storyline — outil no-code, rapide, mais design contraint, animations impossibles, aucune interactivité custom. Des freelances étaient payés pour produire des slides. L'idée : prouver qu'on pouvait livrer la même compatibilité SCORM 1.2 avec une vraie app React — et changer le workflow de l'agence pour tous les futurs clients e-learning. La technique existe, mais elle est rarement mise en œuvre dans un contexte agence où Articulate est la norme."
+        },
+        {
+          "titre": "Comprendre et implémenter le protocole SCORM 1.2",
+          "solution": "SCORM 1.2 est un standard des années 2000. Un package SCORM, c'est une archive ZIP avec un manifest XML (`imsmanifest.xml`) qui décrit le module, et une API JavaScript (`LMSInitialize`, `LMSSetValue`, `LMSCommit`, etc.) que le LMS expose à la page. J'ai étudié la spec, compris le protocole de communication, puis intégré `pipwerks-scorm-api-wrapper` pour abstraire les appels LMS — ce qui a permis de remonter score, progression et statut de complétion vers le LMS de BNP depuis l'app React."
+        },
+        {
+          "titre": "Machine à états pour un flow pédagogique complexe",
+          "solution": "6 chapitres, une intro, une séquence finale, des dizaines d'étapes conditionnelles selon les réponses de l'utilisateur — sans routing serveur possible. L'ensemble du flow est modélisé via des stores Zustand en machine à états. Chaque étape expose ses conditions d'entrée et de sortie, sa contribution à la progression, et son rendu conditionnel."
+        },
+        {
+          "titre": "Mini-jeux canvas dans une SPA statique",
+          "solution": "Chaque chapitre a son propre mini-jeu — jeu de briques avec raquette et balle (PixiJS), bouclier qui intercepte des données en chute, chasse aux hallucinations IA, catégoriseur de packages. Intégrer PixiJS dans React a demandé de gérer manuellement le cycle de vie des scènes canvas pour éviter les fuites mémoire entre transitions de chapitres."
+        },
+        {
+          "titre": "Accessibilité complète — navigation clavier, audio description, zoom",
+          "solution": "BNP imposait une conformité accessibilité stricte. À l'ouverture du module, l'utilisateur choisit sa langue, active ou désactive l'audio description, règle le niveau de zoom, et choisit entre navigation classique et navigation au clavier (Tab). En mode clavier, chaque élément focusable est annoncé à la voix avant interaction — l'utilisateur entend ce sur quoi il est positionné avant de valider avec Entrée. On a même poussé jusqu'à implémenter le drag & drop au clavier, avant de le désactiver en production pour ne pas surcharger l'expérience. C'est probablement la partie la plus longue et la plus fastidieuse du projet — chaque composant, chaque jeu, chaque transition devait être testé avec tabindex, attributs aria et annonces vocales."
+        }
+      ],
+      "credits": [
+        {
+          "nom": "Mathieu Crochet",
+          "role": "Manager & architecture · Artefact 3000"
+        },
+        {
+          "nom": "Vincent Blacher",
+          "role": "Head of Design · Artefact 3000"
+        },
+        {
+          "nom": "Pauline Ravel",
+          "role": "UX Designer · Artefact 3000"
+        }
+      ],
+      "stackDetail": [
+        {
+          "nom": "React + Vite",
+          "role": "SPA statique · build autonome compatible SCORM"
+        },
+        {
+          "nom": "SCORM 1.2 (pipwerks)",
+          "role": "Communication LMS · score · progression · complétion"
+        },
+        {
+          "nom": "PixiJS",
+          "role": "Mini-jeux canvas WebGL haute performance"
+        },
+        {
+          "nom": "react-beautiful-dnd",
+          "role": "Drag & drop accessible · ARIA · navigation clavier"
+        },
+        {
+          "nom": "GSAP",
+          "role": "Timelines orchestrées texte · image · son"
+        },
+        {
+          "nom": "Framer Motion",
+          "role": "Animations React des composants UI"
+        },
+        {
+          "nom": "Zustand",
+          "role": "Machine à états du flow pédagogique (6 chapitres)"
+        },
+        {
+          "nom": "Storybook",
+          "role": "Validation visuelle des composants en isolation"
+        }
+      ],
+      "page": {
+        "section01": {
+          "titlePart1": "Un module e-learning",
+          "titlePart2": "qui remplace Articulate",
+          "titlePart3": "par une app React.",
+          "subtitle": "6 chapitres, 5 mini-jeux, 6 vidéos générées par IA, un personnage guide, packagé en SCORM 1.2 pour s'intégrer dans le LMS interne BNP."
+        },
+        "section04": {
+          "titlePart1": "Cinq décisions",
+          "titlePart2": "qui ont fait le projet",
+          "subtitle": "Pour les développeurs et les recruteurs : voici les choix techniques qui ont structuré ce module e-learning gamifié, du remplacement d'Articulate à l'accessibilité au clavier."
+        },
+        "section05": {
+          "titlePart1": "Les outils",
+          "titlePart2": "qui font tourner",
+          "titlePart3": "le module."
+        },
+        "section06": {
+          "titlePart1": "Avec qui",
+          "titlePart2": "j'ai travaillé",
+          "subtitle": "Le projet a été mené chez Artefact 3000, en collaboration étroite avec une équipe design et un manager produit."
+        },
+        "figCaption": {
+          "video": "Module SCORM interne"
+        },
+        "cta": {
+          "eyebrow": "Un projet de cette envergure ?",
+          "title": "Je conçois et développe des modules e-learning et applications interactives sur mesure.",
+          "description": "Apps React, mini-jeux canvas, machines à états, accessibilité, SCORM : ce projet a posé toutes les briques que je peux remettre en œuvre ailleurs."
+        }
+      }
+    },
+    "argedis-totalenergies": {
+      "titre": "Carte interactive des producteurs locaux",
+      "description": "Application tactile déployée sur des centaines de tablettes en stations TotalEnergies pour mettre en avant les producteurs locaux partenaires — administrée et mise à jour en continu.",
+      "descriptionPublic": "**Une interface pensée pour tous.** Simple, fluide, immédiate. Les visiteurs d'une station comprennent en un instant qui sont les producteurs locaux à proximité, où ils se trouvent, et ce qu'ils fabriquent.\n\n**Chaque région a son univers.** La carte change selon le territoire. Les couleurs changent. Les icônes changent. Chaque territoire a sa propre identité visuelle — un travail de design poussé pour ancrer l'utilisateur dans son terroir.\n\n**De producteur en producteur.** L'expérience est pensée pour la flânerie : un bouton, et on passe au suivant. Simple, accessible, sans friction — même pour les utilisateurs les moins à l'aise avec le digital.",
+      "descriptionTech": "Architecture Next.js 14 App Router entièrement statique. Toutes les routes [region]/[locale]/[station]/[producer] sont pré-générées au build via generateStaticParams — l'application fonctionne hors ligne une fois l'APK installé sur la tablette. Les contenus sont gérés via Contentful et mis à jour automatiquement toutes les 24h via un rebuild déclenché côté serveur. Application packagée en APK Android via @ducanh2912/next-pwa pour contourner les limitations d'installation sur les tablettes propriétaires des stations. Disponible en français et en anglais via le routing i18n natif Next.js.",
+      "intro": "Si vous passez dans une station TotalEnergies, vous apercevrez certainement des écrans dans le rayon produits locaux — j'étais en charge de développer cette application. Développé chez Artefact 3000 pour Argedis, filiale de TotalEnergies, c'est une application **d'envergure nationale** qui met en valeur les producteurs locaux partenaires, déployée sur des centaines de tablettes à travers toute la France.",
+      "imageCaptions": [
+        "Chaque région a son univers. L'image de la carte principale est un Lottie intégré — fond animé aux références culturelles locales — qui change entièrement d'une région à l'autre : **Provence-Alpes-Côte d'Azur** dans ses teintes dorées, **Bourgogne-Franche-Comté** dans ses violets profonds, **Bretagne** dans ses bleus océaniques.\n\nUn radial gradient adapte dynamiquement le fond à la couleur dominante du Lottie. Sur la carte, chaque producteur est positionné à sa place exacte sur le territoire, relié au logo TotalEnergies par des traits en pointillé. Une main animée invite l'utilisateur à parcourir les producteurs dans le sens des aiguilles d'une montre.",
+        "Au clic sur un portrait, la carte s'efface et laisse place à la fiche complète : photo, story, produits, distance depuis la station. **Précédent** et **suivant** à portée de doigt.\n\nLa navigation entre producteurs s'accompagne d'un crossfade sur la photo (Framer Motion) et d'une animation fluide sur la hauteur du conteneur, qui s'ajuste selon la longueur du texte de chaque producteur.\n\nLe basculement **FR / EN** ne recharge pas la page — les deux versions sont chargées à l'ouverture de l'application."
+      ],
+      "technologies": [
+        {
+          "nom": "Next.js (App Router)",
+          "detail": "Une route dynamique par région (/[region]), toutes les pages pré-générées au build via generateStaticParams. La sélection de la station, du producteur et de la langue est entièrement gérée par état client — aucun changement d'URL."
+        },
+        {
+          "nom": "Contentful (Headless CMS)",
+          "detail": "Gestion de l'ensemble des contenus : textes, photos, Lottie et coordonnées de chaque producteur. Modifiable par les équipes Argedis sans intervention développeur. Les données FR et EN sont chargées simultanément à l'ouverture."
+        },
+        {
+          "nom": "Framer Motion",
+          "detail": "Utilisé pour les transitions entre producteurs (crossfade photo + hauteur animée du conteneur de texte via useRef), la transition carte principale → carte producteur, et les animations d'apparition/disparition via AnimatePresence."
+        },
+        {
+          "nom": "PWA → APK Android",
+          "detail": "L'application est packagée en APK pour l'installation sur les tablettes Android des stations. Grâce à la génération statique complète, elle fonctionne entièrement hors ligne. Le contenu se met à jour régulièrement via un rebuild automatique."
+        }
+      ],
+      "challenges": [
+        {
+          "titre": "Transition carte principale → carte producteur",
+          "solution": "Au clic sur un producteur, la grande carte Lottie se réduit et se déplace pour rejoindre exactement la position de la carte producteur, puis disparaît en fondu. La carte producteur apparaît au même instant avec un léger scale et un délai coordonné via Framer Motion — pour que les deux cartes ne soient jamais visibles simultanément et que la transition paraisse continue."
+        },
+        {
+          "titre": "Animations de navigation entre producteurs",
+          "solution": "Deux effets simultanés : un crossfade sur la photo (la photo suivante monte en opacité via Framer Motion pendant que l'actuelle disparaît) et une animation de hauteur sur le conteneur de texte. Comme height: auto ne s'anime pas nativement, un useRef mesure la hauteur réelle du contenu à chaque changement et met à jour un state en pixels — la transition CSS prend ensuite le relais."
+        },
+        {
+          "titre": "Positionnement pixel-perfect sur des centaines de cartes",
+          "solution": "Chaque producteur est positionné via des coordonnées x/y stockées dans Contentful. Le système s'adapte à toutes les résolutions de tablette pour un rendu fidèle sur chaque carte régionale."
+        },
+        {
+          "titre": "PWA → APK Android",
+          "solution": "Les PWA ne sont plus acceptées sur Android — et ne le seront bientôt plus non plus sur iOS. Impossible d'installer l'application comme une simple web app. Il a fallu convertir l'application en APK natif via un wrapper, en veillant à ce que le comportement reste identique — notamment le mode hors ligne."
+        },
+        {
+          "titre": "Génération statique complète (generateStaticParams)",
+          "solution": "Toutes les pages régions sont pré-générées au build via generateStaticParams — l'équivalent App Router des anciens getStaticProps / getStaticPaths. C'est aussi ce qui rend l'APK viable offline : toutes les données, images et contenus sont embarqués au build. Changement de producteur, navigation FR/EN — tout est instantané, sans aucun appel réseau."
+        },
+        {
+          "titre": "Langue sans routing",
+          "solution": "Le basculement FR/EN ne passe pas par l'URL. Les deux versions des données Contentful sont chargées simultanément à l'initialisation. Un simple état client permute entre les deux — invisible pour l'utilisateur, immédiat à l'écran."
+        },
+        {
+          "titre": "Maintenance à l'échelle de centaines de producteurs",
+          "solution": "L'architecture Contentful permet à des équipes non-développeurs de gérer l'ensemble du contenu — ajout de producteurs, mise à jour des textes, photos, Lottie — sans aucune intervention technique."
+        }
+      ],
+      "pointsCles": [
+        {
+          "label": "Enjeux",
+          "items": [
+            "Des centaines de tablettes déployées dans des stations TotalEnergies à travers toute la France",
+            "Des centaines de stations, et encore plus de producteurs référencés"
+          ]
+        },
+        {
+          "label": "Défis",
+          "items": [
+            "Fonctionnement hors ligne — l'application est packagée en APK Android, aucune connexion requise",
+            "Contenu mis à jour régulièrement, sans intervention technique"
+          ]
+        },
+        {
+          "label": "Intérêt",
+          "items": [
+            "Interface 100% tactile, disponible en français et en anglais",
+            "Chaque région dispose de son univers visuel propre"
+          ]
+        }
+      ],
+      "resultats": "Des centaines de stations TotalEnergies équipées à travers toute la France. Les producteurs locaux disposent d'une vitrine digitale permanente, visible par des millions de voyageurs. Un produit vivant, maintenu et enrichi en continu depuis 2024.",
+      "credits": [
+        {
+          "nom": "Mathieu Crochet",
+          "role": "Manager & aide au développement · Artefact 3000"
+        },
+        {
+          "nom": "Dwizil Sèche",
+          "role": "Designer associé · Artefact 3000"
+        },
+        {
+          "nom": "Pauline Ravel",
+          "role": "Designer associé · Artefact 3000"
+        }
+      ],
+      "stackDetail": [
+        {
+          "nom": "Next.js 14 (App Router)",
+          "role": "Génération statique · 1 route par région · embarqué dans l'APK"
+        },
+        {
+          "nom": "Contentful (Headless CMS)",
+          "role": "Producteurs, photos, Lottie · gestion sans dev"
+        },
+        {
+          "nom": "GraphQL",
+          "role": "Requêtes Contentful · FR et EN chargés à l'init"
+        },
+        {
+          "nom": "Framer Motion",
+          "role": "Transitions carte → producteur · crossfades photo"
+        },
+        {
+          "nom": "Lottie",
+          "role": "Fonds animés régionaux · une identité par territoire"
+        },
+        {
+          "nom": "PWA → APK Android",
+          "role": "Installation native · 100% hors ligne sur tablette"
+        }
+      ],
+      "page": {
+        "section01": {
+          "titlePart1": "Une appli tactile",
+          "titlePart2": "qui change avec le territoire",
+          "subtitle": "Déployée sur des centaines de tablettes en stations, en France, pour mettre en avant les producteurs locaux partenaires. Chaque région a sa carte, son univers visuel, ses producteurs."
+        },
+        "section02": {
+          "titlePart1": "Chaque région",
+          "titlePart2": "a son univers",
+          "subtitle": "Lottie animé, palette régionale, géolocalisation des producteurs sur la carte."
+        },
+        "section03": {
+          "titlePart1": "De producteur",
+          "titlePart2": "en producteur",
+          "subtitle": "Fiche complète, navigation tactile, basculement FR/EN sans recharger."
+        },
+        "section04": {
+          "titlePart1": "Sept décisions",
+          "titlePart2": "qui ont fait le projet",
+          "subtitle": "Pour les développeurs et les recruteurs : pourquoi une PWA convertie en APK, pourquoi du SSG complet, comment animer une carte qui devient une fiche, et comment basculer FR / EN sans rechargement."
+        },
+        "section05": {
+          "titlePart1": "Les outils",
+          "titlePart2": "qui font tourner",
+          "titlePart3": "l'app."
+        },
+        "section06": {
+          "titlePart1": "Avec qui",
+          "titlePart2": "j'ai travaillé",
+          "subtitle": "Projet mené chez Artefact 3000, en collaboration avec une équipe design et un manager produit."
+        },
+        "section07": {
+          "titlePart1": "En station,",
+          "titlePart2": "au quotidien"
+        },
+        "figCaption": {
+          "tablet": "Tablette en station",
+          "regional": "Carte régionale",
+          "producer": "Fiche producteur",
+          "bilingual": "Le même contenu en anglais, sans rechargement"
+        },
+        "inNumbers": {
+          "label": "En quelques chiffres",
+          "stats": [
+            {
+              "value": "× 100s",
+              "label": "Tablettes en station"
+            },
+            {
+              "value": "FR · EN",
+              "label": "Bilingue à la volée"
+            },
+            {
+              "value": "0 réseau",
+              "label": "Application 100% hors ligne"
+            },
+            {
+              "value": "2024 +",
+              "label": "Maintenu en continu"
+            }
+          ]
+        },
+        "interactions": {
+          "label": "Interactions tactiles",
+          "items": [
+            {
+              "glyph": "◀ ▶",
+              "label": "Précédent / suivant"
+            },
+            {
+              "glyph": "FR ⇄ EN",
+              "label": "Sans rechargement"
+            },
+            {
+              "glyph": "↕",
+              "label": "Hauteur animée"
+            }
+          ]
+        },
+        "regions": {
+          "label": "Une identité par région",
+          "more": "+ 7 autres"
+        },
+        "cta": {
+          "eyebrow": "Une appli tactile à imaginer ?",
+          "title": "Je conçois et développe des apps statiques performantes, déployables hors ligne sur tablette ou borne.",
+          "description": "Next.js statique, Contentful, Framer Motion, conversion APK : ce projet a posé les briques que je peux remettre en œuvre ailleurs."
+        }
+      }
+    },
+    "sweetime-adp-extime": {
+      "titre": "Jeu à gratter virtuel — Sweetime Factory",
+      "description": "Jeu concours digital pour les voyageurs d'ADP : un ticket à gratter virtuel pour gagner des réductions dans les boutiques Extime.",
+      "descriptionPublic": "**Un ticket, une chance.** Le voyageur arrive sur l'écran d'accueil, invité à tenter sa chance. Il saisit son email — la carte se retourne alors pour révéler sa zone de grattage. Tout est pensé pour être joué en quelques secondes, debout, avant d'embarquer.\n\n**Gratter pour révéler.** La récompense est cachée sous une surface tactile dessinée sur canvas. Le joueur gratte avec le doigt — et le gain apparaît automatiquement : **sucette**, **réduction -5%** ou **réduction -20%**.\n\n**Une expérience en six étapes.** Accueil → saisie email → flip de carte → grattage → résultat gagnant ou écran dommage. Chaque transition est animée, chaque étape se succède sans rechargement — une expérience fluide du début à la fin.",
+      "intro": "Pour Extime, la marque de luxe travel retail des Aéroports de Paris, j'ai développé un jeu concours digital qui a touché **des centaines de milliers d'utilisateurs** en quelques semaines seulement. Les voyageurs recevaient un **bon physique avec QR code** à l'achat en boutique — en le scannant, ils accédaient au jeu et pouvaient gratter un ticket virtuel pour remporter une **récompense** : **sucette** ou **code de réduction** valable dans les boutiques de l'aéroport.",
+      "sliderSets": [
+        {
+          "title": "Le parcours complet",
+          "description": "En quelques secondes, le voyageur saisit son email, retourne la carte et gratte pour révéler son lot. Chaque étape s'enchaîne sans rechargement — de l'inscription au bon de réduction, tout est fluide et pensé pour être joué debout, avant l'embarquement."
+        }
+      ],
+      "technologies": [
+        {
+          "nom": "Next.js (App Router)",
+          "detail": "Interface côté client, mais les appels à MongoDB ne peuvent pas transiter directement par le navigateur — faille de sécurité critique sur une opération de cette envergure. Les API routes Next.js servent de proxy serveur sécurisé, sans avoir à déployer un backend séparé."
+        },
+        {
+          "nom": "MongoDB",
+          "detail": "Opération courte, charge d'écriture intense, structure de données flexible par boutique. MongoDB absorbe des milliers d'appels simultanés sans dégradation, là où une base relationnelle aurait nécessité une gestion de concurrence plus complexe."
+        },
+        {
+          "nom": "Canvas API",
+          "detail": "Le grattage tactile est impossible à reproduire avec du HTML/CSS standard. Canvas permet un contrôle précis du dessin et de l'effacement progressif pour révéler la récompense sous le doigt."
+        },
+        {
+          "nom": "Storybook",
+          "detail": "Beaucoup d'éléments graphiques à construire avant le funnel (états de carte, animations, cadre décoratif). Storybook a permis de valider chaque composant en isolation sans naviguer dans tout le flow."
+        },
+        {
+          "nom": "Lottie + Framer Motion",
+          "detail": "Deux types d'animations coexistent : les séquences design pré-rendues (pluie de bonbons) via Lottie, et les transitions programmatiques (décorations, apparitions) via Framer Motion."
+        },
+        {
+          "nom": "i18next",
+          "detail": "Basculement FR/EN instantané côté client sans changement d'URL — le terminal est identifié via les paramètres UTM de l'URL, pas via le routing."
+        }
+      ],
+      "challenges": [
+        {
+          "titre": "Carte à gratter sur canvas et cadre responsive",
+          "solution": "Le grattage tactile repose entièrement sur Canvas — le seul moyen d'effacer progressivement une surface dessinée sous le doigt. Le tracé doit rester fluide même à grande vitesse, et la révélation se déclenche automatiquement dès qu'un seuil de surface grattée est atteint. Le cadre décoratif (style bonbon) est lui aussi dessiné sur canvas : ses dimensions s'adaptent dynamiquement au container pour rester proportionnel sur tous les formats d'écran, du téléphone à la tablette."
+        },
+        {
+          "titre": "Funnel en état machine et flip de carte",
+          "solution": "L'expérience suit 6 étapes séquentielles (accueil, saisie email, flip, grattage, gain, dommage). La récompense est attribuée côté serveur avant que la carte ne se retourne — le joueur ne peut pas savoir à l'avance ce qu'il va gagner. Chaque transition est animée pour rendre le funnel fluide sans rechargement."
+        },
+        {
+          "titre": "Anti-fraude : QR code physique et double vérification",
+          "solution": "L'accès passe par un QR code remis physiquement en boutique — sans ce bon, impossible de jouer. Une première vérification côté client bloque les tentatives répétées depuis le même appareil. Si cette barrière est contournée, une vérification serveur via l'email prend le relais. La personne ne peut pas rejouer, qu'elle ait gagné ou non."
+        },
+        {
+          "titre": "Distribution probabiliste avec stocks limités",
+          "solution": "Trois récompenses avec des probabilités différentes. Si une tranche est tirée mais son stock est épuisé, le joueur atterrit sur 'Dommage' — pas de rebond vers une autre récompense. Cela garantit une distribution strictement contrôlée sur toute la durée de l'opération."
+        },
+        {
+          "titre": "Animations : fond rotatif, Lottie et Framer Motion",
+          "solution": "Le fond tourne en continu à deux vitesses selon l'étape. La pluie de bonbons au gain est une séquence Lottie fournie par le design, jouée en une seule passe. Les décorations candy apparaissent progressivement dès que l'utilisateur quitte l'écran principal."
+        }
+      ],
+      "pointsCles": [
+        {
+          "label": "Enjeux",
+          "items": [
+            "Opération d'1 à 2 semaines sur l'ensemble des terminaux de Roissy — des centaines de milliers d'utilisateurs en très peu de temps",
+            "Disponibilité critique : aucune interruption tolérée pendant le jeu concours"
+          ]
+        },
+        {
+          "label": "Défis",
+          "items": [
+            "Anti-fraude double couche : cookie client par terminal + vérification MongoDB par email",
+            "Distribution probabiliste avec stocks limités — si une tranche est épuisée, le tirage atterrit sur 'Dommage', sans rebond vers un autre gain"
+          ]
+        },
+        {
+          "label": "Intérêt",
+          "items": [
+            "Expérience gamifiée complète : flip de carte, grattage tactile, pluie de bonbons Lottie et QR code à capturer",
+            "Disponible en français et en anglais, sans création de compte"
+          ]
+        }
+      ],
+      "resultats": "L'opération a attiré plusieurs centaines de milliers de participants sur une à deux semaines, avec un taux d'engagement supérieur aux attentes. Le jeu a contribué à augmenter le trafic dans les boutiques Extime pendant la période.",
+      "credits": [
+        {
+          "nom": "Mathieu Crochet",
+          "role": "Manager & architecture backend · Artefact 3000"
+        },
+        {
+          "nom": "Vincent Blacher",
+          "role": "Head of Design · Artefact 3000"
+        },
+        {
+          "nom": "Pauline Chapelle",
+          "role": "Designer · Artefact 3000"
+        }
+      ],
+      "stackDetail": [
+        {
+          "nom": "Next.js (App Router)",
+          "role": "App + API routes · proxy serveur sécurisé pour MongoDB"
+        },
+        {
+          "nom": "MongoDB",
+          "role": "Charge d'écriture intense · structure flexible par boutique"
+        },
+        {
+          "nom": "Canvas API",
+          "role": "Grattage tactile · effacement progressif sous le doigt"
+        },
+        {
+          "nom": "Storybook",
+          "role": "Composants graphiques validés en isolation"
+        },
+        {
+          "nom": "Lottie + Framer Motion",
+          "role": "Pluie de bonbons design + transitions programmatiques"
+        },
+        {
+          "nom": "i18next",
+          "role": "FR / EN sans changement d'URL · terminal identifié par UTM"
+        }
+      ],
+      "page": {
+        "section01": {
+          "titlePart1": "Un ticket virtuel",
+          "titlePart2": "à gratter avec le doigt",
+          "subtitle": "Un jeu concours déployé sur l'ensemble des terminaux de Roissy pendant deux semaines. QR code remis en boutique, grattage tactile sur Canvas, récompense instantanée — tout joué debout, avant l'embarquement."
+        },
+        "section02": {
+          "titlePart1": "Le parcours,",
+          "titlePart2": "en quatre captures"
+        },
+        "section03": {
+          "titlePart1": "Cinq décisions",
+          "titlePart2": "qui ont fait le projet",
+          "subtitle": "Pour les développeurs et les recruteurs : pourquoi Canvas pour le grattage, comment sécuriser MongoDB côté serveur, comment garantir l'anti-fraude avec une double couche, et comment distribuer des récompenses à stocks limités."
+        },
+        "section04": {
+          "titlePart1": "Les outils",
+          "titlePart2": "qui font tenir",
+          "titlePart3": "l'opération."
+        },
+        "section05": {
+          "titlePart1": "Avec qui",
+          "titlePart2": "j'ai travaillé",
+          "subtitle": "Projet mené chez Artefact 3000, avec une équipe design Extime et un manager produit côté Artefact."
+        },
+        "section06": {
+          "titlePart1": "En deux semaines,",
+          "titlePart2": "sur tous les terminaux"
+        },
+        "figCaption": {
+          "video": "Mobile, en aéroport"
+        },
+        "operationNumbers": {
+          "label": "L'opération en chiffres",
+          "stats": [
+            {
+              "value": "× 100k+",
+              "label": "Joueurs en 2 semaines"
+            },
+            {
+              "value": "6 étapes",
+              "label": "Du QR code au gain"
+            },
+            {
+              "value": "FR · EN",
+              "label": "Sans création de compte"
+            },
+            {
+              "value": "0 fraude",
+              "label": "Cookie + vérif email serveur"
+            }
+          ]
+        },
+        "funnelSteps": [
+          {
+            "num": "01",
+            "label": "Saisie email"
+          },
+          {
+            "num": "02",
+            "label": "Flip de carte"
+          },
+          {
+            "num": "03",
+            "label": "Grattage tactile"
+          },
+          {
+            "num": "04",
+            "label": "Récompense"
+          }
+        ],
+        "cta": {
+          "eyebrow": "Une opération digitale à imaginer ?",
+          "title": "Je conçois et développe des expériences gamifiées en marque blanche, du QR code à l'envoi du gain.",
+          "description": "Canvas tactile, MongoDB sécurisé, anti-fraude double couche, multi-langue : ce projet a posé les briques que je peux remettre en œuvre ailleurs."
+        }
+      }
+    },
+    "make-a-scene": {
+      "titre": "Outil de formation au prompting IA",
+      "description": "Funnel interactif déployé chez Artefact pour apprendre à construire un prompt structuré et générer des images par IA, étape par étape.",
+      "descriptionPublic": "**Un outil pour apprendre à parler à une IA.**\nPlutôt que lire des guidelines, les participants construisent un prompt mot à mot : type d'image, sujet, action, lieu, style, lumière, ratio. Chaque choix s'ajoute en temps réel à la barre de prompt visible en bas de l'écran.\n\n**Un résultat visible à chaque étape.**\nAu survol de chaque option, une image d'exemple s'affiche pour aider à choisir. On avance seulement quand tous les champs sont remplis, ce qui force la précision du prompt.\n\n**Quatre images générées en quelques secondes.**\nUne fois le funnel terminé, l'outil génère quatre variantes visuelles à partir du prompt construit. Le prompt complet est affiché et copiable. On peut revenir sur n'importe quelle étape et recommencer.\n\n**Disponible en français et en anglais.**\nInterface bilingue, pensée pour des équipes internationales.",
+      "intro": "Développé en interne chez **Artefact**, Make a Scene est un outil de formation au **prompt engineering** appliqué à la génération d'images. Plutôt que de lire des guidelines, les participants construisent un prompt mot à mot à travers un funnel guidé : **3 étapes, 14 sous-étapes**. Chaque option dispose d'une image de prévisualisation au survol. Au bout du funnel, 4 variantes sont générées en une seule requête. Disponible en anglais et en français.",
+      "videoTitle": "La démo complète",
+      "sliderSets": [
+        {
+          "title": "Le funnel pas à pas",
+          "description": "Chaque écran guide l'utilisateur vers un mot clé à sélectionner — type d'image, lieu, rendu, ratio. Le prompt s'assemble en bas de l'écran au fil des choix. La flèche pour avancer n'apparaît que lorsque tous les champs sont remplis."
+        },
+        {
+          "title": "Du prompt à l'image",
+          "description": "Une fois le funnel terminé, 4 variantes sont générées. Une barre de progression s'affiche pendant la génération, puis les 4 images apparaissent côte à côte, avec le prompt complet en dessous, copiable en un clic."
+        }
+      ],
+      "technologies": [
+        {
+          "nom": "Next.js App Router",
+          "detail": "App structurée en routes distinctes, chacune avec son layout dédié. Les images générées sont stockées en mémoire côté client et affichées sans passer par un backend."
+        },
+        {
+          "nom": "API de génération d'images",
+          "detail": "Une seule requête suffit à générer les 4 variantes finales côté serveur. Pas de Promise.all, pas de polling : la Server Action attend la réponse complète et la retourne au client d'un bloc. Les images de prévisualisation du funnel sont générées une fois en script offline et servies en statique, sans aucun appel API au runtime."
+        },
+        {
+          "nom": "Zustand",
+          "detail": "Un store unique gère tout l'état du funnel : étape courante, valeurs sélectionnées à chaque sous-étape, flag de navigation vers la galerie, URLs des images générées. Aucun prop drilling sur les 3 étapes × 14 sous-étapes."
+        },
+        {
+          "nom": "Storybook",
+          "detail": "Tous les composants du design system sont développés et validés en isolation avant d'être intégrés. Cela garantit la cohérence visuelle et facilite les retours du client sur chaque brique de l'interface."
+        },
+        {
+          "nom": "next-intl",
+          "detail": "Interface disponible en anglais et en français. Toutes les questions, options et labels du funnel sont externalisés en fichiers de traduction, avec sélecteur de langue visible."
+        },
+        {
+          "nom": "Embla Carousel + Radix UI Slider",
+          "detail": "Embla pour les carousels d'options et la galerie de résultats. Radix UI Slider pour les 3 paramètres avancés de l'étape finale, avec rendu accessible natif."
+        }
+      ],
+      "challenges": [
+        {
+          "titre": "Funnel 3 étapes × 14 sous-étapes avec navigation arrière",
+          "solution": "Le funnel est découpé en 3 grandes étapes thématiques, elles-mêmes divisées en 14 sous-étapes. Chaque bloc du prompt assemblé est cliquable : l'utilisateur peut revenir directement sur n'importe quelle sous-étape sans perdre ses choix. Tout l'état du funnel est centralisé dans un store Zustand, ce qui évite le prop drilling et rend la navigation arrière triviale à implémenter."
+        },
+        {
+          "titre": "Génération des 4 images en une seule requête",
+          "solution": "Plutôt que d'enchaîner plusieurs appels, une seule requête avec le paramètre n: 4 génère les 4 variantes côté serveur en une fois. Pas de Promise.all, pas de polling : la Server Action attend la réponse complète et la retourne au client. Résultat : code simple, délai minimal, pas de gestion d'état intermédiaire."
+        },
+        {
+          "titre": "Images de prévisualisation au survol sans appel API",
+          "solution": "Chaque option du funnel dispose d'une image d'exemple visible au survol. Plutôt que de générer ces images à la volée, elles ont été produites une seule fois en script offline et sont servies en statique. Aucun appel API au runtime, aucune latence côté utilisateur."
+        }
+      ],
+      "stackDetail": [
+        {
+          "nom": "Next.js (App Router)",
+          "role": "Routes par étape · pas de backend pour stocker les images"
+        },
+        {
+          "nom": "API de génération d'images",
+          "role": "1 requête, 4 variantes via `n: 4` côté serveur"
+        },
+        {
+          "nom": "Zustand",
+          "role": "Store unique · 3 × 14 sous-étapes · pas de prop drilling"
+        },
+        {
+          "nom": "Storybook",
+          "role": "Composants design system validés en isolation"
+        },
+        {
+          "nom": "next-intl",
+          "role": "FR / EN · questions et options externalisées"
+        },
+        {
+          "nom": "Embla Carousel + Radix UI",
+          "role": "Carrousels d'options + sliders accessibles"
+        }
+      ],
+      "page": {
+        "section01": {
+          "titlePart1": "Un funnel pour",
+          "titlePart2": "parler à une IA",
+          "titlePart3": "mot à mot.",
+          "subtitle": "3 étapes, 14 sous-étapes. Chaque option choisie s'ajoute en temps réel à la barre de prompt en bas de l'écran. Au bout du funnel, 4 variantes d'images sont générées en une seule requête."
+        },
+        "section04": {
+          "titlePart1": "Trois décisions",
+          "titlePart2": "qui ont fait le projet",
+          "subtitle": "Pour les développeurs et les recruteurs : pourquoi un store Zustand pour 3×14 sous-étapes, pourquoi une seule requête pour les 4 variantes, et pourquoi générer les aperçus offline plutôt qu'à la volée."
+        },
+        "section05": {
+          "titlePart1": "Les outils",
+          "titlePart2": "qui font tourner",
+          "titlePart3": "l'outil."
+        },
+        "figCaption": {
+          "video": "Outil interne Artefact"
+        },
+        "cta": {
+          "eyebrow": "Un outil de formation à imaginer ?",
+          "title": "Je conçois et développe des funnels guidés et des outils internes intégrant la génération d'images IA.",
+          "description": "Funnel multi-étapes, store Zustand, génération d'images en 1 requête, design system Storybook : ce projet a posé les briques que je peux remettre en œuvre ailleurs."
+        }
+      }
+    },
+    "bald-artiste": {
+      "titre": "Site e-commerce artiste peintre",
+      "description": "Site e-commerce pour Bald, artiste peintre abstrait : galerie filtrable par collection, taille et prix, fiches œuvres avec slider, achat en ligne via Stripe, internationalisation FR/EN.",
+      "tagline": "Une *identité visuelle* sur mesure, une *galerie filtrante*, et un paiement à l'*international*.",
+      "descriptionPublic": "Une identité visuelle entièrement sur mesure. Chaque élément graphique a été conçu pour Bald : le logo découpé en deux typographies (BA en encre, LD en feuille d'or), un badge circulaire animé, des coups de pinceau qui s'animent au défilement de la page. Ce genre d'effets visuels ne s'improvise pas avec un template.\n\nUne galerie pensée pour naviguer facilement. Les visiteurs filtrent les toiles par collection, par dimensions et par prix. L'accès à ce qu'ils cherchent est immédiat, sans rechargement de page.\n\nAcheter une toile en quelques clics. Le paiement Stripe est intégré directement dans le site. Bald peut ajouter ou retirer des œuvres depuis son espace d'administration, sans toucher au code.\n\nLe site en français et en anglais. Chaque page, chaque fiche et chaque mention légale est disponible dans les deux langues. Un visiteur anglophone arrive automatiquement sur la bonne version.\n\nLe site est en ligne sur [bald-art.com](https://bald-art.com), n'hésitez pas à aller le visiter pour vous en faire votre propre idée.",
+      "intro": "Site e-commerce développé en freelance pour Bald, artiste peintre abstrait. Identité visuelle noir et or construite from scratch : intro animée, badge circulaire rotatif, coups de pinceau au scroll, typographie Bebas Neue. Galerie avec filtres multi-critères, tunnel Stripe complet et internationalisation FR/EN native. Le genre de site qu'on ne fait pas avec un template.",
+      "sliderSets": [
+        {
+          "title": "L'identité visuelle",
+          "description": "Chaque élément graphique (le logo, le badge circulaire rotatif, les coups de pinceau au scroll) a été conçu sur mesure et intégré. Noir et or, typographie Bebas Neue, animations GSAP : tout l'univers de BALD est construit from scratch."
+        },
+        {
+          "title": "La galerie filtrée",
+          "description": "La galerie permet de filtrer les œuvres par collection, par dimensions et de les trier par prix croissant ou décroissant. Avec plusieurs dizaines de toiles, le filtrage est instantané côté client (sans rechargement, sans appel réseau)."
+        }
+      ],
+      "technologies": [
+        {
+          "nom": "Stripe",
+          "detail": "Tunnel d'achat complet via Stripe Checkout pour la sécurité des paiements et la conformité PCI. Pas de données bancaires manipulées côté serveur : le client est redirigé vers Stripe, qui gère le formulaire de paiement, et un webhook signale la confirmation au site pour marquer la toile comme vendue."
+        },
+        {
+          "nom": "GSAP + Lenis + Motion",
+          "detail": "Le site valorise des œuvres d'art, le rendu visuel devait être fluide et soigné. Lenis pour un défilement doux et inertiel, GSAP pour les animations au scroll et les transitions entre pages, Motion (l'évolution de Framer Motion) pour les animations d'interface plus locales."
+        },
+        {
+          "nom": "next-intl",
+          "detail": "Le site est disponible en français et en anglais. Le routing i18n est géré par next-intl avec des fichiers de traduction séparés (chaque page, chaque label, chaque message d'erreur est externalisé). Le choix de la langue est persisté côté URL pour le SEO."
+        },
+        {
+          "nom": "nuqs",
+          "detail": "Les filtres de la galerie (collection, dimensions, tri par prix) sont stockés dans l'URL via nuqs plutôt que dans un état React local. Conséquence directe : un visiteur peut partager le lien d'une recherche filtrée, ou rafraîchir la page sans perdre ses choix. Pas de prop drilling, pas de state global."
+        },
+        {
+          "nom": "Next.js",
+          "detail": "Les pages de galerie et de fiches œuvres sont générées statiquement pour des performances maximales et un bon référencement naturel. Les mutations (achat, gestion du stock côté admin) passent par des Server Actions, qui revalident les pages concernées après modification."
+        }
+      ],
+      "challenges": [
+        {
+          "titre": "Galerie filtrable avec tri multi-critères et URL partageable",
+          "solution": "Les œuvres peuvent être filtrées par collection, par dimensions et triées par prix. Avec plusieurs dizaines de toiles, le filtrage devait rester instantané côté client. La logique est encapsulée dans un useMemo pour éviter les recalculs à chaque render, et l'état des filtres est synchronisé avec l'URL via nuqs : un visiteur peut copier-coller le lien d'une vue filtrée et la retrouver à l'identique chez quelqu'un d'autre."
+        },
+        {
+          "titre": "Internationalisation FR/EN complète",
+          "solution": "Tout le contenu du site (galerie, fiches œuvres, pages légales, formulaire de contact) est disponible en français et en anglais via next-intl. Le choix de la langue est persisté dans l'URL, et chaque page a sa version localisée pour le SEO. Le visiteur peut basculer d'une langue à l'autre à tout moment depuis le sélecteur du header."
+        },
+        {
+          "titre": "Pages légales e-commerce, écrites pour l'art international",
+          "solution": "Une boutique en ligne implique des obligations légales : CGV, politique de confidentialité, politique de retour. Ces pages ont été rédigées et intégrées avec les spécificités du commerce d'art international (livraison internationale, règles douanières, délai de rétractation, mentions sur les œuvres uniques). Un travail de fond peu visible mais indispensable pour qu'un site de vente puisse passer en production sereinement."
+        }
+      ],
+      "stackDetail": [
+        {
+          "nom": "Next.js",
+          "role": "App Router · pages galerie statiques · Server Actions"
+        },
+        {
+          "nom": "Stripe",
+          "role": "Tunnel Checkout · webhook de confirmation de commande"
+        },
+        {
+          "nom": "GSAP",
+          "role": "Animations au scroll · transitions de page soignées"
+        },
+        {
+          "nom": "Lenis",
+          "role": "Défilement inertiel doux · sensation premium"
+        },
+        {
+          "nom": "Motion",
+          "role": "Micro-interactions de l'interface"
+        },
+        {
+          "nom": "next-intl",
+          "role": "Routing internationalisé FR / EN · SEO localisé"
+        },
+        {
+          "nom": "nuqs",
+          "role": "Filtres de galerie persistés dans l'URL · partageables"
+        },
+        {
+          "nom": "TypeScript",
+          "role": "Type safety du SSR au DOM"
+        }
+      ],
+      "page": {
+        "figCaption": {
+          "home": "Page d'accueil"
+        },
+        "section04": {
+          "titlePart1": "Trois choix techniques",
+          "titlePart2": "qui ont fait le projet",
+          "subtitle": "Pour les développeurs et les recruteurs : voici les décisions techniques qui ont structuré ce site e-commerce d'art international."
+        },
+        "section05": {
+          "titlePart1": "Les outils",
+          "titlePart2": "qui font tourner",
+          "titlePart3": "le site."
+        },
+        "cta": {
+          "eyebrow": "Vous aimez ce type de site ?",
+          "title": "Je crée des sites sur mesure pour artistes, indépendants et petites entreprises.",
+          "description": "Identité visuelle, e-commerce, interface d'administration : chaque projet est pensé et codé de A à Z."
+        }
+      }
+    },
+    "russian-with-julia": {
+      "titre": "Le site d'une prof de russe internationale",
+      "description": "Site freelance pour Julia, professeure de russe avec 500+ élèves dans 25 pays : vitrine soignée, réservation d'un appel en quelques clics, plateforme de cours vidéo payants en alternative à Podia ou Teachable.",
+      "tagline": "Une vitrine *ouverte à tous*, un espace privé pour ses élèves, et une réservation en *moins d'une minute*.",
+      "descriptionPublic": "Le site combine deux mondes en général séparés : une vitrine publique consultable sans la moindre friction, et un espace privé pour les élèves qui achètent les cours vidéo. Tout le marketing est ouvert : on parcourt les sections, on lit les avis, on regarde la carte du monde des élèves, et on peut réserver un premier appel sans avoir à créer de compte.\n\nLa connexion n'apparaît qu'au moment où elle a vraiment du sens, pour retrouver les cours déjà achetés. L'élève reçoit un lien de connexion par email, sans mot de passe, et accède à son tableau de bord. La prof, elle, dispose d'un espace administrateur où elle gère ses cours, ses élèves et son agenda en complète autonomie.\n\nLe site est en ligne sur [russianwithjulia.com](https://russianwithjulia.com), n'hésitez pas à aller le visiter pour vous en faire votre propre idée.",
+      "intro": "Site freelance complet pour Julia, professeure particulière de russe avec ~~plus de 500 élèves~~ répartis dans ~~25 pays~~. La spécificité du projet : combiner dans un seul site une vitrine grand public, un système de réservation et de paiement en ligne, et une plateforme de cours vidéo en ligne payants achetables à l'unité. Le tout pensé pour qu'elle soit ensuite totalement autonome (elle ajoute ses cours, gère ses élèves, et reprend la main sur son site sans avoir besoin de moi).",
+      "pillarsCards": [
+        {
+          "eyebrow": "Enjeu n°1",
+          "titre": "Paiement Stripe et Google Calendar enchaînés",
+          "description": "L'élève choisit un créneau, paie en ligne, reçoit l'invitation Google Calendar avec lien de visioconférence : toute la chaîne tient en quelques secondes, sans intervention manuelle de la prof."
+        },
+        {
+          "eyebrow": "Enjeu n°2",
+          "titre": "Une plateforme de cours vidéo auto-hébergée",
+          "description": "Une vraie alternative à Podia ou Teachable, sans abonnement récurrent et mieux protégée que YouTube. Packs de leçons achetables à l'unité, vidéos servies par URL signée depuis Cloudflare R2, zéro frais d'egress."
+        },
+        {
+          "eyebrow": "Enjeu n°3",
+          "titre": "Une direction artistique qui retient",
+          "description": "Logo, palette, carte du monde des élèves, témoignages bilingues, micro-interactions soignées. Une home one-page efficace pour le marketing, un espace dédié pour les cours payants : un site qu'on a envie de parcourir, et qui génère naturellement du trafic."
+        }
+      ],
+      "sliderSets": [
+        {
+          "title": "La carte des élèves dans le monde",
+          "description": "La carte du monde est l'une des sections que j'ai le plus aimé construire. Chaque point correspond à un élève réel : la carte traduit visuellement la dimension internationale de Julia, qui enseigne à ~~plus de 500 personnes~~ réparties dans ~~25 pays~~. Les noms des villes les plus représentatives sont positionnés à la main, ce qui donne un rendu plus humain qu'un placement automatique. Pour la voir vivre, le mieux est encore d'aller faire un tour sur [russianwithjulia.com](https://russianwithjulia.com)."
+        },
+        {
+          "title": "La réservation d'un premier appel",
+          "description": "Le widget de réservation occupe la moitié droite de l'écran : un calendrier, des créneaux disponibles, un bouton de paiement, et c'est tout. L'élève choisit son moment, paie en ligne, et reçoit dans la foulée une invitation Google Calendar avec un lien de visioconférence prêt à l'emploi. L'évènement apparaît directement dans l'agenda de la prof, dans son fuseau horaire à elle. Aucune saisie manuelle, aucun email à envoyer."
+        },
+        {
+          "title": "Témoignages bilingues, espace élève et admin",
+          "description": "Le carrousel des avis défile en continu, mêlant alphabets cyrillique et latin (j'ai uniformisé les avis en anglais). Le composant vient à l'origine de [21st.dev](https://21st.dev), retravaillé pour coller à l'identité du site. Côté élève, un tableau de bord donne accès aux packs achetés et aux leçons en streaming. Côté admin, Julia crée ses formules, uploade ses vidéos directement vers le stockage, suit ses élèves et connecte son agenda Google."
+        }
+      ],
+      "challenges": [
+        {
+          "titre": "Combiner site vitrine et application authentifiée dans un seul site",
+          "solution": "La plupart des sites font l'un ou l'autre : un one-page de présentation, ou bien une vraie application qui demande de se connecter dès l'arrivée. Ici les deux cohabitent. Tout le marketing reste public, instantanément consultable. La connexion n'apparaît qu'au moment où elle a vraiment du sens (acheter un pack ou retrouver ses cours déjà achetés). Pas de mur d'authentification au premier contact, mais une vraie session sécurisée pour la partie payante."
+        },
+        {
+          "titre": "Authentification sans mot de passe (magic link)",
+          "solution": "Les élèves comme la prof se connectent en recevant un lien à usage unique sur leur email : un clic, et la session est ouverte. Aucun mot de passe à créer, à mémoriser, à oublier ou à réinitialiser. Côté technique, c'est Convex Auth qui gère le flow, avec Resend pour l'envoi des emails depuis un domaine professionnel vérifié. Le passage en production a demandé de configurer des records DNS spécifiques (SPF, DKIM) sur la zone du domaine pour garantir que les emails arrivent bien dans la boîte de réception et pas en spam."
+        },
+        {
+          "titre": "Paiement et calendrier enchaînés en moins de cinq secondes",
+          "solution": "L'élève choisit un créneau et paie via Stripe. Dès que le paiement est confirmé côté serveur, un évènement Google Calendar est créé automatiquement dans l'agenda de la prof, avec un lien de visioconférence généré à la volée et l'élève invité. Toute la chaîne (paiement, écriture en base de données, création de l'évènement, envoi de l'invitation) tient en quelques secondes. La prof n'a strictement rien à faire entre la réservation et le rendez-vous lui-même."
+        },
+        {
+          "titre": "Hébergement vidéo privé sur Cloudflare R2",
+          "solution": "Cloudflare R2 a été choisi plutôt qu'AWS S3 pour une raison simple : R2 ne facture pas la bande passante sortante, là où S3 facture chaque gigaoctet servi. Sur de la diffusion vidéo, c'est ce poste-là qui explose en premier. Les 10 Go de stockage gratuits suffisent largement pour des cours de langue, et même en dépassant, le coût reste minime. Surtout, c'est une vraie alternative aux abonnements Podia ou Teachable à 20-40€/mois qui étaient l'option à éviter. L'admin uploade ses fichiers directement depuis son navigateur via une URL pré-signée : la vidéo ne transite jamais par le serveur Next.js, ce qui évite les frais de proxy et accélère les uploads."
+        },
+        {
+          "titre": "Carte du monde des élèves : placement manuel plutôt qu'algorithme",
+          "solution": "La carte est rendue par [dotted-map](https://www.npmjs.com/package/dotted-map), une petite bibliothèque qui transforme une carte du monde en grille de points stylisée. Première tentative pour placer les noms des villes : un algorithme automatique qui devait éviter les chevauchements de labels, avec des traits pointillés reliant chaque nom à son point. Trop fragile, et le rendu paraissait robotique. Bascule vers un système manuel : en mode développeur, un overlay permet de placer chaque label à la souris, les positions sont stockées en local, et un bouton exporte le JSON à coller dans le code pour la production. Résultat humain, ajustable en deux minutes quand un nouveau pays s'ajoute."
+        },
+        {
+          "titre": "Souveraineté complète de la cliente sur ses outils",
+          "solution": "Le domaine, le compte de paiement Stripe, le compte d'envoi d'emails Resend, l'accès Google Cloud : tout est ouvert au nom de la prof, pas du développeur. Mes accès se limitent à des credentials temporaires partagés en visio le temps de configurer les services. Si demain elle change de développeur, tout reste en place et lui appartient (aucune migration à faire). Cette logique est documentée dans le code source du projet sous forme d'ADR (Architecture Decision Record), réutilisable comme modèle sur les prochains projets freelance."
+        }
+      ],
+      "stackDetail": [
+        {
+          "nom": "Next.js 16",
+          "role": "App Router · pages statiques + zone authentifiée /courses"
+        },
+        {
+          "nom": "Convex",
+          "role": "Base de données temps réel · auth · suivi de progression"
+        },
+        {
+          "nom": "Convex Auth",
+          "role": "Magic link sans mot de passe · whitelist d'admins"
+        },
+        {
+          "nom": "Stripe",
+          "role": "Paiement des packs vidéo · checkout des séances de cours"
+        },
+        {
+          "nom": "Cloudflare R2",
+          "role": "Hébergement des vidéos · zéro frais d'egress · URL signées"
+        },
+        {
+          "nom": "Google Calendar",
+          "role": "Création automatique des rendez-vous + lien de visioconférence"
+        },
+        {
+          "nom": "Resend",
+          "role": "Envoi des magic links et confirmations · domaine vérifié"
+        },
+        {
+          "nom": "dotted-map",
+          "role": "Carte du monde stylisée des élèves"
+        },
+        {
+          "nom": "next-intl",
+          "role": "Internationalisation FR / EN"
+        },
+        {
+          "nom": "Tailwind · shadcn",
+          "role": "Système d'UI cohérent et productif"
+        }
+      ],
+      "page": {
+        "figCaption": {
+          "home": "Page d'accueil"
+        },
+        "section02": {
+          "titlePart1": "Trois questions à trancher",
+          "titlePart2": "avant la première ligne de code",
+          "sectionLabel": "Enjeux & défis",
+          "subtitle": "Chaque pilier ci-dessous correspond à un choix structurant : ce qui rend ce site spécifique, et ce qui l'a forcé à sortir des sentiers battus du site vitrine classique."
+        },
+        "section06": {
+          "titlePart1": "Six décisions",
+          "titlePart2": "qui ont fait le projet",
+          "subtitle": "Pour les développeurs et les recruteurs qui ouvrent cette page : voici les choix techniques que ce projet m'a obligé à formuler, pas ceux que j'aurais pris par défaut. Chaque entrée est documentée en interne sous forme d'ADR (Architecture Decision Record)."
+        },
+        "section07": {
+          "titlePart1": "Les outils",
+          "titlePart2": "qui font tourner",
+          "titlePart3": "le site."
+        },
+        "cta": {
+          "eyebrow": "Vous aimez ce type de site ?",
+          "title": "Je crée des sites sur mesure pour artistes, indépendants et petites entreprises.",
+          "description": "Identité visuelle, e-commerce, interface d'administration — chaque projet est pensé et codé de A à Z."
+        }
+      }
+    },
+    "kalypso": {
+      "projet": {
+        "numero": "N°007",
+        "edition": "Édition Hiver",
+        "client": "Domaine de l'Opaline",
+        "signature": "Maison Bardet · Vigneronne en Bourgogne",
+        "contexte": "Freelance",
+        "annee": "2026",
+        "lieu": "Saint-Aubin · Côte de Beaune",
+        "url": "domaine-opaline.fr",
+        "tagline": {
+          "haut": "Quatre générations",
+          "milieu": "à veiller sur la pierre,",
+          "bas": "désormais en ligne."
+        },
+        "citation": "Je voulais un site qui donne le silence d'une cave et la lumière d'un matin de vendanges. Léo a écouté, puis il a écrit.",
+        "citationAuteur": "Camille Bardet — vigneronne, 4ᵉ génération"
+      },
+      "piliers": [
+        {
+          "n": "I",
+          "eyebrow": "Cave",
+          "titre": "Bouteilles numérotées,\nvendues comme des œuvres.",
+          "texte": "Chaque cuvée en édition limitée se réserve avant la mise en bouteille. Compteur de stock en temps réel, certificat numéroté généré au paiement, étiquette personnalisée à la commande."
+        },
+        {
+          "n": "II",
+          "eyebrow": "Caveau",
+          "titre": "Visites guidées\nréservables d'un trait.",
+          "texte": "Trois formats de dégustation, un calendrier qui respecte la lune et les vendanges, paiement à la réservation, invitation Google Calendar avec plan d'accès joint."
+        },
+        {
+          "n": "III",
+          "eyebrow": "Maison d'hôtes",
+          "titre": "Cinq suites, cinq\nrécits à habiter.",
+          "texte": "Calendrier multi-ressources qui orchestre les chambres, le restaurant et le caveau ensemble. Une seule réservation peut composer un séjour entier."
+        }
+      ],
+      "challenges": [
+        {
+          "n": "01",
+          "titre": "Calendrier multi-ressources",
+          "extrait": "Une chambre, le caveau et la table peuvent être réservés ensemble ou séparément. La logique métier interdit certains combinats (dégustation seule le samedi, suite + table couplées en haute saison) et les conflits sont vérifiés au niveau de la transaction Convex."
+        },
+        {
+          "n": "02",
+          "titre": "Stock vivant pour les éditions limitées",
+          "extrait": "Chaque cuvée a un compteur réservé / vendu / restant qui se met à jour en temps réel via les subscriptions Convex. Aucun risque de double vente sur les dernières bouteilles d'une cuvée à 200 exemplaires."
+        },
+        {
+          "n": "03",
+          "titre": "Sanity + ISR pour le journal",
+          "extrait": "La vigneronne écrit dans Sanity Studio. Le front Next.js régénère ses pages éditoriales par revalidation à la demande : un nouveau billet est en ligne en moins de dix secondes, sans rebuild complet."
+        },
+        {
+          "n": "04",
+          "titre": "Cartographie du domaine en SVG animé",
+          "extrait": "Plutôt qu'une intégration Mapbox lourde, j'ai dessiné le domaine et ses parcelles à la main en SVG. Le tracé se révèle au scroll, les climats s'éclairent au survol. 12 ko gzip, zéro JS bloquant."
+        },
+        {
+          "n": "05",
+          "titre": "Trois langues, une seule source",
+          "extrait": "FR, EN et japonais via next-intl. Le contenu Sanity est localisé champ par champ ; les pages statiques sont générées par locale au build pour que chaque version ait son URL propre et son SEO."
+        }
+      ],
+      "stack": [
+        {
+          "nom": "Next.js 16",
+          "role": "App Router · ISR par tag"
+        },
+        {
+          "nom": "Sanity",
+          "role": "CMS structuré · Studio embarqué"
+        },
+        {
+          "nom": "Convex",
+          "role": "Réservations realtime · stock vivant"
+        },
+        {
+          "nom": "Stripe",
+          "role": "Vins, séjours, dégustations · 1 compte, 3 catalogues"
+        },
+        {
+          "nom": "Resend",
+          "role": "Confirmation client · alerte vigneronne"
+        },
+        {
+          "nom": "Cloudflare R2",
+          "role": "Photos haute définition · zéro frais sortie"
+        },
+        {
+          "nom": "Motion",
+          "role": "Reveals, scroll-trigger, micro-interactions"
+        },
+        {
+          "nom": "next-intl",
+          "role": "Routing FR / EN / JA"
+        }
+      ],
+      "credits": [
+        {
+          "role": "Direction artistique",
+          "nom": "Léo Hengebaert"
+        },
+        {
+          "role": "Développement",
+          "nom": "Léo Hengebaert"
+        },
+        {
+          "role": "Photographie",
+          "nom": "Atelier Brisac"
+        },
+        {
+          "role": "Conseil œnologique",
+          "nom": "Camille Bardet"
+        }
+      ],
+      "ticker": [
+        "Domaine de l'Opaline",
+        "Saint-Aubin · Bourgogne",
+        "Refonte complète",
+        "Vins · Caveau · Maison d'hôtes",
+        "FR / EN / JA",
+        "Hiver 2026"
+      ],
+      "page": {
+        "indexNav": [
+          {
+            "n": "I",
+            "label": "Vue d'ensemble"
+          },
+          {
+            "n": "II",
+            "label": "Trois piliers"
+          },
+          {
+            "n": "III",
+            "label": "Le caveau"
+          },
+          {
+            "n": "IV",
+            "label": "Côté technique"
+          },
+          {
+            "n": "V",
+            "label": "Stack"
+          },
+          {
+            "n": "VI",
+            "label": "Crédits"
+          }
+        ],
+        "sectionI": {
+          "eyebrow": "I — Le projet",
+          "clientLabel": "Client",
+          "sevenLabel": "Septième projet\nfreelance"
+        },
+        "sectionII": {
+          "eyebrow": "II — Trois piliers",
+          "titlePart1": "Trois enjeux,",
+          "titlePart2": "trois interfaces",
+          "titlePart3": "à inventer.",
+          "subtitle": "Le domaine n'est pas un seul commerce mais une trilogie : la cave, le caveau de dégustation, la maison d'hôtes. Chaque univers a demandé un parti pris à part entière, sans jamais s'éparpiller."
+        },
+        "sectionIII": {
+          "caption": "Pour la galerie photo, le client a fourni un fonds de mille deux cents clichés — il a fallu inventer un parcours.",
+          "captionHighlight": "mille deux cents clichés"
+        },
+        "sectionIV": {
+          "eyebrow": "IV — Côté technique",
+          "titlePart1": "Cinq décisions qui",
+          "titlePart2": "ont fait la différence",
+          "subtitle": "Pour les développeurs et les recruteurs qui ouvrent cette page : voici les choix techniques que ce projet m'a obligé à formuler, pas ceux que j'aurais pris par défaut."
+        },
+        "sectionV": {
+          "eyebrow": "V — Stack",
+          "titlePart1": "Les outils",
+          "titlePart2": "qui ont permis",
+          "titlePart3": "l'écriture.",
+          "subtitle": "Choix dictés par l'usage de la cliente, pas par mes goûts du moment. Chaque outil reste à son nom à elle, je ne suis qu'un assemblage."
+        },
+        "sectionVI": {
+          "eyebrow": "VI — Colophon",
+          "colophon": "Composé en DM Serif Display et en Space Grotesk. Imprimé pour l'écran, en Bourgogne et à Paris, hiver 2026.",
+          "contributedLabel": "Ont contribué"
+        },
+        "heroQuote": "« Une page d'accueil qui sente la pierre humide, pas le template. »",
+        "figCaption": {
+          "heroShot": "Fig.01 — Cliché du domaine",
+          "cellar": "Fig.05 — Le caveau, intérieur"
+        },
+        "readingNext": "Lecture suivante",
+        "allProjects": "Tous les projets"
+      }
+    }
+  }
+}

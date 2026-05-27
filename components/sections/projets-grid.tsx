@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight, Search, X } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { projets, Projet } from "@/lib/projets";
+import { localizeProjetCard } from "@/lib/projets-i18n";
 import { cn } from "@/lib/utils";
 
 // ─── helpers ───────────────────────────────────────────────────────────────
@@ -13,27 +15,23 @@ import { cn } from "@/lib/utils";
 // Cas spécial pour 8 projets : mosaïque asymétrique (5+4+3 / 4+8).
 // Autres quantités : lignes de 3 tierces (4+4+4), leftover en demi ou pleine largeur.
 function getCardClasses(index: number, total: number) {
-  // ── Hero ──
   if (index === 0) {
     if (total === 1) return "col-span-12";
     return cn("col-span-12 lg:col-span-8", total >= 3 && "lg:row-span-2");
   }
-  // ── Compagnons à droite du hero ──
   if (index === 1 || index === 2) return "col-span-12 sm:col-span-6 lg:col-span-4";
 
-  // ── Algorithme générique : lignes sans trou ──
-  const rest = total - 3; // cartes après les 3 premières (hero + 2 compagnons)
+  const rest = total - 3;
   if (rest <= 0) return "col-span-12 sm:col-span-6 lg:col-span-4";
   if (rest === 1) return "col-span-12";
   if (rest === 2) return "col-span-12 sm:col-span-6";
 
-  const restIndex = index - 3; // position 0-based dans le groupe "rest"
-  const fullRows = Math.floor(rest / 3); // lignes complètes de 3
-  const leftover = rest % 3; // cartes restantes (0, 1 ou 2)
+  const restIndex = index - 3;
+  const fullRows = Math.floor(rest / 3);
+  const leftover = rest % 3;
 
   if (restIndex < fullRows * 3) return "col-span-12 sm:col-span-4 lg:col-span-4";
 
-  // Gestion du leftover final
   if (leftover === 1) return "col-span-12";
   if (leftover === 2) return "col-span-12 sm:col-span-6";
 
@@ -88,19 +86,16 @@ function PlaceholderBg({ projet }: { projet: Projet }) {
 
 // ─── ProjectCard ───────────────────────────────────────────────────────────
 
-const CONTEXT_LABEL: Record<Projet["contexte"], string> = {
-  agence: "Agence",
-  freelance: "Freelance",
-  perso: "Perso",
-};
-
 const CONTEXT_STYLE: Record<Projet["contexte"], React.CSSProperties> = {
-  agence:    { color: "var(--accent)",   borderColor: "rgba(162,226,208,0.5)",  background: "rgba(162,226,208,0.13)" },
-  freelance: { color: "var(--lavender)", borderColor: "rgba(156,220,254,0.5)",  background: "rgba(156,220,254,0.13)" },
-  perso:     { color: "var(--gold)",     borderColor: "rgba(220,196,84,0.45)",  background: "rgba(220,196,84,0.12)"  },
+  agence: { color: "var(--accent)", borderColor: "rgba(162,226,208,0.5)", background: "rgba(162,226,208,0.13)" },
+  freelance: { color: "var(--lavender)", borderColor: "rgba(156,220,254,0.5)", background: "rgba(156,220,254,0.13)" },
+  perso: { color: "var(--gold)", borderColor: "rgba(220,196,84,0.45)", background: "rgba(220,196,84,0.12)" },
 };
 
 function ProjectCard({ projet, index, total }: { projet: Projet; index: number; total: number }) {
+  const t = useTranslations("projets.grid");
+  const tProjetsData = useTranslations("projetsData");
+  const { titre, description } = localizeProjetCard(projet, tProjetsData);
   const hasImage = Boolean(projet.img);
   const isLarge = index === 0;
 
@@ -116,7 +111,7 @@ function ProjectCard({ projet, index, total }: { projet: Projet; index: number; 
       {hasImage ? (
         <Image
           src={projet.img}
-          alt={projet.titre}
+          alt={titre}
           fill
           className="object-cover transition-transform duration-700 group-hover:scale-105"
           sizes={
@@ -129,7 +124,6 @@ function ProjectCard({ projet, index, total }: { projet: Projet; index: number; 
         <PlaceholderBg projet={projet} />
       )}
 
-      {/* Gradient overlay */}
       <div className="absolute inset-0 bg-linear-to-t from-zinc-950/95 via-zinc-950/40 to-transparent" />
 
       {/* Top row: context badge · enCours · arrow */}
@@ -138,12 +132,12 @@ function ProjectCard({ projet, index, total }: { projet: Projet; index: number; 
           className="text-[10px] font-semibold px-2.5 py-1 rounded-full border backdrop-blur-sm uppercase tracking-wider"
           style={CONTEXT_STYLE[projet.contexte]}
         >
-          {CONTEXT_LABEL[projet.contexte]}
+          {t(`context.${projet.contexte}`)}
         </span>
         <div className="flex items-center gap-2">
           {projet.enCours && (
             <span className="text-[10px] font-medium px-2.5 py-1 rounded-full bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50 text-zinc-400 uppercase tracking-wider">
-              En cours
+              {t("inProgress")}
             </span>
           )}
           <div className="w-8 h-8 rounded-full bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -152,7 +146,7 @@ function ProjectCard({ projet, index, total }: { projet: Projet; index: number; 
         </div>
       </div>
 
-      {/* Title block — slides up on hover */}
+      {/* Title block */}
       <div className="absolute bottom-5 left-5 right-5 transition-transform duration-300 ease-out group-hover:-translate-y-[56px]">
         <div className="flex items-center gap-2.5 mb-0.5">
           <h2
@@ -175,14 +169,14 @@ function ProjectCard({ projet, index, total }: { projet: Projet; index: number; 
             </div>
           )}
         </div>
-        <p className="text-xs text-white/80">{projet.titre}</p>
+        <p className="text-xs text-white/80">{titre}</p>
         <p className="text-[10px] text-white/45 mt-1 font-mono tracking-wider">{projet.date.slice(0, 4)}</p>
       </div>
 
-      {/* Description — fades in at the bottom where the title was */}
+      {/* Description */}
       <div className="absolute bottom-5 left-5 right-5 opacity-0 translate-y-1.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 delay-75">
         <p className="text-sm text-zinc-300/80 leading-relaxed line-clamp-2">
-          {projet.description}
+          {description}
         </p>
       </div>
     </Link>
@@ -223,6 +217,8 @@ function FilterPills({
 // ─── ProjetsGrid ───────────────────────────────────────────────────────────
 
 export function ProjetsGrid() {
+  const t = useTranslations("projets.grid");
+  const tProjetsData = useTranslations("projetsData");
   const [typeFilter, setTypeFilter] = useState("");
   const [yearFilter, setYearFilter] = useState("");
   const [search, setSearch] = useState("");
@@ -238,10 +234,14 @@ export function ProjetsGrid() {
     return projets.filter((p) => {
       if (typeFilter && p.contexte !== typeFilter) return false;
       if (yearFilter && !p.date.startsWith(yearFilter)) return false;
-      if (q && !p.client.toLowerCase().includes(q) && !p.titre.toLowerCase().includes(q)) return false;
+      if (q) {
+        const localizedTitre = localizeProjetCard(p, tProjetsData).titre;
+        const haystack = `${p.client} ${p.titre} ${localizedTitre}`.toLowerCase();
+        if (!haystack.includes(q)) return false;
+      }
       return true;
     });
-  }, [typeFilter, yearFilter, search]);
+  }, [typeFilter, yearFilter, search, tProjetsData]);
 
   const hasFilters = typeFilter || yearFilter || search.trim();
 
@@ -254,7 +254,7 @@ export function ProjetsGrid() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-foreground/35 pointer-events-none" />
           <input
             type="text"
-            placeholder="Rechercher un projet..."
+            placeholder={t("searchPlaceholder")}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full pl-8 pr-8 py-2 rounded-lg border border-foreground/15 bg-foreground/5 text-sm text-foreground/80 placeholder:text-foreground/80 focus:outline-none focus:border-foreground/30 transition-colors"
@@ -274,13 +274,13 @@ export function ProjetsGrid() {
           {/* Type */}
           <div className="flex items-center gap-2.5">
             <span className="text-xs text-foreground font-medium uppercase tracking-wider shrink-0">
-              Type
+              {t("typeFilter")}
             </span>
             <FilterPills
               options={[
-                { label: "Agence", value: "agence" },
-                { label: "Freelance", value: "freelance" },
-                { label: "Perso", value: "perso" },
+                { label: t("context.agence"), value: "agence" },
+                { label: t("context.freelance"), value: "freelance" },
+                { label: t("context.perso"), value: "perso" },
               ]}
               value={typeFilter}
               onChange={setTypeFilter}
@@ -292,7 +292,7 @@ export function ProjetsGrid() {
           {/* Année */}
           <div className="flex items-center gap-2.5">
             <span className="text-xs text-foreground font-medium uppercase tracking-wider shrink-0">
-              Année
+              {t("yearFilter")}
             </span>
             <FilterPills
               options={yearOptions}
@@ -311,7 +311,7 @@ export function ProjetsGrid() {
               }}
               className="text-xs text-foreground/50 hover:text-foreground/80 transition-colors cursor-pointer underline underline-offset-2"
             >
-              Tout afficher
+              {t("showAll")}
             </button>
           )}
         </div>
@@ -319,7 +319,7 @@ export function ProjetsGrid() {
         {/* Results count */}
         {hasFilters && (
           <p className="text-xs text-foreground/50">
-            {filtered.length} projet{filtered.length !== 1 ? "s" : ""}
+            {t("resultsCount", { count: filtered.length })}
           </p>
         )}
       </div>
@@ -333,7 +333,7 @@ export function ProjetsGrid() {
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center py-24 text-center">
-          <p className="text-foreground/30 text-sm">Aucun projet pour ces filtres.</p>
+          <p className="text-foreground/30 text-sm">{t("noResults")}</p>
           <button
             onClick={() => {
               setTypeFilter("");
@@ -341,7 +341,7 @@ export function ProjetsGrid() {
             }}
             className="mt-3 text-xs text-accent hover:text-accent/70 transition-colors cursor-pointer underline underline-offset-2"
           >
-            Réinitialiser
+            {t("reset")}
           </button>
         </div>
       )}

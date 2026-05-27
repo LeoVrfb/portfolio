@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import { useTranslations } from "next-intl"
 
 
 
@@ -375,6 +376,7 @@ const ANIM_CSS = `
 `
 
 export function HeroNeonAnim({ responsive = false, once = false }: { responsive?: boolean; once?: boolean }) {
+  const t = useTranslations("intro.card")
   const [playing, setPlaying] = useState(false)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -425,8 +427,8 @@ export function HeroNeonAnim({ responsive = false, once = false }: { responsive?
       <div className="hna-wall-left" />
       <div className="hna-wall-right" />
       <div className="hna-content">
-        <h2>Léo Hengebaert</h2>
-        <p>Développeur front-end</p>
+        <h2>{t("name")}</h2>
+        <p>{t("role")}</p>
       </div>
       <div className="hna-hand1" />
       <div className="hna-hand2" />

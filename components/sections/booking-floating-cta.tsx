@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { Calendar } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 // Floating Action Button "Réserver un appel" — visible en permanence pendant
 // le scroll, scroll smooth vers #booking au clic.
@@ -17,6 +18,7 @@ type BookingFloatingCtaProps = {
 }
 
 export function BookingFloatingCta({ color = "var(--accent)" }: BookingFloatingCtaProps) {
+  const t = useTranslations("booking.floatingCta")
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -56,7 +58,7 @@ export function BookingFloatingCta({ color = "var(--accent)" }: BookingFloatingC
     <a
       href="#booking"
       onClick={handleClick}
-      aria-label="Réserver un appel découverte"
+      aria-label={t("ariaLabel")}
       className={`fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40 inline-flex items-center gap-2 px-4 py-3 sm:px-5 sm:py-3.5 rounded-full text-sm font-bold cursor-pointer transition-all duration-300 shadow-2xl hover:scale-[1.03] ${
         visible
           ? "opacity-100 translate-y-0 pointer-events-auto"
@@ -69,8 +71,8 @@ export function BookingFloatingCta({ color = "var(--accent)" }: BookingFloatingC
       }}
     >
       <Calendar className="w-4 h-4" />
-      <span className="hidden sm:inline">Réserver un appel</span>
-      <span className="sm:hidden">Réserver</span>
+      <span className="hidden sm:inline">{t("long")}</span>
+      <span className="sm:hidden">{t("short")}</span>
     </a>
   )
 }

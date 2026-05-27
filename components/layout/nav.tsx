@@ -1,18 +1,11 @@
 "use client"
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { useState } from "react"
-import { Menu, X, ArrowRight } from "lucide-react"
+import { Menu, X } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { Link, usePathname } from "@/i18n/navigation"
+import { LocaleSwitcher } from "@/components/layout/locale-switcher"
 import { cn } from "@/lib/utils"
-
-const links = [
-  { href: "/", label: "Accueil" },
-  { href: "/projets", label: "Projets" },
-  { href: "/services", label: "Services" },
-  { href: "/a-propos", label: "À propos" },
-  { href: "/contact", label: "Contact" },
-]
 
 const NAV_GLASS_CSS = `
 @property --npg-angle { syntax: "<angle>"; inherits: false; initial-value: -75deg; }
@@ -59,32 +52,20 @@ const NAV_GLASS_CSS = `
   box-shadow: inset 0 0 0 calc(var(--bw) / 2) rgba(255,255,255,0.08);
 }
 .nav-pill-glass:hover::after { --npg-angle: -125deg; }
-
-/* CTA disponible */
-.nav-cta {
-  --t: 300ms;
-  --ease: cubic-bezier(0.25, 1, 0.5, 1);
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 0.45em 1.1em; border-radius: 999vw;
-  background: linear-gradient(-75deg, rgba(110,166,150,0.10), rgba(110,166,150,0.20), rgba(110,166,150,0.10));
-  border: 1px solid rgba(110,166,150,0.30);
-  color: rgba(180,230,215,1);
-  font-size: 0.8125rem; font-weight: 600;
-  box-shadow: 0 0 12px rgba(110,166,150,0.08), inset 0 1px rgba(255,255,255,0.06);
-  backdrop-filter: blur(8px);
-  transition: all var(--t) var(--ease);
-  cursor: pointer; text-decoration: none;
-}
-.nav-cta:hover {
-  background: linear-gradient(-75deg, rgba(110,166,150,0.16), rgba(110,166,150,0.28), rgba(110,166,150,0.16));
-  border-color: rgba(110,166,150,0.50);
-  box-shadow: 0 0 20px rgba(110,166,150,0.14), inset 0 1px rgba(255,255,255,0.08);
-}
 `
 
 export function Nav() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
+  const t = useTranslations("nav")
+
+  const links = [
+    { href: "/" as const, label: t("home") },
+    { href: "/projets" as const, label: t("projects") },
+    { href: "/services" as const, label: t("services") },
+    { href: "/a-propos" as const, label: t("about") },
+    { href: "/contact" as const, label: t("contact") },
+  ]
 
   return (
     <header className="fixed top-0 inset-x-0 z-50">
@@ -126,16 +107,23 @@ export function Nav() {
             })}
           </div>
 
-          {/* Desktop CTA — supprimé, Contact est dans la nav */}
-          <div className="hidden md:block" />
+          {/* Desktop — locale switcher à droite */}
+          <div className="hidden md:flex items-center">
+            <LocaleSwitcher />
+          </div>
 
-          {/* Mobile toggle */}
-          <button
-            onClick={() => setOpen(!open)}
-            className="md:hidden p-2 rounded-xl border border-white/10 bg-white/4 text-zinc-300 hover:text-white hover:bg-white/8 transition-all cursor-pointer"
-          >
-            {open ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
-          </button>
+          {/* Mobile — switcher + burger */}
+          <div className="md:hidden flex items-center gap-2">
+            <LocaleSwitcher />
+            <button
+              onClick={() => setOpen(!open)}
+              aria-label={open ? t("menuClose") : t("menuOpen")}
+              aria-expanded={open}
+              className="p-2 rounded-xl border border-white/10 bg-white/4 text-zinc-300 hover:text-white hover:bg-white/8 transition-all cursor-pointer"
+            >
+              {open ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+            </button>
+          </div>
         </nav>
 
         {/* Mobile menu */}
@@ -146,6 +134,7 @@ export function Nav() {
               <span className="text-sm font-bold text-white">Léo Hengebaert</span>
               <button
                 onClick={() => setOpen(false)}
+                aria-label={t("menuClose")}
                 className="p-1.5 rounded-lg text-zinc-500 hover:text-white transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />

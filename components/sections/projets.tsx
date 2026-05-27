@@ -1,10 +1,12 @@
 "use client"
 
-import Link from "next/link"
 import Image from "next/image"
 import { ArrowUpRight } from "lucide-react"
 import { motion } from "motion/react"
+import { useTranslations } from "next-intl"
+import { Link } from "@/i18n/navigation"
 import { projets } from "@/lib/projets"
+import { localizeProjetCard } from "@/lib/projets-i18n"
 
 const TAG_COLORS = [
   { color: "var(--accent)", bg: "hsl(163 24% 54% / 0.12)" },
@@ -13,6 +15,9 @@ const TAG_COLORS = [
 ]
 
 export function ProjetsSection() {
+  const t = useTranslations("home.projects")
+  const tProjetsData = useTranslations("projetsData")
+
   return (
     <section className="pt-20 pb-16 bg-background">
       <div className="layout-container">
@@ -26,19 +31,19 @@ export function ProjetsSection() {
         >
           <div>
             <p className="text-xs uppercase tracking-[0.4em] text-accent font-medium mb-3">
-              Réalisations
+              {t("eyebrow")}
             </p>
             <h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-tighter leading-[0.95]">
-              Projets
+              {t("title")}
               <br />
-              <span className="text-accent">sélectionnés</span>
+              <span className="text-accent">{t("titleAccent")}</span>
             </h2>
           </div>
           <Link
             href="/projets"
             className="hidden md:flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group cursor-pointer"
           >
-            Voir tout
+            {t("viewAll")}
             <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </Link>
         </motion.div>
@@ -47,6 +52,7 @@ export function ProjetsSection() {
         <ul className="divide-y divide-border/50">
           {projets.slice(0, 3).map((projet, i) => {
             const year = projet.date.split("-")[0]
+            const { titre } = localizeProjetCard(projet, tProjetsData)
             return (
               <motion.li
                 key={projet.slug}
@@ -100,7 +106,7 @@ export function ProjetsSection() {
                     </div>
                     {/* Ligne 2 : titre secondaire */}
                     <p className="text-sm text-foreground/75 leading-snug truncate">
-                      {projet.titre}
+                      {titre}
                     </p>
                   </div>
 
@@ -139,7 +145,7 @@ export function ProjetsSection() {
             href="/projets"
             className="inline-flex items-center gap-2 text-sm text-foreground/60 hover:text-accent transition-colors cursor-pointer group"
           >
-            Voir tous les projets
+            {t("viewAllProjects")}
             <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </Link>
         </motion.div>

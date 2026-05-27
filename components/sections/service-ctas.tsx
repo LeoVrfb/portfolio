@@ -1,13 +1,11 @@
 "use client"
 
-import { Calendar, Mail, ArrowRight } from "lucide-react"
-
-// ─── Mini CTA inline ───────────────────────────────────────────────────────
-// Petit bouton seul après les témoignages, pour les visiteurs déjà chauds qui
-// veulent réserver tout de suite sans passer par le configurateur.
-// Pas de bloc lourd ici : juste un bouton qui scroll vers le calendar.
+import { useTranslations } from "next-intl"
+import { Calendar, Mail } from "lucide-react"
 
 export function ServiceCtaInline({ color }: { color: string }) {
+  const t = useTranslations("serviceCtas")
+
   return (
     <section className="py-10 sm:py-12 flex justify-center">
       <a
@@ -16,28 +14,32 @@ export function ServiceCtaInline({ color }: { color: string }) {
         style={{ background: color, color: "var(--background)" }}
       >
         <Calendar className="w-4 h-4" />
-        Réserver mon appel découverte
-        <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+        {t("bookMyCall")}
       </a>
     </section>
   )
 }
 
-// ─── CTA final — après le configurateur ────────────────────────────────────
-// Double choix : Réserver un appel (primaire) OU Voir mon estimation (scroll
-// vers la sticky card du configurateur). C'est le seul gros bloc CTA de la
-// page : on a viré l'ancien "ServiceCtaDiscovery" pour ne pas surcharger.
-
 export function ServiceCtaFinal({ color }: { color: string }) {
+  const t = useTranslations("serviceCtas")
+
   return (
     <section className="py-12 sm:py-16">
       <div className="text-center max-w-2xl mx-auto">
         <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-white mb-3">
-          Prêt à <span style={{ color }}>passer à l&apos;action</span> ?
+          {t("readyToAct").split(t("readyToActAccent")).map((part, i, arr) =>
+            i < arr.length - 1 ? (
+              <span key={i}>
+                {part}
+                <span style={{ color }}>{t("readyToActAccent")}</span>
+              </span>
+            ) : (
+              <span key={i}>{part}</span>
+            )
+          )}
         </h2>
         <p className="text-sm sm:text-base text-white/65 leading-relaxed mb-7">
-          Que vous préfériez en parler maintenant ou recevoir d&apos;abord votre estimation par
-          mail, on avance ensemble à votre rythme.
+          {t("finalDescription")}
         </p>
 
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
@@ -47,7 +49,7 @@ export function ServiceCtaFinal({ color }: { color: string }) {
             style={{ background: color, color: "var(--background)" }}
           >
             <Calendar className="w-4 h-4" />
-            Réserver un appel
+            {t("bookCall")}
           </a>
 
           <a
@@ -55,7 +57,7 @@ export function ServiceCtaFinal({ color }: { color: string }) {
             className="group inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl text-sm font-semibold text-white border border-white/15 hover:border-white/30 hover:bg-white/4 transition-all cursor-pointer"
           >
             <Mail className="w-4 h-4" />
-            Recevoir mon estimation
+            {t("receiveEstimation")}
           </a>
         </div>
       </div>

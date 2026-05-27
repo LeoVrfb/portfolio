@@ -1,35 +1,34 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
+
+const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
-  // Redirections SEO permanentes (308) — le site avait l'i18n /fr/* et /en/*
-  // dans une version précédente. Google a encore ces URLs en cache, donc on les
-  // renvoie vers leurs équivalents sans préfixe pour ne pas perdre l'autorité
-  // SEO accumulée. À retirer le jour où on remet une vraie i18n.
+  // Redirections SEO permanentes (308) — anciens URLs en cache chez Google.
+  // Note : les catch-all /fr/:path* → /:path* du passé i18n ONT ÉTÉ RETIRÉS
+  // car ils entreraient en conflit avec la nouvelle i18n /en/*.
+  // Le /fr historique pointait vers la version française unique du site.
   async redirects() {
     return [
-      // Mapping anciens slugs anglais → nouveaux slugs français
-      // (ordre important : ces règles passent avant les catch-all /fr et /en)
+      // Anciens slugs anglais → nouveaux slugs français
       { source: "/about", destination: "/a-propos", permanent: true },
       { source: "/projects", destination: "/projets", permanent: true },
       { source: "/projects/:slug*", destination: "/projets/:slug*", permanent: true },
-      { source: "/fr/about", destination: "/a-propos", permanent: true },
-      { source: "/en/about", destination: "/a-propos", permanent: true },
-      { source: "/fr/projects", destination: "/projets", permanent: true },
-      { source: "/en/projects", destination: "/projets", permanent: true },
-      { source: "/fr/projects/:slug*", destination: "/projets/:slug*", permanent: true },
-      { source: "/en/projects/:slug*", destination: "/projets/:slug*", permanent: true },
-      // L'ancienne page /devis pointe désormais vers /services (configurateur de devis intégré)
+      // Équivalents avec préfixe /en pour conserver le SEO sur la nouvelle i18n
+      { source: "/en/about", destination: "/en/a-propos", permanent: true },
+      { source: "/en/projects", destination: "/en/projets", permanent: true },
+      { source: "/en/projects/:slug*", destination: "/en/projets/:slug*", permanent: true },
+      // L'ancienne page /devis pointe désormais vers /services
       { source: "/devis", destination: "/services", permanent: true },
       { source: "/services/devis", destination: "/services", permanent: true },
-      { source: "/fr/devis", destination: "/services", permanent: true },
-      { source: "/en/devis", destination: "/services", permanent: true },
-      // Catch-all : on retire le préfixe de langue pour tout le reste
+      { source: "/en/devis", destination: "/en/services", permanent: true },
+      { source: "/en/services/devis", destination: "/en/services", permanent: true },
+      // Catch-all : on retire le préfixe /fr/* historique (mais on garde /en/*
+      // qui est maintenant géré par next-intl)
       { source: "/fr", destination: "/", permanent: true },
-      { source: "/en", destination: "/", permanent: true },
       { source: "/fr/:path*", destination: "/:path*", permanent: true },
-      { source: "/en/:path*", destination: "/:path*", permanent: true },
     ];
   },
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

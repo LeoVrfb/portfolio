@@ -1,32 +1,36 @@
 "use client"
 
 import { useState } from "react"
-import Link from "next/link"
+import { useTranslations } from "next-intl"
+import { Link } from "@/i18n/navigation"
 import { Marquee } from "@/components/animations/marquee"
 
-type Item = {
+type Color = "lavender" | "mauve" | "accent"
+
+type InternalItem = {
+  kind: "internal"
   text: string
-  color: "lavender" | "mauve" | "accent"
-  href: string
-  external?: boolean
+  color: Color
+  href: "/projets" | "/a-propos" | "/services" | "/contact"
 }
 
-const ITEMS: Item[] = [
-  { text: "Projets", href: "/projets", color: "lavender" },
-  { text: "Argedis × TotalEnergies", href: "/projets/argedis-totalenergies", color: "mauve" },
-  { text: "À propos", href: "/a-propos", color: "lavender" },
-  { text: "Sweetime × ADP", href: "/projets/sweetime-adp-extime", color: "mauve" },
-  { text: "LinkedIn", href: "https://linkedin.com/in/leo-hengebaert", color: "accent", external: true },
-  { text: "BNP Paribas", href: "/projets/bnp-paribas-elearning", color: "mauve" },
-  { text: "Services", href: "/services", color: "lavender" },
-  { text: "Make a Scene", href: "/projets/make-a-scene", color: "mauve" },
-  { text: "GitHub", href: "https://github.com/LeoVrfb", color: "accent", external: true },
-  { text: "Contact", href: "/contact", color: "lavender" },
-  { text: "Bald", href: "/projets/bald-artiste", color: "mauve" },
-  { text: "Instagram", href: "https://instagram.com/leohengebaert", color: "accent", external: true },
-]
+type ProjectItem = {
+  kind: "project"
+  text: string
+  color: Color
+  slug: string
+}
 
-const NEON: Record<Item["color"], { base: string; glow: string }> = {
+type ExternalItem = {
+  kind: "external"
+  text: string
+  color: Color
+  href: string
+}
+
+type Item = InternalItem | ProjectItem | ExternalItem
+
+const NEON: Record<Color, { base: string; glow: string }> = {
   lavender: {
     base: "var(--lavender)",
     glow: "0 0 6px rgba(187,160,197,0.9), 0 0 18px rgba(187,160,197,0.5), 0 0 35px rgba(187,160,197,0.25)",
@@ -64,7 +68,7 @@ function BandItem({ item }: { item: Item }) {
 
   const className = "text-xl font-black uppercase tracking-[0.08em] select-none"
 
-  if (item.external) {
+  if (item.kind === "external") {
     return (
       <a
         href={item.href}
@@ -79,6 +83,21 @@ function BandItem({ item }: { item: Item }) {
       </a>
     )
   }
+
+  if (item.kind === "project") {
+    return (
+      <Link
+        href={`/projets/${item.slug}`}
+        className={className}
+        style={style}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        {content}
+      </Link>
+    )
+  }
+
   return (
     <Link
       href={item.href}
@@ -94,6 +113,24 @@ function BandItem({ item }: { item: Item }) {
 
 export function TechBand() {
   const [paused, setPaused] = useState(false)
+  const t = useTranslations("nav")
+
+  // Mix d'items i18n (liens internes) + items "littéraux" (noms propres
+  // qui ne se traduisent pas : marques, projets, réseaux sociaux).
+  const items: Item[] = [
+    { kind: "internal", text: t("projects"), href: "/projets", color: "lavender" },
+    { kind: "project", text: "Argedis × TotalEnergies", slug: "argedis-totalenergies", color: "mauve" },
+    { kind: "internal", text: t("about"), href: "/a-propos", color: "lavender" },
+    { kind: "project", text: "Sweetime × ADP", slug: "sweetime-adp-extime", color: "mauve" },
+    { kind: "external", text: "LinkedIn", href: "https://linkedin.com/in/leo-hengebaert", color: "accent" },
+    { kind: "project", text: "BNP Paribas", slug: "bnp-paribas-elearning", color: "mauve" },
+    { kind: "internal", text: t("services"), href: "/services", color: "lavender" },
+    { kind: "project", text: "Make a Scene", slug: "make-a-scene", color: "mauve" },
+    { kind: "external", text: "GitHub", href: "https://github.com/LeoVrfb", color: "accent" },
+    { kind: "internal", text: t("contact"), href: "/contact", color: "lavender" },
+    { kind: "project", text: "Bald", slug: "bald-artiste", color: "mauve" },
+    { kind: "external", text: "Instagram", href: "https://instagram.com/leohengebaert", color: "accent" },
+  ]
 
   return (
     <section
@@ -102,8 +139,8 @@ export function TechBand() {
       onMouseLeave={() => setPaused(false)}
     >
       <Marquee paused={paused} className="[--duration:60s] [--gap:0rem]">
-        {ITEMS.map((item) => (
-          <BandItem key={item.text} item={item} />
+        {items.map((item, i) => (
+          <BandItem key={`${item.kind}-${i}-${item.text}`} item={item} />
         ))}
       </Marquee>
     </section>
