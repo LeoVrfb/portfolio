@@ -15,6 +15,7 @@ import { ServiceProjects } from "@/components/sections/service-projects"
 import { ServiceCtaInline, ServiceCtaFinal } from "@/components/sections/service-ctas"
 import { BookingCalendar } from "@/components/sections/booking-calendar"
 import { BookingFloatingCta } from "@/components/sections/booking-floating-cta"
+import { scrollToAnchor } from "@/lib/scroll-to-anchor"
 
 // Parse minimaliste **mot** → <strong className="text-accent">. Utilisé dans le pitch.
 function renderRichText(text: string, accentClassName = "text-accent font-bold"): React.ReactNode {
@@ -534,6 +535,10 @@ export function ServiceConfigurator({ service }: { service: ServiceDetail }) {
 
             <a
               href="#booking"
+              onClick={(e) => {
+                e.preventDefault()
+                scrollToAnchor("booking")
+              }}
               className="group inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all hover:opacity-90 cursor-pointer"
               style={{ background: service.color, color: "var(--background)" }}
             >

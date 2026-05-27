@@ -2,6 +2,14 @@
 
 import { useTranslations } from "next-intl"
 import { Calendar, Mail } from "lucide-react"
+import { scrollToAnchor } from "@/lib/scroll-to-anchor"
+
+function handleAnchor(id: string) {
+  return (e: React.MouseEvent) => {
+    e.preventDefault()
+    scrollToAnchor(id)
+  }
+}
 
 export function ServiceCtaInline({ color }: { color: string }) {
   const t = useTranslations("serviceCtas")
@@ -10,6 +18,7 @@ export function ServiceCtaInline({ color }: { color: string }) {
     <section className="py-10 sm:py-12 flex justify-center">
       <a
         href="#booking"
+        onClick={handleAnchor("booking")}
         className="group inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-bold transition-all hover:opacity-90 cursor-pointer"
         style={{ background: color, color: "var(--background)" }}
       >
@@ -45,6 +54,7 @@ export function ServiceCtaFinal({ color }: { color: string }) {
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
           <a
             href="#booking"
+            onClick={handleAnchor("booking")}
             className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-bold transition-all hover:opacity-90 cursor-pointer"
             style={{ background: color, color: "var(--background)" }}
           >
@@ -54,6 +64,7 @@ export function ServiceCtaFinal({ color }: { color: string }) {
 
           <a
             href="#configurateur"
+            onClick={handleAnchor("configurateur")}
             className="group inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl text-sm font-semibold text-white border border-white/15 hover:border-white/30 hover:bg-white/4 transition-all cursor-pointer"
           >
             <Mail className="w-4 h-4" />

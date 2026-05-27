@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { Calendar } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { scrollToAnchor } from "@/lib/scroll-to-anchor"
 
 // Floating Action Button "Réserver un appel" — visible en permanence pendant
 // le scroll, scroll smooth vers #booking au clic.
@@ -50,8 +51,7 @@ export function BookingFloatingCta({ color = "var(--accent)" }: BookingFloatingC
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault()
-    const el = document.getElementById("booking")
-    el?.scrollIntoView({ behavior: "smooth", block: "start" })
+    scrollToAnchor("booking")
   }
 
   return (

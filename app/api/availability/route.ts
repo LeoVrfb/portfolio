@@ -5,14 +5,17 @@ import { getAvailableSlots } from "@/lib/availability"
 // Endpoint GET /api/availability?date=YYYY-MM-DD
 // Retourne la liste des créneaux libres pour la date demandée.
 // Pas de cache : la dispo doit refléter le calendrier en temps réel.
+//
+// Note i18n : on ne retourne PAS de `message` dans les réponses d'erreur.
+// Le client (booking-calendar.tsx) affiche son propre message via
+// `t("loadError")` quand le champ est absent. Cela évite d'avoir à propager
+// la locale jusque dans l'API juste pour traduire un message d'erreur.
 
 export const dynamic = "force-dynamic"
 export const runtime = "nodejs"
 
 const QuerySchema = z.object({
-  date: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, "Format de date attendu : YYYY-MM-DD"),
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
 })
 
 export async function GET(req: NextRequest) {
@@ -22,7 +25,7 @@ export async function GET(req: NextRequest) {
 
     if (!parsed.success) {
       return NextResponse.json(
-        { success: false, message: "Date invalide.", slots: [] },
+        { success: false, slots: [] },
         { status: 400 }
       )
     }
@@ -33,11 +36,7 @@ export async function GET(req: NextRequest) {
   } catch (err) {
     console.error("[availability] error:", err)
     return NextResponse.json(
-      {
-        success: false,
-        message: "Impossible de récupérer les disponibilités pour le moment.",
-        slots: [],
-      },
+      { success: false, slots: [] },
       { status: 500 }
     )
   }
