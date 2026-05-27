@@ -32,6 +32,10 @@
       "linkedin": "LinkedIn",
       "instagram": "Instagram",
       "github": "GitHub"
+    },
+    "legal": {
+      "privacy": "Confidentialité",
+      "terms": "Mentions légales"
     }
   },
   "metadata": {

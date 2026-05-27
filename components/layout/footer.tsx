@@ -66,8 +66,22 @@ export async function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-white/4 flex items-center justify-between">
+        <div className="mt-8 pt-6 border-t border-white/4 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
           <p className="text-xs text-zinc-700">{t("copyright", { year })}</p>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/privacy"
+              className="text-xs text-zinc-700 hover:text-zinc-400 transition-colors"
+            >
+              {t("legal.privacy")}
+            </Link>
+            <Link
+              href="/terms"
+              className="text-xs text-zinc-700 hover:text-zinc-400 transition-colors"
+            >
+              {t("legal.terms")}
+            </Link>
+          </div>
           <p className="text-xs text-zinc-800">{t("stack")}</p>
         </div>
       </div>
