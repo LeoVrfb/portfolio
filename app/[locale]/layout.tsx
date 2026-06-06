@@ -161,6 +161,13 @@ export default async function LocaleLayout({ children, params }: Props) {
       lang={locale}
       className={`${spaceGrotesk.variable} ${dmMono.variable} ${bebasNeue.variable} ${dmSerifDisplay.variable} dark`}
     >
+      <head>
+        {/* Vieille balise pré-HTML5 que Bing inspecte explicitement (warning
+            "Meta Language tag missing" sans elle). L'attribut html lang=...
+            au-dessus suffit pour Google + crawlers modernes, mais Bing
+            audite cette balise spécifique côté URL Inspection. */}
+        <meta httpEquiv="content-language" content={locale} />
+      </head>
       <body className="min-h-screen flex flex-col bg-background text-foreground">
         <JsonLd data={globalSchemas} />
         <NextIntlClientProvider locale={locale} messages={messages}>
