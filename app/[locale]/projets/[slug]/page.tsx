@@ -24,7 +24,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { projets, getProjet, type PillarIcon } from "@/lib/projets";
-import { getAlternates } from "@/lib/seo/alternates";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { buildProjetSchemas } from "@/lib/seo/projet-schemas";
 import { JsonLd } from "@/components/seo/json-ld";
 import { ProjetGallery } from "@/components/sections/projet-gallery";
@@ -84,11 +84,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = tProjet.has(`${projet.slug}.description`)
     ? tProjet(`${projet.slug}.description`)
     : projet.description;
-  return {
-    title: `${projet.client} — Léo Hengebaert`,
+  return buildPageMetadata({
+    title: `${projet.client} — Étude de cas`,
     description,
-    alternates: getAlternates(`/projets/${projet.slug}`, locale as Locale),
-  };
+    pathname: `/projets/${projet.slug}`,
+    locale: locale as Locale,
+    ogType: "article",
+  });
 }
 
 function renderHighlight(text: string): React.ReactNode {

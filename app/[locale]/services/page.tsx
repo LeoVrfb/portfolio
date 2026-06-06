@@ -5,7 +5,7 @@ import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
-import { getAlternates } from "@/lib/seo/alternates";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import {
   type FaqItem,
   cleanRichText,
@@ -34,11 +34,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
   const t = await getTranslations({ locale, namespace: "services.meta" });
-  return {
+  return buildPageMetadata({
     title: t("title"),
     description: t("description"),
-    alternates: getAlternates("/services", locale as Locale),
-  };
+    pathname: "/services",
+    locale: locale as Locale,
+    keywords:
+      locale === "fr"
+        ? [
+            "tarif site web",
+            "création site web sur mesure",
+            "freelance Next.js Paris",
+            "site web professionnel",
+            "devis site internet",
+          ]
+        : [
+            "website pricing",
+            "custom website development",
+            "freelance Next.js Paris",
+            "professional website",
+            "website quote",
+          ],
+  });
 }
 
 const FORMULES_META = [

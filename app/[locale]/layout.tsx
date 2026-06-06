@@ -9,8 +9,7 @@ import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
 import { IntroOverlay } from "@/components/sections/intro-overlay";
 import { routing, type Locale } from "@/i18n/routing";
-import { getAlternates } from "@/lib/seo/alternates";
-import { localizedUrl } from "@/lib/seo/site";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { isBotUserAgent } from "@/lib/seo/is-bot";
 import {
   personSchema,
@@ -44,29 +43,28 @@ const dmSerifDisplay = DM_Serif_Display({
   style: ["normal", "italic"],
 });
 
-const OG_LOCALE_MAP: Record<Locale, string> = {
-  fr: "fr_FR",
-  en: "en_US",
-};
-
+// Keywords prioritaires sélectionnés en Phase 0 (cf. REX) :
+// - FR : "Développeur Next.js freelance Paris" (k5)
+// - EN : "Next.js freelance developer Paris" (k4)
+// + queue de keywords longue traîne pour couvrir les requêtes commerciales.
 const KEYWORDS_MAP: Record<Locale, string[]> = {
   fr: [
-    "développeur front-end",
-    "freelance",
-    "Next.js",
-    "React",
-    "création de site web",
-    "site vitrine",
-    "site sur mesure",
+    "développeur Next.js freelance",
+    "développeur React Paris",
+    "création site web sur mesure",
+    "freelance Next.js Paris",
+    "site Next.js professionnel",
+    "site vitrine sur mesure",
+    "agence digitale freelance",
   ],
   en: [
-    "front-end developer",
-    "freelance",
-    "Next.js",
-    "React",
-    "website creation",
-    "custom website",
-    "web design",
+    "Next.js freelance developer",
+    "React developer Paris",
+    "custom website development",
+    "freelance Next.js Paris",
+    "professional Next.js website",
+    "custom web design",
+    "freelance digital agency",
   ],
 };
 
@@ -86,36 +84,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const t = await getTranslations({ locale, namespace: "metadata.default" });
 
-  // Alternates de la home (page racine `[locale]/page.tsx`). Les pages enfants
-  // doivent définir leur propre `generateMetadata` qui appelle `getAlternates`
-  // avec le pathname courant — sans ça, Next.js fait un override complet du
-  // champ `alternates` (pas de deep merge), donc on doit toujours le redéfinir
-  // par page pour avoir un canonical/hreflang correct.
-  const homeUrl = localizedUrl("/", locale);
-
+  // Métadonnées de la home + valeurs par défaut héritées (titleTemplate,
+  // applicationName, robots) qui s'appliquent à toutes les pages enfants.
+  // Note : les pages enfants doivent quand même appeler `buildPageMetadata`
+  // pour leur propre `alternates`, `openGraph` et `twitter` — Next.js
+  // n'effectue pas de deep merge sur ces champs.
   return {
+    ...buildPageMetadata({
+      title: t("title"),
+      description: t("description"),
+      pathname: "/",
+      locale,
+      keywords: KEYWORDS_MAP[locale],
+    }),
     title: {
       default: t("title"),
       template: t("titleTemplate"),
     },
-    description: t("description"),
     applicationName: "Léo Hengebaert",
     authors: [{ name: "Léo Hengebaert", url: "https://leohengebaert.fr" }],
     creator: "Léo Hengebaert",
-    keywords: KEYWORDS_MAP[locale],
-    openGraph: {
-      title: t("title"),
-      description: t("description"),
-      url: homeUrl,
-      siteName: "Léo Hengebaert",
-      locale: OG_LOCALE_MAP[locale],
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: t("title"),
-      description: t("description"),
-    },
     robots: {
       index: true,
       follow: true,
@@ -126,7 +114,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "max-snippet": -1,
       },
     },
-    alternates: getAlternates("/", locale),
   };
 }
 

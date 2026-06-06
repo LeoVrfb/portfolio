@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing, type Locale } from "@/i18n/routing";
-import { getAlternates } from "@/lib/seo/alternates";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { ProjetsGrid } from "@/components/sections/projets-grid";
 import { BlurFade } from "@/components/animations/blur-fade";
 
@@ -15,11 +15,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
   const t = await getTranslations({ locale, namespace: "projets.meta" });
-  return {
+  return buildPageMetadata({
     title: t("title"),
     description: t("description"),
-    alternates: getAlternates("/projets", locale as Locale),
-  };
+    pathname: "/projets",
+    locale: locale as Locale,
+  });
 }
 
 export default async function ProjetsPage({ params }: Props) {

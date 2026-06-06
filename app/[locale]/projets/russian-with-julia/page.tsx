@@ -26,7 +26,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 import { projets, type PillarIcon } from "@/lib/projets";
-import { getAlternates } from "@/lib/seo/alternates";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { buildProjetSchemas } from "@/lib/seo/projet-schemas";
 import { JsonLd } from "@/components/seo/json-ld";
 import { ProjetImageSlider } from "@/components/sections/projet-image-slider";
@@ -76,11 +76,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const projet = projets.find((p) => p.slug === SLUG)!;
   const tProjet = await getTranslations({ locale, namespace: "projetsData" });
-  return {
-    title: projet.client,
+  return buildPageMetadata({
+    title: `${projet.client} — Étude de cas`,
     description: tProjet(`${SLUG}.description`),
-    alternates: getAlternates(`/projets/${SLUG}`, locale as Locale),
-  };
+    pathname: `/projets/${SLUG}`,
+    locale: locale as Locale,
+    ogType: "article",
+  });
 }
 
 function renderHighlight(text: string): React.ReactNode {

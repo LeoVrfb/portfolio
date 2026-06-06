@@ -13,7 +13,7 @@ import { hasLocale } from "next-intl"
 import { notFound } from "next/navigation"
 import { Link } from "@/i18n/navigation"
 import { routing, type Locale } from "@/i18n/routing"
-import { getAlternates } from "@/lib/seo/alternates"
+import { buildPageMetadata } from "@/lib/seo/metadata"
 import { BlurFade } from "@/components/animations/blur-fade"
 import { NumberTicker } from "@/components/animations/number-ticker"
 
@@ -25,11 +25,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
   if (!hasLocale(routing.locales, locale)) return {}
   const t = await getTranslations({ locale, namespace: "aPropos.meta" })
-  return {
+  return buildPageMetadata({
     title: t("title"),
     description: t("description"),
-    alternates: getAlternates("/a-propos", locale as Locale),
-  }
+    pathname: "/a-propos",
+    locale: locale as Locale,
+  })
 }
 
 const STATS_VALUES = [

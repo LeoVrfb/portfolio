@@ -5,7 +5,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server"
 import { services } from "@/lib/services"
 import { getServiceContent } from "@/lib/services-content"
 import { ServiceConfigurator } from "@/components/sections/service-configurator"
-import { getAlternates } from "@/lib/seo/alternates"
+import { buildPageMetadata } from "@/lib/seo/metadata"
 import { breadcrumbSchema, serviceOfferSchema } from "@/lib/seo/json-ld"
 import { JsonLd } from "@/components/seo/json-ld"
 import type { Locale } from "@/i18n/routing"
@@ -23,11 +23,12 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "servicesData" })
   const service = getServiceContent(slug, t)
   if (!service) return {}
-  return {
-    title: `${service.nom} — Léo Hengebaert`,
+  return buildPageMetadata({
+    title: `${service.nom} — Création de site web Next.js`,
     description: service.description,
-    alternates: getAlternates(`/services/${slug}`, locale as Locale),
-  }
+    pathname: `/services/${slug}`,
+    locale: locale as Locale,
+  })
 }
 
 export default async function ServicePage({

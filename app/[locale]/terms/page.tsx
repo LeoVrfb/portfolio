@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 import { setRequestLocale } from "next-intl/server"
 import type { Locale } from "@/i18n/routing"
-import { getAlternates } from "@/lib/seo/alternates"
+import { buildPageMetadata } from "@/lib/seo/metadata"
 
 const METADATA_BY_LOCALE: Record<Locale, { title: string; description: string }> = {
   fr: {
@@ -23,11 +23,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   const meta = METADATA_BY_LOCALE[locale as Locale] ?? METADATA_BY_LOCALE.fr
-  return {
+  return buildPageMetadata({
     title: meta.title,
     description: meta.description,
-    alternates: getAlternates("/terms", locale as Locale),
-  }
+    pathname: "/terms",
+    locale: locale as Locale,
+  })
 }
 
 type Section = {

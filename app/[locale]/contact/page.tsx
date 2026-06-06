@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ContactForm, ContactBackLink } from "@/components/sections/contact-form";
-import { getAlternates } from "@/lib/seo/alternates";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import type { Locale } from "@/i18n/routing";
 
 type Props = {
@@ -13,11 +13,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "contact.meta" });
 
-  return {
+  return buildPageMetadata({
     title: t("title"),
     description: t("description"),
-    alternates: getAlternates("/contact", locale as Locale),
-  };
+    pathname: "/contact",
+    locale: locale as Locale,
+  });
 }
 
 export default async function ContactPage({ params }: Props) {

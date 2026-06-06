@@ -40,9 +40,9 @@
   },
   "metadata": {
     "default": {
-      "title": "Léo Hengebaert — Développeur Front-End",
+      "title": "Léo Hengebaert — Développeur Next.js freelance à Paris",
       "titleTemplate": "%s — Léo Hengebaert",
-      "description": "Développeur front-end chez Artefact, spécialisé React & Next.js. Je crée aussi des sites web sur mesure pour entreprises et particuliers."
+      "description": "Développeur Next.js freelance basé à Paris, ex-Artefact. Je crée des sites web sur mesure pour PME, artisans et artistes — propres, rapides, sans abonnement."
     }
   },
   "intro": {
@@ -54,8 +54,8 @@
   },
   "services": {
     "meta": {
-      "title": "Services & Tarifs",
-      "description": "3 formules claires pour la création de votre site web : Essentiel à 590€, Standard à 990€, Premium à 1 890€. Next.js professionnel pour artisans, PME et artistes."
+      "title": "Création de site web Next.js — Tarifs & Formules",
+      "description": "Création de site web Next.js sur mesure : Essentiel 590€, Standard 990€, Premium 1 890€. Pour PME, artisans et artistes. Devis détaillé en 5 minutes."
     },
     "eyebrow": "Tarifs",
     "title": "3 formules claires.",
@@ -271,8 +271,8 @@
   },
   "projets": {
     "meta": {
-      "title": "Projets",
-      "description": "Découvrez mes réalisations web : applications, sites vitrines et landing pages pour des clients comme BNP Paribas, TotalEnergies, Aéroports de Paris et des PME locales."
+      "title": "Projets — Études de cas Next.js & React",
+      "description": "Réalisations web Next.js et React : applications, sites vitrines, landing pages pour BNP Paribas, TotalEnergies, Aéroports de Paris et PME locales."
     },
     "eyebrow": "Réalisations",
     "title": "Projets",
@@ -296,8 +296,8 @@
   },
   "aPropos": {
     "meta": {
-      "title": "À propos",
-      "description": "Développeur front-end spécialisé React & Next.js, basé en Île-de-France. Découvrez mon parcours."
+      "title": "À propos — Parcours Front-End de Qare à Artefact",
+      "description": "Développeur Next.js freelance à Paris, ex-Qare et Artefact. Expert React, TypeScript et performance web. Découvrez mon parcours et mes valeurs."
     },
     "eyebrow": "À propos",
     "title": "Développeur front-end",
@@ -381,8 +381,8 @@
   },
   "contact": {
     "meta": {
-      "title": "Contact",
-      "description": "Discutons de votre projet web ou d'une collaboration. Je réponds sous 24h."
+      "title": "Contact — Devis création de site web Next.js",
+      "description": "Discutons de votre projet de site web Next.js. Devis gratuit en 24h, appel découverte de 15 min sur Google Meet ou téléphone. Sans engagement."
     },
     "eyebrow": "Prenons contact",
     "title": "Parlons de votre",
