@@ -114,6 +114,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "max-snippet": -1,
       },
     },
+    // Vérifications de propriété pour Google Search Console et Bing Webmaster
+    // Tools. Les valeurs sont injectées en var d'env Vercel pour ne pas exposer
+    // les codes dans le repo. Si une env var est absente, le champ est omis
+    // (Next.js gère les undefined). Une fois la propriété GSC vérifiée via
+    // DNS TXT, ce meta tag devient redondant — on peut le laisser ou le retirer.
+    verification: {
+      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+      other: process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+        ? { "msvalidate.01": [process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION] }
+        : undefined,
+    },
   };
 }
 
