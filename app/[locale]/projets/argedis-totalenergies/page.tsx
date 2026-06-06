@@ -13,6 +13,8 @@ import { Link } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 import { projets } from "@/lib/projets";
 import { getAlternates } from "@/lib/seo/alternates";
+import { buildProjetSchemas } from "@/lib/seo/projet-schemas";
+import { JsonLd } from "@/components/seo/json-ld";
 import { Reveal } from "../_components/reveal";
 
 const SLUG = "argedis-totalenergies";
@@ -116,6 +118,13 @@ export default async function ArgedisTotalEnergiesPage({ params }: Props) {
   const descriptionPublic = tProjet(`${SLUG}.descriptionPublic`);
   const resultats = tProjet(`${SLUG}.resultats`);
   const projetTitre = tProjet(`${SLUG}.titre`);
+  const projetDescription = tProjet(`${SLUG}.description`);
+  const pageSchemas = buildProjetSchemas({
+    projet,
+    locale: locale as Locale,
+    titre: projetTitre,
+    description: projetDescription,
+  });
   const projetIntro = tProjet(`${SLUG}.intro`);
 
   if (projet.video) preload(projet.video, { as: "video" });
@@ -136,6 +145,7 @@ export default async function ArgedisTotalEnergiesPage({ params }: Props) {
 
   return (
     <div className="pt-28 pb-28">
+      <JsonLd data={pageSchemas} />
 
       {/* HEADER */}
       <div className="max-w-6xl mx-auto px-6 lg:px-10 mb-12">

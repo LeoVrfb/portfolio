@@ -12,6 +12,12 @@ import { routing, type Locale } from "@/i18n/routing";
 import { getAlternates } from "@/lib/seo/alternates";
 import { localizedUrl } from "@/lib/seo/site";
 import { isBotUserAgent } from "@/lib/seo/is-bot";
+import {
+  personSchema,
+  professionalServiceSchema,
+  websiteSchema,
+} from "@/lib/seo/json-ld";
+import { JsonLd } from "@/components/seo/json-ld";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-geist-sans",
@@ -142,12 +148,23 @@ export default async function LocaleLayout({ children, params }: Props) {
   const userAgent = requestHeaders.get("user-agent");
   const skipIntro = isBotUserAgent(userAgent);
 
+  // Schemas JSON-LD globaux — Person + WebSite + ProfessionalService.
+  // Inclus sur toutes les pages (héritage layout). Les schemas page-spécifiques
+  // (FAQPage, BreadcrumbList, CreativeWork, Service…) sont ajoutés dans chaque
+  // `page.tsx` qui en a besoin. Tous référencent les entités globales via @id.
+  const globalSchemas = [
+    personSchema(locale),
+    websiteSchema(locale),
+    professionalServiceSchema(locale),
+  ];
+
   return (
     <html
       lang={locale}
       className={`${spaceGrotesk.variable} ${dmMono.variable} ${bebasNeue.variable} ${dmSerifDisplay.variable} dark`}
     >
       <body className="min-h-screen flex flex-col bg-background text-foreground">
+        <JsonLd data={globalSchemas} />
         <NextIntlClientProvider locale={locale} messages={messages}>
           {skipIntro ? null : <IntroOverlay />}
           <Nav />

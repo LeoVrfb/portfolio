@@ -6,6 +6,14 @@ import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 import { getAlternates } from "@/lib/seo/alternates";
+import {
+  type FaqItem,
+  cleanRichText,
+  faqPageSchema,
+  serviceOfferSchema,
+} from "@/lib/seo/json-ld";
+import { services } from "@/lib/services";
+import { JsonLd } from "@/components/seo/json-ld";
 import { BlurFade } from "@/components/animations/blur-fade";
 import {
   BookingDiscoveryCard,
@@ -85,9 +93,40 @@ export default async function ServicesPage({ params }: Props) {
   const locale = localeParam as Locale;
   setRequestLocale(locale);
   const t = await getTranslations("services");
+  const tServicesData = await getTranslations({ locale, namespace: "servicesData" });
+
+  // Construit les schemas JSON-LD page-spécifiques :
+  // - FAQPage : 8 Q/R pour aider Google AI Overviews et ChatGPT/Perplexity
+  // - 3× Service : un schema par formule (Essentiel, Standard, Premium) avec
+  //   prix, currency, provider référençant la Person globale.
+  const faqItems: FaqItem[] = FAQ_ITEMS.map((item) => {
+    const question = t(`faq.${item.key}.question`);
+    const paragraphs = Array.from({ length: item.paragraphs }, (_, i) =>
+      t(`faq.${item.key}.p${i + 1}`),
+    );
+    return {
+      question: cleanRichText(question),
+      answer: cleanRichText(paragraphs.join(" ")),
+    };
+  });
+  const pageSchemas = [
+    faqPageSchema(faqItems),
+    ...services.map((service) => {
+      // Surcharge nom/description par les versions traduites quand dispo
+      // (lib/services.ts contient les versions FR par défaut).
+      const nom = tServicesData.has(`${service.slug}.nom`)
+        ? tServicesData(`${service.slug}.nom`)
+        : service.nom;
+      const description = tServicesData.has(`${service.slug}.description`)
+        ? tServicesData(`${service.slug}.description`)
+        : service.description;
+      return serviceOfferSchema({ ...service, nom, description }, locale);
+    }),
+  ];
 
   return (
     <div className="pt-28 pb-20 layout-container">
+      <JsonLd data={pageSchemas} />
       {/* Header */}
       <div className="mb-10">
         <BlurFade delay={0}>

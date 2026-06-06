@@ -6,6 +6,8 @@ import { services } from "@/lib/services"
 import { getServiceContent } from "@/lib/services-content"
 import { ServiceConfigurator } from "@/components/sections/service-configurator"
 import { getAlternates } from "@/lib/seo/alternates"
+import { breadcrumbSchema, serviceOfferSchema } from "@/lib/seo/json-ld"
+import { JsonLd } from "@/components/seo/json-ld"
 import type { Locale } from "@/i18n/routing"
 
 export function generateStaticParams() {
@@ -40,9 +42,25 @@ export default async function ServicePage({
   const service = getServiceContent(slug, t)
   if (!service) notFound()
 
+  // Schemas page : Service (formule + prix) + BreadcrumbList Accueil → Services → Formule.
+  const pageSchemas = [
+    serviceOfferSchema(service, locale as Locale),
+    breadcrumbSchema(
+      [
+        { name: locale === "fr" ? "Accueil" : "Home", pathname: "/" },
+        { name: locale === "fr" ? "Services" : "Services", pathname: "/services" },
+        { name: service.nom, pathname: `/services/${slug}` },
+      ],
+      locale as Locale,
+    ),
+  ]
+
   return (
-    <Suspense fallback={null}>
-      <ServiceConfigurator service={service} />
-    </Suspense>
+    <>
+      <JsonLd data={pageSchemas} />
+      <Suspense fallback={null}>
+        <ServiceConfigurator service={service} />
+      </Suspense>
+    </>
   )
 }

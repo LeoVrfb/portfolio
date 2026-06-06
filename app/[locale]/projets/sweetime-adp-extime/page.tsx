@@ -13,6 +13,8 @@ import { Link } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 import { projets } from "@/lib/projets";
 import { getAlternates } from "@/lib/seo/alternates";
+import { buildProjetSchemas } from "@/lib/seo/projet-schemas";
+import { JsonLd } from "@/components/seo/json-ld";
 import { Reveal } from "../_components/reveal";
 
 const SLUG = "sweetime-adp-extime";
@@ -104,6 +106,13 @@ export default async function SweetimeAdpExtimePage({ params }: Props) {
   const descriptionPublic = tProjet(`${SLUG}.descriptionPublic`);
   const resultats = tProjet(`${SLUG}.resultats`);
   const projetTitre = tProjet(`${SLUG}.titre`);
+  const projetDescription = tProjet(`${SLUG}.description`);
+  const pageSchemas = buildProjetSchemas({
+    projet,
+    locale: locale as Locale,
+    titre: projetTitre,
+    description: projetDescription,
+  });
   const projetIntro = tProjet(`${SLUG}.intro`);
   const funnelImages = projet.sliderSets?.[0]?.images ?? [];
   const funnelDescription = (tProjet.raw(`${SLUG}.sliderSets`) as { title: string; description: string }[])?.[0]?.description;
@@ -114,6 +123,7 @@ export default async function SweetimeAdpExtimePage({ params }: Props) {
 
   return (
     <div className="pt-28 pb-28">
+      <JsonLd data={pageSchemas} />
 
       {/* HEADER */}
       <div className="max-w-6xl mx-auto px-6 lg:px-10 mb-12">

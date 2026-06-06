@@ -25,6 +25,8 @@ import {
 } from "lucide-react";
 import { projets, getProjet, type PillarIcon } from "@/lib/projets";
 import { getAlternates } from "@/lib/seo/alternates";
+import { buildProjetSchemas } from "@/lib/seo/projet-schemas";
+import { JsonLd } from "@/components/seo/json-ld";
 import { ProjetGallery } from "@/components/sections/projet-gallery";
 import { ProjetImageSlider } from "@/components/sections/projet-image-slider";
 import { WideVideoPlayer } from "@/components/sections/wide-video-player";
@@ -325,6 +327,17 @@ export default async function ProjetPage({ params }: Props) {
   const prevProjet = projets[(idx - 1 + projets.length) % projets.length];
   const year = projet.date.split("-")[0];
 
+  // Schemas JSON-LD page-spécifiques : BreadcrumbList + CreativeWork.
+  const projetDescription = tProjet.has(`${slug}.description`)
+    ? tProjet(`${slug}.description`)
+    : projet.description;
+  const pageSchemas = buildProjetSchemas({
+    projet,
+    locale: locale as Locale,
+    titre: projetTitre,
+    description: projetDescription,
+  });
+
   // Preload des assets critiques (vidéo + image principale)
   if (projet.video) preload(projet.video, { as: "video" });
   const mainImg = projet.heroImg ?? projet.img;
@@ -350,6 +363,7 @@ export default async function ProjetPage({ params }: Props) {
 
   return (
     <div className="pt-28 pb-28">
+      <JsonLd data={pageSchemas} />
 
       {/* ── HEADER — légèrement plus large que le contenu ── */}
       <div className="max-w-5xl mx-auto px-6 lg:px-10 mb-8">

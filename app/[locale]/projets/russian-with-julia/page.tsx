@@ -27,6 +27,8 @@ import { Link } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 import { projets, type PillarIcon } from "@/lib/projets";
 import { getAlternates } from "@/lib/seo/alternates";
+import { buildProjetSchemas } from "@/lib/seo/projet-schemas";
+import { JsonLd } from "@/components/seo/json-ld";
 import { ProjetImageSlider } from "@/components/sections/projet-image-slider";
 import { Reveal } from "../_components/reveal";
 
@@ -144,6 +146,13 @@ export default async function RussianWithJuliaPage({ params }: Props) {
   const descriptionPublic = tProjet(`${SLUG}.descriptionPublic`);
   const tagline = tProjet(`${SLUG}.tagline`);
   const projetTitre = tProjet(`${SLUG}.titre`);
+  const projetDescription = tProjet(`${SLUG}.description`);
+  const pageSchemas = buildProjetSchemas({
+    projet,
+    locale: locale as Locale,
+    titre: projetTitre,
+    description: projetDescription,
+  });
   const projetIntro = tProjet(`${SLUG}.intro`);
 
   const mainImg = projet.heroImg ?? projet.img;
@@ -151,6 +160,7 @@ export default async function RussianWithJuliaPage({ params }: Props) {
 
   return (
     <div className="pt-28 pb-28">
+      <JsonLd data={pageSchemas} />
 
       {/* HEADER */}
       <div className="max-w-6xl mx-auto px-6 lg:px-10 mb-12">
