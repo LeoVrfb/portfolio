@@ -1,7 +1,0 @@
-allowBuilds:
-  '@parcel/watcher': false
-  '@swc/core': false
-  '@tsparticles/engine': false
-  msw: false
-  sharp: false
-  unrs-resolver: false
