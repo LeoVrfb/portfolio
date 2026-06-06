@@ -238,6 +238,13 @@ export default async function AProposPage({ params }: Props) {
               <p className="text-sm text-foreground/70 leading-relaxed">
                 {t("cards.parallel.description")}
               </p>
+              <Link
+                href="/services"
+                className="group inline-flex items-center gap-1.5 mt-4 text-xs font-semibold text-(--lavender)/80 hover:text-(--lavender) transition-colors uppercase tracking-[0.18em]"
+              >
+                {t("cards.parallel.cta")}
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
             </div>
           </div>
         </BlurFade>

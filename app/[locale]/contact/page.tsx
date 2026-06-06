@@ -1,8 +1,10 @@
 import { Metadata } from "next";
 import { Suspense } from "react";
+import { ArrowRight } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ContactForm, ContactBackLink } from "@/components/sections/contact-form";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 
 type Props = {
@@ -50,6 +52,46 @@ export default async function ContactPage({ params }: Props) {
         <Suspense fallback={null}>
           <ContactForm />
         </Suspense>
+
+        {/* Maillage interne contextuel : 2 ancres descriptives vers /services
+            et /projets pour les visiteurs arrivés directement sur /contact
+            depuis Google. Améliore le crawl + le parcours utilisateur. */}
+        <div className="mt-14 pt-10 border-t border-white/8 grid sm:grid-cols-2 gap-4">
+          <Link
+            href="/services"
+            className="group flex items-start gap-4 p-5 rounded-xl border border-accent/15 bg-accent/[0.04] hover:border-accent/30 hover:bg-accent/[0.06] transition-colors"
+          >
+            <div className="flex-1 min-w-0">
+              <p className="text-[10px] font-semibold text-accent uppercase tracking-[0.3em] mb-2">
+                {t("links.services.eyebrow")}
+              </p>
+              <p className="text-sm font-bold text-white leading-snug mb-1">
+                {t("links.services.title")}
+              </p>
+              <p className="text-xs text-white/55 leading-relaxed">
+                {t("links.services.description")}
+              </p>
+            </div>
+            <ArrowRight className="w-4 h-4 text-accent/60 group-hover:text-accent group-hover:translate-x-0.5 transition-all shrink-0 mt-1" />
+          </Link>
+          <Link
+            href="/projets"
+            className="group flex items-start gap-4 p-5 rounded-xl border border-(--lavender)/15 bg-(--lavender)/[0.04] hover:border-(--lavender)/30 hover:bg-(--lavender)/[0.06] transition-colors"
+          >
+            <div className="flex-1 min-w-0">
+              <p className="text-[10px] font-semibold text-(--lavender) uppercase tracking-[0.3em] mb-2">
+                {t("links.projets.eyebrow")}
+              </p>
+              <p className="text-sm font-bold text-white leading-snug mb-1">
+                {t("links.projets.title")}
+              </p>
+              <p className="text-xs text-white/55 leading-relaxed">
+                {t("links.projets.description")}
+              </p>
+            </div>
+            <ArrowRight className="w-4 h-4 text-(--lavender)/60 group-hover:text-(--lavender) group-hover:translate-x-0.5 transition-all shrink-0 mt-1" />
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -317,7 +317,8 @@
       "parallel": {
         "eyebrow": "En parallèle",
         "title": "Créateur de sites web",
-        "description": "L'autre partie de mon activité, par passion pour le développement et le design. J'aide PME, indépendants et particuliers à construire leur présence en ligne. Un business à moi, où je gère tout de A à Z et où je peux mettre ma patte."
+        "description": "L'autre partie de mon activité, par passion pour le développement et le design. J'aide PME, indépendants et particuliers à construire leur présence en ligne. Un business à moi, où je gère tout de A à Z et où je peux mettre ma patte.",
+        "cta": "Voir mes formules"
       }
     },
     "story": {
@@ -389,6 +390,18 @@
     "titleAccent": "projet",
     "description": "Une idée, un site à refaire, une mission React/Next.js ? Décrivez-moi votre besoin, je reviens vers vous sous 24h.",
     "backToConfigurator": "Revenir au configurateur",
+    "links": {
+      "services": {
+        "eyebrow": "Pas sûr de la formule ?",
+        "title": "Voir mes formules de création de site web",
+        "description": "Essentiel, Standard ou Premium — comparez les formules et les options disponibles."
+      },
+      "projets": {
+        "eyebrow": "Voir mon travail",
+        "title": "Études de cas et réalisations Next.js",
+        "description": "BNP Paribas, TotalEnergies, Aéroports de Paris, Bald, Russian with Julia — explorez les projets."
+      }
+    },
     "form": {
       "selectedPlan": "Formule sélectionnée",
       "estimatedQuote": "Estimation",

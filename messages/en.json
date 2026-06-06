@@ -317,7 +317,8 @@
       "parallel": {
         "eyebrow": "On the side",
         "title": "Website builder",
-        "description": "The other side of my activity, driven by my passion for development and design. I help SMBs, freelancers and individuals build their online presence. My own business, where I handle everything from A to Z and put my personal touch on every project."
+        "description": "The other side of my activity, driven by my passion for development and design. I help SMBs, freelancers and individuals build their online presence. My own business, where I handle everything from A to Z and put my personal touch on every project.",
+        "cta": "See my plans"
       }
     },
     "story": {
@@ -389,6 +390,18 @@
     "titleAccent": "project",
     "description": "An idea, a website to rebuild, a React/Next.js mission? Tell me about it and I'll get back to you within 24 hours.",
     "backToConfigurator": "Back to configurator",
+    "links": {
+      "services": {
+        "eyebrow": "Not sure which plan?",
+        "title": "See my website development plans",
+        "description": "Essential, Standard or Premium — compare plans and available options."
+      },
+      "projets": {
+        "eyebrow": "See my work",
+        "title": "Next.js case studies and projects",
+        "description": "BNP Paribas, TotalEnergies, Paris Airports, Bald, Russian with Julia — explore the projects."
+      }
+    },
     "form": {
       "selectedPlan": "Selected plan",
       "estimatedQuote": "Estimate",
