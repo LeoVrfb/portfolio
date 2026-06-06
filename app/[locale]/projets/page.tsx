@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing, type Locale } from "@/i18n/routing";
+import { getAlternates } from "@/lib/seo/alternates";
 import { ProjetsGrid } from "@/components/sections/projets-grid";
 import { BlurFade } from "@/components/animations/blur-fade";
 
@@ -17,6 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: t("title"),
     description: t("description"),
+    alternates: getAlternates("/projets", locale as Locale),
   };
 }
 

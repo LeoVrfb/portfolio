@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Space_Grotesk, DM_Mono, Bebas_Neue, DM_Serif_Display } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
@@ -8,6 +9,9 @@ import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
 import { IntroOverlay } from "@/components/sections/intro-overlay";
 import { routing, type Locale } from "@/i18n/routing";
+import { getAlternates } from "@/lib/seo/alternates";
+import { localizedUrl } from "@/lib/seo/site";
+import { isBotUserAgent } from "@/lib/seo/is-bot";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-geist-sans",
@@ -76,10 +80,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const t = await getTranslations({ locale, namespace: "metadata.default" });
 
-  const url =
-    locale === routing.defaultLocale
-      ? "https://leohengebaert.fr"
-      : `https://leohengebaert.fr/${locale}`;
+  // Alternates de la home (page racine `[locale]/page.tsx`). Les pages enfants
+  // doivent définir leur propre `generateMetadata` qui appelle `getAlternates`
+  // avec le pathname courant — sans ça, Next.js fait un override complet du
+  // champ `alternates` (pas de deep merge), donc on doit toujours le redéfinir
+  // par page pour avoir un canonical/hreflang correct.
+  const homeUrl = localizedUrl("/", locale);
 
   return {
     title: {
@@ -94,7 +100,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: t("title"),
       description: t("description"),
-      url,
+      url: homeUrl,
       siteName: "Léo Hengebaert",
       locale: OG_LOCALE_MAP[locale],
       type: "website",
@@ -114,14 +120,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "max-snippet": -1,
       },
     },
-    alternates: {
-      canonical: url,
-      languages: {
-        fr: "https://leohengebaert.fr",
-        en: "https://leohengebaert.fr/en",
-        "x-default": "https://leohengebaert.fr",
-      },
-    },
+    alternates: getAlternates("/", locale),
   };
 }
 
@@ -136,6 +135,13 @@ export default async function LocaleLayout({ children, params }: Props) {
   setRequestLocale(locale);
   const messages = await getMessages();
 
+  // Détection bot côté serveur : on évite de rendre l'intro overlay (animation
+  // ~4s qui bloque le LCP perçu) pour les crawlers Google/Bing/ChatGPT/Claude.
+  // Le check `prefers-reduced-motion` est fait côté client dans IntroOverlay.
+  const requestHeaders = await headers();
+  const userAgent = requestHeaders.get("user-agent");
+  const skipIntro = isBotUserAgent(userAgent);
+
   return (
     <html
       lang={locale}
@@ -143,7 +149,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     >
       <body className="min-h-screen flex flex-col bg-background text-foreground">
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <IntroOverlay />
+          {skipIntro ? null : <IntroOverlay />}
           <Nav />
           <main className="flex-1">{children}</main>
           <Footer />

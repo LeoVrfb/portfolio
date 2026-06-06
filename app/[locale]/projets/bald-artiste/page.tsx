@@ -12,6 +12,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 import { projets } from "@/lib/projets";
+import { getAlternates } from "@/lib/seo/alternates";
 import { ProjetImageSlider } from "@/components/sections/projet-image-slider";
 import { Reveal } from "../_components/reveal";
 
@@ -48,6 +49,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: projet.client,
     description: tProjet(`${SLUG}.description`),
+    alternates: getAlternates(`/projets/${SLUG}`, locale as Locale),
   };
 }
 

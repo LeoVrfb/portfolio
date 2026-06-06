@@ -5,6 +5,7 @@ import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
+import { getAlternates } from "@/lib/seo/alternates";
 import { BlurFade } from "@/components/animations/blur-fade";
 import {
   BookingDiscoveryCard,
@@ -28,6 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: t("title"),
     description: t("description"),
+    alternates: getAlternates("/services", locale as Locale),
   };
 }
 

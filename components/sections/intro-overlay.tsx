@@ -81,10 +81,27 @@ const ELECTRIC_CSS = `
 `
 
 export function IntroOverlay() {
-  const [visible, setVisible] = useState(true)
+  // Détection prefers-reduced-motion côté client AVANT le 1er paint :
+  // - Si l'utilisateur a configuré l'accessibilité OS ou navigateur pour
+  //   réduire les animations, on saute complètement l'intro (visible=false)
+  //   et on signale immédiatement que le hero peut s'afficher.
+  // - Le check User-Agent (bots) est fait côté server dans le layout.
+  const prefersReducedMotion =
+    typeof window !== "undefined" &&
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+  const [visible, setVisible] = useState(!prefersReducedMotion)
   const t = useTranslations("intro")
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      // Cas reduced-motion : pas d'animation, on signale immédiatement que le
+      // hero peut démarrer. setTimeout(0) pour laisser React commit le state
+      // avant de signaler (sinon le hero rate l'événement).
+      const timer = setTimeout(signalIntroReady, 0)
+      return () => clearTimeout(timer)
+    }
     const timer = setTimeout(() => {
       setVisible(false)
       // Signaler pendant le fade-out pour que le hero soit déjà en train d'animer
@@ -92,7 +109,7 @@ export function IntroOverlay() {
       setTimeout(signalIntroReady, 200)
     }, INTRO_DURATION)
     return () => clearTimeout(timer)
-  }, [])
+  }, [prefersReducedMotion])
 
   return (
     <AnimatePresence>

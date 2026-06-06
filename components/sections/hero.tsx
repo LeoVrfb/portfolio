@@ -149,21 +149,25 @@ export function HeroSection() {
               </div>
             </motion.div>
 
-            {/* Name — particules en typewriter, balayage curseur sequentiel (Léo puis Hengebaert), repulsion au survol */}
-            <h1 aria-label="Léo" className="leading-none mb-1">
-              <ParticleName
-                text="Léo"
-                typingStartDelay={TYPING_LEO_START}
-                autoWaveDelay={AUTO_WAVE_LEO_START}
-              />
-            </h1>
-            <h1 aria-label="Hengebaert" className="leading-none mb-8">
-              <ParticleName
-                text="Hengebaert"
-                typingStartDelay={TYPING_HENGEBAERT_START}
-                autoWaveDelay={AUTO_WAVE_HENGEBAERT_START}
-                dimmed
-              />
+            {/* Name — un seul <h1> sémantique (SEO : 1 h1 par page). Visuellement
+                on conserve les 2 lignes via des spans block + animations
+                indépendantes par mot pour préserver le typewriter sequentiel. */}
+            <h1 aria-label="Léo Hengebaert" className="leading-none mb-8">
+              <span className="block leading-none mb-1">
+                <ParticleName
+                  text="Léo"
+                  typingStartDelay={TYPING_LEO_START}
+                  autoWaveDelay={AUTO_WAVE_LEO_START}
+                />
+              </span>
+              <span className="block leading-none">
+                <ParticleName
+                  text="Hengebaert"
+                  typingStartDelay={TYPING_HENGEBAERT_START}
+                  autoWaveDelay={AUTO_WAVE_HENGEBAERT_START}
+                  dimmed
+                />
+              </span>
             </h1>
 
             {/* Tagline */}

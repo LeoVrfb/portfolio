@@ -5,6 +5,8 @@ import { setRequestLocale, getTranslations } from "next-intl/server"
 import { services } from "@/lib/services"
 import { getServiceContent } from "@/lib/services-content"
 import { ServiceConfigurator } from "@/components/sections/service-configurator"
+import { getAlternates } from "@/lib/seo/alternates"
+import type { Locale } from "@/i18n/routing"
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }))
@@ -22,6 +24,7 @@ export async function generateMetadata({
   return {
     title: `${service.nom} — Léo Hengebaert`,
     description: service.description,
+    alternates: getAlternates(`/services/${slug}`, locale as Locale),
   }
 }
 

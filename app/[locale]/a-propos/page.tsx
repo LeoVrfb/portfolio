@@ -13,6 +13,7 @@ import { hasLocale } from "next-intl"
 import { notFound } from "next/navigation"
 import { Link } from "@/i18n/navigation"
 import { routing, type Locale } from "@/i18n/routing"
+import { getAlternates } from "@/lib/seo/alternates"
 import { BlurFade } from "@/components/animations/blur-fade"
 import { NumberTicker } from "@/components/animations/number-ticker"
 
@@ -27,6 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: t("title"),
     description: t("description"),
+    alternates: getAlternates("/a-propos", locale as Locale),
   }
 }
 
@@ -169,7 +171,7 @@ export default async function AProposPage({ params }: Props) {
   const t = await getTranslations("aPropos")
 
   return (
-    <main className="bg-background">
+    <div className="bg-background">
       {/* Header */}
       <section className="pt-32 pb-24 layout-container">
         <BlurFade delay={0.1} direction="up" inView>
@@ -486,6 +488,6 @@ export default async function AProposPage({ params }: Props) {
           </BlurFade>
         </div>
       </section>
-    </main>
+    </div>
   )
 }

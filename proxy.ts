@@ -26,14 +26,27 @@ function hasLocalePrefix(pathname: string): boolean {
 }
 
 export function proxy(request: NextRequest) {
-  // Garde l'ancienne redirection /demo/* → /
-  if (request.nextUrl.pathname.startsWith("/demo")) {
-    return NextResponse.redirect(new URL("/", request.url));
+  // Garde l'ancienne redirection /demo/* → / (FR et EN). La page demo legacy
+  // jQuery ne reflète plus l'offre actuelle ; on évite qu'elle soit indexée
+  // ou linkée. Couvre aussi les chemins `/fr/demo` historiques.
+  const pathname = request.nextUrl.pathname;
+  if (
+    pathname === "/demo" ||
+    pathname.startsWith("/demo/") ||
+    pathname === "/en/demo" ||
+    pathname.startsWith("/en/demo/") ||
+    pathname === "/fr/demo" ||
+    pathname.startsWith("/fr/demo/")
+  ) {
+    const targetUrl = new URL("/", request.url);
+    if (pathname.startsWith("/en")) {
+      targetUrl.pathname = "/en";
+    }
+    return NextResponse.redirect(targetUrl);
   }
 
   // Détection locale custom : seulement à la première visite (pas de cookie
   // NEXT_LOCALE) et sur les URLs sans préfixe de locale explicite.
-  const pathname = request.nextUrl.pathname;
   const localeCookie = request.cookies.get("NEXT_LOCALE")?.value;
   const cookieIsValid =
     localeCookie && (routing.locales as readonly string[]).includes(localeCookie);

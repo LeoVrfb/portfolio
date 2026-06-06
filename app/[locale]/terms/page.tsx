@@ -1,15 +1,33 @@
 import { Metadata } from "next"
 import { setRequestLocale } from "next-intl/server"
 import type { Locale } from "@/i18n/routing"
+import { getAlternates } from "@/lib/seo/alternates"
 
-export const metadata: Metadata = {
-  title: "Conditions d'utilisation — Léo Hengebaert",
-  description:
-    "Conditions d'utilisation du site leohengebaert.fr — portfolio et services de Léo Hengebaert, développeur freelance.",
-  alternates: {
-    canonical: "/terms",
-    languages: { fr: "/terms", en: "/en/terms" },
+const METADATA_BY_LOCALE: Record<Locale, { title: string; description: string }> = {
+  fr: {
+    title: "Conditions d'utilisation — Léo Hengebaert",
+    description:
+      "Conditions d'utilisation du site leohengebaert.fr — portfolio et services de Léo Hengebaert, développeur freelance.",
   },
+  en: {
+    title: "Terms of use — Léo Hengebaert",
+    description:
+      "Terms of use of leohengebaert.fr — portfolio and services of Léo Hengebaert, freelance developer.",
+  },
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const meta = METADATA_BY_LOCALE[locale as Locale] ?? METADATA_BY_LOCALE.fr
+  return {
+    title: meta.title,
+    description: meta.description,
+    alternates: getAlternates("/terms", locale as Locale),
+  }
 }
 
 type Section = {
@@ -136,7 +154,7 @@ export default async function TermsPage({
   const copy = COPY[locale as Locale] ?? COPY.fr
 
   return (
-    <main className="pt-28 pb-20 px-4 sm:px-6">
+    <div className="pt-28 pb-20 px-4 sm:px-6">
       <article className="max-w-2xl mx-auto">
         <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white mb-6">
           {copy.title}
@@ -170,6 +188,6 @@ export default async function TermsPage({
 
         <p className="mt-12 text-xs text-white/40 font-mono">{copy.lastUpdated}</p>
       </article>
-    </main>
+    </div>
   )
 }

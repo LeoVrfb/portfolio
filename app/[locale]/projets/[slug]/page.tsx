@@ -24,6 +24,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { projets, getProjet, type PillarIcon } from "@/lib/projets";
+import { getAlternates } from "@/lib/seo/alternates";
 import { ProjetGallery } from "@/components/sections/projet-gallery";
 import { ProjetImageSlider } from "@/components/sections/projet-image-slider";
 import { WideVideoPlayer } from "@/components/sections/wide-video-player";
@@ -84,6 +85,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${projet.client} — Léo Hengebaert`,
     description,
+    alternates: getAlternates(`/projets/${projet.slug}`, locale as Locale),
   };
 }
 

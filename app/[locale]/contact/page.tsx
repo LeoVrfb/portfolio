@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ContactForm, ContactBackLink } from "@/components/sections/contact-form";
+import { getAlternates } from "@/lib/seo/alternates";
+import type { Locale } from "@/i18n/routing";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -14,6 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: t("title"),
     description: t("description"),
+    alternates: getAlternates("/contact", locale as Locale),
   };
 }
 

@@ -1,15 +1,33 @@
 import { Metadata } from "next"
 import { setRequestLocale } from "next-intl/server"
 import type { Locale } from "@/i18n/routing"
+import { getAlternates } from "@/lib/seo/alternates"
 
-export const metadata: Metadata = {
-  title: "Politique de confidentialité — Léo Hengebaert",
-  description:
-    "Données collectées via les formulaires du site (contact, devis, prise de rendez-vous) et comment elles sont traitées.",
-  alternates: {
-    canonical: "/privacy",
-    languages: { fr: "/privacy", en: "/en/privacy" },
+const METADATA_BY_LOCALE: Record<Locale, { title: string; description: string }> = {
+  fr: {
+    title: "Politique de confidentialité — Léo Hengebaert",
+    description:
+      "Données collectées via les formulaires du site (contact, devis, prise de rendez-vous) et comment elles sont traitées.",
   },
+  en: {
+    title: "Privacy policy — Léo Hengebaert",
+    description:
+      "Data collected through the site's forms (contact, quotes, bookings) and how it is processed.",
+  },
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const meta = METADATA_BY_LOCALE[locale as Locale] ?? METADATA_BY_LOCALE.fr
+  return {
+    title: meta.title,
+    description: meta.description,
+    alternates: getAlternates("/privacy", locale as Locale),
+  }
 }
 
 type Section = {
@@ -124,7 +142,7 @@ export default async function PrivacyPage({
   const copy = COPY[locale as Locale] ?? COPY.fr
 
   return (
-    <main className="pt-28 pb-20 px-4 sm:px-6">
+    <div className="pt-28 pb-20 px-4 sm:px-6">
       <article className="max-w-2xl mx-auto">
         <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white mb-6">
           {copy.title}
@@ -158,6 +176,6 @@ export default async function PrivacyPage({
 
         <p className="mt-12 text-xs text-white/40 font-mono">{copy.lastUpdated}</p>
       </article>
-    </main>
+    </div>
   )
 }
