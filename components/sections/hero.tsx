@@ -113,13 +113,17 @@ function GlassButton({ children, href, variant = "green" }: { children: React.Re
   )
 }
 
-export function HeroSection() {
-  const [ready, setReady] = useState(false)
+export function HeroSection({ skipIntro = false }: { skipIntro?: boolean } = {}) {
+  // skipIntro=true (bots) : on monte le contenu hero dès le SSR pour que
+  // le <h1> et le reste du DOM soient présents dans le HTML servi aux
+  // crawlers (sinon l'intro overlay les masque et le H1 est manquant).
+  const [ready, setReady] = useState(skipIntro)
   const t = useTranslations("home.hero")
 
   useEffect(() => {
+    if (skipIntro) return
     return onIntroReady(() => setReady(true))
-  }, [])
+  }, [skipIntro])
 
   return (
     <section className="relative min-h-screen flex flex-col justify-end overflow-hidden bg-background pt-32">
