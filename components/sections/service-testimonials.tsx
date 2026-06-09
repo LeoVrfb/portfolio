@@ -50,7 +50,7 @@ function TestimonialCard({
         </div>
       </header>
 
-      <div className="flex items-center gap-0.5" aria-label={starsLabel}>
+      <div className="flex items-center gap-0.5" role="img" aria-label={starsLabel}>
         {Array.from({ length: testimonial.note }).map((_, i) => (
           <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
         ))}

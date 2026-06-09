@@ -170,7 +170,7 @@ function ProjectCard({ projet, index, total }: { projet: Projet; index: number; 
           )}
         </div>
         <p className="text-xs text-white/80">{titre}</p>
-        <p className="text-[10px] text-white/45 mt-1 font-mono tracking-wider">{projet.date.slice(0, 4)}</p>
+        <p className="text-[10px] text-white/55 mt-1 font-mono tracking-wider">{projet.date.slice(0, 4)}</p>
       </div>
 
       {/* Description */}
@@ -251,7 +251,7 @@ export function ProjetsGrid() {
       <div className="mb-8 space-y-4">
         {/* Search bar */}
         <div className="relative max-w-xs">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-foreground/35 pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-foreground/55 pointer-events-none" />
           <input
             type="text"
             placeholder={t("searchPlaceholder")}
@@ -262,7 +262,7 @@ export function ProjetsGrid() {
           {search && (
             <button
               onClick={() => setSearch("")}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-foreground/35 hover:text-foreground/70 transition-colors cursor-pointer"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-foreground/55 hover:text-foreground/70 transition-colors cursor-pointer"
             >
               <X className="w-3.5 h-3.5" />
             </button>

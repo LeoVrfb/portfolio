@@ -1,0 +1,11 @@
+{
+  "name": "portfolio-audit-tools",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Sous-package isolé pour l'audit a11y. Séparé du package.json principal pour éviter d'embarquer puppeteer (Chrome 250MB) dans le build Vercel.",
+  "dependencies": {
+    "@axe-core/puppeteer": "^4.11.3",
+    "puppeteer": "^25.1.0"
+  }
+}

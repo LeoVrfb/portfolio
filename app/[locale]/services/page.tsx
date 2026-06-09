@@ -116,10 +116,26 @@ export default async function ServicesPage({ params }: Props) {
   // - FAQPage : 8 Q/R pour aider Google AI Overviews et ChatGPT/Perplexity
   // - 3× Service : un schema par formule (Essentiel, Standard, Premium) avec
   //   prix, currency, provider référençant la Person globale.
+  //
+  // IMPORTANT : les FAQ contiennent du rich text (<accent>, <projets>, etc.)
+  // dans messages/fr.json. On utilise t.markup() qui retourne une string et
+  // remplace chaque balise par une identité (renvoie juste le contenu) — sinon
+  // next-intl jette une FORMATTING_ERROR à chaque rendu serveur. cleanRichText
+  // garde son rôle de safety net pour les caractères collés sans espace.
+  const richIdentity = {
+    accent: (chunks: string) => chunks,
+    projets: (chunks: string) => chunks,
+    bold: (chunks: string) => chunks,
+    lavender: (chunks: string) => chunks,
+    mauve: (chunks: string) => chunks,
+    data: (chunks: string) => chunks,
+    artefact: (chunks: string) => chunks,
+    clients: (chunks: string) => chunks,
+  };
   const faqItems: FaqItem[] = FAQ_ITEMS.map((item) => {
-    const question = t(`faq.${item.key}.question`);
+    const question = t.markup(`faq.${item.key}.question`, richIdentity);
     const paragraphs = Array.from({ length: item.paragraphs }, (_, i) =>
-      t(`faq.${item.key}.p${i + 1}`),
+      t.markup(`faq.${item.key}.p${i + 1}`, richIdentity),
     );
     return {
       question: cleanRichText(question),
@@ -264,9 +280,9 @@ export default async function ServicesPage({ params }: Props) {
                 {t("configureCard.eyebrow")}
               </p>
             </div>
-            <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight leading-snug mb-2">
+            <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight leading-snug mb-2">
               {t("configureCard.title")}
-            </h3>
+            </h2>
             <p className="text-sm text-white/70 leading-relaxed mb-5 flex-1">
               {t("configureCard.description")}
             </p>

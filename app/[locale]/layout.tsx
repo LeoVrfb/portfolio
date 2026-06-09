@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import { Space_Grotesk, DM_Mono, Bebas_Neue, DM_Serif_Display } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
@@ -7,10 +6,11 @@ import { notFound } from "next/navigation";
 import { Toaster } from "sonner";
 import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
-import { IntroOverlay } from "@/components/sections/intro-overlay";
+import { CookieConsentBanner } from "@/components/analytics/cookie-consent";
+import { GoogleAnalyticsWrapper } from "@/components/analytics/google-analytics";
+import { MetaPixelWrapper } from "@/components/analytics/meta-pixel";
 import { routing, type Locale } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { isBotUserAgent } from "@/lib/seo/is-bot";
 import {
   personSchema,
   professionalServiceSchema,
@@ -18,22 +18,31 @@ import {
 } from "@/lib/seo/json-ld";
 import { JsonLd } from "@/components/seo/json-ld";
 
+// Configuration fonts : on précharge UNIQUEMENT Space Grotesk (utilisée par le
+// H1 du Hero via H1Typewriter → critique pour le LCP de la home). Les 3 autres
+// fonts sont chargées sans preload (display:swap) car utilisées below-the-fold.
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-geist-sans",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+  preload: true,
 });
 
 const dmMono = DM_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
   weight: ["300", "400", "500"],
+  display: "swap",
+  preload: false,
 });
 
 const bebasNeue = Bebas_Neue({
   variable: "--font-bebas",
   subsets: ["latin"],
   weight: "400",
+  display: "swap",
+  preload: false,
 });
 
 const dmSerifDisplay = DM_Serif_Display({
@@ -41,6 +50,8 @@ const dmSerifDisplay = DM_Serif_Display({
   subsets: ["latin"],
   weight: "400",
   style: ["normal", "italic"],
+  display: "swap",
+  preload: false,
 });
 
 // Keywords prioritaires sélectionnés en Phase 0 (cf. REX) :
@@ -139,12 +150,11 @@ export default async function LocaleLayout({ children, params }: Props) {
   setRequestLocale(locale);
   const messages = await getMessages();
 
-  // Détection bot côté serveur : on évite de rendre l'intro overlay (animation
-  // ~4s qui bloque le LCP perçu) pour les crawlers Google/Bing/ChatGPT/Claude.
-  // Le check `prefers-reduced-motion` est fait côté client dans IntroOverlay.
-  const requestHeaders = await headers();
-  const userAgent = requestHeaders.get("user-agent");
-  const skipIntro = isBotUserAgent(userAgent);
+  // L'IntroOverlay est désormais géré exclusivement dans `app/[locale]/page.tsx`
+  // (la home). Il joue à CHAQUE chargement de `/` (pas de cookie de skip),
+  // et n'apparaît jamais sur les autres pages (services, projets, etc.).
+  // Le check User-Agent bot reste fait côté server dans la home pour servir le
+  // SSR complet aux crawlers.
 
   // Schemas JSON-LD globaux — Person + WebSite + ProfessionalService.
   // Inclus sur toutes les pages (héritage layout). Les schemas page-spécifiques
@@ -171,11 +181,18 @@ export default async function LocaleLayout({ children, params }: Props) {
       <body className="min-h-screen flex flex-col bg-background text-foreground">
         <JsonLd data={globalSchemas} />
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {skipIntro ? null : <IntroOverlay />}
           <Nav />
           <main className="flex-1">{children}</main>
           <Footer />
           <Toaster richColors position="bottom-right" />
+          {/* Trackers + banner consent. Les wrappers vérifient la var d'env
+              correspondante : si NEXT_PUBLIC_GA_ID / NEXT_PUBLIC_META_PIXEL_ID
+              est absente, ils retournent null et le script n'est pas injecté.
+              Donc safe à déployer même avant que les comptes GA4 / Meta Pixel
+              soient créés. Ils respectent aussi le cookie `cookie_consent`. */}
+          <CookieConsentBanner />
+          <GoogleAnalyticsWrapper />
+          <MetaPixelWrapper />
         </NextIntlClientProvider>
       </body>
     </html>

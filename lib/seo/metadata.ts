@@ -19,9 +19,15 @@ import { localizedUrl } from "@/lib/seo/site";
  * Convention :
  * - `pathname` est la route sans préfixe locale (ex. `/services/standard`).
  * - `image` peut être un chemin relatif (`/og-services.png`) ou absolu.
- *   Si non fourni, Next.js fallback automatiquement sur `app/opengraph-image.tsx`
- *   et `app/twitter-image.tsx` racine (image globale du portfolio).
+ *   Si non fourni, on retombe **explicitement** sur l'OG image globale
+ *   (`/opengraph-image`, `/twitter-image`) générée par `app/opengraph-image.tsx`
+ *   et `app/twitter-image.tsx`. On ne se repose PAS sur l'auto-injection Next.js
+ *   parce qu'elle ne se déclenche pas quand on définit explicitement `openGraph`
+ *   (même sans `images`) — ce qui est notre cas systématique.
  */
+
+const DEFAULT_OG_IMAGE = "/opengraph-image";
+const DEFAULT_TWITTER_IMAGE = "/twitter-image";
 
 const OG_LOCALE_MAP: Record<Locale, string> = {
   fr: "fr_FR",
@@ -65,7 +71,8 @@ export function buildPageMetadata(input: PageMetadataInput): Metadata {
 
   const url = localizedUrl(pathname, locale);
 
-  const ogImages = image ? [{ url: image }] : undefined;
+  const ogImageUrl = image ?? DEFAULT_OG_IMAGE;
+  const twitterImageUrl = image ?? DEFAULT_TWITTER_IMAGE;
 
   const metadata: Metadata = {
     title,
@@ -79,13 +86,13 @@ export function buildPageMetadata(input: PageMetadataInput): Metadata {
       locale: OG_LOCALE_MAP[locale],
       alternateLocale: OG_LOCALE_ALTERNATES[locale].map((l) => OG_LOCALE_MAP[l]),
       type: ogType,
-      ...(ogImages ? { images: ogImages } : {}),
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      ...(image ? { images: [image] } : {}),
+      images: [twitterImageUrl],
     },
   };
 

@@ -155,7 +155,7 @@ export default async function ArgedisTotalEnergiesPage({ params }: Props) {
           <div className="mb-10">
             <Link
               href="/projets"
-              className="inline-flex items-center gap-2 text-sm text-foreground/35 hover:text-foreground transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 text-sm text-foreground/55 hover:text-foreground transition-colors cursor-pointer"
             >
               <ArrowLeft size={14} />
               {t("backToAll")}
@@ -171,7 +171,7 @@ export default async function ArgedisTotalEnergiesPage({ params }: Props) {
               <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-foreground/55 border border-white/12 rounded-full px-3 py-1">
                 {t("badge.agenceArtefact3000")}
               </span>
-              <span className="text-[11px] text-foreground/40 font-mono">{year}</span>
+              <span className="text-[11px] text-foreground/55 font-mono">{year}</span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-[-0.02em] text-foreground leading-[1.05] mb-3">
@@ -299,7 +299,7 @@ export default async function ArgedisTotalEnergiesPage({ params }: Props) {
                   <div className="relative rounded-2xl overflow-hidden border border-border/60 shadow-[0_32px_80px_-8px_rgba(0,0,0,0.6)]">
                     <video src={projet.video} autoPlay muted loop playsInline preload="auto" className="block w-full h-auto" />
                   </div>
-                  <figcaption className="mt-3 flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.32em] text-foreground/40">
+                  <figcaption className="mt-3 flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.32em] text-foreground/55">
                     <span>Fig.01 — {tProjet(`${SLUG}.page.figCaption.tablet`)}</span>
                     <span>FR · EN</span>
                   </figcaption>
@@ -311,7 +311,7 @@ export default async function ArgedisTotalEnergiesPage({ params }: Props) {
                   )}
 
                   <div className="pt-8 border-t border-foreground/10">
-                    <p className="text-[10px] font-mono uppercase tracking-[0.32em] text-foreground/40 mb-6">
+                    <p className="text-[10px] font-mono uppercase tracking-[0.32em] text-foreground/55 mb-6">
                       {inNumbers.label}
                     </p>
                     <div className="grid grid-cols-2 gap-x-8 gap-y-7">
@@ -379,7 +379,7 @@ export default async function ArgedisTotalEnergiesPage({ params }: Props) {
                       sizes="(max-width: 1024px) 90vw, 480px"
                     />
                   </div>
-                  <figcaption className="mt-3 flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.32em] text-foreground/40">
+                  <figcaption className="mt-3 flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.32em] text-foreground/55">
                     <span>Fig.02 — {tProjet(`${SLUG}.page.figCaption.regional`)}</span>
                     <span>Lottie</span>
                   </figcaption>
@@ -395,7 +395,7 @@ export default async function ArgedisTotalEnergiesPage({ params }: Props) {
                   </div>
 
                   <div className="pt-8 border-t border-foreground/10">
-                    <p className="text-[10px] font-mono uppercase tracking-[0.32em] text-foreground/40 mb-5">
+                    <p className="text-[10px] font-mono uppercase tracking-[0.32em] text-foreground/55 mb-5">
                       {tProjet(`${SLUG}.page.regions.label`)}
                     </p>
                     <div className="flex flex-wrap gap-x-2.5 gap-y-2.5">
@@ -469,7 +469,7 @@ export default async function ArgedisTotalEnergiesPage({ params }: Props) {
                   </div>
 
                   <div className="pt-8 border-t border-foreground/10">
-                    <p className="text-[10px] font-mono uppercase tracking-[0.32em] text-foreground/40 mb-5">
+                    <p className="text-[10px] font-mono uppercase tracking-[0.32em] text-foreground/55 mb-5">
                       {interactions.label}
                     </p>
                     <div className="grid grid-cols-3 gap-x-4 gap-y-5">
@@ -501,7 +501,7 @@ export default async function ArgedisTotalEnergiesPage({ params }: Props) {
                       sizes="(max-width: 1024px) 90vw, 480px"
                     />
                   </div>
-                  <figcaption className="mt-3 flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.32em] text-foreground/40">
+                  <figcaption className="mt-3 flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.32em] text-foreground/55">
                     <span>Fig.03 — {tProjet(`${SLUG}.page.figCaption.producer`)}</span>
                     <span>FR</span>
                   </figcaption>
@@ -514,7 +514,7 @@ export default async function ArgedisTotalEnergiesPage({ params }: Props) {
                 <div className="grid grid-cols-1 lg:grid-cols-[180px_1fr] gap-4 lg:gap-12">
                   <div aria-hidden className="hidden lg:block" />
                   <div>
-                    <p className="text-[10px] font-mono uppercase tracking-[0.32em] text-foreground/40 mb-4">
+                    <p className="text-[10px] font-mono uppercase tracking-[0.32em] text-foreground/55 mb-4">
                       Fig.04 — {tProjet(`${SLUG}.page.figCaption.bilingual`)}
                     </p>
                     <div className="grid grid-cols-2 gap-4 sm:gap-6 max-w-2xl">
@@ -639,7 +639,7 @@ export default async function ArgedisTotalEnergiesPage({ params }: Props) {
                   key={s.nom}
                   className="grid grid-cols-[auto_1fr_auto] items-baseline gap-4 sm:gap-6 py-4 border-t border-foreground/10 last:border-b last:border-foreground/10"
                 >
-                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-foreground/40 w-8">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-foreground/55 w-8">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span className="text-base sm:text-lg font-bold text-foreground">{s.nom}</span>
@@ -686,7 +686,7 @@ export default async function ArgedisTotalEnergiesPage({ params }: Props) {
                     key={c.nom}
                     className="grid grid-cols-[auto_1fr_auto] items-baseline gap-4 sm:gap-6 py-4 border-t border-foreground/10 last:border-b last:border-foreground/10"
                   >
-                    <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-foreground/40 w-8">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-foreground/55 w-8">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span className="text-base sm:text-lg font-bold text-foreground">{c.nom}</span>
@@ -785,7 +785,7 @@ export default async function ArgedisTotalEnergiesPage({ params }: Props) {
               <p className="text-base font-bold text-foreground group-hover:text-(--accent) transition-colors">
                 {nextProjet.clientShort ?? nextProjet.client}
               </p>
-              <p className="text-xs text-foreground/40 mt-0.5">{nextProjet.titre}</p>
+              <p className="text-xs text-foreground/55 mt-0.5">{nextProjet.titre}</p>
             </div>
             <ArrowRight className="w-5 h-5 text-foreground/25 group-hover:text-(--accent) group-hover:translate-x-1 transition-all shrink-0 ml-4" />
           </Link>

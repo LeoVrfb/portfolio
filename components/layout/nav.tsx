@@ -135,7 +135,7 @@ export function Nav() {
               <button
                 onClick={() => setOpen(false)}
                 aria-label={t("menuClose")}
-                className="p-1.5 rounded-lg text-zinc-500 hover:text-white transition-colors cursor-pointer"
+                className="p-1.5 rounded-lg text-zinc-400 hover:text-white transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>

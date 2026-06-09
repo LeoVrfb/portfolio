@@ -373,7 +373,7 @@ export default async function ProjetPage({ params }: Props) {
         <div className="mb-10">
           <Link
             href="/projets"
-            className="inline-flex items-center gap-2 text-sm text-foreground/35 hover:text-foreground transition-colors cursor-pointer"
+            className="inline-flex items-center gap-2 text-sm text-foreground/55 hover:text-foreground transition-colors cursor-pointer"
           >
             <ArrowLeft size={14} />
             {t("backToAll")}
@@ -396,7 +396,7 @@ export default async function ProjetPage({ params }: Props) {
                 <span className="text-[11px] px-2.5 py-1 rounded-full border border-white/10 bg-white/4 text-foreground/55">
                   {t(`context.${projet.contexte}`)}
                 </span>
-                <span className="text-[11px] text-foreground/40 font-mono">{year}</span>
+                <span className="text-[11px] text-foreground/55 font-mono">{year}</span>
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {projet.tags.map((tag, ti) => (
@@ -445,7 +445,7 @@ export default async function ProjetPage({ params }: Props) {
                   ) : projet.contexte === "freelance" ? (
                     <><User size={11} className="text-(--mauve)" /><span>{t("context.freelance")}</span></>
                   ) : (
-                    <><User size={11} className="text-zinc-500" /><span>{t("context.perso")}</span></>
+                    <><User size={11} className="text-zinc-400" /><span>{t("context.perso")}</span></>
                   )}
                 </div>
               </div>
@@ -845,7 +845,7 @@ export default async function ProjetPage({ params }: Props) {
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-foreground leading-none mb-0.5">{c.nom}</p>
-                      <p className="text-xs text-foreground/40">{c.role}</p>
+                      <p className="text-xs text-foreground/55">{c.role}</p>
                     </div>
                   </div>
                 );
@@ -899,7 +899,7 @@ export default async function ProjetPage({ params }: Props) {
             <p className="text-base font-bold text-foreground group-hover:text-accent transition-colors">
               {nextProjet.clientShort ?? nextProjet.client}
             </p>
-            <p className="text-xs text-foreground/40 mt-0.5">{nextProjet.titre}</p>
+            <p className="text-xs text-foreground/55 mt-0.5">{nextProjet.titre}</p>
           </div>
           <ArrowRight className="w-5 h-5 text-foreground/25 group-hover:text-accent group-hover:translate-x-1 transition-all shrink-0 ml-4" />
         </Link>

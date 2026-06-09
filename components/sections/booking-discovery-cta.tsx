@@ -131,9 +131,9 @@ export function BookingDiscoveryCard({
             {t("eyebrow")}
           </p>
         </div>
-        <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight leading-snug mb-2">
+        <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight leading-snug mb-2">
           {t("title")}
-        </h3>
+        </h2>
         <p className="text-sm text-white/70 leading-relaxed mb-5 flex-1">
           {t("description")}
         </p>
@@ -142,7 +142,7 @@ export function BookingDiscoveryCard({
             {t("cta")}
             <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" />
           </span>
-          <span className="text-[10px] text-white/45 italic">
+          <span className="text-[10px] text-white/55 italic">
             {t("availabilityNote")}
           </span>
         </div>

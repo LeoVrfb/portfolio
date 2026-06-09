@@ -6,7 +6,7 @@ import { motion } from "motion/react"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
 import { Boxes } from "@/components/animations/background-boxes"
-import { ParticleText } from "@/components/animations/particle-text"
+import { H1Typewriter } from "@/components/animations/h1-typewriter"
 import { onIntroReady } from "@/lib/intro-signal"
 
 const PALETTE = [
@@ -15,84 +15,27 @@ const PALETTE = [
   "#b4859e", "#c9a1b8", "#96697e",
 ]
 
-// Sequence:
-// 1. "Léo" se tape lettre par lettre
-// 2. Petit gap, puis "Hengebaert" se tape lettre par lettre
-// 3. Le curseur balaie "Léo" de gauche a droite
-// 4. Sans pause, le curseur balaie "Hengebaert"
-// Repulsion au survol active des le mount.
-const TYPEWRITER_DELAY = 110
-const TYPING_GAP = 280
-// La duree du balayage est calculee par breakpoint dans ParticleName : sur
-// desktop le canvas est beaucoup plus large, il faut plus de temps pour que
-// la traversee reste lisible. Sur mobile 1400ms suffit largement.
-// Ecart entre le debut du balayage de Léo et celui de Hengebaert.
-const AUTO_WAVE_STAGGER = 700
-const TYPING_LEO_START = 300
-const TYPING_LEO_END = TYPING_LEO_START + 3 * TYPEWRITER_DELAY
-const TYPING_HENGEBAERT_START = TYPING_LEO_END + TYPING_GAP
-const TYPING_HENGEBAERT_END = TYPING_HENGEBAERT_START + 10 * TYPEWRITER_DELAY
-const AUTO_WAVE_LEO_START = TYPING_HENGEBAERT_END + 200
-const AUTO_WAVE_HENGEBAERT_START = AUTO_WAVE_LEO_START + AUTO_WAVE_STAGGER
+// Couleurs du H1 du hero — transition temporelle bleu → vert pendant la frappe,
+// puis état stable où les deux mots sont en variantes du vert (cohérent avec
+// l'identité site qui est "vert mint sur fond sombre").
+//  - "Léo" : glow vert mint (--accent), final blanc cassé → dominante verte
+//  - "Hengebaert" : glow bleu sky (--lavender), final vert pâle dimmed
+//    → l'apparition flashe en bleu mais le néon résiduel s'éteint en vert
+// Le glow résiduel est volontairement très discret après animation (pas Vegas).
+const COLOR_LEO_FINAL = "#f9fbfb"        // blanc cassé (lisibilité max)
+const COLOR_LEO_GLOW = "var(--accent)"   // vert mint (design system)
+const COLOR_HENGEBAERT_FINAL = "#a2e2d0" // vert pâle dimmed (couleur finale)
+const COLOR_HENGEBAERT_GLOW = "var(--lavender)" // bleu sky (apparition)
 
-function ParticleName({
-  text,
-  typingStartDelay,
-  autoWaveDelay,
-  dimmed = false,
-}: {
-  text: string
-  typingStartDelay: number
-  autoWaveDelay: number
-  dimmed?: boolean
-}) {
-  const [config, setConfig] = useState({
-    height: 156,
-    fontSize: 138,
-    autoWaveDuration: 2200,
-  })
-
-  useEffect(() => {
-    const compute = () => {
-      const w = window.innerWidth
-      if (w < 480) {
-        setConfig({ height: 72, fontSize: 60, autoWaveDuration: 1400 })
-      } else if (w < 768) {
-        setConfig({ height: 96, fontSize: 80, autoWaveDuration: 1600 })
-      } else if (w < 1280) {
-        setConfig({ height: 124, fontSize: 108, autoWaveDuration: 2400 })
-      } else {
-        setConfig({ height: 156, fontSize: 138, autoWaveDuration: 3000 })
-      }
-    }
-    compute()
-    window.addEventListener("resize", compute)
-    return () => window.removeEventListener("resize", compute)
-  }, [])
-
-  return (
-    <ParticleText
-      text={text}
-      typewriter
-      autoWave
-      startDelay={typingStartDelay}
-      autoWaveDelay={autoWaveDelay}
-      autoWaveDuration={config.autoWaveDuration}
-      typewriterDelay={TYPEWRITER_DELAY}
-      height={config.height}
-      fontSize={config.fontSize}
-      fontFamily="'Space Grotesk', system-ui, sans-serif"
-      fontWeight={700}
-      color={dimmed ? "#a2e2d0" : "#f9fbfb"}
-      sampleStep={2}
-      particleSize={1}
-      repelRadius={110}
-      repelForce={9}
-      padding={60}
-      className={dimmed ? "opacity-90" : undefined}
-    />
-  )
-}
+// Timing du H1. La frappe démarre 0.3s après que l'intro overlay ait fini
+// (le hero est monté quand l'overlay disparaît). "Hengebaert" démarre quand
+// "Léo" est terminé + petite respiration.
+const TYPE_SPEED_MS = 90
+const TYPING_LEO_DELAY = 0.3
+const TYPING_LEO_DURATION_S = (3 * TYPE_SPEED_MS) / 1000
+const TYPING_GAP_S = 0.28
+const TYPING_HENGEBAERT_DELAY =
+  TYPING_LEO_DELAY + TYPING_LEO_DURATION_S + TYPING_GAP_S
 
 
 function GlassButton({ children, href, variant = "green" }: { children: React.ReactNode; href: "/projets" | "/services" | "/contact" | "/a-propos"; variant?: "green" | "mauve" | "blue" }) {
@@ -155,21 +98,33 @@ export function HeroSection({ skipIntro = false }: { skipIntro?: boolean } = {})
 
             {/* Name — un seul <h1> sémantique (SEO : 1 h1 par page). Visuellement
                 on conserve les 2 lignes via des spans block + animations
-                indépendantes par mot pour préserver le typewriter sequentiel. */}
-            <h1 aria-label="Léo Hengebaert" className="leading-none mb-8">
+                indépendantes par mot pour préserver le typewriter sequentiel.
+                "Léo" tape en glow vert accent, "Hengebaert" tape en glow mauve.
+                Chaque lettre flashe en néon puis s'éteint vers sa couleur finale. */}
+            <h1
+              aria-label="Léo Hengebaert"
+              className="leading-none mb-8 font-bold"
+              style={{
+                fontFamily: "'Space Grotesk', system-ui, sans-serif",
+                fontSize: "clamp(60px, 9vw, 138px)",
+              }}
+            >
               <span className="block leading-none mb-1">
-                <ParticleName
+                <H1Typewriter
                   text="Léo"
-                  typingStartDelay={TYPING_LEO_START}
-                  autoWaveDelay={AUTO_WAVE_LEO_START}
+                  color={COLOR_LEO_FINAL}
+                  glowColor={COLOR_LEO_GLOW}
+                  delay={TYPING_LEO_DELAY}
+                  speed={TYPE_SPEED_MS}
                 />
               </span>
               <span className="block leading-none">
-                <ParticleName
+                <H1Typewriter
                   text="Hengebaert"
-                  typingStartDelay={TYPING_HENGEBAERT_START}
-                  autoWaveDelay={AUTO_WAVE_HENGEBAERT_START}
-                  dimmed
+                  color={COLOR_HENGEBAERT_FINAL}
+                  glowColor={COLOR_HENGEBAERT_GLOW}
+                  delay={TYPING_HENGEBAERT_DELAY}
+                  speed={TYPE_SPEED_MS}
                 />
               </span>
             </h1>

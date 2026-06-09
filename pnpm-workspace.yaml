@@ -1,0 +1,8 @@
+allowBuilds:
+  '@parcel/watcher': true
+  '@swc/core': true
+  '@tsparticles/engine': true
+  msw: true
+  puppeteer: false
+  sharp: true
+  unrs-resolver: true

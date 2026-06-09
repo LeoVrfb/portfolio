@@ -42,3 +42,10 @@ next-env.d.ts
 
 # Claude Code settings (local only)
 .claude/
+.env*.local
+scripts/audit/node_modules
+scripts/audit/pnpm-lock.yaml
+
+# Outputs scripts (régénérés à chaque run, pas du source)
+audit-a11y-results.json
+scripts/audit/audit-a11y-results.json

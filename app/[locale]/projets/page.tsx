@@ -43,7 +43,7 @@ export default async function ProjetsPage({ params }: Props) {
           <h1 className="text-5xl sm:text-6xl font-black tracking-tighter leading-[0.92] mb-4">
             {t("title")}
             <br />
-            <span className="text-foreground/20">{t("titleAccent")}</span>
+            <span className="text-foreground/55">{t("titleAccent")}</span>
           </h1>
         </BlurFade>
         <BlurFade delay={0.14}>

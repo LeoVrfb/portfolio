@@ -176,7 +176,7 @@ export default async function AProposPage({ params }: Props) {
       {/* Header */}
       <section className="pt-32 pb-24 layout-container">
         <BlurFade delay={0.1} direction="up" inView>
-          <p className="text-xs uppercase tracking-[0.45em] text-zinc-600 font-semibold mb-5">
+          <p className="text-xs uppercase tracking-[0.45em] text-zinc-400 font-semibold mb-5">
             {t("eyebrow")}
           </p>
         </BlurFade>
@@ -197,7 +197,7 @@ export default async function AProposPage({ params }: Props) {
                   <NumberTicker value={stat.value} className="text-white" />
                   <span className="text-accent">{stat.suffix}</span>
                 </p>
-                <p className="text-xs text-zinc-600 uppercase tracking-[0.2em] mt-1">
+                <p className="text-xs text-zinc-400 uppercase tracking-[0.2em] mt-1">
                   {t(`stats.${stat.labelKey}`)}
                 </p>
               </div>
@@ -215,9 +215,9 @@ export default async function AProposPage({ params }: Props) {
                   {t("cards.job.eyebrow")}
                 </span>
               </div>
-              <h3 className="text-xl font-bold text-white mb-2 leading-tight">
+              <h2 className="text-xl font-bold text-white mb-2 leading-tight">
                 {t("cards.job.title")}
-              </h3>
+              </h2>
               <p className="text-sm text-foreground/70 leading-relaxed">
                 {t.rich("cards.job.description", {
                   qare: (chunks) => <span className="text-foreground/90 font-medium">{chunks}</span>,
@@ -232,9 +232,9 @@ export default async function AProposPage({ params }: Props) {
                   {t("cards.parallel.eyebrow")}
                 </span>
               </div>
-              <h3 className="text-xl font-bold text-white mb-2 leading-tight">
+              <h2 className="text-xl font-bold text-white mb-2 leading-tight">
                 {t("cards.parallel.title")}
-              </h3>
+              </h2>
               <p className="text-sm text-foreground/70 leading-relaxed">
                 {t("cards.parallel.description")}
               </p>
@@ -255,7 +255,7 @@ export default async function AProposPage({ params }: Props) {
         <BlurFade delay={0.1} direction="up" inView>
           <div className="grid md:grid-cols-[1fr_2fr] gap-10 md:gap-16 items-start">
             <div>
-              <p className="text-xs uppercase tracking-[0.4em] text-zinc-600 font-semibold mb-3">
+              <p className="text-xs uppercase tracking-[0.4em] text-zinc-400 font-semibold mb-3">
                 {t("story.eyebrow")}
               </p>
               <h2 className="text-3xl font-black text-white leading-tight tracking-tight mb-4">
@@ -266,7 +266,7 @@ export default async function AProposPage({ params }: Props) {
               {/* Lien visible uniquement en desktop (en mobile il est répété en fin de texte) */}
               <Link
                 href="/contact"
-                className="group hidden md:inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-white transition-colors mt-4"
+                className="group hidden md:inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors mt-4"
               >
                 {t("story.workTogether")}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -349,7 +349,7 @@ export default async function AProposPage({ params }: Props) {
               <BlurFade delay={0.45} direction="up" inView>
                 <Link
                   href="/contact"
-                  className="group md:hidden inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-white transition-colors pt-2"
+                  className="group md:hidden inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors pt-2"
                 >
                   {t("story.workTogether")}
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -456,9 +456,12 @@ export default async function AProposPage({ params }: Props) {
                         className="inline-flex items-center gap-1.5 text-sm text-foreground/85"
                       >
                         {Icon ? (
-                          <Icon className="w-3.5 h-3.5 shrink-0 text-accent" />
+                          // aria-hidden : icône purement décorative, le nom de la techno
+                          // (`{name}` juste après) sert déjà de label accessible.
+                          <Icon className="w-3.5 h-3.5 shrink-0 text-accent" aria-hidden="true" />
                         ) : (
                           <span
+                            aria-hidden="true"
                             className="w-1 h-1 rounded-full shrink-0"
                             style={{ background: "var(--accent)", opacity: 0.5 }}
                           />

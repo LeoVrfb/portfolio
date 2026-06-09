@@ -253,7 +253,7 @@ export function ContactForm() {
               <p className="text-2xl font-black text-accent">
                 {hasDevis ? `${total} €+` : `${total} €`}
               </p>
-              <p className="text-[10px] text-white/40">{t("estimatedQuote")}</p>
+              <p className="text-[10px] text-white/55">{t("estimatedQuote")}</p>
             </div>
           </div>
 
@@ -316,8 +316,13 @@ export function ContactForm() {
         </div>
       )}
 
-      <div>
-        <label className="text-xs font-semibold text-zinc-500 uppercase tracking-[0.2em] mb-2 block">{t("nameLabel")}</label>
+      {/* Labels en wrapping pattern : <label><span>...</span><input/></label> assure
+          l'association sémantique sans nécessiter d'IDs uniques. Couleur des
+          labels : text-zinc-400 (contraste 7.5:1 sur fond #0e1613, WCAG AA). */}
+      <label className="block">
+        <span className="text-xs font-semibold text-zinc-400 uppercase tracking-[0.2em] mb-2 block">
+          {t("nameLabel")}
+        </span>
         <input
           type="text"
           placeholder={t("namePlaceholder")}
@@ -326,11 +331,13 @@ export function ContactForm() {
           required
           className={inputClass}
         />
-      </div>
+      </label>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label className="text-xs font-semibold text-zinc-500 uppercase tracking-[0.2em] mb-2 block">{t("emailLabel")}</label>
+        <label className="block">
+          <span className="text-xs font-semibold text-zinc-400 uppercase tracking-[0.2em] mb-2 block">
+            {t("emailLabel")}
+          </span>
           <input
             type="email"
             placeholder={t("emailPlaceholder")}
@@ -339,12 +346,12 @@ export function ContactForm() {
             required
             className={inputClass}
           />
-        </div>
-        <div>
-          <label className="text-xs font-semibold text-zinc-500 uppercase tracking-[0.2em] mb-2 block">
+        </label>
+        <label className="block">
+          <span className="text-xs font-semibold text-zinc-400 uppercase tracking-[0.2em] mb-2 block">
             {t("phoneLabel")}{" "}
-            <span className="text-white/40 normal-case tracking-normal">{t("phoneOptional")}</span>
-          </label>
+            <span className="text-white/55 normal-case tracking-normal">{t("phoneOptional")}</span>
+          </span>
           <input
             type="tel"
             placeholder={t("phonePlaceholder")}
@@ -352,13 +359,15 @@ export function ContactForm() {
             onChange={(e) => setData((d) => ({ ...d, telephone: e.target.value }))}
             className={inputClass}
           />
-        </div>
+        </label>
       </div>
 
       {/* Formule — seulement si pas venu du configurateur */}
       {!fromConfigurator && (
-        <div>
-          <label className="text-xs font-semibold text-zinc-500 uppercase tracking-[0.2em] mb-2 block">{t("planLabel")}</label>
+        <label className="block">
+          <span className="text-xs font-semibold text-zinc-400 uppercase tracking-[0.2em] mb-2 block">
+            {t("planLabel")}
+          </span>
           <select
             value={data.formule}
             onChange={(e) => setData((d) => ({ ...d, formule: e.target.value }))}
@@ -370,13 +379,13 @@ export function ContactForm() {
               </option>
             ))}
           </select>
-        </div>
+        </label>
       )}
 
-      <div>
-        <label className="text-xs font-semibold text-zinc-500 uppercase tracking-[0.2em] mb-2 block">
+      <label className="block">
+        <span className="text-xs font-semibold text-zinc-400 uppercase tracking-[0.2em] mb-2 block">
           {fromConfigurator ? t("messageLabelProject") : t("messageLabelRequest")}
-        </label>
+        </span>
         <textarea
           placeholder={
             fromConfigurator ? t("messagePlaceholderProject") : t("messagePlaceholderRequest")
@@ -387,7 +396,7 @@ export function ContactForm() {
           rows={6}
           className={`${inputClass} resize-none`}
         />
-      </div>
+      </label>
 
       {hasIncompleteAddon && fromConfigurator && (
         <div className="flex items-start gap-2 px-3 py-2.5 rounded-lg bg-red-400/10 border border-red-400/30 text-xs text-red-300">

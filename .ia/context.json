@@ -39,8 +39,13 @@
   "nav_links": ["Accueil (/)", "Projets (/projets)", "Services (/services)", "À propos (/a-propos)", "Contact (/contact)"],
   "theme": "dark mode permanent — background #09090b, accent vert/teal, lavender sky-blue, gold jaune, mauve orchid",
   "intro_animation": {
-    "component": "IntroOverlay (layout.tsx) → HeroNeonAnim",
+    "component": "IntroOverlay (rendu uniquement par app/[locale]/page.tsx) → HeroNeonAnim",
     "duration_ms": 4200,
-    "signal": "signalIntroReady() → HeroSection attend onIntroReady() pour démarrer ses animations"
+    "scope": "home page uniquement (`/` et `/en`) — n'apparaît PAS sur services/projets/etc.",
+    "trigger": "à chaque chargement de la home (pas de cookie de skip pour visiteurs récurrents)",
+    "skippable": false,
+    "skips_auto": ["bot UA (server)", "prefers-reduced-motion (client)", "navigator.webdriver (client)"],
+    "signal": "signalIntroReady() → HeroSection attend onIntroReady() pour démarrer ses animations",
+    "h1_animation": "H1Typewriter (components/animations/h1-typewriter.tsx) — typewriter avec glow néon vert pour 'Léo', mauve pour 'Hengebaert'"
   }
 }

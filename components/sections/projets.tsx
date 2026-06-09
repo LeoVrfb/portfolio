@@ -127,7 +127,7 @@ export function ProjetsSection() {
                   </div>
 
                   {/* Arrow */}
-                  <ArrowUpRight className="w-5 h-5 text-foreground/20 group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0" />
+                  <ArrowUpRight className="w-5 h-5 text-foreground/55 group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0" />
                 </Link>
               </motion.li>
             )

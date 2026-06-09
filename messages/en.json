@@ -46,7 +46,6 @@
     }
   },
   "intro": {
-    "skipHint": "Click to skip",
     "card": {
       "name": "Léo Hengebaert",
       "role": "Front-end developer"
@@ -4114,5 +4113,12 @@
         "allProjects": "All projects"
       }
     }
+  },
+  "cookies": {
+    "title": "Cookies & privacy",
+    "description": "This site uses cookies for audience analytics (Google Analytics) and personalized advertising (Meta Pixel). You can accept or decline at any time.",
+    "privacyLink": "Read our privacy policy",
+    "accept": "Accept",
+    "decline": "Decline"
   }
 }

@@ -17,7 +17,8 @@ app/
     [slug]/page.tsx     → Configurateur formule (essentiel/standard/premium)
   a-propos/page.tsx     → Page à propos
   contact/page.tsx      → Formulaire de contact
-  layout.tsx            → Root layout — fonts (Space Grotesk + DM Mono + Bebas Neue), IntroOverlay, Nav, Footer
+  layout.tsx            → Root layout — fonts (Space Grotesk + DM Mono + Bebas Neue), Nav, Footer
+                           (IntroOverlay rendu uniquement par `[locale]/page.tsx`, voir Intro animation)
 
 components/
   layout/
@@ -36,6 +37,7 @@ components/
     wide-video-player.tsx → Lecteur vidéo 16:9 avec loop start/end
   animations/
     blur-fade.tsx       → Animation d'entrée (opacity + blur + translate)
+    h1-typewriter.tsx   → H1 du hero — typewriter avec glow néon (vert/mauve)
 
 lib/
   projets.ts            → Source de vérité — type Projet + tableau projets[] (5 projets)
@@ -70,10 +72,26 @@ Tout est dans `lib/projets.ts`. Type `Projet` :
 
 ## Intro animation
 
-1. `layout.tsx` rend `<IntroOverlay />` en premier enfant de `<body>`
+L'intro overlay (`HeroNeonAnim` plein écran ~4.2s) est l'expérience signature
+du portfolio. Choix produit assumé : elle joue à **chaque chargement de la
+home `/`**, n'est **pas skippable** côté client (pas de onClick handler, pas
+de hint visuelle), et **n'apparaît jamais sur les autres pages** (services,
+projets, à propos, contact). Trade-off : LCP synthétique mobile dégradé sur
+la home, accepté car l'effet "wahou" prime (cf. `seo-roadmap-post-livraison.md`).
+
+1. `app/[locale]/page.tsx` (la home) rend `<IntroOverlay />` en début de page
 2. `IntroOverlay` affiche `HeroNeonAnim` (animation neon + portrait) pendant ~4.2s
 3. Au fade-out, appelle `signalIntroReady()` (via `lib/intro-signal.ts`)
 4. `HeroSection` écoute `onIntroReady()` et affiche son contenu seulement après
+5. Le H1 "Léo Hengebaert" tape ensuite via `H1Typewriter` avec glow néon
+   (vert accent pour "Léo", mauve pour "Hengebaert")
+
+Skips automatiques :
+- **Bot UA** (Googlebot, Bingbot…) → skippé côté server dans `page.tsx`
+  (`isBotUserAgent` sur `user-agent`) → contenu SSR complet pour les crawlers
+- **`prefers-reduced-motion`** → skippé côté client (accessibilité OS)
+- **`navigator.webdriver === true`** → skippé côté client (Lighthouse / Selenium /
+  Playwright / Puppeteer) → score perf synthétique préservé en automation
 
 ## Badges contexte (projets-grid.tsx)
 

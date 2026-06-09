@@ -187,7 +187,7 @@ export default async function TermsPage({
           ))}
         </div>
 
-        <p className="mt-12 text-xs text-white/40 font-mono">{copy.lastUpdated}</p>
+        <p className="mt-12 text-xs text-white/55 font-mono">{copy.lastUpdated}</p>
       </article>
     </div>
   )

@@ -164,7 +164,7 @@ export default function KalypsoClient() {
       <aside className="hidden xl:flex flex-col gap-1.5 fixed left-8 top-1/2 -translate-y-1/2 z-40 select-none">
         {indexNav.map((item, i) => (
           <a key={i} href={`#section-${item.n.toLowerCase()}`}
-            className="group flex items-center gap-3 py-1.5 text-foreground/35 hover:text-foreground transition-colors cursor-pointer">
+            className="group flex items-center gap-3 py-1.5 text-foreground/55 hover:text-foreground transition-colors cursor-pointer">
             <span className="font-mono text-[10px] uppercase tracking-[0.3em] w-6" style={{ color: "var(--gold)" }}>{item.n}</span>
             <span className="text-[10px] uppercase tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-opacity">{item.label}</span>
           </a>
@@ -175,7 +175,7 @@ export default function KalypsoClient() {
       <div className="relative z-10 mb-10 border-y border-foreground/10 overflow-hidden">
         <div className="flex gap-12 py-3 animate-[marquee_40s_linear_infinite] whitespace-nowrap">
           {[...ticker, ...ticker, ...ticker].map((item, i) => (
-            <div key={i} className="flex items-center gap-12 text-[10px] font-mono uppercase tracking-[0.4em] text-foreground/40 shrink-0">
+            <div key={i} className="flex items-center gap-12 text-[10px] font-mono uppercase tracking-[0.4em] text-foreground/55 shrink-0">
               <span>{item}</span>
               <span aria-hidden className="w-1 h-1 rounded-full" style={{ background: "var(--gold)", opacity: 0.6 }} />
             </div>
@@ -190,7 +190,7 @@ export default function KalypsoClient() {
             <ArrowLeft size={13} />
             {t("retour")}
           </Link>
-          <div className="hidden sm:flex items-center gap-6 text-[10px] font-mono uppercase tracking-[0.3em] text-foreground/40">
+          <div className="hidden sm:flex items-center gap-6 text-[10px] font-mono uppercase tracking-[0.3em] text-foreground/55">
             <span>{projet.numero}</span>
             <span aria-hidden className="w-3 h-px bg-foreground/20" />
             <span>{projet.edition}</span>
@@ -231,12 +231,12 @@ export default function KalypsoClient() {
         <Reveal delay={0.2}>
           <div className="mt-14 grid sm:grid-cols-[1fr_auto] gap-6 items-end">
             <div>
-              <p className="text-[10px] font-mono uppercase tracking-[0.35em] text-foreground/40 mb-2">{tK("page.sectionI.clientLabel")}</p>
+              <p className="text-[10px] font-mono uppercase tracking-[0.35em] text-foreground/55 mb-2">{tK("page.sectionI.clientLabel")}</p>
               <p className="text-xl sm:text-2xl font-serif-display font-normal text-foreground tracking-tight">{projet.client}</p>
             </div>
             <div className="flex items-baseline gap-3">
               <span className="font-serif-display italic font-normal" style={{ fontSize: "clamp(2.25rem, 5vw, 4rem)", color: "var(--gold)", lineHeight: 1 }}>7</span>
-              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-foreground/40 pb-2 whitespace-pre-line">{tK("page.sectionI.sevenLabel")}</span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-foreground/55 pb-2 whitespace-pre-line">{tK("page.sectionI.sevenLabel")}</span>
             </div>
           </div>
         </Reveal>
@@ -371,7 +371,7 @@ export default function KalypsoClient() {
             {stack.map((s, i) => (
               <Reveal key={s.nom} delay={i * 0.04}>
                 <div className="grid grid-cols-[auto_1fr_auto] items-baseline gap-6 py-5 border-t border-foreground/10">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-foreground/40 w-8">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-foreground/55 w-8">{String(i + 1).padStart(2, "0")}</span>
                   <span className="font-serif-display font-normal text-foreground" style={{ fontSize: "clamp(1.15rem, 1.5vw, 1.4rem)" }}>{s.nom}</span>
                   <span className="text-xs text-foreground/55 text-right max-w-[18rem] leading-snug">{s.role}</span>
                 </div>
@@ -400,7 +400,7 @@ export default function KalypsoClient() {
               </a>
             </div>
             <div>
-              <p className="text-[10px] font-mono uppercase tracking-[0.4em] text-foreground/40 mb-6">{t("contributed")}</p>
+              <p className="text-[10px] font-mono uppercase tracking-[0.4em] text-foreground/55 mb-6">{t("contributed")}</p>
               <ul className="space-y-4">
                 {credits.map((c) => (
                   <li key={c.role + c.nom} className="grid grid-cols-[1fr_1.5fr] gap-4 items-baseline pb-4 border-b border-foreground/8">
@@ -419,13 +419,13 @@ export default function KalypsoClient() {
         <Reveal>
           <Link href="/projets" className="group flex items-center justify-between pt-8 border-t border-foreground/15 cursor-pointer">
             <div>
-              <p className="text-[10px] font-mono uppercase tracking-[0.35em] text-foreground/40 mb-2">{t("readingNext")}</p>
+              <p className="text-[10px] font-mono uppercase tracking-[0.35em] text-foreground/55 mb-2">{t("readingNext")}</p>
               <p className="font-serif-display italic font-normal text-foreground group-hover:translate-x-1 transition-transform"
                 style={{ fontSize: "clamp(1.35rem, 2vw, 1.85rem)" }}>
                 {t("allProjects")}
               </p>
             </div>
-            <ArrowRight className="w-7 h-7 text-foreground/40 group-hover:text-foreground group-hover:translate-x-2 transition-all" strokeWidth={1.25} />
+            <ArrowRight className="w-7 h-7 text-foreground/55 group-hover:text-foreground group-hover:translate-x-2 transition-all" strokeWidth={1.25} />
           </Link>
         </Reveal>
       </section>

@@ -420,7 +420,7 @@ function SlotsList({
   const dateLabel = useMemo(() => formatDateLong(selectedDate, intlTag), [selectedDate, intlTag])
   return (
     <>
-      <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/45 mb-4">
+      <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/55 mb-4">
         {dateLabel} · {countLabel}
       </p>
       <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 gap-2">
@@ -552,7 +552,7 @@ function BookingFormDialog({
               placeholder={t("emailPlaceholder")}
               className="bg-white/4 border-white/10 text-white placeholder:text-white/30 focus-visible:border-white/30"
             />
-            <p className="text-[11px] text-white/40 mt-1">{t("emailHint")}</p>
+            <p className="text-[11px] text-white/55 mt-1">{t("emailHint")}</p>
           </div>
 
           <div className="space-y-2">
@@ -602,7 +602,7 @@ function BookingFormDialog({
 
           <div className="space-y-1.5">
             <Label htmlFor="booking-message" className="text-white/85 text-xs font-semibold">
-              {t("messageLabel")} <span className="text-white/40 font-normal">{t("messageOptional")}</span>
+              {t("messageLabel")} <span className="text-white/55 font-normal">{t("messageOptional")}</span>
             </Label>
             <Textarea
               id="booking-message"
@@ -672,7 +672,7 @@ function CallTypeOption({
         <span style={{ color: checked ? accentColor : "rgba(255,255,255,0.55)" }}>{icon}</span>
         {label}
       </div>
-      <span className="text-[11px] text-white/45">{hint}</span>
+      <span className="text-[11px] text-white/55">{hint}</span>
     </Label>
   )
 }

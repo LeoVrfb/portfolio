@@ -4,20 +4,28 @@ import { TechBand } from "@/components/sections/tech-band";
 import { AboutIntro } from "@/components/sections/about-intro";
 import { ProjetsSection } from "@/components/sections/projets";
 import { ServicesSection } from "@/components/sections/services";
+import { IntroOverlay } from "@/components/sections/intro-overlay";
 import { isBotUserAgent } from "@/lib/seo/is-bot";
 
+// L'IntroOverlay est rendu UNIQUEMENT sur la home page. Il joue à chaque
+// chargement de `/` (pas de cookie de skip pour les visiteurs récurrents).
+// L'animation est non-skippable côté client : il faut attendre les 4.2s.
+//
+// Skips serveur (avant rendu) :
+//  - bot (Googlebot, Bingbot, GPTBot…) → contenu SSR complet pour les crawlers,
+//    sinon ils voient une page vide masquée par l'overlay → SEO cassé.
+//
+// Skips client (dans IntroOverlay) :
+//  - prefers-reduced-motion → accessibilité
+//  - navigator.webdriver → Lighthouse / Selenium / Playwright
 export default async function Home() {
-  // Pour les bots, l'intro overlay est désactivée dans le layout. Sans signal
-  // d'intro, le hero ne quitte jamais son état initial `ready=false` et son
-  // <h1> n'est jamais rendu côté serveur — créant une page sans H1 à l'œil
-  // de Bing/Google. On force donc le hero à démarrer immédiatement sur les UA
-  // crawlers pour que le HTML servi soit complet pour le SEO.
   const requestHeaders = await headers();
-  const skipIntro = isBotUserAgent(requestHeaders.get("user-agent"));
+  const isBot = isBotUserAgent(requestHeaders.get("user-agent"));
 
   return (
     <>
-      <HeroSection skipIntro={skipIntro} />
+      {!isBot && <IntroOverlay />}
+      <HeroSection skipIntro={isBot} />
       <TechBand />
       <AboutIntro />
       <ProjetsSection />

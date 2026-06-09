@@ -131,7 +131,7 @@ export default async function SweetimeAdpExtimePage({ params }: Props) {
       <div className="max-w-6xl mx-auto px-6 lg:px-10 mb-12">
         <Reveal duration={0.4} y={8}>
           <div className="mb-10">
-            <Link href="/projets" className="inline-flex items-center gap-2 text-sm text-foreground/35 hover:text-foreground transition-colors cursor-pointer">
+            <Link href="/projets" className="inline-flex items-center gap-2 text-sm text-foreground/55 hover:text-foreground transition-colors cursor-pointer">
               <ArrowLeft size={14} />
               {t("backToAll")}
             </Link>
@@ -144,7 +144,7 @@ export default async function SweetimeAdpExtimePage({ params }: Props) {
               <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-foreground/55 border border-white/12 rounded-full px-3 py-1">
                 {t("badge.agenceArtefact3000")}
               </span>
-              <span className="text-[11px] text-foreground/40 font-mono">{year}</span>
+              <span className="text-[11px] text-foreground/55 font-mono">{year}</span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-[-0.02em] text-foreground leading-[1.05] mb-3">
@@ -236,7 +236,7 @@ export default async function SweetimeAdpExtimePage({ params }: Props) {
                   <div className="relative rounded-2xl overflow-hidden border border-border/60 shadow-[0_32px_80px_-8px_rgba(0,0,0,0.6)]">
                     <video src={projet.video} autoPlay muted loop playsInline preload="auto" className="block w-full h-auto" />
                   </div>
-                  <figcaption className="mt-3 flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.32em] text-foreground/40">
+                  <figcaption className="mt-3 flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.32em] text-foreground/55">
                     <span>Fig.01 — {tProjet(`${SLUG}.page.figCaption.video`)}</span>
                     <span>Canvas</span>
                   </figcaption>
@@ -245,7 +245,7 @@ export default async function SweetimeAdpExtimePage({ params }: Props) {
                 <div className="lg:col-span-7 lg:pt-2 space-y-10">
                   {descriptionPublic && <div>{renderParagraphs(descriptionPublic)}</div>}
                   <div className="pt-8 border-t border-foreground/10">
-                    <p className="text-[10px] font-mono uppercase tracking-[0.32em] text-foreground/40 mb-6">
+                    <p className="text-[10px] font-mono uppercase tracking-[0.32em] text-foreground/55 mb-6">
                       {operationNumbers.label}
                     </p>
                     <div className="grid grid-cols-2 gap-x-8 gap-y-7">
@@ -389,7 +389,7 @@ export default async function SweetimeAdpExtimePage({ params }: Props) {
             <div>
               {stackDetail.map((s, i) => (
                 <div key={s.nom} className="grid grid-cols-[auto_1fr_auto] items-baseline gap-4 sm:gap-6 py-4 border-t border-foreground/10 last:border-b last:border-foreground/10">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-foreground/40 w-8">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-foreground/55 w-8">{String(i + 1).padStart(2, "0")}</span>
                   <span className="text-base sm:text-lg font-bold text-foreground">{s.nom}</span>
                   <span className="text-xs text-foreground/55 text-right max-w-[22rem] leading-snug">{s.role}</span>
                 </div>
@@ -426,7 +426,7 @@ export default async function SweetimeAdpExtimePage({ params }: Props) {
               <div>
                 {credits.map((c, i) => (
                   <div key={c.nom} className="grid grid-cols-[auto_1fr_auto] items-baseline gap-4 sm:gap-6 py-4 border-t border-foreground/10 last:border-b last:border-foreground/10">
-                    <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-foreground/40 w-8">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-foreground/55 w-8">{String(i + 1).padStart(2, "0")}</span>
                     <span className="text-base sm:text-lg font-bold text-foreground">{c.nom}</span>
                     <span className="text-xs text-foreground/55 text-right max-w-[24rem] leading-snug">{c.role}</span>
                   </div>
@@ -497,7 +497,7 @@ export default async function SweetimeAdpExtimePage({ params }: Props) {
             <div>
               <p className="text-[10px] uppercase tracking-[0.3em] mb-1.5 font-semibold" style={{ color: "var(--gold)" }}>{t("nextProject")}</p>
               <p className="text-base font-bold text-foreground group-hover:text-(--gold) transition-colors">{nextProjet.clientShort ?? nextProjet.client}</p>
-              <p className="text-xs text-foreground/40 mt-0.5">{nextProjet.titre}</p>
+              <p className="text-xs text-foreground/55 mt-0.5">{nextProjet.titre}</p>
             </div>
             <ArrowRight className="w-5 h-5 text-foreground/25 group-hover:text-(--gold) group-hover:translate-x-1 transition-all shrink-0 ml-4" />
           </Link>
