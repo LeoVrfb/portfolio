@@ -41,6 +41,9 @@ const DISALLOW_PATHS: string[] = [
   // Page demo legacy jQuery — non maintenue, ne reflète pas le travail actuel
   "/demo",
   "/en/demo",
+  // Questionnaire design privé — envoyé par lien aux clients, jamais public
+  "/brief",
+  "/en/brief",
   // Anciens préfixes legacy (catch-all redirigé via next.config.ts mais on
   // explicite ici pour les crawlers qui ne suivent pas les redirections)
   "/fr/",
