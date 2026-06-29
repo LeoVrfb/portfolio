@@ -44,9 +44,11 @@ const DISALLOW_PATHS: string[] = [
   // Questionnaire design privé — envoyé par lien aux clients, jamais public
   "/brief",
   "/en/brief",
-  // Anciens préfixes legacy (catch-all redirigé via next.config.ts mais on
-  // explicite ici pour les crawlers qui ne suivent pas les redirections)
-  "/fr/",
+  // /!\ NE PAS disallow `/fr/` : ces URLs legacy sont 301-redirigées vers les
+  // nouvelles (cf. next.config.ts). Les bloquer dans robots.txt empêche
+  // Googlebot de fetcher l'URL pour VOIR la redirection → l'ancienne URL reste
+  // indexée "bloquée" et ne transmet jamais son jus SEO à la nouvelle. Pour
+  // qu'une 301 soit prise en compte, l'URL source DOIT être crawlable.
 ];
 
 export default function robots(): MetadataRoute.Robots {
