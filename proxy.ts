@@ -78,6 +78,25 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(targetUrl);
   }
 
+  // 2b. Lien de bio Instagram : `/insta` → home avec paramètres UTM, pour que
+  // GA4 attribue ces visites à Instagram (source/medium = instagram/social) au
+  // lieu de "Direct". Le visiteur ne voit qu'un lien propre `leohengebaert.fr/insta`.
+  // Géré ICI (avant la logique de locale) sinon `/insta` serait transformé en
+  // `/en/insta` pour les visiteurs non-FR → 404. On respecte la langue du visiteur.
+  if (
+    pathname === "/insta" ||
+    pathname === "/en/insta" ||
+    pathname === "/fr/insta"
+  ) {
+    const goEn =
+      pathname.startsWith("/en") ||
+      (!pathname.startsWith("/fr") &&
+        !prefersFrench(request.headers.get("accept-language")));
+    const target = new URL(goEn ? "/en" : "/", request.url);
+    target.search = "utm_source=instagram&utm_medium=social&utm_campaign=bio";
+    return NextResponse.redirect(target);
+  }
+
   // 3. Bots (crawlers) : on ne redirige JAMAIS via la détection custom.
   //    Les URLs sans préfixe = FR (default locale, contrat `localePrefix:as-needed`),
   //    les URLs /en/* = EN. Les bots crawlent ce que le sitemap déclare.
