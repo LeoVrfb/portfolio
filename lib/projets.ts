@@ -32,6 +32,12 @@ export type Projet = {
    */
   tagline?: string;
   img: string;
+  /**
+   * Image portrait (ratio 3:4) dédiée aux cartes "éventail" de la section Réalisations
+   * sur les pages formules (ServiceProjects). Quand absente, on retombe sur `img` (16:9),
+   * qui se fait alors cropper dans le format vertical de la carte.
+   */
+  cardImg?: string;
   heroImg?: string;
   images?: string[];
   sliderSets?: { title: string; description: string; images: string[] }[];
@@ -60,6 +66,13 @@ export type Projet = {
   url?: string;
   enCours?: boolean;
   customSlider?: string;
+  /**
+   * Projet "vitrine" à mettre en avant dans la mosaïque de /projets : il occupe une
+   * grande tuile (8 colonnes, double hauteur) au lieu d'une petite. Réservé aux gros
+   * projets d'agence qui portent la crédibilité (BNP Paribas, TotalEnergies, Groupe ADP).
+   * Les sites freelance restent en petit tant qu'ils ne sont pas des projets d'envergure.
+   */
+  featured?: boolean;
 };
 
 export const projets: Projet[] = [
@@ -70,6 +83,7 @@ export const projets: Projet[] = [
     clientShort: "BNP Paribas",
     logo: "/assets/bnp/logo-bnp.webp",
     contexte: "agence",
+    featured: true,
     description:
       "Module e-learning gamifié déployé en interne chez BNP Paribas — 6 chapitres, 5 types de mini-jeux, 6 vidéos générées par IA, un personnage guide, conforme SCORM 1.2.",
     descriptionPublic:
@@ -185,6 +199,7 @@ export const projets: Projet[] = [
     logo: "/logo-total.webp",
     logos: ["/logo-total.webp", "/logo-argedis.webp"],
     contexte: "agence",
+    featured: true,
     description:
       "Application tactile déployée sur des centaines de tablettes en stations TotalEnergies pour mettre en avant les producteurs locaux partenaires — administrée et mise à jour en continu.",
     descriptionPublic:
@@ -306,6 +321,7 @@ export const projets: Projet[] = [
     logo: "/logo-adp.webp",
     logos: ["/logo-adp.webp", "/logo-extime.webp"],
     contexte: "agence",
+    featured: true,
     description:
       "Jeu concours digital pour les voyageurs d'ADP : un ticket à gratter virtuel pour gagner des réductions dans les boutiques Extime.",
     descriptionPublic:
@@ -524,6 +540,7 @@ export const projets: Projet[] = [
       "Une identité visuelle entièrement sur mesure. Chaque élément graphique a été conçu pour Bald : le logo découpé en deux typographies (BA en encre, LD en feuille d'or), un badge circulaire animé, des coups de pinceau qui s'animent au défilement de la page. Ce genre d'effets visuels ne s'improvise pas avec un template.\n\nUne galerie pensée pour naviguer facilement. Les visiteurs filtrent les toiles par collection, par dimensions et par prix. L'accès à ce qu'ils cherchent est immédiat, sans rechargement de page.\n\nAcheter une toile en quelques clics. Le paiement Stripe est intégré directement dans le site. Bald peut ajouter ou retirer des œuvres depuis son espace d'administration, sans toucher au code.\n\nLe site en français et en anglais. Chaque page, chaque fiche et chaque mention légale est disponible dans les deux langues. Un visiteur anglophone arrive automatiquement sur la bonne version.\n\nLe site est en ligne sur [bald-art.com](https://bald-art.com), n'hésitez pas à aller le visiter pour vous en faire votre propre idée.",
     intro: `Site e-commerce développé en freelance pour Bald, artiste peintre abstrait. Identité visuelle noir et or construite from scratch : intro animée, badge circulaire rotatif, coups de pinceau au scroll, typographie Bebas Neue. Galerie avec filtres multi-critères, tunnel Stripe complet et internationalisation FR/EN native. Le genre de site qu'on ne fait pas avec un template.`,
     img: "/assets/bald/bald-miniature.webp",
+    cardImg: "/assets/bald/bald-card.jpg",
     heroImg: "/assets/bald/bald-hero-accueil.webp",
     url: "https://bald-art.com",
     wideMedia: true,
@@ -601,6 +618,7 @@ export const projets: Projet[] = [
       "Le site combine deux mondes en général séparés : une vitrine publique consultable sans la moindre friction, et un espace privé pour les élèves qui achètent les cours vidéo. Tout le marketing est ouvert : on parcourt les sections, on lit les avis, on regarde la carte du monde des élèves, et on peut réserver un premier appel sans avoir à créer de compte.\n\nLa connexion n'apparaît qu'au moment où elle a vraiment du sens, pour retrouver les cours déjà achetés. L'élève reçoit un lien de connexion par email, sans mot de passe, et accède à son tableau de bord. La prof, elle, dispose d'un espace administrateur où elle gère ses cours, ses élèves et son agenda en complète autonomie.\n\nLe site est en ligne sur [russianwithjulia.com](https://russianwithjulia.com), n'hésitez pas à aller le visiter pour vous en faire votre propre idée.",
     intro: `Site freelance complet pour Julia, professeure particulière de russe avec ~~plus de 500 élèves~~ répartis dans ~~25 pays~~. La spécificité du projet : combiner dans un seul site une vitrine grand public, un système de réservation et de paiement en ligne, et une plateforme de cours vidéo en ligne payants achetables à l'unité. Le tout pensé pour qu'elle soit ensuite totalement autonome (elle ajoute ses cours, gère ses élèves, et reprend la main sur son site sans avoir besoin de moi).`,
     img: "/assets/rwj/rwj-miniature.webp",
+    cardImg: "/assets/rwj/rwj-card.jpg",
     heroImg: "/assets/rwj/rwj-hero-accueil.webp",
     url: "https://russianwithjulia.com",
     wideMedia: true,
@@ -699,6 +717,101 @@ export const projets: Projet[] = [
       },
     ],
     date: "2026-04",
+  },
+  {
+    slug: "tiffany-voixoff",
+    titre: "Le site d'une comédienne voix off & narratrice",
+    client: "Tiffany Voix Off",
+    clientShort: "Tiffany Voix Off",
+    contexte: "freelance",
+    description:
+      "Site vitrine one-page pour une comédienne voix off et narratrice de livres audio : lecteur de démos audio maison, présentation soignée et formulaire de contact connecté par email.",
+    tagline:
+      "Une *voix*, une *identité*, et un site *one-page* qui va droit au but.",
+    descriptionPublic:
+      "Un site d'une seule page, pensé pour aller à l'essentiel. Le visiteur arrive, comprend en trois secondes qui est Tiffany et ce qu'elle propose, écoute une démo, et la contacte. Pas de menu qui se perd sur cinq pages : tout tient dans un parcours fluide qui se déroule au défilement.\n\nUne direction artistique chaleureuse et feutrée. Ambiance de studio, typographie serif élégante, fond animé qui réagit au scroll, lumières douces : l'univers colle à celui d'une voix, à mi-chemin entre le livre audio et le spot publicitaire.\n\nUn vrai lecteur de démos, pas un simple embed. Les livres audio d'un côté, les voix off (pub, télé) de l'autre, chacun avec sa pochette, sa catégorie et sa durée. On lance une écoute sans quitter la page, sans passer par SoundCloud ou Spotify.\n\nLe site est en ligne sur [tiffanyvoixoff.fr](https://tiffanyvoixoff.fr), n'hésitez pas à aller le visiter pour vous en faire votre propre idée.",
+    intro: `Site vitrine développé en freelance pour Tiffany, comédienne voix off et narratrice de livres audio. Un projet **one-page**, proche d'une formule essentielle : une seule page, quatre sections (accueil, démos, présentation, contact), pensée pour transformer un visiteur en prise de contact. Au cœur du site, un **lecteur de démos audio entièrement sur mesure** qui remplace les players embarqués type SoundCloud, un fond animé au canvas piloté au scroll, et un formulaire de contact connecté par email.`,
+    img: "/assets/tiffany-voixoff/tiffany-hero.jpg",
+    cardImg: "/assets/tiffany-voixoff/tiffany-card.jpg",
+    heroImg: "/assets/tiffany-voixoff/tiffany-hero.jpg",
+    url: "https://tiffanyvoixoff.fr",
+    wideMedia: true,
+    pillarsCards: [
+      {
+        eyebrow: "Pilier n°1",
+        iconName: "sparkles",
+        titre: "Un one-page qui va droit au but",
+        description:
+          "Une seule page, quatre sections enchaînées au défilement : accueil, démos, présentation, contact. Aucune navigation à rallonge, un parcours pensé pour mener naturellement à la prise de contact.",
+      },
+      {
+        eyebrow: "Pilier n°2",
+        iconName: "video",
+        titre: "Un lecteur de démos audio sur mesure",
+        description:
+          "Livres audio et voix off (pub, télé) présentés avec pochette, catégorie et durée. Lecture directe dans la page, sans embed SoundCloud ou Spotify, pour garder l'identité du site et la maîtrise de l'expérience.",
+      },
+      {
+        eyebrow: "Pilier n°3",
+        iconName: "palette",
+        titre: "Une direction artistique de studio",
+        description:
+          "Ambiance feutrée, typographie serif, fond animé au canvas qui réagit au scroll, transitions douces. Un univers cohérent avec le métier de la voix, à mi-chemin entre le livre audio et le spot publicitaire.",
+      },
+    ],
+    sliderSets: [
+      {
+        title: "Mes démos — un lecteur audio maison",
+        description:
+          "La section démos rassemble les extraits de Tiffany, séparés en deux colonnes : les livres audio (roman, nouvelle, fantastique, jeunesse…) et les voix off (Prada, Banque Populaire, Top Chef…). Chaque piste affiche sa pochette, sa catégorie et sa durée, et se lance sans recharger la page. Un lecteur développé sur mesure plutôt qu'un player embarqué, pour rester dans l'univers du site.",
+        images: [
+          "/assets/tiffany-voixoff/tiffany-demos.jpg",
+          "/assets/tiffany-voixoff/tiffany-demos-list.jpg",
+        ],
+      },
+      {
+        title: "Présentation & prise de contact",
+        description:
+          "La section « Qui suis-je ? » raconte le parcours de Tiffany, ancienne professeure de français devenue narratrice, formée à la narration et à la voix off. Le tout se termine sur un formulaire de contact clair (nom, email, type de projet, message) connecté à sa boîte pro, avec les infos utiles à côté : email direct, zone d'intervention, délai de réponse.",
+        images: [
+          "/assets/tiffany-voixoff/tiffany-contact.jpg",
+        ],
+      },
+    ],
+    tags: [
+      "Next.js",
+      "React",
+      "GSAP",
+      "Lenis",
+      "Motion",
+      "Canvas",
+      "Resend",
+      "Tailwind",
+      "TypeScript",
+    ],
+    challenges: [
+      {
+        titre: "Un lecteur de démos audio développé à la main",
+        solution:
+          "Plutôt que d'embarquer un player SoundCloud ou Spotify (qui casse l'identité visuelle et impose leur interface), j'ai construit un lecteur audio sur mesure. Il gère la lecture/pause d'une piste à la fois, l'état visuel de la piste active, les pochettes, catégories et durées, et sépare proprement livres audio et voix off. L'écoute se fait sans quitter la page ni recharger quoi que ce soit.",
+      },
+      {
+        titre: "Un hero animé au canvas, piloté par le scroll",
+        solution:
+          "Le fond du hero est un canvas HTML qui dessine une onde audio animée en continu (requestAnimationFrame). Son intensité et ses couleurs réagissent à la progression du scroll via GSAP ScrollTrigger, pendant que le titre se révèle lettre par lettre. Le défilement est lissé avec Lenis pour un rendu doux et inertiel, cohérent avec l'ambiance feutrée du site.",
+      },
+      {
+        titre: "Un formulaire de contact sans backend dédié",
+        solution:
+          "Le formulaire de contact envoie les messages directement dans la boîte pro de Tiffany via une Route Handler Next.js et Resend, sans serveur séparé à maintenir. L'envoi se fait depuis un domaine vérifié (contact@tiffanyvoixoff.fr) avec le mail du visiteur en reply-to, pour qu'elle puisse répondre en un clic.",
+      },
+      {
+        titre: "Autonomie et souveraineté de la cliente",
+        solution:
+          "Le domaine, l'hébergement et le compte d'envoi d'emails sont ouverts au nom de Tiffany, pas au mien. Le site est une vitrine légère, rapide et sans dépendance à un CMS payant : elle possède l'ensemble de ses outils et reste libre de faire évoluer le projet.",
+      },
+    ],
+    date: "2026-07",
   },
 ];
 

@@ -2961,7 +2961,8 @@
       "freelance": "Freelance",
       "agence": "Agence",
       "perso": "Perso"
-    }
+    },
+    "viewLive": "Voir le site"
   },
   "addonInfo": {
     "onQuote": "Sur devis",

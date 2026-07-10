@@ -2961,7 +2961,8 @@
       "freelance": "Freelance",
       "agence": "Agency",
       "perso": "Personal"
-    }
+    },
+    "viewLive": "View site"
   },
   "addonInfo": {
     "onQuote": "On quote",
@@ -4112,6 +4113,58 @@
         "readingNext": "Up next",
         "allProjects": "All projects"
       }
+    },
+    "tiffany-voixoff": {
+      "titre": "The site of a voice-over actress & audiobook narrator",
+      "description": "One-page showcase site for a voice-over actress and audiobook narrator: a home-built audio demo player, polished presentation and a contact form wired to her inbox.",
+      "tagline": "One *voice*, one *identity*, and a *one-page* site that gets straight to the point.",
+      "descriptionPublic": "A single-page site, built to get straight to the point. Visitors land, understand within three seconds who Tiffany is and what she offers, listen to a demo, and get in touch. No menu scattered across five pages: everything lives in one smooth journey that unfolds as you scroll.\n\nA warm, hushed art direction. Studio atmosphere, elegant serif typography, an animated background that reacts to scroll, soft lighting: the world matches that of a voice, halfway between the audiobook and the advertising spot.\n\nA real demo player, not a plain embed. Audiobooks on one side, voice-over work (ads, TV) on the other, each with its cover, category and duration. You start a track without leaving the page, without going through SoundCloud or Spotify.\n\nThe site is live at [tiffanyvoixoff.fr](https://tiffanyvoixoff.fr), feel free to visit it and make up your own mind.",
+      "intro": "Showcase site built freelance for Tiffany, a voice-over actress and audiobook narrator. A **one-page** project, close to an essential formula: a single page, four sections (home, demos, about, contact), designed to turn a visitor into a first contact. At the heart of the site, a **fully custom audio demo player** that replaces embedded players like SoundCloud, a canvas-animated background driven by scroll, and a contact form wired to email.",
+      "pillarsCards": [
+        {
+          "eyebrow": "Pillar #1",
+          "titre": "A one-pager that gets to the point",
+          "description": "A single page, four sections chained on scroll: home, demos, about, contact. No sprawling navigation, a journey designed to lead naturally to getting in touch."
+        },
+        {
+          "eyebrow": "Pillar #2",
+          "titre": "A custom-built audio demo player",
+          "description": "Audiobooks and voice-over work (ads, TV) shown with cover, category and duration. Playback right inside the page, with no SoundCloud or Spotify embed, keeping the site's identity and full control of the experience."
+        },
+        {
+          "eyebrow": "Pillar #3",
+          "titre": "A studio art direction",
+          "description": "Hushed atmosphere, serif typography, a canvas-animated background that reacts to scroll, soft transitions. A world consistent with the craft of voice, halfway between the audiobook and the advertising spot."
+        }
+      ],
+      "sliderSets": [
+        {
+          "title": "My demos — a home-built audio player",
+          "description": "The demos section gathers Tiffany's excerpts, split into two columns: audiobooks (novel, short story, fantasy, children's…) and voice-over work (Prada, Banque Populaire, Top Chef…). Each track shows its cover, category and duration, and plays without reloading the page. A player built from scratch rather than an embedded one, to stay within the site's world."
+        },
+        {
+          "title": "About & getting in touch",
+          "description": "The “About” section tells Tiffany's story, a former French teacher turned narrator, trained in narration and voice-over. It all ends on a clear contact form (name, email, project type, message) wired to her professional inbox, with the useful info alongside: direct email, coverage area, response time."
+        }
+      ],
+      "challenges": [
+        {
+          "titre": "A hand-built audio demo player",
+          "solution": "Rather than embedding a SoundCloud or Spotify player (which breaks the visual identity and imposes their interface), I built a custom audio player. It handles play/pause for one track at a time, the active track's visual state, covers, categories and durations, and cleanly separates audiobooks from voice-over work. Listening happens without leaving the page or reloading anything."
+        },
+        {
+          "titre": "A canvas-animated hero, driven by scroll",
+          "solution": "The hero background is an HTML canvas drawing a continuously animated audio waveform (requestAnimationFrame). Its intensity and colors react to scroll progress via GSAP ScrollTrigger, while the title reveals letter by letter. Scrolling is smoothed with Lenis for a soft, inertial feel that matches the hushed mood of the site."
+        },
+        {
+          "titre": "A contact form with no dedicated backend",
+          "solution": "The contact form sends messages straight to Tiffany's professional inbox via a Next.js Route Handler and Resend, with no separate server to maintain. Emails are sent from a verified domain (contact@tiffanyvoixoff.fr) with the visitor's email as reply-to, so she can answer in one click."
+        },
+        {
+          "titre": "The client's autonomy and ownership",
+          "solution": "The domain, hosting and email-sending account are all opened in Tiffany's name, not mine. The site is a light, fast showcase with no dependency on a paid CMS: she owns all of her tools and stays free to grow the project."
+        }
+      ]
     }
   },
   "cookies": {

@@ -4,6 +4,11 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
+  // Qualités autorisées pour next/image (Next 16 défaut = [75]). 92 sert les
+  // visuels portrait des cartes "éventail" (ServiceProjects) en haute définition.
+  images: {
+    qualities: [75, 92],
+  },
   // Redirections SEO permanentes (308) — anciens URLs en cache chez Google/Bing.
   //
   // Inventaire des URLs legacy reconstruit depuis Search Console + l'ancien

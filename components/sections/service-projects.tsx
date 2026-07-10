@@ -11,14 +11,17 @@ import { localizeProjetCard } from "@/lib/projets-i18n"
 
 // Sélection statique des 3 réalisations mises en avant sur les pages formules :
 // Bald (freelance e-commerce art), Russian with Julia (freelance auth + vidéo + booking),
-// Argedis (échelle multi-régions, projet d'agence). Cette sélection n'est PAS dépendante
-// de la formule : on montre des sites qui font envie, peu importe la formule sélectionnée
-// — c'est aussi ce que veut le client (3 sites concrets, pas une catégorisation par tag).
-const FEATURED_SLUGS = ["bald-artiste", "russian-with-julia", "argedis-totalenergies"] as const
+// Tiffany Voix Off (freelance one-page comédienne voix off). Ces 3 projets ont tous un
+// site EN LIGNE : les cards ouvrent directement le site réel dans un nouvel onglet
+// (et non la page-étude de cas, qui est réservée aux curieux via « voir tous les projets »).
+const FEATURED_SLUGS = ["bald-artiste", "russian-with-julia", "tiffany-voixoff"] as const
 
 // Rotations en éventail — la card centrale reste droite, les bords s'inclinent légèrement.
 const FAN_ROTATIONS = [-4, 0, 4] as const
 const FAN_OFFSETS_Y = [12, 0, 12] as const
+// Décalage horizontal de départ (px) : les cards partent resserrées au centre puis
+// s'écartent en s'ouvrant comme un éventail au scroll.
+const FAN_CLOSED_X = [70, 0, -70] as const
 
 // La prop formuleSlug est conservée pour compat API mais n'est plus utilisée :
 // la sélection des 3 cards est statique (cf. FEATURED_SLUGS).
@@ -75,6 +78,7 @@ export function ServiceProjects({ color, formuleSlug: _formuleSlug }: { color: s
               color={color}
               index={i}
               contextLabel={contextLabel(projet.contexte)}
+              liveLabel={t("liveSite")}
             />
           )
         })}
@@ -85,6 +89,17 @@ export function ServiceProjects({ color, formuleSlug: _formuleSlug }: { color: s
         className="hidden sm:flex justify-center items-end gap-3 sm:gap-4 perspective-distant relative px-4 sm:px-8 pb-8"
         onMouseLeave={() => setHovered(null)}
       >
+        {/* Halo animé derrière l'éventail — attire l'œil sur la section */}
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 mx-auto h-[280px] max-w-lg rounded-full blur-3xl"
+          style={{ background: `radial-gradient(ellipse at center, color-mix(in oklab, ${color} 22%, transparent), transparent 70%)` }}
+          initial={{ opacity: 0, scale: 0.85 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        />
+
         {featured.map((projet, i) => {
           const { titre } = localizeProjetCard(projet, tProjetsData)
           return (
@@ -99,13 +114,13 @@ export function ServiceProjects({ color, formuleSlug: _formuleSlug }: { color: s
               onHover={() => setHovered(i)}
               contextLabel={contextLabel(projet.contexte)}
               liveLabel={t("liveSite")}
-              viewLabel={t("viewProject", { nom: titre })}
+              viewLiveLabel={t("viewLive")}
             />
           )
         })}
       </div>
 
-      {/* Lien discret vers la page projets */}
+      {/* Lien discret vers la page projets (études de cas détaillées) */}
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -137,7 +152,7 @@ function ProjectCardFan({
   onHover,
   contextLabel,
   liveLabel,
-  viewLabel,
+  viewLiveLabel,
 }: {
   projet: (typeof projets)[number]
   titre: string
@@ -148,40 +163,53 @@ function ProjectCardFan({
   onHover: () => void
   contextLabel: string
   liveLabel: string
-  viewLabel: string
+  viewLiveLabel: string
 }) {
   const baseRotate = FAN_ROTATIONS[index]
   const baseOffsetY = FAN_OFFSETS_Y[index]
+  const closedX = FAN_CLOSED_X[index]
   const year = projet.date.slice(0, 4)
   const dimmed = isAnyHovered && !isHovered
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30, rotate: baseRotate }}
-      whileInView={{ opacity: 1, y: baseOffsetY, rotate: baseRotate }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{
-        duration: 0.55,
-        delay: 0.08 + index * 0.06,
-        ease: [0.16, 1, 0.3, 1],
+      // Éventail fermé (resserré au centre) → ouvert au scroll dans le viewport
+      initial={{ opacity: 0, y: 40, x: closedX, rotate: 0, scale: 0.9 }}
+      whileInView={{
+        opacity: 1,
+        y: baseOffsetY,
+        x: 0,
+        rotate: baseRotate,
+        scale: 1,
+        transition: {
+          type: "spring",
+          stiffness: 120,
+          damping: 16,
+          delay: 0.12 + index * 0.1,
+        },
       }}
+      viewport={{ once: true, margin: "-80px" }}
+      // États de survol (prennent le relais après l'entrée)
       animate={{
         rotate: isHovered ? 0 : baseRotate,
-        y: isHovered ? -16 : baseOffsetY,
-        scale: isHovered ? 1.04 : dimmed ? 0.97 : 1,
-        opacity: dimmed ? 0.55 : 1,
+        y: isHovered ? -18 : baseOffsetY,
+        scale: isHovered ? 1.05 : dimmed ? 0.96 : 1,
+        opacity: dimmed ? 0.5 : 1,
       }}
+      transition={{ type: "spring", stiffness: 260, damping: 22 }}
       onMouseEnter={onHover}
       style={{ transformOrigin: "bottom center" }}
       className="relative"
     >
-      <Link
-        href={`/projets/${projet.slug}`}
-        aria-label={viewLabel}
+      <a
+        href={projet.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${liveLabel} — ${titre}`}
         className="group block w-[200px] md:w-[220px] lg:w-[240px] rounded-2xl border border-white/10 bg-zinc-900 cursor-pointer transform-gpu isolate"
         style={{
           boxShadow: isHovered
-            ? `0 20px 40px -10px color-mix(in oklab, ${color} 25%, rgba(0,0,0,0.4)), 0 0 0 1px color-mix(in oklab, ${color} 30%, transparent)`
+            ? `0 24px 48px -10px color-mix(in oklab, ${color} 30%, rgba(0,0,0,0.45)), 0 0 0 1px color-mix(in oklab, ${color} 45%, transparent)`
             : "0 8px 24px -8px rgba(0,0,0,0.4)",
           transition: "box-shadow 0.4s ease",
           clipPath: "inset(0 round 1rem)",
@@ -190,9 +218,9 @@ function ProjectCardFan({
       >
         {/* Image — ratio portrait pour évoquer la "carte à jouer" */}
         <div className="relative aspect-3/4 w-full overflow-hidden">
-          {projet.img && (
+          {(projet.cardImg ?? projet.img) && (
             <Image
-              src={projet.img}
+              src={projet.cardImg ?? projet.img}
               alt={titre}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -203,7 +231,7 @@ function ProjectCardFan({
           )}
 
           {/* Voile bas pour la lisibilité du texte overlay */}
-          <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/25 to-transparent" />
 
           {/* Top : badge contexte + Live */}
           <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-1.5">
@@ -229,7 +257,7 @@ function ProjectCardFan({
             )}
           </div>
 
-          {/* Bottom overlay : logo + nom client + titre + année */}
+          {/* Bottom overlay : logo + nom client + titre + année + CTA live */}
           <div className="absolute bottom-0 left-0 right-0 p-3.5">
             <div className="flex items-center gap-2 mb-1">
               {projet.logo && (
@@ -250,10 +278,21 @@ function ProjectCardFan({
             <p className="text-[11px] text-white/70 leading-snug line-clamp-2 mb-1.5">
               {titre}
             </p>
-            <span className="text-[9px] font-mono tracking-wider text-white/55">{year}</span>
+
+            {/* Ligne du bas : année + CTA "Voir le site" qui se révèle au survol */}
+            <div className="flex items-center justify-between">
+              <span className="text-[9px] font-mono tracking-wider text-white/55">{year}</span>
+              <span
+                className="inline-flex items-center gap-1 text-[10px] font-semibold tracking-wide max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-300 group-hover:max-w-[140px] group-hover:opacity-100"
+                style={{ color }}
+              >
+                {viewLiveLabel}
+                <ArrowUpRight className="w-3 h-3" />
+              </span>
+            </div>
           </div>
 
-          {/* Petit arrow rond visible au hover */}
+          {/* Arrow rond visible au hover (indice de clic) */}
           <div
             className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center backdrop-blur-md border transition-all duration-300 ${
               isHovered ? "opacity-100 scale-100" : "opacity-0 scale-75"
@@ -266,7 +305,7 @@ function ProjectCardFan({
             <ArrowUpRight className="w-5 h-5" style={{ color }} />
           </div>
         </div>
-      </Link>
+      </a>
     </motion.div>
   )
 }
@@ -279,12 +318,14 @@ function ProjectCardMobile({
   color,
   index,
   contextLabel,
+  liveLabel,
 }: {
   projet: (typeof projets)[number]
   titre: string
   color: string
   index: number
   contextLabel: string
+  liveLabel: string
 }) {
   const year = projet.date.slice(0, 4)
 
@@ -295,18 +336,21 @@ function ProjectCardMobile({
       viewport={{ once: true, margin: "-30px" }}
       transition={{ duration: 0.4, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
     >
-      <Link
-        href={`/projets/${projet.slug}`}
+      <a
+        href={projet.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${liveLabel} — ${titre}`}
         className="group flex items-center gap-3 p-3 rounded-xl border border-white/8 bg-white/3 hover:border-white/15 hover:bg-white/5 transition-all cursor-pointer"
       >
-        <div className="relative w-20 h-20 shrink-0 rounded-lg overflow-hidden ring-1 ring-white/10">
-          {projet.img && (
+        <div className="relative w-16 h-20 shrink-0 rounded-lg overflow-hidden ring-1 ring-white/10">
+          {(projet.cardImg ?? projet.img) && (
             <Image
-              src={projet.img}
+              src={projet.cardImg ?? projet.img}
               alt={titre}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-110"
-              sizes="160px"
+              sizes="128px"
               quality={92}
             />
           )}
@@ -336,7 +380,7 @@ function ProjectCardMobile({
         </div>
 
         <ArrowUpRight className="w-4 h-4 shrink-0 text-white/30 group-hover:text-white/80 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-      </Link>
+      </a>
     </motion.div>
   )
 }

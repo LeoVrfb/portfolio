@@ -11,31 +11,33 @@ import { cn } from "@/lib/utils";
 
 // ─── helpers ───────────────────────────────────────────────────────────────
 
-// Layout adaptatif : remplit chaque ligne sans trou quelle que soit la quantité.
-// Cas spécial pour 8 projets : mosaïque asymétrique (5+4+3 / 4+8).
-// Autres quantités : lignes de 3 tierces (4+4+4), leftover en demi ou pleine largeur.
-function getCardClasses(index: number, total: number) {
-  if (index === 0) {
-    if (total === 1) return "col-span-12";
-    return cn("col-span-12 lg:col-span-8", total >= 3 && "lg:row-span-2");
-  }
-  if (index === 1 || index === 2) return "col-span-12 sm:col-span-6 lg:col-span-4";
+type Tile = { projet: Projet; large: boolean; cls: string };
 
-  const rest = total - 3;
-  if (rest <= 0) return "col-span-12 sm:col-span-6 lg:col-span-4";
-  if (rest === 1) return "col-span-12";
-  if (rest === 2) return "col-span-12 sm:col-span-6";
+// Tuiles du bento (grille 12 colonnes, cartes en aspect-video).
+// HERO : le 1er projet vitrine (le plus prioritaire, ex. BNP) domine en haut à gauche,
+//        8 colonnes sur 2 rangées.
+// FEATURE : les autres projets vitrine (Total, ADP) s'empilent à sa droite (4 col × 1),
+//        remplissant exactement la bande 12×2 du haut, dans l'ordre de priorité.
+// SMALL : les sites (freelance) en petit dessous, 4 par ligne en desktop.
+const HERO = "col-span-12 lg:col-span-8 lg:row-span-2";
+const FEATURE = "col-span-6 lg:col-span-4";
+const SMALL = "col-span-6 lg:col-span-3";
 
-  const restIndex = index - 3;
-  const fullRows = Math.floor(rest / 3);
-  const leftover = rest % 3;
+// Mosaïque pilotée par l'importance du projet (champ `featured`) et son ordre de
+// priorité dans `projets`, jamais par l'index brut. Le rendu utilise `grid-flow-dense`
+// pour combler les trous (ex. quand un filtre ne laisse qu'un seul projet vitrine).
+function buildMosaic(items: Projet[]): Tile[] {
+  const featured = items.filter((p) => p.featured);
+  const smalls = items.filter((p) => !p.featured);
 
-  if (restIndex < fullRows * 3) return "col-span-12 sm:col-span-4 lg:col-span-4";
-
-  if (leftover === 1) return "col-span-12";
-  if (leftover === 2) return "col-span-12 sm:col-span-6";
-
-  return "col-span-12 sm:col-span-4 lg:col-span-4";
+  return [
+    ...featured.map((projet, i) => ({
+      projet,
+      large: i === 0,
+      cls: i === 0 ? HERO : FEATURE,
+    })),
+    ...smalls.map((projet) => ({ projet, large: false, cls: SMALL })),
+  ];
 }
 
 // ─── PlaceholderBg ─────────────────────────────────────────────────────────
@@ -92,19 +94,19 @@ const CONTEXT_STYLE: Record<Projet["contexte"], React.CSSProperties> = {
   perso: { color: "var(--gold)", borderColor: "rgba(220,196,84,0.45)", background: "rgba(220,196,84,0.12)" },
 };
 
-function ProjectCard({ projet, index, total }: { projet: Projet; index: number; total: number }) {
+function ProjectCard({ projet, large, cls }: { projet: Projet; large: boolean; cls: string }) {
   const t = useTranslations("projets.grid");
   const tProjetsData = useTranslations("projetsData");
   const { titre, description } = localizeProjetCard(projet, tProjetsData);
   const hasImage = Boolean(projet.img);
-  const isLarge = index === 0;
+  const isLarge = large;
 
   return (
     <Link
       href={`/projets/${projet.slug}`}
       className={cn(
         "group relative overflow-hidden rounded-2xl cursor-pointer block aspect-video",
-        getCardClasses(index, total)
+        cls
       )}
     >
       {/* Background */}
@@ -115,7 +117,7 @@ function ProjectCard({ projet, index, total }: { projet: Projet; index: number; 
           fill
           className="object-cover transition-transform duration-700 group-hover:scale-105"
           sizes={
-            index === 0
+            large
               ? "(max-width: 1024px) 100vw, 66vw"
               : "(max-width: 640px) 100vw, 33vw"
           }
@@ -327,8 +329,8 @@ export function ProjetsGrid() {
       {/* Grid */}
       {filtered.length > 0 ? (
         <div className="grid grid-cols-12 gap-3 sm:gap-4 grid-flow-dense">
-          {filtered.map((projet, index) => (
-            <ProjectCard key={projet.slug} projet={projet} index={index} total={filtered.length} />
+          {buildMosaic(filtered).map(({ projet, large, cls }) => (
+            <ProjectCard key={projet.slug} projet={projet} large={large} cls={cls} />
           ))}
         </div>
       ) : (
